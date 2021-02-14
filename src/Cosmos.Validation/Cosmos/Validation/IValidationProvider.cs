@@ -9,5 +9,8 @@ namespace Cosmos.Validation
         IValidator Resolve(Type type, string name);
         IValidator Resolve<T>();
         IValidator Resolve<T>(string name);
+
+        void UpdateOptions(ValidationOptions options);
+        void UpdateOptions(Action<ValidationOptions> optionAct);
     }
 }

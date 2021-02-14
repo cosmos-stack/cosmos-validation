@@ -41,6 +41,10 @@ namespace Cosmos.Validation.Internals
 
         public IValidator Resolve<T>(string name) => _validationProvider.Resolve<T>(name);
 
+        void IValidationProvider.UpdateOptions(ValidationOptions options) { }
+
+        void IValidationProvider.UpdateOptions(Action<ValidationOptions> optionAct) { }
+
         public string Name { get; }
     }
 }

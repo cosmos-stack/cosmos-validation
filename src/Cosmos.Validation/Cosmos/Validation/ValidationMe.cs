@@ -21,11 +21,13 @@ namespace Cosmos.Validation
         {
             var manager = new BuildInProjectManager();
             var resolver = new BuildInObjectResolver();
-            DefaultProvider = new ValidationProvider(manager, resolver);
+            DefaultProvider = new ValidationProvider(manager, resolver, new());
 
             _currentProvider = DefaultProvider;
         }
 
+        #region Register & Unregister
+        
         internal static void RegisterProvider(IValidationProvider validationProvider)
         {
             if (validationProvider is not null)
@@ -61,6 +63,10 @@ namespace Cosmos.Validation
             }
         }
 
+        #endregion
+
+        #region Internal Expose
+
         internal static IValidationProvider ExposeDefaultProvider() => DefaultProvider;
 
         internal static IValidationProvider ExposeValidationProvider() => _currentProvider;
@@ -79,7 +85,11 @@ namespace Cosmos.Validation
         internal static IValidationProjectManager ExposeProjectManager() => InnerPtr.ExposeProjectManager();
 
         internal static IValidationObjectResolver ExposeObjectResolver() => InnerPtr.ExposeObjectResolver();
+        
+        #endregion
 
+        #region Resolve
+        
         public static IValidator Resolve(Type type) => _currentProvider.Resolve(type);
 
         public static IValidator Resolve(Type type, string name) => _currentProvider.Resolve(type, name);
@@ -87,6 +97,10 @@ namespace Cosmos.Validation
         public static IValidator Resolve<T>() => _currentProvider.Resolve<T>();
 
         public static IValidator Resolve<T>(string name) => _currentProvider.Resolve<T>(name);
+        
+        #endregion
+
+        #region Use Scope
 
         public static IValidationProvider Use(string name)
         {
@@ -95,5 +109,47 @@ namespace Cosmos.Validation
 
             return new ValidationScope(_currentProvider, ValidationProvider.DefaultName);
         }
+        
+        #endregion
+
+        #region Update Options
+
+        public static void UpdateDefaultOptions(ValidationOptions options)
+        {
+            DefaultProvider.UpdateOptions(options);
+        }
+
+        public static void UpdateDefaultOptions(Action<ValidationOptions> optionAct)
+        {
+            DefaultProvider.UpdateOptions(optionAct);
+        }
+
+        public static void UpdateMainOptions(ValidationOptions options)
+        {
+            _currentProvider.UpdateOptions(options);
+        }
+
+        public static void UpdateMainOptions(Action<ValidationOptions> optionAct)
+        {
+            _currentProvider.UpdateOptions(optionAct);
+        }
+
+        public static void UpdateOptions(string providerName, ValidationOptions options)
+        {
+            if (string.IsNullOrWhiteSpace(providerName))
+                UpdateMainOptions(options);
+            else if (ScopedProviders.TryGetValue(providerName, out var provider))
+                provider.UpdateOptions(options);
+        }
+
+        public static void UpdateOptions(string providerName, Action<ValidationOptions> optionAct)
+        {
+            if (string.IsNullOrWhiteSpace(providerName))
+                UpdateMainOptions(optionAct);
+            else if (ScopedProviders.TryGetValue(providerName, out var provider))
+                provider.UpdateOptions(optionAct);
+        }
+        
+        #endregion
     }
 }
