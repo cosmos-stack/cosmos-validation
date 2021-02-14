@@ -132,5 +132,7 @@ namespace Cosmos.Validation.Annotations
         }
 
         #endregion
+
+        public override string Name => "ValidEmailValueAnnotation";
     }
 }
