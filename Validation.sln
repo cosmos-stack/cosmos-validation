@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation", "src\Cosmos.Validation\Cosmos.Validation.csproj", "{19A5EEC5-7977-454B-BA94-B69A022D674B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B1F60691-77D2-4F61-818D-B22471D0F037}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D26706D4-5684-4297-B1C4-453ED096DBF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosValidationUT", "tests\CosmosValidationUT\CosmosValidationUT.csproj", "{F019619B-27FB-493E-A312-EDBDBEFE4D7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asset", "asset", "{13B952FA-0FFC-4E20-B2E6-A47F903384F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{A9804374-B170-4425-8968-90C7EB365DBB}"
+ProjectSection(SolutionItems) = preProject
+	asset\images\icon.back.png = asset\images\icon.back.png
+	asset\images\icon.png = asset\images\icon.png
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{B57218F0-A417-4549-B4FA-3C7D38EA27B2}"
+ProjectSection(SolutionItems) = preProject
+	asset\props\misc.props = asset\props\misc.props
+	asset\props\package.props = asset\props\package.props
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FE9C33B7-AE11-4400-B55E-3BC326833E61}"
+ProjectSection(SolutionItems) = preProject
+	build\PublishBetaVersion_Script.bat = build\PublishBetaVersion_Script.bat
+	build\PublishNightlyVersion_Script.bat = build\PublishNightlyVersion_Script.bat
+	build\PublishReleaseVersion_Script.bat = build\PublishReleaseVersion_Script.bat
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F5CBA80A-F7CA-4B13-B889-1B5D8C288527}"
+ProjectSection(SolutionItems) = preProject
+	README.md = README.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{3DE246C6-0F53-428F-A5F1-D84D0D40D77C}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+	common.props = common.props
+	common.tests.props = common.tests.props
+	LICENSE = LICENSE
+	logo.png = logo.png
+	asset\version.dev.props = asset\version.dev.props
+	asset\version.props = asset\version.props
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Gen-Xml|Any CPU = Gen-Xml|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19A5EEC5-7977-454B-BA94-B69A022D674B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A5EEC5-7977-454B-BA94-B69A022D674B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A5EEC5-7977-454B-BA94-B69A022D674B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A5EEC5-7977-454B-BA94-B69A022D674B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A5EEC5-7977-454B-BA94-B69A022D674B}.Gen-Xml|Any CPU.ActiveCfg = Gen-Xml|Any CPU
+		{19A5EEC5-7977-454B-BA94-B69A022D674B}.Gen-Xml|Any CPU.Build.0 = Gen-Xml|Any CPU
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F}.Gen-Xml|Any CPU.ActiveCfg = Gen-Xml|Any CPU
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F}.Gen-Xml|Any CPU.Build.0 = Gen-Xml|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19A5EEC5-7977-454B-BA94-B69A022D674B} = {B1F60691-77D2-4F61-818D-B22471D0F037}
+		{F019619B-27FB-493E-A312-EDBDBEFE4D7F} = {D26706D4-5684-4297-B1C4-453ED096DBF3}
+		{A9804374-B170-4425-8968-90C7EB365DBB} = {13B952FA-0FFC-4E20-B2E6-A47F903384F8}
+		{B57218F0-A417-4549-B4FA-3C7D38EA27B2} = {13B952FA-0FFC-4E20-B2E6-A47F903384F8}
+	EndGlobalSection
+EndGlobal
