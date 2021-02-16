@@ -208,6 +208,27 @@ namespace Cosmos.Validation
             return Merge(mainResult, results.ToArray());
         }
 
+        public static VerifyResultCollection ToList(VerifyResult masterResult, params VerifyResult[] slaveResults)
+        {
+            var results = new List<VerifyResult>();
+
+            if (masterResult is not null)
+                results.Add(masterResult);
+
+            foreach (var result in slaveResults)
+                if (result is not null)
+                    results.Add(result);
+
+            return new VerifyResultCollection(results);
+        }
+
+        public static VerifyResultCollection ToList(List<VerifyResult> results)
+        {
+            if (results is null)
+                return VerifyResultCollection.Empty;
+            return new VerifyResultCollection(results);
+        }
+
         #endregion
 
         #region Raise
