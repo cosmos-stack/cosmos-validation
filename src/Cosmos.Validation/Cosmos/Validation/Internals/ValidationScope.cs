@@ -14,8 +14,12 @@ namespace Cosmos.Validation.Internals
         internal ValidationScope(IValidationProvider validationProvider, string name)
         {
             _validationProvider = validationProvider ?? throw new ArgumentNullException(nameof(validationProvider));
-            Name = name;
+            ((ICorrectProvider) this).Name = name;
         }
+
+        string ICorrectProvider.Name { get; set; }
+
+        public string GetName() => ((ICorrectProvider) this).Name;
 
         internal IValidationProvider ExposeValidationProvider() => _validationProvider;
 
@@ -44,7 +48,5 @@ namespace Cosmos.Validation.Internals
         void IValidationProvider.UpdateOptions(ValidationOptions options) { }
 
         void IValidationProvider.UpdateOptions(Action<ValidationOptions> optionAct) { }
-
-        public string Name { get; }
     }
 }

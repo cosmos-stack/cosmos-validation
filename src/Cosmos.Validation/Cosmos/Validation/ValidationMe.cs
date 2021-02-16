@@ -27,11 +27,12 @@ namespace Cosmos.Validation
         }
 
         #region Register & Unregister
-        
+
         internal static void RegisterProvider(IValidationProvider validationProvider)
         {
             if (validationProvider is not null)
             {
+                ((ICorrectProvider) validationProvider).Name = ValidationProvider.MainName;
                 CustomMainProvider = validationProvider;
                 _currentProvider = CustomMainProvider;
             }
@@ -49,6 +50,7 @@ namespace Cosmos.Validation
              && !string.IsNullOrWhiteSpace(name)
              && !ScopedProviders.ContainsKey(name))
             {
+                ((ICorrectProvider) validationProvider).Name = name;
                 ScopedProviders[name] = validationProvider;
             }
         }
@@ -59,6 +61,7 @@ namespace Cosmos.Validation
              && !string.IsNullOrWhiteSpace(name)
              && ScopedProviders.ContainsKey(name))
             {
+                ((ICorrectProvider) validationProvider).Name = name;
                 ScopedProviders[name] = validationProvider;
             }
         }
@@ -85,11 +88,11 @@ namespace Cosmos.Validation
         internal static IValidationProjectManager ExposeProjectManager() => InnerPtr.ExposeProjectManager();
 
         internal static IValidationObjectResolver ExposeObjectResolver() => InnerPtr.ExposeObjectResolver();
-        
+
         #endregion
 
         #region Resolve
-        
+
         public static IValidator Resolve(Type type) => _currentProvider.Resolve(type);
 
         public static IValidator Resolve(Type type, string name) => _currentProvider.Resolve(type, name);
@@ -97,7 +100,7 @@ namespace Cosmos.Validation
         public static IValidator Resolve<T>() => _currentProvider.Resolve<T>();
 
         public static IValidator Resolve<T>(string name) => _currentProvider.Resolve<T>(name);
-        
+
         #endregion
 
         #region Use Scope
@@ -107,9 +110,9 @@ namespace Cosmos.Validation
             if (!string.IsNullOrWhiteSpace(name) && ScopedProviders.TryGetValue(name, out var provider))
                 return new ValidationScope(provider, name);
 
-            return new ValidationScope(_currentProvider, ValidationProvider.DefaultName);
+            return new ValidationScope(_currentProvider, ((ICorrectProvider) _currentProvider).Name);
         }
-        
+
         #endregion
 
         #region Update Options
@@ -149,7 +152,7 @@ namespace Cosmos.Validation
             else if (ScopedProviders.TryGetValue(providerName, out var provider))
                 provider.UpdateOptions(optionAct);
         }
-        
+
         #endregion
     }
 }

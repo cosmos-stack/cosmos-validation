@@ -28,8 +28,11 @@ namespace Cosmos.Validation
         }
 
         internal const string DefaultName = "Default Validation Provider";
+        internal const string MainName = "Main Validation Provider";
 
         internal static bool IsDefault(string name) => name == DefaultName;
+
+        string ICorrectProvider.Name { get; set; } = DefaultName;
 
         public IValidator Resolve(Type type)
         {

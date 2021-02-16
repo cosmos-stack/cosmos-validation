@@ -13,7 +13,7 @@ namespace Cosmos.Validation
         private readonly IValidationProjectManager _projectManager;
         private readonly IValidationObjectResolver _objectResolver;
         private readonly CustomValidatorManager _customValidatorManager;
-        
+
         private ValidationOptions _options;
 
         protected AbstractValidationProvider(
@@ -26,6 +26,8 @@ namespace Cosmos.Validation
             _customValidatorManager = new CustomValidatorManager();
             _options = options ?? new ValidationOptions();
         }
+
+        string ICorrectProvider.Name { get; set; }
 
         public virtual IValidator Resolve(Type type)
         {

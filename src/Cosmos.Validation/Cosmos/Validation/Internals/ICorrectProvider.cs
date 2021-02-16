@@ -6,6 +6,7 @@ namespace Cosmos.Validation.Internals
 {
     internal interface ICorrectProvider
     {
+        string Name { get; set; }
         IValidationProjectManager ExposeProjectManager();
 
         IValidationObjectResolver ExposeObjectResolver();
