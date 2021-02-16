@@ -7,9 +7,11 @@ using Cosmos.Collections;
 using Cosmos.Reflection;
 using Cosmos.Validation.Annotations;
 
+// ReSharper disable PrivateFieldCanBeConvertedToLocalVariable
+
 namespace Cosmos.Validation.Objects
 {
-    public class ObjectContract
+    public class ObjectContract : IObjectContract
     {
         private readonly Type _type;
         private readonly Dictionary<string, ObjectValueContract> _valueContracts;
@@ -17,11 +19,13 @@ namespace Cosmos.Validation.Objects
         private readonly Attribute[] _attributes;
 
         private readonly ICustomAttributeReflectorProvider _reflectorProvider;
+        private readonly ICustomObjectContractImpl _objectContractImpl;
 
         public ObjectContract(
             Type type,
             Dictionary<string, ObjectValueContract> valueContracts)
         {
+            _objectContractImpl = null;
             _type = type ?? throw new ArgumentNullException(nameof(type));
             _valueContracts = valueContracts ?? throw new ArgumentNullException(nameof(valueContracts));
             _reflectorProvider = _type.GetReflector();
@@ -31,10 +35,24 @@ namespace Cosmos.Validation.Objects
             ObjectKind = type.GetObjectKind();
         }
 
+        public ObjectContract(ICustomObjectContractImpl objectContractImpl)
+        {
+            _objectContractImpl = objectContractImpl ?? throw new ArgumentNullException(nameof(objectContractImpl));
+            _type = objectContractImpl.Type;
+            _valueContracts = objectContractImpl.GetValueContractMap();
+            _reflectorProvider = null;
+            _attributes = Arrays.Empty<Attribute>();
+
+            IncludeAnnotationsForType = false;
+            ObjectKind = objectContractImpl.ObjectKind;
+        }
+
         #region GetValueContract
 
         public ObjectValueContract GetValueContract(string name)
         {
+            if (_objectContractImpl is not null)
+                return _objectContractImpl.GetValueContract(name);
             if (ObjectKind == ObjectKind.BasicType)
                 return _valueContracts[ObjectValueContract.BASIC_TYPE];
             if (_valueContracts.TryGetValue(name, out var contract))
@@ -46,6 +64,8 @@ namespace Cosmos.Validation.Objects
         {
             if (propertyInfo is null)
                 return default;
+            if (_objectContractImpl is not null)
+                return _objectContractImpl.GetValueContract(propertyInfo);
             if (_valueContracts.TryGetValue(propertyInfo.Name, out var contract) && contract.ObjectValueKind == ObjectValueKind.Property)
                 return contract;
             return default;
@@ -55,6 +75,8 @@ namespace Cosmos.Validation.Objects
         {
             if (fieldInfo is null)
                 return default;
+            if (_objectContractImpl is not null)
+                return _objectContractImpl.GetValueContract(fieldInfo);
             if (_valueContracts.TryGetValue(fieldInfo.Name, out var contract) && contract.ObjectValueKind == ObjectValueKind.Field)
                 return contract;
             return default;
@@ -62,6 +84,8 @@ namespace Cosmos.Validation.Objects
 
         public IEnumerable<ObjectValueContract> GetAllValueContracts()
         {
+            if (_objectContractImpl is not null)
+                return _objectContractImpl.GetAllValueContracts();
             return _valueContracts.Values.AsReadOnly();
         }
 
@@ -76,36 +100,70 @@ namespace Cosmos.Validation.Objects
         #region Annotations
 
         private bool IncludeAnnotationsForType { get; }
-        public bool IncludeAnnotations => IncludeAnnotationsForType || _valueContracts.Values.Any(x => x.IncludeAnnotations);
 
-        public IReadOnlyCollection<Attribute> Attributes => _attributes;
+        public bool IncludeAnnotations =>
+            _objectContractImpl?.IncludeAnnotations ?? IncludeAnnotationsForType || _valueContracts.Values.Any(x => x.IncludeAnnotations);
+
+        public IReadOnlyCollection<Attribute> Attributes => _objectContractImpl?.Attributes ?? _attributes;
 
         public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations()
         {
-            foreach (var attribute in _attributes)
-                if (attribute is ValidationParameterAttribute annotation)
+            if (_objectContractImpl is null)
+            {
+                foreach (var attribute in _attributes)
+                    if (attribute is ValidationParameterAttribute annotation)
+                        yield return annotation;
+            }
+            else
+            {
+                foreach (var annotation in _objectContractImpl.GetParameterAnnotations())
                     yield return annotation;
+            }
         }
 
         public IEnumerable<IQuietVerifiableAnnotation> GetQuietVerifiableAnnotations()
         {
-            foreach (var attribute in _attributes)
-                if (attribute is IQuietVerifiableAnnotation annotation)
+            if (_objectContractImpl is null)
+            {
+                foreach (var attribute in _attributes)
+                    if (attribute is IQuietVerifiableAnnotation annotation)
+                        yield return annotation;
+            }
+            else
+            {
+                foreach (var annotation in _objectContractImpl.GetQuietVerifiableAnnotations())
                     yield return annotation;
+            }
         }
 
         public IEnumerable<IStrongVerifiableAnnotation> GetStrongVerifiableAnnotations()
         {
-            foreach (var attribute in _attributes)
-                if (attribute is IStrongVerifiableAnnotation annotation)
+            if (_objectContractImpl is null)
+            {
+                foreach (var attribute in _attributes)
+                    if (attribute is IStrongVerifiableAnnotation annotation)
+                        yield return annotation;
+            }
+            else
+            {
+                foreach (var annotation in _objectContractImpl.GetStrongVerifiableAnnotations())
                     yield return annotation;
+            }
         }
 
         public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute
         {
-            foreach (var attribute in _attributes)
-                if (attribute is TAttribute t)
-                    yield return t;
+            if (_objectContractImpl is null)
+            {
+                foreach (var attribute in _attributes)
+                    if (attribute is TAttribute t)
+                        yield return t;
+            }
+            else
+            {
+                foreach (var attribute in _objectContractImpl.GetAttributes<TAttribute>())
+                    yield return attribute;
+            }
         }
 
         private static bool HasValidationAnnotationDefined(Attribute[] attributes)

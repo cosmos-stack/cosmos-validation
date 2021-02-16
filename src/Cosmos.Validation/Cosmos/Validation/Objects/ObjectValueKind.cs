@@ -5,5 +5,6 @@
         Property,
         Field,
         ValueType,
+        CustomContract
     }
 }

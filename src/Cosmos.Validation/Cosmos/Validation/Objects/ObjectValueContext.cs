@@ -93,7 +93,7 @@ namespace Cosmos.Validation.Objects
         {
             if (MemberType.IsBasicType())
                 return _parentContext;
-            
+
             var contract = ObjectContractManager.Resolve(MemberType);
 
             return new ObjectContext(Value, contract);

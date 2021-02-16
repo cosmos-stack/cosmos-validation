@@ -36,12 +36,6 @@ namespace Cosmos.Validation.Objects
             return new ObjectValueContext(this, contract);
         }
 
-        public IEnumerable<ObjectValueContext> GetAllValues()
-        {
-            foreach (var contract in GetAllMembers())
-                yield return new ObjectValueContext(this, contract);
-        }
-
         #endregion
 
         #region GetValuesWithAttribute
@@ -197,6 +191,16 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<string> GetAllMemberNames()
         {
             return GetAllMembers().Select(x => x.MemberName);
+        }
+
+        #endregion
+
+        #region ToValueContexts
+
+        public IEnumerable<ObjectValueContext> ToValueContexts()
+        {
+            foreach (var contract in GetAllMembers())
+                yield return new ObjectValueContext(this, contract);
         }
 
         #endregion
