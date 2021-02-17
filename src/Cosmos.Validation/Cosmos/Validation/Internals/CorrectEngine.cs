@@ -51,6 +51,30 @@ namespace Cosmos.Validation.Internals
             return VerifyResult.Merge(mainResult, slaveResults.ToArray());
         }
 
+        public static VerifyResult ValidMany(IDictionary<string, ObjectValueContext> keyValueCollections, List<CorrectValueRule> rules, IEnumerable<CustomValidator> validators)
+        {
+            var len = rules.Count;
+            var failures = new List<VerifyFailure>();
+            var nameOfExecutedRules = new List<string>();
+            var slaveResults = new List<VerifyResult>();
+
+            for (var i = 0; i < len; i++)
+            {
+                var valueRule = rules[i];
+                if (keyValueCollections.TryGetValue(valueRule.MemberName, out var context))
+                    ValidCore(context, valueRule, failures, nameOfExecutedRules);
+            }
+
+            var mainResult = MakeMainResult(failures, nameOfExecutedRules);
+
+            foreach (var context in keyValueCollections.Values)
+            {
+                slaveResults.AddRange(MakeSlaveResults(context, validators));
+            }
+
+            return VerifyResult.Merge(mainResult, slaveResults.ToArray());
+        }
+
         private static void ValidCore(ObjectContext context, CorrectValueRule valueRule, List<VerifyFailure> failures, List<string> nameOfExecutedRules)
         {
             var verifyValSet = valueRule

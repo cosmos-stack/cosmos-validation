@@ -173,22 +173,6 @@
             Annotation Validator
             </summary>
         </member>
-        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.StrongVerify(System.Type,System.Object)">
-            <summary>
-            Strong Verify
-            </summary>
-            <param name="type"></param>
-            <param name="instance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.StrongVerify``1(``0)">
-            <summary>
-            Strong Verify
-            </summary>
-            <param name="instance"></param>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
         <member name="T:Cosmos.Validation.Validators.EmailValidator.SubDomainType">
             <summary>
             Sub domain type

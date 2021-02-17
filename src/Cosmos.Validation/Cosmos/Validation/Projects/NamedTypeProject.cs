@@ -41,5 +41,10 @@ namespace Cosmos.Validation.Projects
         {
             return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList(), _validators);
         }
+
+        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
+        {
+            return CorrectEngine.ValidMany(keyValueCollections, _rules, _validators);
+        }
     }
 }

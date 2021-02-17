@@ -88,12 +88,13 @@ namespace Cosmos.Validation.Objects
             _attributes = Arrays.Empty<Attribute>();
 
             IncludeAnnotations = contractImpl.IncludeAnnotations;
+            _valueContractImpl = contractImpl;
 
             IsBasicType = contractImpl.IsBasicType;
         }
 
         public ObjectValueKind ObjectValueKind { get; }
-        
+
         public bool IsBasicType { get; }
 
         public Type DeclaringType => _declaringType;
@@ -130,23 +131,29 @@ namespace Cosmos.Validation.Objects
 
         public object GetValue(object value)
         {
-            switch (ObjectValueKind)
-            {
-                case ObjectValueKind.Property:
-                    return P(_propertyInfo)(value);
+            if (ObjectValueKind == ObjectValueKind.CustomContract)
+                return _valueContractImpl.GetValue(value);
 
-                case ObjectValueKind.Field:
-                    return F(_fieldInfo)(value);
+            if (value is IDictionary<string, object> d)
+                return GetValue(d);
 
-                case ObjectValueKind.Unknown:
-                    return value;
+            if (ObjectValueKind == ObjectValueKind.Property)
+                return P(_propertyInfo)(value);
 
-                case ObjectValueKind.CustomContract:
-                    return _valueContractImpl.GetValue(value);
+            if (ObjectValueKind == ObjectValueKind.Field)
+                return F(_fieldInfo)(value);
 
-                default:
-                    throw new InvalidOperationException("Unknown ObjectInfo type.");
-            }
+            if (ObjectValueKind == ObjectValueKind.Unknown)
+                return value;
+
+            throw new InvalidOperationException("Unknown ObjectInfo type.");
+        }
+
+        public object GetValue(IDictionary<string, object> keyValueCollections)
+        {
+            if (keyValueCollections is null)
+                return default;
+            return D(MemberName)(keyValueCollections);
         }
 
         #region Annotations
@@ -510,6 +517,9 @@ namespace Cosmos.Validation.Objects
         private static Func<PropertyInfo, Func<object, object>> P => property => property.GetValue;
 
         private static Func<FieldInfo, Func<object, object>> F => field => field.GetValue;
+
+        private static Func<string, Func<IDictionary<string, object>, object>> D =>
+            key => dictionary => dictionary.TryGetValue(key, out var result) ? result : default;
 
         internal ICustomValueContractImpl ExposeInternalImpl() => _valueContractImpl;
     }

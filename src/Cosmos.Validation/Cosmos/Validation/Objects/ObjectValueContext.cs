@@ -6,15 +6,17 @@ namespace Cosmos.Validation.Objects
 {
     public class ObjectValueContext
     {
-        private readonly object _parent;
         private readonly ObjectValueContract _contract;
         private readonly ObjectContext _parentContext;
 
-        public ObjectValueContext(ObjectContext parentContext, ObjectValueContract contract)
+        // 如果为 true，则表示为强类型模式；如果为 false，则表示为字典模式
+        private readonly bool _directMode;
+
+        public ObjectValueContext(ObjectContext parentContext, ObjectValueContract contract, bool directMode)
         {
             _parentContext = parentContext;
-            _parent = parentContext.Instance;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _directMode = directMode;
         }
 
         private bool _hasGot;
@@ -26,7 +28,10 @@ namespace Cosmos.Validation.Objects
             {
                 if (!_hasGot)
                 {
-                    _valueCached = _contract.GetValue(_parent);
+                    _valueCached = _directMode 
+                        ? _contract.GetValue(_parentContext.Instance) 
+                        : _contract.GetValue(_parentContext.KeyValueCollection);
+
                     _hasGot = true;
                 }
 

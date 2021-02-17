@@ -7,7 +7,7 @@ namespace Cosmos.Validation.Objects
     public static class ObjectContractManager
     {
         private static readonly ConcurrentDictionary<Type, ObjectContract> _objectContracts = new();
-
+        
         public static ObjectContract Resolve(Type type)
         {
             if (type is null)

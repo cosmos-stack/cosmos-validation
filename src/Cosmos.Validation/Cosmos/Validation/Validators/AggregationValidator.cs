@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
@@ -65,7 +66,7 @@ namespace Cosmos.Validation.Validators
 
             if (result2 is null)
                 return result1;
-            
+
             if (result1 is null)
                 return result2;
 
@@ -76,13 +77,13 @@ namespace Cosmos.Validation.Validators
         {
             if (instance is null)
                 return BuildInVerifyResults.NullObjectReference;
-            
+
             VerifyResult result1 = null, result2 = null;
-            var context =_objectResolver.Resolve(type, instance);
-            
+            var context = _objectResolver.Resolve(type, instance);
+
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.Verify(context);
-            
+
             if (_options.IncludeAnnotation)
                 result2 = _annotationValidator.Verify(context);
 
@@ -91,7 +92,7 @@ namespace Cosmos.Validation.Validators
 
             if (result2 is null)
                 return result1;
-            
+
             if (result1 is null)
                 return result2;
 
@@ -99,18 +100,18 @@ namespace Cosmos.Validation.Validators
         }
 
         #endregion
-        
+
         #region VerifyOne
 
         public VerifyResult VerifyOne(T instance, string memberName)
         {
             if (instance is null)
                 return BuildInVerifyResults.NullObjectReference;
-            
+
             VerifyResult result1 = null, result2 = null;
             var context = _objectResolver.Resolve(instance);
             var valueContext = context.GetValue(memberName);
-            
+
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyOne(valueContext);
 
@@ -122,7 +123,7 @@ namespace Cosmos.Validation.Validators
 
             if (result2 is null)
                 return result1;
-            
+
             if (result1 is null)
                 return result2;
 
@@ -133,23 +134,82 @@ namespace Cosmos.Validation.Validators
         {
             if (instance is null)
                 return BuildInVerifyResults.NullObjectReference;
-            
+
             VerifyResult result1 = null, result2 = null;
             var context = _objectResolver.Resolve(instance);
             var valueContext = context.GetValue(memberName);
-            
+
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyOne(valueContext);
 
             if (_options.IncludeAnnotation)
                 result2 = _annotationValidator.VerifyOne(valueContext);
-            
+
             if (result1 is null && result2 is null)
                 return BuildInVerifyResults.UnregisterProjectForSuchType;
 
             if (result2 is null)
                 return result1;
-            
+
+            if (result1 is null)
+                return result2;
+
+            return VerifyResult.Merge(result1, result2);
+        }
+
+        #endregion
+
+        #region VerifyMany
+
+        public VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections)
+        {
+            if (keyValueCollections is null)
+                return BuildInVerifyResults.NullObjectReference;
+
+            VerifyResult result1 = null, result2 = null;
+            var context = _objectResolver.Resolve<T>(keyValueCollections);
+
+            if (_projectManager.TryResolve(_type, _name, out var project))
+                result1 = project.VerifyMany(context.ToValueContextMap());
+
+            if (_options.IncludeAnnotation)
+                result2 = _annotationValidator.Verify(context);
+
+            if (result1 is null && result2 is null)
+                return BuildInVerifyResults.UnregisterProjectForSuchType;
+
+            if (result2 is null)
+                return result1;
+
+            if (result1 is null)
+                return result2;
+
+            return VerifyResult.Merge(result1, result2);
+        }
+
+        public VerifyResult VerifyMany(Type type, IDictionary<string, object> keyValueCollections)
+        {
+            if (type is null)
+                return BuildInVerifyResults.NullObjectReference;
+
+            if (keyValueCollections is null)
+                return BuildInVerifyResults.NullObjectReference;
+
+            VerifyResult result1 = null, result2 = null;
+            var context = _objectResolver.Resolve(type, keyValueCollections);
+
+            if (_projectManager.TryResolve(_type, _name, out var project))
+                result1 = project.VerifyMany(context.ToValueContextMap());
+
+            if (_options.IncludeAnnotation)
+                result2 = _annotationValidator.Verify(context);
+
+            if (result1 is null && result2 is null)
+                return BuildInVerifyResults.UnregisterProjectForSuchType;
+
+            if (result2 is null)
+                return result1;
+
             if (result1 is null)
                 return result2;
 

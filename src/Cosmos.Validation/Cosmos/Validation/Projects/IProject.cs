@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Projects
@@ -14,5 +15,7 @@ namespace Cosmos.Validation.Projects
         VerifyResult Verify(ObjectContext context);
         
         VerifyResult VerifyOne(ObjectValueContext context);
+        
+        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections);
     }
 }

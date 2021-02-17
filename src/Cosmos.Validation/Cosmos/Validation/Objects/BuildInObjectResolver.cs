@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Cosmos.Validation.Objects
 {
@@ -24,6 +25,20 @@ namespace Cosmos.Validation.Objects
             return new ObjectContext(instance, contract, instanceName);
         }
 
+        public ObjectContext Resolve<T>(IDictionary<string, object> keyValueCollections)
+        {
+            var contract = ObjectContractManager.Resolve<T>();
+
+            return new ObjectContext(keyValueCollections, contract);
+        }
+
+        public ObjectContext Resolve<T>(IDictionary<string, object> keyValueCollections, string instanceName)
+        {
+            var contract = ObjectContractManager.Resolve<T>();
+
+            return new ObjectContext(keyValueCollections, contract, instanceName);
+        }
+
         public ObjectContext Resolve(Type type, object instance)
         {
             if (instance is ObjectContext context) return context;
@@ -42,6 +57,20 @@ namespace Cosmos.Validation.Objects
             var contract = ObjectContractManager.Resolve(type);
 
             return new ObjectContext(instance, contract, instanceName);
+        }
+
+        public ObjectContext Resolve(Type type, IDictionary<string, object> keyValueCollections)
+        {
+            var contract = ObjectContractManager.Resolve(type);
+
+            return new ObjectContext(keyValueCollections, contract);
+        }
+
+        public ObjectContext Resolve(Type type, IDictionary<string, object> keyValueCollections, string instanceName)
+        {
+            var contract = ObjectContractManager.Resolve(type);
+
+            return new ObjectContext(keyValueCollections, contract, instanceName);
         }
     }
 }

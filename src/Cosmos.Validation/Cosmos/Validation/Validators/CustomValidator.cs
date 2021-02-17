@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Validators
@@ -59,6 +60,15 @@ namespace Cosmos.Validation.Validators
         }
 
         #endregion
+
+        #region VerifyMany
+
+        public virtual VerifyResult VerifyMany(Type type, IDictionary<string, object> keyValueCollections)
+        {
+            return VerifyImpl(_objectResolver.Resolve(type, keyValueCollections));
+        }
+
+        #endregion
     }
 
     public abstract class CustomValidator<T> : CustomValidator, IValidator<T>, ICorrectValidator<T>
@@ -98,6 +108,15 @@ namespace Cosmos.Validation.Validators
             return VerifyResult.UnexpectedType;
         }
 
+        #endregion
+        
+        #region VerifyMany
+
+        public VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections)
+        {
+            return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollections));
+        }
+        
         #endregion
     }
 }

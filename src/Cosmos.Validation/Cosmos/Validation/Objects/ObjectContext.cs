@@ -8,12 +8,17 @@ namespace Cosmos.Validation.Objects
     public class ObjectContext
     {
         private readonly object _targetObject;
+        private readonly IDictionary<string, object> _keyValueRef;
         private readonly ObjectContract _contract;
+
+        private readonly bool _directMode;
 
         public ObjectContext(object targetObject, ObjectContract contract)
         {
             _targetObject = targetObject;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _directMode = true;
+            _keyValueRef = null;
             InstanceName = "Instance";
         }
 
@@ -21,6 +26,26 @@ namespace Cosmos.Validation.Objects
         {
             _targetObject = targetObject;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _directMode = true;
+            _keyValueRef = null;
+            InstanceName = instanceName;
+        }
+
+        public ObjectContext(IDictionary<string, object> keyValueCollections, ObjectContract contract)
+        {
+            _targetObject = null;
+            _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _directMode = false;
+            _keyValueRef = keyValueCollections ?? throw new ArgumentNullException(nameof(keyValueCollections));
+            InstanceName = "KeyValueCollection";
+        }
+
+        public ObjectContext(IDictionary<string, object> keyValueCollections, ObjectContract contract, string instanceName)
+        {
+            _targetObject = null;
+            _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _directMode = false;
+            _keyValueRef = keyValueCollections ?? throw new ArgumentNullException(nameof(keyValueCollections));
             InstanceName = instanceName;
         }
 
@@ -33,7 +58,7 @@ namespace Cosmos.Validation.Objects
             if (contract is null)
                 return default;
 
-            return new ObjectValueContext(this, contract);
+            return new ObjectValueContext(this, contract, _directMode);
         }
 
         #endregion
@@ -49,7 +74,7 @@ namespace Cosmos.Validation.Objects
                 if (!member.IncludeAnnotations)
                     continue;
 
-                yield return new ObjectValueContext(this, member);
+                yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -64,7 +89,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -80,7 +105,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr1, TAttr2>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -97,7 +122,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -115,7 +140,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -134,7 +159,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -154,7 +179,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -175,7 +200,7 @@ namespace Cosmos.Validation.Objects
                     continue;
 
                 if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>())
-                    yield return new ObjectValueContext(this, member);
+                    yield return new ObjectValueContext(this, member, _directMode);
             }
         }
 
@@ -200,7 +225,19 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<ObjectValueContext> ToValueContexts()
         {
             foreach (var contract in GetAllMembers())
-                yield return new ObjectValueContext(this, contract);
+                yield return new ObjectValueContext(this, contract, _directMode);
+        }
+        
+        public IDictionary<string,ObjectValueContext> ToValueContextMap()
+        {
+            var map = new Dictionary<string, ObjectValueContext>();
+
+            foreach (var contract in GetAllMembers())
+            {
+                map[contract.MemberName] = new ObjectValueContext(this, contract, _directMode);
+            }
+
+            return map;
         }
 
         #endregion
@@ -212,6 +249,8 @@ namespace Cosmos.Validation.Objects
         public bool IsBasicType() => ObjectKind == ObjectKind.BasicType;
 
         public object Instance => _targetObject;
+
+        public IDictionary<string, object> KeyValueCollection => _keyValueRef;
 
         public string InstanceName { get; }
 
