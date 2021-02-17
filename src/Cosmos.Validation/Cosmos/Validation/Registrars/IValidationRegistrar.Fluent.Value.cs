@@ -152,11 +152,11 @@ namespace Cosmos.Validation.Registrars
         IWaitForMessageValidationRegistrar<T> Must(Func<object, bool> func);
 
         IValueFluentValidationRegistrar<T> Any(Func<object, bool> func);
-        
+
         IValueFluentValidationRegistrar<T> All(Func<object, bool> func);
-        
+
         IValueFluentValidationRegistrar<T> NotAny(Func<object, bool> func);
-        
+
         IValueFluentValidationRegistrar<T> NotAll(Func<object, bool> func);
 
         IValueFluentValidationRegistrar<T> In(ICollection<object> collection);
@@ -223,8 +223,9 @@ namespace Cosmos.Validation.Registrars
         void Build();
     }
 
-    public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T> { 
-
+    public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>
+    {
+        IValueFluentValidationRegistrar<T, TVal> Use(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
         new IValueFluentValidationRegistrar<T, TVal> Empty();
 
         new IValueFluentValidationRegistrar<T, TVal> NotEmpty();
@@ -340,6 +341,5 @@ namespace Cosmos.Validation.Registrars
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
-        
     }
 }

@@ -22,7 +22,7 @@ namespace Cosmos.Validation.Registrars
 
         #region Use
 
-        public IValueFluentValidationRegistrar<T> Use(Func<IValueRuleBuilder<T,TVal>, IValueRuleBuilder<T,TVal>> func)
+        public IValueFluentValidationRegistrar<T, TVal> Use(Func<IValueRuleBuilder<T,TVal>, IValueRuleBuilder<T,TVal>> func)
         {
             var builder = func?.Invoke(ValueRuleBuilderPtr);
 
