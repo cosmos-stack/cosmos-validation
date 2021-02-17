@@ -183,6 +183,16 @@ namespace Cosmos.Validation.Registrars
                 manager.Register(project);
         }
 
+        public ValidationHandler TempBuild()
+        {
+            return new(GetProjects(), InnerPtr.ExposeObjectResolver());
+        }
+
+        public ValidationHandler TempBuild(ValidationHandler handler)
+        {
+            return handler.Merge(GetProjects());
+        }
+
         #endregion
 
         #region BuildForMember

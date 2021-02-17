@@ -11,6 +11,7 @@ namespace Cosmos.Validation.Registrars
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
+        IValueFluentValidationRegistrar Use(Func<IValueRuleBuilder, IValueRuleBuilder> func);
         IValueFluentValidationRegistrar Empty();
         IValueFluentValidationRegistrar NotEmpty();
         IValueFluentValidationRegistrar Required();
@@ -87,6 +88,7 @@ namespace Cosmos.Validation.Registrars
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
+        IValueFluentValidationRegistrar<T> Use(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
         IValueFluentValidationRegistrar<T> Empty();
 
         IValueFluentValidationRegistrar<T> NotEmpty();

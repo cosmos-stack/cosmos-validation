@@ -29,5 +29,6 @@ namespace Cosmos.Validation.Registrars
         IFluentValidationRegistrar<T> ForType<T>();
         IFluentValidationRegistrar<T> ForType<T>(string name);
         void Build();
+        ValidationHandler TempBuild();
     }
 }

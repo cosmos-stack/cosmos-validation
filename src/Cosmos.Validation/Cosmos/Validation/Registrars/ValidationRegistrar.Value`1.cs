@@ -33,6 +33,20 @@ namespace Cosmos.Validation.Registrars
 
         protected CorrectValueRuleBuilder<T> ValueRuleBuilder { get; set; }
 
+        #region Use
+
+        public IValueFluentValidationRegistrar<T> Use(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        {
+            var builder = func?.Invoke(ValueRuleBuilder);
+
+            if (builder is not null)
+                ValueRuleBuilder = (CorrectValueRuleBuilder<T>) builder;
+
+            return this;
+        }
+
+        #endregion
+
         #region ValueRules
 
         public IValueFluentValidationRegistrar<T> Empty()
