@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Validation.Internals.Tokens;
 using Cosmos.Validation.Objects;
@@ -42,6 +41,11 @@ namespace Cosmos.Validation.Internals.Rules
         public IEnumerable<CorrectVerifyVal> ValidValue(ObjectContext context)
         {
             return Tokens.Select(token => token.ValidValue(context.GetValue(MemberName)));
+        }
+        
+        public IEnumerable<CorrectVerifyVal> ValidValue(ObjectValueContext context)
+        {
+            return Tokens.Select(token => token.ValidValue(context));
         }
 
         public ObjectValueContext GetValue(ObjectContext context)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Validation.Objects;
-using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation.Annotations.Core
 {

@@ -5,6 +5,7 @@ namespace Cosmos.Validation.Validators
 {
     public abstract class CustomValidator : IValidator, ICorrectValidator
     {
+        // ReSharper disable once InconsistentNaming
         protected readonly IValidationObjectResolver _objectResolver;
 
         protected CustomValidator(string name)
@@ -23,26 +24,51 @@ namespace Cosmos.Validation.Validators
 
         public bool IsAnonymous => string.IsNullOrEmpty(Name);
 
+        #region Verify
+
         public virtual VerifyResult Verify(Type type, object instance)
         {
             return VerifyImpl(_objectResolver.Resolve(type, instance));
         }
 
         protected abstract VerifyResult VerifyImpl(ObjectContext context);
-        
+
         public VerifyResult VerifyViaContext(ObjectContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
             return VerifyImpl(context);
         }
+
+        #endregion
+
+        #region VerifyOne
+
+        public virtual VerifyResult VerifyOne(Type type, object instance, string memberName)
+        {
+            return VerifyOneImpl(_objectResolver.Resolve(type, instance).GetValue(memberName));
+        }
+
+        protected abstract VerifyResult VerifyOneImpl(ObjectValueContext context);
+
+        public VerifyResult VerifyOneViaContext(ObjectValueContext context)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+            return VerifyOneImpl(context);
+        }
+
+        #endregion
     }
 
     public abstract class CustomValidator<T> : CustomValidator, IValidator<T>, ICorrectValidator<T>
     {
         protected CustomValidator(string name) : base(name) { }
 
-        protected CustomValidator(string name, IValidationObjectResolver objectResolver) : base(name, objectResolver) { }
+        protected CustomValidator(string name, IValidationObjectResolver objectResolver)
+            : base(name, objectResolver) { }
+
+        #region Verify
 
         public virtual VerifyResult Verify(T instance)
         {
@@ -55,29 +81,23 @@ namespace Cosmos.Validation.Validators
                 return Verify(t);
             return VerifyResult.UnexpectedType;
         }
-    }
 
-    internal sealed class SealedValidator : CustomValidator
-    {
-        public SealedValidator() : base("SealedValidator") { }
+        #endregion
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
+        #region VerifyOne
+
+        public VerifyResult VerifyOne(T instance, string memberName)
         {
-            return VerifyResult.Success;
+            return VerifyOneImpl(_objectResolver.Resolve(instance).GetValue(memberName));
         }
 
-        public static SealedValidator Instance { get; } = new();
-    }
-
-    internal sealed class SealedValidator<T> : CustomValidator<T>
-    {
-        public SealedValidator() : base("SealedValidator`1") { }
-
-        protected override VerifyResult VerifyImpl(ObjectContext context)
+        public override VerifyResult VerifyOne(Type type, object instance, string memberName)
         {
-            return VerifyResult.Success;
+            if (instance is T t)
+                return VerifyOne(t, memberName);
+            return VerifyResult.UnexpectedType;
         }
 
-        public static SealedValidator<T> Instance { get; } = new();
+        #endregion
     }
 }

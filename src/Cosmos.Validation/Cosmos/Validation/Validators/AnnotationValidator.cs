@@ -32,6 +32,8 @@ namespace Cosmos.Validation.Validators
 
         public bool IsAnonymous => false;
 
+        #region Verify
+
         public VerifyResult Verify(Type type, object instance)
         {
             if (instance is null)
@@ -39,7 +41,7 @@ namespace Cosmos.Validation.Validators
             if (instance is ObjectContext context)
                 return Verify(context);
             if (instance is ObjectValueContext valueContext)
-                return Verify(valueContext.ToObjectContext());
+                return VerifyOne(valueContext);
             return Verify(_objectResolver.Resolve(type, instance));
         }
 
@@ -50,41 +52,7 @@ namespace Cosmos.Validation.Validators
             if (instance is ObjectContext context)
                 return Verify(context);
             if (instance is ObjectValueContext valueContext)
-                return Verify(valueContext.ToObjectContext());
-            return Verify(_objectResolver.Resolve(instance));
-        }
-
-        /// <summary>
-        /// Strong Verify
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="instance"></param>
-        /// <returns></returns>
-        public VerifyResult StrongVerify(Type type, object instance)
-        {
-            if (instance is null)
-                return BuildInVerifyResults.NullObjectReference;
-            if (instance is ObjectContext context)
-                return Verify(context);
-            if (instance is ObjectValueContext valueContext)
-                return Verify(valueContext.ToObjectContext());
-            return Verify(_objectResolver.Resolve(type, instance));
-        }
-
-        /// <summary>
-        /// Strong Verify
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public VerifyResult StrongVerify<T>(T instance)
-        {
-            if (instance is null)
-                return BuildInVerifyResults.NullObjectReference;
-            if (instance is ObjectContext context)
-                return Verify(context);
-            if (instance is ObjectValueContext valueContext)
-                return Verify(valueContext.ToObjectContext());
+                return VerifyOne(valueContext);
             return Verify(_objectResolver.Resolve(instance));
         }
 
@@ -107,6 +75,50 @@ namespace Cosmos.Validation.Validators
             return VerifyResult.MakeTogether(slaveResults);
         }
 
+        #endregion
+
+        #region VerifyOne
+
+        public VerifyResult VerifyOne(Type type, object instance, string memberName)
+        {
+            if (instance is null)
+                return BuildInVerifyResults.NullObjectReference;
+            if (instance is ObjectContext context)
+                return Verify(context);
+            if (instance is ObjectValueContext valueContext)
+                return VerifyOne(valueContext);
+            return VerifyOne(_objectResolver.Resolve(type, instance).GetValue(memberName));
+        }
+
+        public VerifyResult VerifyOne<T>(T instance, string memberName)
+        {
+            if (instance is null)
+                return BuildInVerifyResults.NullObjectReference;
+            if (instance is ObjectContext context)
+                return Verify(context);
+            if (instance is ObjectValueContext valueContext)
+                return VerifyOne(valueContext);
+            return VerifyOne(_objectResolver.Resolve(instance).GetValue(memberName));
+        }
+
+        public VerifyResult VerifyOne(ObjectValueContext context)
+        {
+            if (context is null)
+                return VerifyResult.NullReference;
+
+            if (!context.IncludeAnnotations)
+                return VerifyResult.Success;
+
+            var slaveResults = new List<VerifyResult>();
+
+            VerifyViaFlagAnnotations(context, slaveResults);
+            VerifyViaVerifiableAnnotations(context, slaveResults);
+
+            return VerifyResult.MakeTogether(slaveResults);
+        }
+
+        #endregion
+        
         private static void VerifyViaFlagAnnotations(ObjectValueContext context, List<VerifyResult> results)
         {
             var annotations = context.GetFlagAnnotations(true).ToList();

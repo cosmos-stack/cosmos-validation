@@ -44,6 +44,8 @@ namespace Cosmos.Validation.Validators
             _annotationValidator = options.IncludeAnnotation ? AnnotationValidator.GetInstance(objectResolver) : null;
         }
 
+        #region Verify
+
         public VerifyResult Verify(T instance)
         {
             if (instance is null)
@@ -95,6 +97,66 @@ namespace Cosmos.Validation.Validators
 
             return VerifyResult.Merge(result1, result2);
         }
+
+        #endregion
+        
+        #region VerifyOne
+
+        public VerifyResult VerifyOne(T instance, string memberName)
+        {
+            if (instance is null)
+                return BuildInVerifyResults.NullObjectReference;
+            
+            VerifyResult result1 = null, result2 = null;
+            var context = _objectResolver.Resolve(instance);
+            var valueContext = context.GetValue(memberName);
+            
+            if (_projectManager.TryResolve(_type, _name, out var project))
+                result1 = project.VerifyOne(valueContext);
+
+            if (_options.IncludeAnnotation)
+                result2 = _annotationValidator.VerifyOne(valueContext);
+
+            if (result1 is null && result2 is null)
+                return BuildInVerifyResults.UnregisterProjectForSuchType;
+
+            if (result2 is null)
+                return result1;
+            
+            if (result1 is null)
+                return result2;
+
+            return VerifyResult.Merge(result1, result2);
+        }
+
+        public VerifyResult VerifyOne(Type type, object instance, string memberName)
+        {
+            if (instance is null)
+                return BuildInVerifyResults.NullObjectReference;
+            
+            VerifyResult result1 = null, result2 = null;
+            var context = _objectResolver.Resolve(instance);
+            var valueContext = context.GetValue(memberName);
+            
+            if (_projectManager.TryResolve(_type, _name, out var project))
+                result1 = project.VerifyOne(valueContext);
+
+            if (_options.IncludeAnnotation)
+                result2 = _annotationValidator.VerifyOne(valueContext);
+            
+            if (result1 is null && result2 is null)
+                return BuildInVerifyResults.UnregisterProjectForSuchType;
+
+            if (result2 is null)
+                return result1;
+            
+            if (result1 is null)
+                return result2;
+
+            return VerifyResult.Merge(result1, result2);
+        }
+
+        #endregion
 
         public string Name => string.IsNullOrEmpty(_name) ? "Anonymous Validator" : _name;
 

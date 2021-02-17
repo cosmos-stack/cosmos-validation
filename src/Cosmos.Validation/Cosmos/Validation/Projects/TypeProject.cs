@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Rules;
@@ -35,6 +36,11 @@ namespace Cosmos.Validation.Projects
         public VerifyResult Verify(ObjectContext context)
         {
             return CorrectEngine.Valid(context, _rules, _validators);
+        }
+
+        public VerifyResult VerifyOne(ObjectValueContext context)
+        {
+            return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList(), _validators);
         }
     }
 }
