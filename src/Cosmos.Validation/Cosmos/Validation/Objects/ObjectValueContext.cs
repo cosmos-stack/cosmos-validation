@@ -40,6 +40,8 @@ namespace Cosmos.Validation.Objects
 
         public ObjectValueKind ObjectValueKind => _contract.ObjectValueKind;
 
+        public bool IsBasicType => _contract.IsBasicType;
+
         public Type DeclaringType => _contract.DeclaringType;
 
         public Type MemberType => _contract.MemberType;
@@ -98,6 +100,8 @@ namespace Cosmos.Validation.Objects
 
             return new ObjectContext(Value, contract);
         }
+
+        internal ICustomValueContractImpl ExposeInternalImpl() => _contract.ExposeInternalImpl();
 
         #endregion
     }

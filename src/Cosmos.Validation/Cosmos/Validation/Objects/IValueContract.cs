@@ -7,10 +7,14 @@ namespace Cosmos.Validation.Objects
     public interface IValueContract
     {
         ObjectValueKind ObjectValueKind { get; }
+        
         Type DeclaringType { get; }
+        
         Type MemberType { get; }
 
         string MemberName { get; }
+        
+        bool IsBasicType { get; }
 
         object GetValue(object value);
 

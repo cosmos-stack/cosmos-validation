@@ -38,6 +38,8 @@ namespace Cosmos.Validation.Objects
 
             IncludeAnnotations = HasValidationAnnotationDefined(_attributes);
             _valueContractImpl = null;
+
+            IsBasicType = property.PropertyType.IsBasicType();
         }
 
         public ObjectValueContract(Type declaringType, FieldInfo field)
@@ -53,12 +55,14 @@ namespace Cosmos.Validation.Objects
 
             IncludeAnnotations = HasValidationAnnotationDefined(_attributes);
             _valueContractImpl = null;
+
+            IsBasicType = field.FieldType.IsBasicType();
         }
 
         public ObjectValueContract(Type declaringType)
         {
             _declaringType = declaringType;
-            ObjectValueKind = ObjectValueKind.ValueType;
+            ObjectValueKind = ObjectValueKind.Unknown;
 
             _propertyInfo = null;
             _fieldInfo = null;
@@ -68,6 +72,8 @@ namespace Cosmos.Validation.Objects
 
             IncludeAnnotations = false;
             _valueContractImpl = null;
+
+            IsBasicType = declaringType.IsBasicType();
         }
 
         public ObjectValueContract(ICustomValueContractImpl contractImpl)
@@ -82,9 +88,13 @@ namespace Cosmos.Validation.Objects
             _attributes = Arrays.Empty<Attribute>();
 
             IncludeAnnotations = contractImpl.IncludeAnnotations;
+
+            IsBasicType = contractImpl.IsBasicType;
         }
 
         public ObjectValueKind ObjectValueKind { get; }
+        
+        public bool IsBasicType { get; }
 
         public Type DeclaringType => _declaringType;
 
@@ -96,7 +106,7 @@ namespace Cosmos.Validation.Objects
                 {
                     ObjectValueKind.Property => _propertyInfo.PropertyType,
                     ObjectValueKind.Field => _fieldInfo.FieldType,
-                    ObjectValueKind.ValueType => _declaringType,
+                    ObjectValueKind.Unknown => _declaringType,
                     ObjectValueKind.CustomContract => _valueContractImpl.MemberType,
                     _ => throw new InvalidOperationException("Unknown ObjectIn type")
                 };
@@ -111,7 +121,7 @@ namespace Cosmos.Validation.Objects
                 {
                     ObjectValueKind.Property => _propertyInfo.Name,
                     ObjectValueKind.Field => _fieldInfo.Name,
-                    ObjectValueKind.ValueType => "ValueType",
+                    ObjectValueKind.Unknown => "ValueType",
                     ObjectValueKind.CustomContract => _valueContractImpl.MemberName,
                     _ => throw new InvalidOperationException("Unknown ObjectIn type")
                 };
@@ -128,7 +138,7 @@ namespace Cosmos.Validation.Objects
                 case ObjectValueKind.Field:
                     return F(_fieldInfo)(value);
 
-                case ObjectValueKind.ValueType:
+                case ObjectValueKind.Unknown:
                     return value;
 
                 case ObjectValueKind.CustomContract:
@@ -500,5 +510,7 @@ namespace Cosmos.Validation.Objects
         private static Func<PropertyInfo, Func<object, object>> P => property => property.GetValue;
 
         private static Func<FieldInfo, Func<object, object>> F => field => field.GetValue;
+
+        internal ICustomValueContractImpl ExposeInternalImpl() => _valueContractImpl;
     }
 }
