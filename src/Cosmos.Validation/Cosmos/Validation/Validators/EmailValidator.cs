@@ -39,71 +39,7 @@ namespace Cosmos.Validation.Validators
 
         private const string AtomCharacters = "!#$%&'*+-/=?^_`{|}~";
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
-        {
-            List<VerifyResult> results = new();
-            var values = context.GetValuesWithAttribute<ValidEmailAttribute>();
-
-            foreach (var value in values)
-            {
-                // 如果 Value 为 String，对其进行验证
-                if (value.Value is string emailValue)
-                {
-                    var attr = value.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
-
-                    if (attr is null)
-                        continue;
-
-                    var options = new EmailValidationOptions(attr.AllowTopLevelDomains, attr.AllowInternational, value.MemberName);
-
-                    results.Add(Verify(emailValue, options));
-                }
-                // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
-                else if (value.ObjectValueKind != ObjectValueKind.ValueType)
-                {
-                    results.Add(VerifyImpl(value.ToObjectContext()));
-                }
-                // 否则，认为其类型不是所期待的
-                else
-                {
-                    results.Add(VerifyResult.UnexpectedTypeWith(value.MemberName));
-                }
-            }
-
-            return VerifyResult.MakeTogether(results);
-        }
-
-        private VerifyResult VerifyImpl(ObjectContext context, EmailValidationOptions options)
-        {
-            List<VerifyResult> results = new();
-            var values = context.GetValuesWithAttribute<ValidEmailAttribute>();
-
-            foreach (var value in values)
-            {
-                // 如果 Value 为 String，对其进行验证
-                if (value.Value is string emailValue)
-                {
-                    var attr = value.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
-
-                    if (attr is null)
-                        continue;
-
-                    results.Add(Verify(emailValue, options));
-                }
-                // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
-                else if (value.ObjectValueKind != ObjectValueKind.ValueType)
-                {
-                    results.Add(VerifyImpl(value.ToObjectContext(), options));
-                }
-                // 否则，认为其类型不是所期待的
-                else
-                {
-                    results.Add(VerifyResult.UnexpectedTypeWith(value.MemberName));
-                }
-            }
-
-            return VerifyResult.MakeTogether(results);
-        }
+        #region Verify Core
 
         public VerifyResult Verify(string instance, EmailValidationOptions options)
         {
@@ -182,6 +118,78 @@ namespace Cosmos.Validation.Validators
             return Verify(instance, new EmailValidationOptions(allowTopLevelDomains, allowInternational, paramName));
         }
 
+        #endregion
+
+        #region Verify
+
+        private VerifyResult VerifyImpl(ObjectContext context, EmailValidationOptions options)
+        {
+            List<VerifyResult> results = new();
+            var values = context.GetValuesWithAttribute<ValidEmailAttribute>();
+
+            foreach (var value in values)
+            {
+                // 如果 Value 为 String，对其进行验证
+                if (value.Value is string emailValue)
+                {
+                    var attr = value.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+
+                    if (attr is null)
+                        continue;
+
+                    results.Add(Verify(emailValue, options));
+                }
+                // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
+                else if (!value.BasicTypeState())
+                {
+                    results.Add(VerifyImpl(value.ToObjectContext(), options));
+                }
+                // 否则，认为其类型不是所期待的
+                else
+                {
+                    results.Add(VerifyResult.UnexpectedTypeWith(value.MemberName));
+                }
+            }
+
+            return VerifyResult.MakeTogether(results);
+        }
+
+        protected override VerifyResult VerifyImpl(ObjectContext context)
+        {
+            if (context is null)
+                return VerifyResult.NullReference;
+
+            List<VerifyResult> results = new();
+            var values = context.GetValuesWithAttribute<ValidEmailAttribute>();
+
+            foreach (var value in values)
+            {
+                // 如果 Value 为 String，对其进行验证
+                if (value.Value is string emailValue)
+                {
+                    var attr = value.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+
+                    if (attr is null)
+                        continue;
+
+                    var options = new EmailValidationOptions(attr.AllowTopLevelDomains, attr.AllowInternational, value.MemberName);
+
+                    results.Add(Verify(emailValue, options));
+                }
+                // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
+                else if (!value.BasicTypeState())
+                {
+                    results.Add(VerifyImpl(value.ToObjectContext()));
+                }
+                // 否则，认为其类型不是所期待的
+                else
+                {
+                    results.Add(VerifyResult.UnexpectedTypeWith(value.MemberName));
+                }
+            }
+
+            return VerifyResult.MakeTogether(results);
+        }
         public VerifyResult Verify(Type type, object instance, EmailValidationOptions options)
         {
             if (type is null)
@@ -192,6 +200,8 @@ namespace Cosmos.Validation.Validators
                 return Verify(str, options);
             if (instance is ObjectContext context)
                 return VerifyImpl(context, options);
+            if (instance is ObjectValueContext valueContext)
+                return VerifyOneImpl(valueContext, options);
             context = _objectResolver.Resolve(type, instance);
             return VerifyImpl(context, options);
         }
@@ -206,7 +216,7 @@ namespace Cosmos.Validation.Validators
 
             if (instance is null)
                 return VerifyResult.NullReferenceWith(options.ParamName);
-            
+
             return Verify(type, instance, options);
         }
 
@@ -218,6 +228,8 @@ namespace Cosmos.Validation.Validators
                 return Verify(str, options);
             if (instance is ObjectContext context)
                 return VerifyImpl(context, options);
+            if (instance is ObjectValueContext valueContext)
+                return VerifyOneImpl(valueContext, options);
             context = _objectResolver.Resolve(instance);
             return VerifyImpl(context, options);
         }
@@ -226,13 +238,73 @@ namespace Cosmos.Validation.Validators
         {
             var options = new EmailValidationOptions();
             optionsAct?.Invoke(options);
-            
+
             if (instance is null)
                 return VerifyResult.NullReferenceWith(options.ParamName);
-            
+
             return Verify(instance, options);
         }
 
+        #endregion
+
+        #region Verify One
+        
+        private VerifyResult VerifyOneImpl(ObjectValueContext context, EmailValidationOptions options)
+        {
+            if (context is null)
+                return VerifyResult.NullReference;
+            
+            // 如果 Value 为 String，对其进行验证
+            if (context.Value is string emailValue)
+            {
+                var attr = context.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+
+                if (attr is null)
+                    return VerifyResult.NullReferenceWith("There's no ValidEmailValueAttribute on this Member.");
+                
+                return Verify(emailValue, options);
+            }
+            
+            // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
+            if (!context.BasicTypeState())
+            {
+                return VerifyImpl(context.ToObjectContext());
+            }
+            
+            // 否则，认为其类型不是所期待的
+            return VerifyResult.UnexpectedTypeWith(context.MemberName);
+        }
+        
+        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        {
+            if (context is null)
+                return VerifyResult.NullReference;
+
+            // 如果 Value 为 String，对其进行验证
+            if (context.Value is string emailValue)
+            {
+                var attr = context.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+
+                if (attr is null)
+                    return VerifyResult.NullReferenceWith("There's no ValidEmailValueAttribute on this Member.");
+
+                var options = new EmailValidationOptions(attr.AllowTopLevelDomains, attr.AllowInternational, context.MemberName);
+
+                return Verify(emailValue, options);
+            }
+
+            // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
+            if (!context.BasicTypeState())
+            {
+                return VerifyImpl(context.ToObjectContext());
+            }
+
+            // 否则，认为其类型不是所期待的
+            return VerifyResult.UnexpectedTypeWith(context.MemberName);
+        }
+
+        #endregion
+        
         #region Internal Methods Impl
 
         private static bool ShouldNotBeNull(string instance, EmailValidationOptions options, List<VerifyFailure> failures)
