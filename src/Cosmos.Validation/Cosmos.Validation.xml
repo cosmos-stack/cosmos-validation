@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cosmos.Validation</name>
+    </assembly>
+    <members>
+        <member name="T:Cosmos.Validation.Annotations.Core.ObjectValueContextExtensions">
+            <summary>
+            Annotation verification engine extensions
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.Core.ParameterTypeValidation">
+            <summary>
+            Parameter type validation<br />
+            参数类型验证
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.#ctor(System.Boolean,System.Type)">
+            <summary>
+            Create a new instance of <see cref="T:Cosmos.Validation.Annotations.Core.ParameterTypeValidation"/><br />
+            创建一个参数类型验证实例
+            </summary>
+            <param name="result"></param>
+            <param name="parameterType"></param>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.Result">
+            <inheritdoc />
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.ParameterType">
+            <summary>
+            Gets parameter type<br />
+            获取参数类型
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.op_Implicit(Cosmos.Validation.Annotations.Core.ParameterTypeValidation)~System.Boolean">
+            <summary>
+            Convert instance of <see cref="T:Cosmos.Validation.Annotations.Core.ParameterTypeValidation"/> to <see cref="T:System.Boolean"/>.<br />
+            隐式转换为布尔值
+            </summary>
+            <param name="result">被转换的参数类型验证对象</param>
+            <returns>返回布尔值结果</returns>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.CustomAnnotationAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.CustomAnnotationAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.IObjectContextVerifiableAnnotation">
+            <summary>
+            A ObjectContext Verify Interface
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.IObjectContextVerifiableAnnotation.StrongVerify(Cosmos.Validation.Objects.ObjectContext)">
+            <summary>
+            ObjectContext Verify
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.IStrongVerifiableAnnotation">
+            <summary>
+            A Strong Verify Interface
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.IStrongVerifiableAnnotation.StrongVerify``1(``0)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.IStrongVerifiableAnnotation.StrongVerify(System.Type,System.Object)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="type"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.IStrongVerifiableAnnotation`1">
+            <summary>
+            A Strong Verify Interface
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.IStrongVerifiableAnnotation`1.StrongVerify(`0)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.ValidEmailAttribute">
+            <summary>
+            Valid date
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.Invoke(AspectCore.DynamicProxy.Parameters.ParameterAspectContext,AspectCore.DynamicProxy.Parameters.ParameterAspectDelegate)">
+            <summary>
+            Invoke
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify(System.String)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify``1(``0)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify(System.Type,System.Object)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="type"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify(Cosmos.Validation.Objects.ObjectContext)">
+            <summary>
+            ObjectContext Verify
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.QuietVerify``1(``0)">
+            <summary>
+            Quiet Verify
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.QuietVerify(System.Type,System.Object)">
+            <summary>
+            Quiet Verify
+            </summary>
+            <param name="type"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.IValueToken.AppendOrOverwrite">
+            <summary>
+            If WithMessage is true, this AppendOrOverwrite takes effect. <br />
+            true - Append <br />
+            false - Overwrite
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.AppendOrOverwrite">
+            <summary>
+            If WithMessage is true, this AppendOrOverwrite takes effect. <br />
+            true - Append <br />
+            false - Overwrite
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.AnnotationValidator">
+            <summary>
+            Annotation Validator
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.StrongVerify(System.Type,System.Object)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="type"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.StrongVerify``1(``0)">
+            <summary>
+            Strong Verify
+            </summary>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.EmailValidator.SubDomainType">
+            <summary>
+            Sub domain type
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.EmailValidator.Helpers">
+            <summary>
+            Internal helpers
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.IValidator">
+            <summary>
+            Interface of Cosmos Validator
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyFailure.PropertyName">
+            <summary>
+            The name of property
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyFailure.ErrorMessage">
+            <summary>
+            The error message
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyFailure.VerifiedValue">
+            <summary>
+            The verified value
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyFailure.Details">
+            <summary>
+            Error details
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyFailure.Code">
+            <summary>
+            Error code
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyFailure.ToString">
+            <summary>
+            To string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyResult.NameOfExecutedRules">
+            <summary>
+            Name collection of executed validation rules. 
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyResult.IsValid">
+            <summary>
+            Is valid
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyResult.Errors">
+            <summary>
+            A collection of errors
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToString">
+            <summary>
+            To string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToString(System.String)">
+            <summary>
+            To string
+            </summary>
+            <param name="separator"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cosmos.Validation.VerifyResultCollection.IsValid">
+            <summary>
+            Is valid
+            </summary>
+        </member>
+    </members>
+</doc>
