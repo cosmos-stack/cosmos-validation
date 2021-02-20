@@ -521,6 +521,8 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region GetProjects/GetProjectManager
+        
         private IValidationProjectManager GetProjectManager()
         {
             ICorrectProvider provider;
@@ -555,11 +557,12 @@ namespace Cosmos.Validation.Registrars
 
         private IEnumerable<IProject> GetProjects()
         {
-            var customValidators = InnerPtr.ExposeCustomValidatorManager().ResolveAll();
-            foreach (var project in ProjectFactory.CreateTypeProject(_typedRulesDictionary, customValidators))
+            foreach (var project in ProjectFactory.CreateTypeProject(_typedRulesDictionary, InnerPtr.ExposeCustomValidatorManager()))
                 yield return project;
-            foreach (var project in ProjectFactory.CreateNamedTypeProject(_namedRulesDictionary, customValidators))
+            foreach (var project in ProjectFactory.CreateNamedTypeProject(_namedRulesDictionary, InnerPtr.ExposeCustomValidatorManager()))
                 yield return project;
         }
+
+        #endregion
     }
 }

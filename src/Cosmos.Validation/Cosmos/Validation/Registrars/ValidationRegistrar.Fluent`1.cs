@@ -40,7 +40,7 @@ namespace Cosmos.Validation.Registrars
 
         private List<CorrectValueRule> Rules { get; set; }
 
-        #region For Member
+        #region ForMember
 
         IValueFluentValidationRegistrar IFluentValidationRegistrar.ForMember(string memberName, ValueRuleMode mode)
         {
@@ -124,7 +124,7 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
-        #region And for type
+        #region AndForType
 
         public IFluentValidationRegistrar AndForType(Type type)
         {

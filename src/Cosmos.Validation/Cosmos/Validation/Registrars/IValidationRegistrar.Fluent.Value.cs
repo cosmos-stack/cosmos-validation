@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Registrars
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
-        IValueFluentValidationRegistrar Use(Func<IValueRuleBuilder, IValueRuleBuilder> func);
+        IValueFluentValidationRegistrar WithConfig(Func<IValueRuleBuilder, IValueRuleBuilder> func);
         IValueFluentValidationRegistrar Empty();
         IValueFluentValidationRegistrar NotEmpty();
         IValueFluentValidationRegistrar Required();
@@ -88,7 +88,7 @@ namespace Cosmos.Validation.Registrars
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
-        IValueFluentValidationRegistrar<T> Use(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
+        IValueFluentValidationRegistrar<T> WithConfig(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
         IValueFluentValidationRegistrar<T> Empty();
 
         IValueFluentValidationRegistrar<T> NotEmpty();
@@ -225,7 +225,7 @@ namespace Cosmos.Validation.Registrars
 
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>
     {
-        IValueFluentValidationRegistrar<T, TVal> Use(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
+        IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
         new IValueFluentValidationRegistrar<T, TVal> Empty();
 
         new IValueFluentValidationRegistrar<T, TVal> NotEmpty();

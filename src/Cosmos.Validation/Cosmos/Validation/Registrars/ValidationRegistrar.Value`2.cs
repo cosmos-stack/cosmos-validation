@@ -20,9 +20,9 @@ namespace Cosmos.Validation.Registrars
 
         private CorrectValueRuleBuilder<T, TVal> ValueRuleBuilderPtr => (CorrectValueRuleBuilder<T, TVal>) ValueRuleBuilder;
 
-        #region Use
+        #region WithConfig
 
-        public IValueFluentValidationRegistrar<T, TVal> Use(Func<IValueRuleBuilder<T,TVal>, IValueRuleBuilder<T,TVal>> func)
+        public IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T,TVal>, IValueRuleBuilder<T,TVal>> func)
         {
             var builder = func?.Invoke(ValueRuleBuilderPtr);
 
