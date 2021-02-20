@@ -27,9 +27,9 @@ namespace Cosmos.Validation.Validators
 
         #region Verify
 
-        public virtual VerifyResult Verify(Type type, object instance)
+        public virtual VerifyResult Verify(Type declaringType, object instance)
         {
-            return VerifyImpl(_objectResolver.Resolve(type, instance));
+            return VerifyImpl(_objectResolver.Resolve(declaringType, instance));
         }
 
         protected abstract VerifyResult VerifyImpl(ObjectContext context);
@@ -45,9 +45,11 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyOne
 
-        public virtual VerifyResult VerifyOne(Type type, object instance, string memberName)
+        public virtual VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
-            return VerifyOneImpl(_objectResolver.Resolve(type, instance).GetValue(memberName));
+            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            return VerifyOneImpl(valueContext);
         }
 
         protected abstract VerifyResult VerifyOneImpl(ObjectValueContext context);
@@ -63,9 +65,9 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyMany
 
-        public virtual VerifyResult VerifyMany(Type type, IDictionary<string, object> keyValueCollections)
+        public virtual VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
-            return VerifyImpl(_objectResolver.Resolve(type, keyValueCollections));
+            return VerifyImpl(_objectResolver.Resolve(declaringType, keyValueCollections));
         }
 
         #endregion
@@ -85,38 +87,43 @@ namespace Cosmos.Validation.Validators
             return VerifyImpl(_objectResolver.Resolve(instance));
         }
 
-        public override VerifyResult Verify(Type type, object instance)
+        VerifyResult IValidator.Verify(Type declaringType, object instance)
         {
-            if (instance is T t)
-                return Verify(t);
-            return VerifyResult.UnexpectedType;
+            return VerifyImpl(_objectResolver.Resolve(declaringType, instance));
         }
 
         #endregion
 
-        #region VerifyOne
+        #region Verify
 
-        public VerifyResult VerifyOne(T instance, string memberName)
+        public VerifyResult VerifyOne(Type memberType, object memberValue, string memberName)
         {
-            return VerifyOneImpl(_objectResolver.Resolve(instance).GetValue(memberName));
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            return VerifyOneImpl(valueContext);
         }
 
-        public override VerifyResult VerifyOne(Type type, object instance, string memberName)
+        VerifyResult IValidator.VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
-            if (instance is T t)
-                return VerifyOne(t, memberName);
-            return VerifyResult.UnexpectedType;
+            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            return VerifyOneImpl(valueContext);
         }
 
         #endregion
-        
+
         #region VerifyMany
 
         public VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections)
         {
             return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollections));
         }
-        
+
+        VerifyResult IValidator.VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
+        {
+            return VerifyImpl(_objectResolver.Resolve(declaringType, keyValueCollections));
+        }
+
         #endregion
     }
 }

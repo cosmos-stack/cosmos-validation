@@ -34,9 +34,9 @@ namespace Cosmos.Validation.Validators
 
         #region Verify
 
-        public VerifyResult Verify(Type type, object instance)
+        public VerifyResult Verify(Type declaringType, object instance)
         {
-            if (type is null)
+            if (declaringType is null)
                 return BuildInVerifyResults.NullObjectReference;
             if (instance is null)
                 return BuildInVerifyResults.NullObjectReference;
@@ -45,8 +45,8 @@ namespace Cosmos.Validation.Validators
             if (instance is ObjectValueContext valueContext)
                 return VerifyOne(valueContext);
             if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyMany(type, keyValueCollections);
-            return Verify(_objectResolver.Resolve(type, instance));
+                return VerifyMany(declaringType, keyValueCollections);
+            return Verify(_objectResolver.Resolve(declaringType, instance));
         }
 
         public VerifyResult Verify<T>(T instance)
@@ -85,32 +85,36 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyOne
 
-        public VerifyResult VerifyOne(Type type, object instance, string memberName)
+        public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
-            if (type is null)
+            if (declaringType is null)
                 return BuildInVerifyResults.NullObjectReference;
-            if (instance is null)
+            if (memberType is null)
                 return BuildInVerifyResults.NullObjectReference;
-            if (instance is ObjectContext context)
+            if (memberValue is null)
+                return BuildInVerifyResults.NullObjectReference;
+            if (memberValue is ObjectContext context)
                 return Verify(context);
-            if (instance is ObjectValueContext valueContext)
+            if (memberValue is ObjectValueContext valueContext)
                 return VerifyOne(valueContext);
-            if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyMany(type, keyValueCollections);
-            return VerifyOne(_objectResolver.Resolve(type, instance).GetValue(memberName));
+            if (memberValue is IDictionary<string, object> keyValueCollections)
+                return VerifyMany(declaringType, keyValueCollections);
+            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
         }
 
-        public VerifyResult VerifyOne<T>(T instance, string memberName)
+        public VerifyResult VerifyOne<TP, TM>(TM memberValue, string memberName)
         {
-            if (instance is null)
+            if (memberValue is null)
                 return BuildInVerifyResults.NullObjectReference;
-            if (instance is ObjectContext context)
+            if (memberValue is ObjectContext context)
                 return Verify(context);
-            if (instance is ObjectValueContext valueContext)
+            if (memberValue is ObjectValueContext valueContext)
                 return VerifyOne(valueContext);
-            if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyMany<T>(keyValueCollections);
-            return VerifyOne(_objectResolver.Resolve(instance).GetValue(memberName));
+            if (memberValue is IDictionary<string, object> keyValueCollections)
+                return VerifyMany<TP>(keyValueCollections);
+            var valueContract = ObjectContractManager.Resolve<TP>()?.GetValueContract(memberName);
+            return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
         }
 
         public VerifyResult VerifyOne(ObjectValueContext context)
@@ -133,13 +137,13 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyMany
 
-        public VerifyResult VerifyMany(Type type, IDictionary<string, object> keyValueCollections)
+        public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
-            if (type is null)
+            if (declaringType is null)
                 return BuildInVerifyResults.NullObjectReference;
             if (keyValueCollections is null)
                 return BuildInVerifyResults.NullObjectReference;
-            return Verify(_objectResolver.Resolve(type, keyValueCollections));
+            return Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
         }
 
         public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections)
@@ -207,7 +211,7 @@ namespace Cosmos.Validation.Validators
                     // 如果不是，则检查是否为对象上下文验证特性
                     else if (annotation is IObjectContextVerifiableAnnotation contextVerifiableAnnotation)
                     {
-                        var result = contextVerifiableAnnotation.StrongVerify(context.ToObjectContext());
+                        var result = contextVerifiableAnnotation.StrongVerify(context.ConvertToObjectContext());
 
                         if (!result.IsValid)
                         {

@@ -10,15 +10,15 @@ namespace Cosmos.Validation.Validators
     {
         string Name { get; }
         bool IsAnonymous { get; }
-        VerifyResult Verify(Type type, object instance);
-        VerifyResult VerifyOne(Type type, object instance, string memberName);
-        VerifyResult VerifyMany(Type type, IDictionary<string, object> keyValueCollections);
+        VerifyResult Verify(Type declaringType, object instance);
+        VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName);
+        VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections);
     }
 
     public interface IValidator<in T> : IValidator
     {
         VerifyResult Verify(T instance);
-        VerifyResult VerifyOne(T instance, string memberName);
+        VerifyResult VerifyOne(Type memberType, object memberValue, string memberName);
         VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections);
     }
 }
