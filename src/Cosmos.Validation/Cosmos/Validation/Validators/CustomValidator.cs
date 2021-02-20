@@ -79,6 +79,11 @@ namespace Cosmos.Validation.Validators
 
     public abstract class CustomValidator<T> : CustomValidator, IValidator<T>, ICorrectValidator<T>
     {
+        static CustomValidator()
+        {
+            ObjectContractManager.InitTypeFor<T>();
+        }
+
         protected CustomValidator(string name) : base(name)
         {
             _registrar = ValidationRegistrar.Continue();
@@ -138,7 +143,7 @@ namespace Cosmos.Validation.Validators
             _needToBuildInternalValidationHandler = true;
             return _registrar.ForType<T>().ForMember(expression, mode);
         }
-        
+
         #endregion
 
         #region Verify
