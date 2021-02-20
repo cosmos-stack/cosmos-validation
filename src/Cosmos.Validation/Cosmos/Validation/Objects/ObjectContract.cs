@@ -47,6 +47,12 @@ namespace Cosmos.Validation.Objects
             ObjectKind = objectContractImpl.ObjectKind;
         }
 
+        public Type Type => _type;
+
+        public ObjectKind ObjectKind { get; }
+
+        public bool IsBasicType() => ObjectKind == ObjectKind.BasicType;
+
         #region GetValueContract
 
         public ObjectValueContract GetValueContract(string name)
@@ -91,11 +97,16 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        public Type Type => _type;
+        #region WithInstance
 
-        public ObjectKind ObjectKind { get; }
+        public ObjectContext WithInstance(object instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            return new ObjectContext(instance, this);
+        }
 
-        public bool IsBasicType() => ObjectKind == ObjectKind.BasicType;
+        #endregion
 
         #region Annotations
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace Cosmos.Validation.Objects
 {
     internal class BuildInObjectResolver : IValidationObjectResolver
-    {
+    {        
         public ObjectContext Resolve<T>(T instance)
         {
             if (instance is ObjectContext context) return context;
-            if (instance is ObjectValueContext valueContext) return valueContext.ToObjectContext();
+            if (instance is ObjectValueContext valueContext) return valueContext.ConvertToObjectContext();
             
             var contract = ObjectContractManager.Resolve<T>();
 
@@ -18,7 +18,7 @@ namespace Cosmos.Validation.Objects
         public ObjectContext Resolve<T>(T instance, string instanceName)
         {
             if (instance is ObjectContext context) return context;
-            if (instance is ObjectValueContext valueContext) return valueContext.ToObjectContext();
+            if (instance is ObjectValueContext valueContext) return valueContext.ConvertToObjectContext();
             
             var contract = ObjectContractManager.Resolve<T>();
 
@@ -42,7 +42,7 @@ namespace Cosmos.Validation.Objects
         public ObjectContext Resolve(Type type, object instance)
         {
             if (instance is ObjectContext context) return context;
-            if (instance is ObjectValueContext valueContext) return valueContext.ToObjectContext();
+            if (instance is ObjectValueContext valueContext) return valueContext.ConvertToObjectContext();
             
             var contract = ObjectContractManager.Resolve(type);
 
@@ -52,7 +52,7 @@ namespace Cosmos.Validation.Objects
         public ObjectContext Resolve(Type type, object instance, string instanceName)
         {
             if (instance is ObjectContext context) return context;
-            if (instance is ObjectValueContext valueContext) return valueContext.ToObjectContext();
+            if (instance is ObjectValueContext valueContext) return valueContext.ConvertToObjectContext();
             
             var contract = ObjectContractManager.Resolve(type);
 

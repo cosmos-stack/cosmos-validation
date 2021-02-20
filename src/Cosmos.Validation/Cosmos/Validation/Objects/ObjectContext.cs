@@ -49,199 +49,6 @@ namespace Cosmos.Validation.Objects
             InstanceName = instanceName;
         }
 
-        #region GetValue
-
-        public ObjectValueContext GetValue(string name)
-        {
-            var contract = _contract.GetValueContract(name);
-
-            if (contract is null)
-                return default;
-
-            return new ObjectValueContext(this, contract, _directMode);
-        }
-
-        #endregion
-
-        #region GetValuesWithAttribute
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute()
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr>()
-            where TAttr : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2>()
-            where TAttr1 : Attribute
-            where TAttr2 : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr1, TAttr2>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3>()
-            where TAttr1 : Attribute
-            where TAttr2 : Attribute
-            where TAttr3 : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4>()
-            where TAttr1 : Attribute
-            where TAttr2 : Attribute
-            where TAttr3 : Attribute
-            where TAttr4 : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>()
-            where TAttr1 : Attribute
-            where TAttr2 : Attribute
-            where TAttr3 : Attribute
-            where TAttr4 : Attribute
-            where TAttr5 : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>()
-            where TAttr1 : Attribute
-            where TAttr2 : Attribute
-            where TAttr3 : Attribute
-            where TAttr4 : Attribute
-            where TAttr5 : Attribute
-            where TAttr6 : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>()
-            where TAttr1 : Attribute
-            where TAttr2 : Attribute
-            where TAttr3 : Attribute
-            where TAttr4 : Attribute
-            where TAttr5 : Attribute
-            where TAttr6 : Attribute
-            where TAttr7 : Attribute
-        {
-            var members = GetAllMembers();
-
-            foreach (var member in members)
-            {
-                if (!member.IncludeAnnotations)
-                    continue;
-
-                if (member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>())
-                    yield return new ObjectValueContext(this, member, _directMode);
-            }
-        }
-
-        #endregion
-
-        #region GetMember
-
-        public IEnumerable<ObjectValueContract> GetAllMembers()
-        {
-            return _contract.GetAllValueContracts();
-        }
-
-        public IEnumerable<string> GetAllMemberNames()
-        {
-            return GetAllMembers().Select(x => x.MemberName);
-        }
-
-        #endregion
-
-        #region ToValueContexts
-
-        public IEnumerable<ObjectValueContext> ToValueContexts()
-        {
-            foreach (var contract in GetAllMembers())
-                yield return new ObjectValueContext(this, contract, _directMode);
-        }
-        
-        public IDictionary<string,ObjectValueContext> ToValueContextMap()
-        {
-            var map = new Dictionary<string, ObjectValueContext>();
-
-            foreach (var contract in GetAllMembers())
-            {
-                map[contract.MemberName] = new ObjectValueContext(this, contract, _directMode);
-            }
-
-            return map;
-        }
-
-        #endregion
-
         public Type Type => _contract.Type;
 
         public ObjectKind ObjectKind => _contract.ObjectKind;
@@ -254,6 +61,159 @@ namespace Cosmos.Validation.Objects
 
         public string InstanceName { get; }
 
+        #region GetValue
+
+        public ObjectValueContext GetValue(string memberName)
+        {
+            var contract = _contract.GetValueContract(memberName);
+
+            if (contract is null)
+                return default;
+
+            return new ObjectValueContext(this, contract, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValues()
+        {
+            foreach (var contract in GetMembers())
+                yield return new ObjectValueContext(this, contract, _directMode);
+        }
+
+        public IDictionary<string, ObjectValueContext> GetValueMap()
+        {
+            var map = new Dictionary<string, ObjectValueContext>();
+
+            foreach (var contract in GetMembers())
+            {
+                map[contract.MemberName] = new ObjectValueContext(this, contract, _directMode);
+            }
+
+            return map;
+        }
+
+        #endregion
+
+        #region GetValuesWithAttribute
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute()
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr>()
+            where TAttr : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2>()
+            where TAttr1 : Attribute
+            where TAttr2 : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr1, TAttr2>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3>()
+            where TAttr1 : Attribute
+            where TAttr2 : Attribute
+            where TAttr3 : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4>()
+            where TAttr1 : Attribute
+            where TAttr2 : Attribute
+            where TAttr3 : Attribute
+            where TAttr4 : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>()
+            where TAttr1 : Attribute
+            where TAttr2 : Attribute
+            where TAttr3 : Attribute
+            where TAttr4 : Attribute
+            where TAttr5 : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>()
+            where TAttr1 : Attribute
+            where TAttr2 : Attribute
+            where TAttr3 : Attribute
+            where TAttr4 : Attribute
+            where TAttr5 : Attribute
+            where TAttr6 : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>()
+            where TAttr1 : Attribute
+            where TAttr2 : Attribute
+            where TAttr3 : Attribute
+            where TAttr4 : Attribute
+            where TAttr5 : Attribute
+            where TAttr6 : Attribute
+            where TAttr7 : Attribute
+        {
+            return from member in GetMembers()
+                where member.IncludeAnnotations
+                where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>()
+                select new ObjectValueContext(this, member, _directMode);
+        }
+
+        #endregion
+
+        #region GetMember
+
+        public ObjectValueContract GetMember(string memberName)
+        {
+            return _contract.GetValueContract(memberName);
+        }
+
+        public IEnumerable<ObjectValueContract> GetMembers()
+        {
+            return _contract.GetAllValueContracts();
+        }
+
+        public IDictionary<string, ObjectValueContract> GetMemberMap()
+        {
+            var map = new Dictionary<string, ObjectValueContract>();
+
+            foreach (var contract in GetMembers())
+            {
+                map[contract.MemberName] = contract;
+            }
+
+            return map;
+        }
+
+        #endregion
+        
         #region Annotations
 
         public bool IncludeAnnotations => _contract.IncludeAnnotations;

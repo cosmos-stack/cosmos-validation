@@ -10,14 +10,36 @@ namespace Cosmos.Validation.Objects
         private readonly ObjectContext _parentContext;
 
         // 如果为 true，则表示为强类型模式；如果为 false，则表示为字典模式
-        private readonly bool _directMode;
+        private readonly ValueMode _valueMode;
 
         public ObjectValueContext(ObjectContext parentContext, ObjectValueContract contract, bool directMode)
         {
             _parentContext = parentContext;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
-            _directMode = directMode;
+            _valueMode = directMode.Ifttt(() => ValueMode.DirectType, () => ValueMode.Dictionary);
         }
+
+        private ObjectValueContext(object value, ObjectValueContract contract, ObjectContext parentContext)
+        {
+            _parentContext = parentContext;
+            _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _valueMode = ValueMode.DirectValue;
+
+            _hasGot = true;
+            _valueCached = value;
+        }
+
+        public ObjectValueKind ObjectValueKind => _contract.ObjectValueKind;
+
+        public bool IsBasicType => _contract.IsBasicType;
+
+        public Type DeclaringType => _contract.DeclaringType;
+
+        public Type MemberType => _contract.MemberType;
+
+        public string MemberName => _contract.MemberName;
+
+        #region GetValue
 
         private bool _hasGot;
         private object _valueCached;
@@ -28,9 +50,12 @@ namespace Cosmos.Validation.Objects
             {
                 if (!_hasGot)
                 {
-                    _valueCached = _directMode 
-                        ? _contract.GetValue(_parentContext.Instance) 
-                        : _contract.GetValue(_parentContext.KeyValueCollection);
+                    _valueCached = _valueMode switch
+                    {
+                        ValueMode.DirectType => _contract.GetValue(_parentContext.Instance),
+                        ValueMode.Dictionary => _contract.GetValue(_parentContext.KeyValueCollection),
+                        _ => default
+                    };
 
                     _hasGot = true;
                 }
@@ -43,15 +68,7 @@ namespace Cosmos.Validation.Objects
 
         public TVal GetValue<TVal>() => Value.As<TVal>();
 
-        public ObjectValueKind ObjectValueKind => _contract.ObjectValueKind;
-
-        public bool IsBasicType => _contract.IsBasicType;
-
-        public Type DeclaringType => _contract.DeclaringType;
-
-        public Type MemberType => _contract.MemberType;
-
-        public string MemberName => _contract.MemberName;
+        #endregion
 
         #region Annotations
 
@@ -94,9 +111,9 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        #region ToObjectContext
+        #region ConvertToObjectContext
 
-        public ObjectContext ToObjectContext()
+        public ObjectContext ConvertToObjectContext()
         {
             if (MemberType.IsBasicType())
                 return _parentContext;
@@ -106,8 +123,28 @@ namespace Cosmos.Validation.Objects
             return new ObjectContext(Value, contract);
         }
 
+        #endregion
+
+        #region ExposeInternalImpl
+
         internal ICustomValueContractImpl ExposeInternalImpl() => _contract.ExposeInternalImpl();
 
         #endregion
+
+        #region Factory
+
+        public static ObjectValueContext Create<T>(T value, ObjectValueContract contract, ObjectContext parentContext = default)
+        {
+            return new(value, contract, parentContext);
+        }        
+
+        #endregion
+
+        enum ValueMode
+        {
+            DirectType,
+            DirectValue,
+            Dictionary,
+        }
     }
 }
