@@ -11,13 +11,13 @@ namespace Cosmos.Validation.Projects
     {
         public static List<IProject> CreateTypeProject(
             Dictionary<Type, List<CorrectValueRule>> rulesDictionary,
-            IEnumerable<CustomValidator> validators)
+            CustomValidatorManager customValidatorManager)
         {
             var result = new List<IProject>();
 
             foreach (var item in rulesDictionary)
             {
-                var project = new TypeProject(item.Key, validators);
+                var project = new TypeProject(item.Key, customValidatorManager);
 
                 project.UpdateRules(item.Value);
 
@@ -29,13 +29,13 @@ namespace Cosmos.Validation.Projects
 
         public static List<IProject> CreateNamedTypeProject(
             Dictionary<(Type, string), List<CorrectValueRule>> rulesDictionary,
-            IEnumerable<CustomValidator> validators)
+            CustomValidatorManager customValidatorManager)
         {
             var result = new List<IProject>();
 
             foreach (var item in rulesDictionary)
             {
-                var project = new NamedTypeProject(item.Key.Item1, item.Key.Item2, validators);
+                var project = new NamedTypeProject(item.Key.Item1, item.Key.Item2, customValidatorManager);
 
                 project.UpdateRules(item.Value);
 

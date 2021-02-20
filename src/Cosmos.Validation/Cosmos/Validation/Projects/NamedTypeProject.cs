@@ -11,14 +11,14 @@ namespace Cosmos.Validation.Projects
     public class NamedTypeProject : IProject
     {
         private readonly List<CorrectValueRule> _rules;
-        private readonly IEnumerable<CustomValidator> _validators;
+        private readonly CustomValidatorManager _customValidatorManager;
 
-        public NamedTypeProject(Type type, string name, IEnumerable<CustomValidator> validators)
+        public NamedTypeProject(Type type, string name, CustomValidatorManager customValidatorManager)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
+            _customValidatorManager = customValidatorManager ?? throw new ArgumentNullException(nameof(customValidatorManager));
             Name = name;
             _rules = new();
-            _validators = validators;
         }
 
         public string Name { get; }
@@ -34,17 +34,17 @@ namespace Cosmos.Validation.Projects
 
         public VerifyResult Verify(ObjectContext context)
         {
-            return CorrectEngine.Valid(context, _rules, _validators);
+            return CorrectEngine.Valid(context, _rules, _customValidatorManager.ResolveAll());
         }
 
         public VerifyResult VerifyOne(ObjectValueContext context)
         {
-            return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList(), _validators);
+            return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList(),  _customValidatorManager.ResolveAll());
         }
 
         public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
         {
-            return CorrectEngine.ValidMany(keyValueCollections, _rules, _validators);
+            return CorrectEngine.ValidMany(keyValueCollections, _rules,  _customValidatorManager.ResolveAll());
         }
     }
 }

@@ -4,7 +4,7 @@ using Cosmos.Collections;
 
 namespace Cosmos.Validation.Validators
 {
-    internal class CustomValidatorManager
+    public class CustomValidatorManager
     {
         private readonly Dictionary<string, CustomValidator> _validators = new();
 
