@@ -73,6 +73,17 @@ namespace Cosmos.Validation
 
         public VerifyResult Verify<T>(T instance, string projectName) => Verify(typeof(T), instance, projectName);
 
+        internal VerifyResult Verify(ObjectContext context)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out var result))
+                return result.Verify(context);
+
+            return VerifyResult.UnexpectedType;
+        }
+
         #endregion
 
         #region VerifyOne
@@ -81,7 +92,7 @@ namespace Cosmos.Validation
         {
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-            
+
             if (memberType is null)
                 throw new ArgumentNullException(nameof(memberType));
 
@@ -98,11 +109,11 @@ namespace Cosmos.Validation
         public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName, string projectName)
         {
             if (string.IsNullOrWhiteSpace(projectName))
-                return VerifyOne(declaringType, memberType,memberValue,memberName);
-            
+                return VerifyOne(declaringType, memberType, memberValue, memberName);
+
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-            
+
             if (memberType is null)
                 throw new ArgumentNullException(nameof(memberType));
 
@@ -116,12 +127,23 @@ namespace Cosmos.Validation
             return VerifyResult.UnexpectedType;
         }
 
-        public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName) 
+        public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName)
             => VerifyOne(typeof(TP), typeof(TM), memberValue, memberName);
 
-        public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName, string projectName) 
+        public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName, string projectName)
             => VerifyOne(typeof(TP), typeof(TM), memberValue, memberName, projectName);
-        
+
+        internal VerifyResult VerifyOne(ObjectValueContext context, Type declaringType = default)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            if (_typedProjects.TryGetValue((declaringType ?? context.DeclaringType).GetHashCode(), out var result))
+                return result.VerifyOne(context);
+
+            return VerifyResult.UnexpectedType;
+        }
+
         #endregion
 
         #region VerifyMany
@@ -130,13 +152,13 @@ namespace Cosmos.Validation
         {
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-            
+
             if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out var result))
                 return result.Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
 
             return VerifyResult.UnexpectedType;
-        } 
-        
+        }
+
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections, string projectName)
         {
             if (string.IsNullOrWhiteSpace(projectName))
@@ -149,7 +171,18 @@ namespace Cosmos.Validation
                 return result.Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
 
             return VerifyResult.UnexpectedType;
-        } 
+        }
+
+        internal VerifyResult VerifyMany(ObjectContext context)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out var result))
+                return result.VerifyMany(context.GetValueMap());
+
+            return VerifyResult.UnexpectedType;
+        }
 
         #endregion
 
