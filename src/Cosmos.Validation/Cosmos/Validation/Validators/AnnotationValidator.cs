@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Validators
     /// <summary>
     /// Annotation Validator
     /// </summary>
-    public class AnnotationValidator : IValidator
+    public class AnnotationValidator : IValidator, ICorrectValidator
     {
         private readonly IValidationObjectResolver _objectResolver;
 
@@ -31,6 +31,8 @@ namespace Cosmos.Validation.Validators
         public string Name => "Annotation Validator";
 
         public bool IsAnonymous => false;
+
+        bool ICorrectValidator.IsTypeBinding => false;
 
         #region Verify
 
@@ -143,14 +145,33 @@ namespace Cosmos.Validation.Validators
                 return BuildInVerifyResults.NullObjectReference;
             if (keyValueCollections is null)
                 return BuildInVerifyResults.NullObjectReference;
-            return Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
+            return VerifyMany(_objectResolver.Resolve(declaringType, keyValueCollections));
         }
 
         public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections)
         {
             if (keyValueCollections is null)
                 return BuildInVerifyResults.NullObjectReference;
-            return Verify(_objectResolver.Resolve<T>(keyValueCollections));
+            return VerifyMany(_objectResolver.Resolve<T>(keyValueCollections));
+        }
+
+        public VerifyResult VerifyMany(ObjectContext context)
+        {
+            if (context is null)
+                return VerifyResult.NullReference;
+
+            if (!context.IncludeAnnotations)
+                return VerifyResult.Success;
+
+            var slaveResults = new List<VerifyResult>();
+            
+            foreach (var valueWithAnnotation in context.GetValuesWithAttribute())
+            {
+                VerifyViaFlagAnnotations(valueWithAnnotation, slaveResults);
+                VerifyViaVerifiableAnnotations(valueWithAnnotation, slaveResults);
+            }
+
+            return VerifyResult.MakeTogether(slaveResults);
         }
 
         #endregion
