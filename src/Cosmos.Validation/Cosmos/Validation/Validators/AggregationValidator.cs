@@ -49,6 +49,8 @@ namespace Cosmos.Validation.Validators
 
         public bool IsAnonymous => string.IsNullOrEmpty(_name);
 
+        bool ICorrectValidator.IsTypeBinding => true;
+
         #region Verify
 
         public VerifyResult Verify(T instance)

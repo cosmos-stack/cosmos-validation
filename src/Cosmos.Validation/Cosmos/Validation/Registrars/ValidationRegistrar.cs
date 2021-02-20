@@ -58,5 +58,20 @@ namespace Cosmos.Validation.Registrars
 
             return new InternalValidationRegistrar(provider, RegisterMode.Hosted, name);
         }
+
+        internal static IValidationRegistrar ContinueWithoutException(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return Continue();
+
+            var provider = ValidationMe.ExposeValidationProvider(name);
+
+            if (provider is null)
+                provider = ValidationMe.ExposeValidationProvider();
+
+            name = ((ICorrectProvider) provider).Name;
+
+            return new InternalValidationRegistrar(provider, RegisterMode.Hosted, name);
+        }
     }
 }

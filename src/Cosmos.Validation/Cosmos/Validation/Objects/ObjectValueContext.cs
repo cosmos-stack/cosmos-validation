@@ -16,7 +16,7 @@ namespace Cosmos.Validation.Objects
         {
             _parentContext = parentContext;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
-            _valueMode = directMode.Ifttt(() => ValueMode.DirectType, () => ValueMode.Dictionary);
+            _valueMode = directMode ? ValueMode.DirectType : ValueMode.Dictionary;
         }
 
         private ObjectValueContext(object value, ObjectValueContract contract, ObjectContext parentContext)
@@ -136,7 +136,7 @@ namespace Cosmos.Validation.Objects
         public static ObjectValueContext Create<T>(T value, ObjectValueContract contract, ObjectContext parentContext = default)
         {
             return new(value, contract, parentContext);
-        }        
+        }
 
         #endregion
 

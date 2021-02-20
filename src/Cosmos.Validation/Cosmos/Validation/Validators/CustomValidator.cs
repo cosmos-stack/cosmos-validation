@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Cosmos.Validation.Objects;
+using Cosmos.Validation.Registrars;
 
 namespace Cosmos.Validation.Validators
 {
@@ -24,6 +26,8 @@ namespace Cosmos.Validation.Validators
         public string Name { get; }
 
         public bool IsAnonymous => string.IsNullOrEmpty(Name);
+
+        bool ICorrectValidator.IsTypeBinding => false;
 
         #region Verify
 
@@ -75,12 +79,74 @@ namespace Cosmos.Validation.Validators
 
     public abstract class CustomValidator<T> : CustomValidator, IValidator<T>, ICorrectValidator<T>
     {
-        protected CustomValidator(string name) : base(name) { }
+        protected CustomValidator(string name) : base(name)
+        {
+            _registrar = ValidationRegistrar.Continue();
+        }
+
+        protected CustomValidator(string name, string providerName) : base(name)
+        {
+            _registrar = ValidationRegistrar.ContinueWithoutException(providerName);
+        }
 
         protected CustomValidator(string name, IValidationObjectResolver objectResolver)
-            : base(name, objectResolver) { }
+            : base(name, objectResolver)
+        {
+            _registrar = ValidationRegistrar.Continue();
+        }
+
+        protected CustomValidator(string name, string providerName, IValidationObjectResolver objectResolver)
+            : base(name, objectResolver)
+        {
+            _registrar = ValidationRegistrar.ContinueWithoutException(providerName);
+        }
+
+        bool ICorrectValidator.IsTypeBinding => true;
+
+        #region ValidationHandler
+
+        private IValidationRegistrar _registrar;
+        private bool _needToBuildInternalValidationHandler;
+        private bool _hasBuildInternalValidationHandler;
+        private ValidationHandler _internalValidationHandler;
+
+        private ValidationHandler LocalTypedHandler
+        {
+            get
+            {
+                if (!_needToBuildInternalValidationHandler)
+                    return default;
+
+                if (!_hasBuildInternalValidationHandler)
+                {
+                    _internalValidationHandler = _registrar.TempBuild();
+                    _hasBuildInternalValidationHandler = true;
+                }
+
+                return _internalValidationHandler;
+            }
+        }
+
+        protected IValueFluentValidationRegistrar<T> ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
+        {
+            _needToBuildInternalValidationHandler = true;
+            return _registrar.ForType<T>().ForMember(memberName, mode);
+        }
+
+        protected IValueFluentValidationRegistrar<T, TVal> ForMember<TVal>(Expression<Func<T, TVal>> expression, ValueRuleMode mode = ValueRuleMode.Append)
+        {
+            _needToBuildInternalValidationHandler = true;
+            return _registrar.ForType<T>().ForMember(expression, mode);
+        }
+        
+        #endregion
 
         #region Verify
+
+        protected override VerifyResult VerifyImpl(ObjectContext context)
+        {
+            return LocalTypedHandler?.Verify(context) ?? VerifyResult.Success;
+        }
 
         public virtual VerifyResult Verify(T instance)
         {
@@ -94,7 +160,12 @@ namespace Cosmos.Validation.Validators
 
         #endregion
 
-        #region Verify
+        #region VerifyOne
+
+        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        {
+            return LocalTypedHandler?.VerifyOne(context) ?? VerifyResult.Success;
+        }
 
         public VerifyResult VerifyOne(Type memberType, object memberValue, string memberName)
         {
@@ -114,14 +185,19 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyMany
 
+        protected virtual VerifyResult VerifyManyImpl(ObjectContext context)
+        {
+            return LocalTypedHandler?.VerifyMany(context) ?? VerifyResult.Success;
+        }
+
         public VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections)
         {
-            return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollections));
+            return VerifyManyImpl(_objectResolver.Resolve<T>(keyValueCollections));
         }
 
         VerifyResult IValidator.VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
-            return VerifyImpl(_objectResolver.Resolve(declaringType, keyValueCollections));
+            return VerifyManyImpl(_objectResolver.Resolve(declaringType, keyValueCollections));
         }
 
         #endregion
