@@ -165,7 +165,7 @@ namespace Cosmos.Validation.Annotations.Core
                 }
                 else
                 {
-                    var result = attr.StrongVerify(context.ToObjectContext());
+                    var result = attr.StrongVerify(context.ConvertToObjectContext());
 
                     condition = result.IsValid;
                 }

@@ -138,7 +138,7 @@ namespace Cosmos.Validation.Internals
 
         private static IEnumerable<VerifyResult> MakeSlaveResults(ObjectContext context, IEnumerable<CustomValidator> validators)
         {
-            foreach (var ctx in context.ToValueContexts())
+            foreach (var ctx in context.GetValues())
             foreach (var result in MakeSlaveResults(ctx, validators))
                 yield return result;
         }

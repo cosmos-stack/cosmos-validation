@@ -142,7 +142,7 @@ namespace Cosmos.Validation.Validators
                 // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
                 else if (!value.BasicTypeState())
                 {
-                    results.Add(VerifyImpl(value.ToObjectContext(), options));
+                    results.Add(VerifyImpl(value.ConvertToObjectContext(), options));
                 }
                 // 否则，认为其类型不是所期待的
                 else
@@ -179,7 +179,7 @@ namespace Cosmos.Validation.Validators
                 // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
                 else if (!value.BasicTypeState())
                 {
-                    results.Add(VerifyImpl(value.ToObjectContext()));
+                    results.Add(VerifyImpl(value.ConvertToObjectContext()));
                 }
                 // 否则，认为其类型不是所期待的
                 else
@@ -268,7 +268,7 @@ namespace Cosmos.Validation.Validators
             // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
             if (!context.BasicTypeState())
             {
-                return VerifyImpl(context.ToObjectContext());
+                return VerifyImpl(context.ConvertToObjectContext());
             }
             
             // 否则，认为其类型不是所期待的
@@ -296,7 +296,7 @@ namespace Cosmos.Validation.Validators
             // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
             if (!context.BasicTypeState())
             {
-                return VerifyImpl(context.ToObjectContext());
+                return VerifyImpl(context.ConvertToObjectContext());
             }
 
             // 否则，认为其类型不是所期待的

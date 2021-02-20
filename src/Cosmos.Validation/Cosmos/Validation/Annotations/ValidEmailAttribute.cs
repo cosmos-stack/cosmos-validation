@@ -68,7 +68,7 @@ namespace Cosmos.Validation.Annotations
                 return EmailValidator.Instance.VerifyViaContext(ctx1);
 
             if (instance is ObjectValueContext ctx2)
-                return EmailValidator.Instance.VerifyViaContext(ctx2.ToObjectContext());
+                return EmailValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
 
             return EmailValidator.Instance.Verify(typeof(T), instance);
         }
@@ -91,7 +91,7 @@ namespace Cosmos.Validation.Annotations
                 return EmailValidator.Instance.VerifyViaContext(ctx1);
 
             if (instance is ObjectValueContext ctx2)
-                return EmailValidator.Instance.VerifyViaContext(ctx2.ToObjectContext());
+                return EmailValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
 
             return EmailValidator.Instance.Verify(type, instance);
         }
