@@ -15,6 +15,7 @@ namespace Cosmos.Validation.Objects
     {
         private readonly Type _type;
         private readonly Dictionary<string, ObjectValueContract> _valueContracts;
+        private readonly string[] _valueKeys;
 
         private readonly Attribute[] _attributes;
 
@@ -28,6 +29,7 @@ namespace Cosmos.Validation.Objects
             _objectContractImpl = null;
             _type = type ?? throw new ArgumentNullException(nameof(type));
             _valueContracts = valueContracts ?? throw new ArgumentNullException(nameof(valueContracts));
+            _valueKeys = _valueContracts.Keys.ToArray();
             _reflectorProvider = _type.GetReflector();
             _attributes = _reflectorProvider.GetCustomAttributes();
 
@@ -40,6 +42,7 @@ namespace Cosmos.Validation.Objects
             _objectContractImpl = objectContractImpl ?? throw new ArgumentNullException(nameof(objectContractImpl));
             _type = objectContractImpl.Type;
             _valueContracts = objectContractImpl.GetValueContractMap();
+            _valueKeys = _valueContracts.Keys.ToArray();
             _reflectorProvider = null;
             _attributes = Arrays.Empty<Attribute>();
 
@@ -88,6 +91,13 @@ namespace Cosmos.Validation.Objects
             return default;
         }
 
+        public ObjectValueContract GetValueContract(int index)
+        {
+            if (index < 0 || index >= _valueKeys.Length)
+                throw new ArgumentOutOfRangeException(nameof(index), index, $"Index '{index}' is out of range.");
+            return GetValueContract(_valueKeys[index]);
+        }
+
         public IEnumerable<ObjectValueContract> GetAllValueContracts()
         {
             if (_objectContractImpl is not null)
@@ -97,13 +107,38 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        #region WithInstance
+        #region With
 
         public ObjectContext WithInstance(object instance)
         {
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             return new ObjectContext(instance, this);
+        }
+
+        public ObjectContext WithInstance(object instance, string instanceName)
+        {
+            if (string.IsNullOrWhiteSpace(instanceName))
+                return WithInstance(instance);
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            return new ObjectContext(instance, this, instanceName);
+        }
+
+        public ObjectContext WithDictionary(IDictionary<string, object> keyValueCollections)
+        {
+            if (keyValueCollections is null)
+                throw new ArgumentNullException(nameof(keyValueCollections));
+            return new ObjectContext(keyValueCollections, this);
+        }
+
+        public ObjectContext WithDictionary(IDictionary<string, object> keyValueCollections, string instanceName)
+        {
+            if (string.IsNullOrWhiteSpace(instanceName))
+                return WithDictionary(keyValueCollections);
+            if (keyValueCollections is null)
+                throw new ArgumentNullException(nameof(keyValueCollections));
+            return new ObjectContext(keyValueCollections, this, instanceName);
         }
 
         #endregion

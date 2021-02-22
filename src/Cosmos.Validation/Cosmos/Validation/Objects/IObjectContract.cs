@@ -7,9 +7,14 @@ namespace Cosmos.Validation.Objects
 {
     public interface IObjectContract
     {
+        ObjectContext WithInstance(object instance);
+        ObjectContext WithInstance(object instance, string instanceName);
+        ObjectContext WithDictionary(IDictionary<string, object> keyValueCollections);
+        ObjectContext WithDictionary(IDictionary<string, object> keyValueCollections, string instanceName);
         ObjectValueContract GetValueContract(string name);
         ObjectValueContract GetValueContract(PropertyInfo propertyInfo);
         ObjectValueContract GetValueContract(FieldInfo fieldInfo);
+        ObjectValueContract GetValueContract(int index);
         IEnumerable<ObjectValueContract> GetAllValueContracts();
         Type Type { get; }
         ObjectKind ObjectKind { get; }

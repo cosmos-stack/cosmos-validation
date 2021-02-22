@@ -122,7 +122,7 @@ namespace Cosmos.Validation.Objects
                 {
                     ObjectValueKind.Property => _propertyInfo.Name,
                     ObjectValueKind.Field => _fieldInfo.Name,
-                    ObjectValueKind.Unknown => "ValueType",
+                    ObjectValueKind.Unknown => BASIC_TYPE,
                     ObjectValueKind.CustomContract => _valueContractImpl.MemberName,
                     _ => throw new InvalidOperationException("Unknown ObjectIn type")
                 };

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cosmos.Validation.Objects
 {
-    internal class BuildInObjectResolver : IValidationObjectResolver
+   internal class BuildInObjectResolver : IValidationObjectResolver
     {        
         public ObjectContext Resolve<T>(T instance)
         {

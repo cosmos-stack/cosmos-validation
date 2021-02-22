@@ -19,7 +19,7 @@ namespace Cosmos.Validation.Objects
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
             _directMode = true;
             _keyValueRef = null;
-            InstanceName = "Instance";
+            InstanceName = contract.IsBasicType() ? ObjectValueContract.BASIC_TYPE : "Instance";
         }
 
         public ObjectContext(object targetObject, ObjectContract contract, string instanceName)
@@ -66,6 +66,16 @@ namespace Cosmos.Validation.Objects
         public ObjectValueContext GetValue(string memberName)
         {
             var contract = _contract.GetValueContract(memberName);
+
+            if (contract is null)
+                return default;
+
+            return new ObjectValueContext(this, contract, _directMode);
+        }
+
+        public ObjectValueContext GetValue(int indexOfMember)
+        {
+            var contract = _contract.GetValueContract(indexOfMember);
 
             if (contract is null)
                 return default;
@@ -195,6 +205,11 @@ namespace Cosmos.Validation.Objects
             return _contract.GetValueContract(memberName);
         }
 
+        public ObjectValueContract GetMember(int indexOfMember)
+        {
+            return _contract.GetValueContract(indexOfMember);
+        }
+
         public IEnumerable<ObjectValueContract> GetMembers()
         {
             return _contract.GetAllValueContracts();
@@ -213,7 +228,7 @@ namespace Cosmos.Validation.Objects
         }
 
         #endregion
-        
+
         #region Annotations
 
         public bool IncludeAnnotations => _contract.IncludeAnnotations;
