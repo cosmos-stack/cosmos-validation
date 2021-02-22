@@ -150,7 +150,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void ValidEmailValue(ObjectValueContext context, ValidEmailAttribute attr, List<VerifyError> errors)
+            public static void ValidEmailValue(ObjectValueContext context, ValidEmailValueAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.StringClazz) && context.Value is string emailStr)

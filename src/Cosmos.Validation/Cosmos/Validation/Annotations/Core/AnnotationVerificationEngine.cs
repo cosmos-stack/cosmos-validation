@@ -84,7 +84,7 @@ namespace Cosmos.Validation.Annotations.Core
                     VerifyImpls.NotWhiteSpace(context, attr, errors);
                     break;
                 
-                case ValidEmailAttribute attr:
+                case ValidEmailValueAttribute attr:
                     VerifyImpls.ValidEmailValue(context, attr, errors);
                     break;
 

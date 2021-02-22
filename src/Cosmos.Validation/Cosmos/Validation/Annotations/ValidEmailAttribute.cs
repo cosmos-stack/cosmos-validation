@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Annotations
     /// Valid date
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Class)]
-    public class ValidEmailAttribute : ValidationParameterAttribute,
+    public class ValidEmailValueAttribute : ValidationParameterAttribute,
         IQuietVerifiableAnnotation, IStrongVerifiableAnnotation<string>, IObjectContextVerifiableAnnotation
     {
         public bool AllowTopLevelDomains { get; set; }
