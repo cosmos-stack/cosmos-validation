@@ -1,42 +1,49 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Cosmos.Validation.Objects
 {
     public static class ObjectContractManager
     {
-        private static readonly ConcurrentDictionary<Type, ObjectContract> _objectContracts = new();
+        private static readonly Dictionary<int, ObjectContract> _objectContracts = new();
+        private static readonly object _lockObj = new();
 
         public static ObjectContract Resolve(Type type)
         {
             if (type is null)
                 return default;
 
-            if (_objectContracts.TryGetValue(type, out var contract))
-                return contract;
+            var hash = type.GetHashCode();
 
-            Dictionary<string, ObjectValueContract> valueContracts = new();
+            if (_objectContracts.ContainsKey(hash))
+                return _objectContracts[hash];
 
-            if (type.IsBasicType())
+            lock (_lockObj)
             {
-                valueContracts.Add(ObjectValueContract.BASIC_TYPE, new ObjectValueContract(type));
-            }
-            else
-            {
-                foreach (var property in type.GetProperties())
-                    valueContracts.Add(property.Name, new ObjectValueContract(type, property));
+                if (_objectContracts.ContainsKey(hash))
+                    return _objectContracts[hash];
 
-                foreach (var field in type.GetFields())
-                    valueContracts.Add(field.Name, new ObjectValueContract(type, field));
-            }
+                Dictionary<string, ObjectValueContract> valueContracts = new();
 
-            contract = new ObjectContract(type, valueContracts);
+                if (type.IsBasicType())
+                {
+                    valueContracts.Add(ObjectValueContract.BASIC_TYPE, new ObjectValueContract(type));
+                }
+                else
+                {
+                    foreach (var property in type.GetProperties())
+                        valueContracts.Add(property.Name, new ObjectValueContract(type, property));
 
-            if (_objectContracts.TryAdd(type, contract))
+                    foreach (var field in type.GetFields())
+                        valueContracts.Add(field.Name, new ObjectValueContract(type, field));
+                }
+
+                var contract = new ObjectContract(type, valueContracts);
+
+                _objectContracts[hash] = contract;
+
                 return contract;
-
-            return default;
+            }
         }
 
         public static ObjectContract Resolve<T>()
