@@ -29,6 +29,8 @@ namespace Cosmos.Validation.Internals
 
         CustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager() => InnerPtr.ExposeCustomValidatorManager();
 
+        ValidationOptions ICorrectProvider.ExposeValidationOptions() => InnerPtr.ExposeValidationOptions();
+
         void ICorrectProvider.RegisterValidator<TValidator>() => InnerPtr.RegisterValidator<TValidator>();
 
         void ICorrectProvider.RegisterValidator<TValidator, T>() => InnerPtr.RegisterValidator<TValidator, T>();

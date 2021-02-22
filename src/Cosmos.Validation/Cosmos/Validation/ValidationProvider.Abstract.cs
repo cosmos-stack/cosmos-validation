@@ -86,6 +86,11 @@ namespace Cosmos.Validation
             return _customValidatorManager;
         }
 
+        ValidationOptions ICorrectProvider.ExposeValidationOptions()
+        {
+            return _options;
+        }
+
         void ICorrectProvider.RegisterValidator<TValidator>()
         {
             _customValidatorManager.Register<TValidator>();

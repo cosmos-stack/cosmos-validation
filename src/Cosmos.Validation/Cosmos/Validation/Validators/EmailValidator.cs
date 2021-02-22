@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Validation.Annotations;
+using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Validators
@@ -33,7 +34,14 @@ namespace Cosmos.Validation.Validators
 
     public class EmailValidator : CustomValidator<string>
     {
+        private ValidationOptions _options { get; set; }
+
         private EmailValidator() : base("Email Validator") { }
+
+        private EmailValidator(ValidationOptions options) : base("Email Validator")
+        {
+            _options = options ?? new ValidationOptions();
+        }
 
         public static EmailValidator Instance { get; } = new();
 
@@ -125,14 +133,14 @@ namespace Cosmos.Validation.Validators
         private VerifyResult VerifyImpl(ObjectContext context, EmailValidationOptions options)
         {
             List<VerifyResult> results = new();
-            var values = context.GetValuesWithAttribute<ValidEmailAttribute>();
+            var values = context.GetValuesWithAttribute<ValidEmailValueAttribute>();
 
             foreach (var value in values)
             {
                 // 如果 Value 为 String，对其进行验证
                 if (value.Value is string emailValue)
                 {
-                    var attr = value.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+                    var attr = value.GetAttributes<ValidEmailValueAttribute>().FirstOrDefault();
 
                     if (attr is null)
                         continue;
@@ -157,17 +165,17 @@ namespace Cosmos.Validation.Validators
         protected override VerifyResult VerifyImpl(ObjectContext context)
         {
             if (context is null)
-                return VerifyResult.NullReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             List<VerifyResult> results = new();
-            var values = context.GetValuesWithAttribute<ValidEmailAttribute>();
+            var values = context.GetValuesWithAttribute<ValidEmailValueAttribute>();
 
             foreach (var value in values)
             {
                 // 如果 Value 为 String，对其进行验证
                 if (value.Value is string emailValue)
                 {
-                    var attr = value.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+                    var attr = value.GetAttributes<ValidEmailValueAttribute>().FirstOrDefault();
 
                     if (attr is null)
                         continue;
@@ -190,12 +198,13 @@ namespace Cosmos.Validation.Validators
 
             return VerifyResult.MakeTogether(results);
         }
+
         public VerifyResult Verify(Type type, object instance, EmailValidationOptions options)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
             if (instance is null)
-                return VerifyResult.NullReferenceWith(options?.ParamName ?? "Instance");
+                return _options.ReturnNullReferenceOrSuccess(options?.ParamName ?? "Instance");
             if (instance is string str)
                 return Verify(str, options);
             if (instance is ObjectContext context)
@@ -215,7 +224,7 @@ namespace Cosmos.Validation.Validators
             optionsAct?.Invoke(options);
 
             if (instance is null)
-                return VerifyResult.NullReferenceWith(options.ParamName);
+                return _options.ReturnNullReferenceOrSuccess(options.ParamName);
 
             return Verify(type, instance, options);
         }
@@ -223,7 +232,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult Verify<T>(T instance, EmailValidationOptions options)
         {
             if (instance is null)
-                return VerifyResult.NullReferenceWith(options?.ParamName ?? "Instance");
+                return _options.ReturnNullReferenceOrSuccess(options?.ParamName ?? "Instance");
             if (instance is string str)
                 return Verify(str, options);
             if (instance is ObjectContext context)
@@ -240,7 +249,7 @@ namespace Cosmos.Validation.Validators
             optionsAct?.Invoke(options);
 
             if (instance is null)
-                return VerifyResult.NullReferenceWith(options.ParamName);
+                return _options.ReturnNullReferenceOrSuccess(options.ParamName);
 
             return Verify(instance, options);
         }
@@ -248,42 +257,42 @@ namespace Cosmos.Validation.Validators
         #endregion
 
         #region Verify One
-        
+
         private VerifyResult VerifyOneImpl(ObjectValueContext context, EmailValidationOptions options)
         {
             if (context is null)
-                return VerifyResult.NullReference;
-            
+                return _options.ReturnNullReferenceOrSuccess();
+
             // 如果 Value 为 String，对其进行验证
             if (context.Value is string emailValue)
             {
-                var attr = context.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+                var attr = context.GetAttributes<ValidEmailValueAttribute>().FirstOrDefault();
 
                 if (attr is null)
                     return VerifyResult.NullReferenceWith("There's no ValidEmailValueAttribute on this Member.");
-                
+
                 return Verify(emailValue, options);
             }
-            
+
             // 否则，如果 Value 不是基础类型（即 Value 为引用类型、结构等），对其进一步解析并验证
             if (!context.BasicTypeState())
             {
                 return VerifyImpl(context.ConvertToObjectContext());
             }
-            
+
             // 否则，认为其类型不是所期待的
             return VerifyResult.UnexpectedTypeWith(context.MemberName);
         }
-        
+
         protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
         {
             if (context is null)
-                return VerifyResult.NullReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             // 如果 Value 为 String，对其进行验证
             if (context.Value is string emailValue)
             {
-                var attr = context.GetAttributes<ValidEmailAttribute>().FirstOrDefault();
+                var attr = context.GetAttributes<ValidEmailValueAttribute>().FirstOrDefault();
 
                 if (attr is null)
                     return VerifyResult.NullReferenceWith("There's no ValidEmailValueAttribute on this Member.");
@@ -304,7 +313,7 @@ namespace Cosmos.Validation.Validators
         }
 
         #endregion
-        
+
         #region Internal Methods Impl
 
         private static bool ShouldNotBeNull(string instance, EmailValidationOptions options, List<VerifyFailure> failures)

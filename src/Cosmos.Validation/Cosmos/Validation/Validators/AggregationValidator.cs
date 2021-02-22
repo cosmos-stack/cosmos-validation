@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Validation.Internals;
+using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
 
@@ -27,7 +27,7 @@ namespace Cosmos.Validation.Validators
             _name = string.Empty;
             _options = options;
 
-            _annotationValidator = options.AnnotationEnabled ? AnnotationValidator.GetInstance(objectResolver) : null;
+            _annotationValidator = options.AnnotationEnabled ? AnnotationValidator.GetInstance(objectResolver, options) : null;
         }
 
         public AggregationValidator(
@@ -42,7 +42,7 @@ namespace Cosmos.Validation.Validators
             _name = name;
             _options = options;
 
-            _annotationValidator = options.AnnotationEnabled ? AnnotationValidator.GetInstance(objectResolver) : null;
+            _annotationValidator = options.AnnotationEnabled ? AnnotationValidator.GetInstance(objectResolver, options) : null;
         }
 
         public string Name => string.IsNullOrEmpty(_name) ? "Anonymous Validator" : _name;
@@ -55,8 +55,8 @@ namespace Cosmos.Validation.Validators
 
         public VerifyResult Verify(T instance)
         {
-            if (instance is null && _options.FailureIfInstanceIsNull)
-                return BuildInVerifyResults.NullObjectReference;
+            if (instance is null)
+                return _options.ReturnNullReferenceOrSuccess();
 
             VerifyResult result1 = null, result2 = null;
             var context = _objectResolver.Resolve(instance);
@@ -68,7 +68,7 @@ namespace Cosmos.Validation.Validators
                 result2 = _annotationValidator.Verify(context);
 
             if (result1 is null && result2 is null)
-                return BuildInVerifyResults.UnregisterProjectForSuchType;
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
             if (result2 is null)
                 return result1;
@@ -81,8 +81,8 @@ namespace Cosmos.Validation.Validators
 
         VerifyResult IValidator.Verify(Type declaringType, object instance)
         {
-            if (instance is null && _options.FailureIfInstanceIsNull)
-                return BuildInVerifyResults.NullObjectReference;
+            if (instance is null)
+                return _options.ReturnNullReferenceOrSuccess();
 
             VerifyResult result1 = null, result2 = null;
             var context = _objectResolver.Resolve(declaringType, instance);
@@ -94,7 +94,7 @@ namespace Cosmos.Validation.Validators
                 result2 = _annotationValidator.Verify(context);
 
             if (result1 is null && result2 is null)
-                return BuildInVerifyResults.UnregisterProjectForSuchType;
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
             if (result2 is null)
                 return result1;
@@ -112,7 +112,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyOne(Type memberType, object memberValue, string memberName)
         {
             if (memberValue is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             VerifyResult result1 = null, result2 = null;
             var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
@@ -125,7 +125,7 @@ namespace Cosmos.Validation.Validators
                 result2 = _annotationValidator.VerifyOne(valueContext);
 
             if (result1 is null && result2 is null)
-                return BuildInVerifyResults.UnregisterProjectForSuchType;
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
             if (result2 is null)
                 return result1;
@@ -139,7 +139,7 @@ namespace Cosmos.Validation.Validators
         VerifyResult IValidator.VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
             if (memberValue is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             VerifyResult result1 = null, result2 = null;
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
@@ -152,7 +152,7 @@ namespace Cosmos.Validation.Validators
                 result2 = _annotationValidator.VerifyOne(valueContext);
 
             if (result1 is null && result2 is null)
-                return BuildInVerifyResults.UnregisterProjectForSuchType;
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
             if (result2 is null)
                 return result1;
@@ -170,7 +170,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections)
         {
             if (keyValueCollections is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             VerifyResult result1 = null, result2 = null;
             var context = _objectResolver.Resolve<T>(keyValueCollections);
@@ -182,7 +182,7 @@ namespace Cosmos.Validation.Validators
                 result2 = _annotationValidator.Verify(context);
 
             if (result1 is null && result2 is null)
-                return BuildInVerifyResults.UnregisterProjectForSuchType;
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
             if (result2 is null)
                 return result1;
@@ -196,10 +196,10 @@ namespace Cosmos.Validation.Validators
         VerifyResult IValidator.VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
             if (declaringType is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             if (keyValueCollections is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             VerifyResult result1 = null, result2 = null;
             var context = _objectResolver.Resolve(declaringType, keyValueCollections);
@@ -211,7 +211,7 @@ namespace Cosmos.Validation.Validators
                 result2 = _annotationValidator.Verify(context);
 
             if (result1 is null && result2 is null)
-                return BuildInVerifyResults.UnregisterProjectForSuchType;
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
             if (result2 is null)
                 return result1;

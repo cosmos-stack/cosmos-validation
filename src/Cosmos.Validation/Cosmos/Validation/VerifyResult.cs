@@ -123,9 +123,13 @@ namespace Cosmos.Validation
 
         public static VerifyResult NullReferenceWith(string paramName) => new(VerifyFailure.Create(paramName, "Null Reference."));
 
-        public static VerifyResult UnexpectedType { get; } = new(VerifyFailure.Create("Instance", "Unexpected Type."));
+        public static VerifyResult UnexpectedType { get; } = new(VerifyFailure.Create("$Type", "Unexpected Type."));
 
         public static VerifyResult UnexpectedTypeWith(string paramName) => new(VerifyFailure.Create(paramName, "Unexpected Type."));
+
+        internal static VerifyResult UnregisterProjectForSuchType { get; } = new(VerifyFailure.Create("$TypedProject", "The corresponding type of Project is not registered."));
+
+        internal static VerifyResult UnregisterProjectForSuchNamedType { get; } = new(VerifyFailure.Create("$NamedProject", "The Project of the corresponding type and name is not registered."));
 
         #endregion
 

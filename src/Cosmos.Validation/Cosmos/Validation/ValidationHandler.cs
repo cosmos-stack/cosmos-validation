@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cosmos.Collections;
+using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
 
@@ -12,10 +13,12 @@ namespace Cosmos.Validation
         private readonly Dictionary<int, IProject> _typedProjects = new();
 
         private readonly IValidationObjectResolver _objectResolver;
+        private readonly ValidationOptions _options;
 
-        internal ValidationHandler(IEnumerable<IProject> projects, IValidationObjectResolver objectResolver)
+        internal ValidationHandler(IEnumerable<IProject> projects, IValidationObjectResolver objectResolver, ValidationOptions options)
         {
             _objectResolver = objectResolver ?? throw new ArgumentNullException(nameof(objectResolver));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
 
             if (projects is not null)
                 foreach (var project in projects)
@@ -52,7 +55,7 @@ namespace Cosmos.Validation
             if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out var result))
                 return result.Verify(_objectResolver.Resolve(declaringType, instance));
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         public VerifyResult Verify(Type declaringType, object instance, string projectName)
@@ -66,7 +69,7 @@ namespace Cosmos.Validation
             if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out var result))
                 return result.Verify(_objectResolver.Resolve(declaringType, instance));
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         public VerifyResult Verify<T>(T instance) => Verify(typeof(T), instance);
@@ -81,7 +84,7 @@ namespace Cosmos.Validation
             if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out var result))
                 return result.Verify(context);
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         #endregion
@@ -103,7 +106,7 @@ namespace Cosmos.Validation
                 return result.VerifyOne(valueContext);
             }
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName, string projectName)
@@ -124,7 +127,7 @@ namespace Cosmos.Validation
                 return result.VerifyOne(valueContext);
             }
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName)
@@ -141,7 +144,7 @@ namespace Cosmos.Validation
             if (_typedProjects.TryGetValue((declaringType ?? context.DeclaringType).GetHashCode(), out var result))
                 return result.VerifyOne(context);
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         #endregion
@@ -156,7 +159,7 @@ namespace Cosmos.Validation
             if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out var result))
                 return result.Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections, string projectName)
@@ -170,7 +173,7 @@ namespace Cosmos.Validation
             if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out var result))
                 return result.Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         internal VerifyResult VerifyMany(ObjectContext context)
@@ -181,7 +184,7 @@ namespace Cosmos.Validation
             if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out var result))
                 return result.VerifyMany(context.GetValueMap());
 
-            return VerifyResult.UnexpectedType;
+            return _options.ReturnUnexpectedTypeOrSuccess();
         }
 
         #endregion

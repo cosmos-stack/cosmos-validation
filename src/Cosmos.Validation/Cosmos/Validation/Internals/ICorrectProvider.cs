@@ -13,6 +13,8 @@ namespace Cosmos.Validation.Internals
 
         CustomValidatorManager ExposeCustomValidatorManager();
 
+        ValidationOptions ExposeValidationOptions();
+
         void RegisterValidator<TValidator>() where TValidator : CustomValidator, new();
 
         void RegisterValidator<TValidator, T>() where TValidator : CustomValidator<T>, new();

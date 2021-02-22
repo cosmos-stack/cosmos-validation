@@ -185,7 +185,7 @@ namespace Cosmos.Validation.Registrars
 
         public ValidationHandler TempBuild()
         {
-            return new(GetProjects(), InnerPtr.ExposeObjectResolver());
+            return new(GetProjects(), InnerPtr.ExposeObjectResolver(), InnerPtr.ExposeValidationOptions());
         }
 
         public ValidationHandler TempBuild(ValidationHandler handler)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Validation.Annotations;
 using Cosmos.Validation.Annotations.Core;
-using Cosmos.Validation.Internals;
+using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Validators
@@ -14,19 +14,24 @@ namespace Cosmos.Validation.Validators
     public class AnnotationValidator : IValidator, ICorrectValidator
     {
         private readonly IValidationObjectResolver _objectResolver;
+        private readonly ValidationOptions _options;
 
-        private AnnotationValidator() : this(new BuildInObjectResolver()) { }
+        private AnnotationValidator() : this(new BuildInObjectResolver(), new ValidationOptions()) { }
 
-        private AnnotationValidator(IValidationObjectResolver objectResolver)
+        private AnnotationValidator(IValidationObjectResolver objectResolver, ValidationOptions options)
         {
             _objectResolver = objectResolver ?? throw new ArgumentNullException(nameof(objectResolver));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
         public static AnnotationValidator Instance { get; } = new();
 
         public static AnnotationValidator GetInstance() => Instance;
 
-        public static AnnotationValidator GetInstance(IValidationObjectResolver objectResolver) => new(objectResolver);
+        public static AnnotationValidator GetInstance(IValidationObjectResolver objectResolver, ValidationOptions options)
+        {
+            return new(objectResolver, options);
+        }
 
         public string Name => "Annotation Validator";
 
@@ -39,9 +44,9 @@ namespace Cosmos.Validation.Validators
         public VerifyResult Verify(Type declaringType, object instance)
         {
             if (declaringType is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (instance is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (instance is ObjectContext context)
                 return Verify(context);
             if (instance is ObjectValueContext valueContext)
@@ -54,7 +59,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult Verify<T>(T instance)
         {
             if (instance is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (instance is ObjectContext context)
                 return Verify(context);
             if (instance is ObjectValueContext valueContext)
@@ -67,7 +72,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult Verify(ObjectContext context)
         {
             if (context is null)
-                return VerifyResult.NullReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             if (!context.IncludeAnnotations)
                 return VerifyResult.Success;
@@ -90,11 +95,11 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
             if (declaringType is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (memberType is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (memberValue is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (memberValue is ObjectContext context)
                 return Verify(context);
             if (memberValue is ObjectValueContext valueContext)
@@ -108,7 +113,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyOne<TP, TM>(TM memberValue, string memberName)
         {
             if (memberValue is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (memberValue is ObjectContext context)
                 return Verify(context);
             if (memberValue is ObjectValueContext valueContext)
@@ -122,7 +127,7 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyOne(ObjectValueContext context)
         {
             if (context is null)
-                return VerifyResult.NullReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             if (!context.IncludeAnnotations)
                 return VerifyResult.Success;
@@ -142,29 +147,29 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
             if (declaringType is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             if (keyValueCollections is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             return VerifyMany(_objectResolver.Resolve(declaringType, keyValueCollections));
         }
 
         public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections)
         {
             if (keyValueCollections is null)
-                return BuildInVerifyResults.NullObjectReference;
+                return _options.ReturnNullReferenceOrSuccess();
             return VerifyMany(_objectResolver.Resolve<T>(keyValueCollections));
         }
 
         public VerifyResult VerifyMany(ObjectContext context)
         {
             if (context is null)
-                return VerifyResult.NullReference;
+                return _options.ReturnNullReferenceOrSuccess();
 
             if (!context.IncludeAnnotations)
                 return VerifyResult.Success;
 
             var slaveResults = new List<VerifyResult>();
-            
+
             foreach (var valueWithAnnotation in context.GetValuesWithAttribute())
             {
                 VerifyViaFlagAnnotations(valueWithAnnotation, slaveResults);
