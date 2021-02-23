@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Cosmos.Collections;
+using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
+using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation
 {
@@ -23,6 +26,10 @@ namespace Cosmos.Validation
             if (projects is not null)
                 foreach (var project in projects)
                     UpdateProject(project);
+
+            AnnotationValidator = options.AnnotationEnabled
+                ? AnnotationValidator.GetInstance(_objectResolver, _options)
+                : default;
         }
 
         private void UpdateProject(IProject project)
@@ -45,46 +52,56 @@ namespace Cosmos.Validation
             }
         }
 
+        private AnnotationValidator AnnotationValidator { get; set; }
+
         #region Verify
 
         public VerifyResult Verify(Type declaringType, object instance)
         {
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-
-            if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out var result))
-                return result.Verify(_objectResolver.Resolve(declaringType, instance));
-
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            return Verify(_objectResolver.Resolve(declaringType, instance), "");
         }
 
         public VerifyResult Verify(Type declaringType, object instance, string projectName)
         {
-            if (string.IsNullOrWhiteSpace(projectName))
-                return Verify(declaringType, instance);
-
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-
-            if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out var result))
-                return result.Verify(_objectResolver.Resolve(declaringType, instance));
-
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            return Verify(_objectResolver.Resolve(declaringType, instance), projectName);
         }
 
         public VerifyResult Verify<T>(T instance) => Verify(typeof(T), instance);
 
         public VerifyResult Verify<T>(T instance, string projectName) => Verify(typeof(T), instance, projectName);
 
-        internal VerifyResult Verify(ObjectContext context)
+        internal VerifyResult Verify(ObjectContext context, string projectName = "")
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out var result))
-                return result.Verify(context);
+            IProject project;
+            VerifyResult result1 = null, result2 = null;
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out project))
+                    result1 = project.Verify(context, _options);
+            }
+            else
+            {
+                if (_namedTypeProjects.TryGetValue((context.Type.GetHashCode(), projectName.GetHashCode()), out project))
+                    result1 = project.Verify(context, _options);
+            }
+
+            if (_options.AnnotationEnabled)
+                result2 = AnnotationValidator.Verify(context);
+
+            if (result1 is null && result2 is null)
+                return _options.ReturnUnexpectedTypeOrSuccess();
+
+            if (result2 is null) return result1;
+            if (result1 is null) return result2;
+            return VerifyResult.Merge(result1, result2);
         }
 
         #endregion
@@ -99,52 +116,92 @@ namespace Cosmos.Validation
             if (memberType is null)
                 throw new ArgumentNullException(nameof(memberType));
 
-            if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out var result))
-            {
-                var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
-                var valueContext = ObjectValueContext.Create(memberValue, valueContract);
-                return result.VerifyOne(valueContext);
-            }
+            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            return VerifyOne(valueContext, declaringType, "");
         }
 
         public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName, string projectName)
         {
-            if (string.IsNullOrWhiteSpace(projectName))
-                return VerifyOne(declaringType, memberType, memberValue, memberName);
-
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
 
             if (memberType is null)
                 throw new ArgumentNullException(nameof(memberType));
 
-            if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out var result))
-            {
-                var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
-                var valueContext = ObjectValueContext.Create(memberValue, valueContract);
-                return result.VerifyOne(valueContext);
-            }
+            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            return VerifyOne(valueContext, declaringType, projectName);
         }
 
-        public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName)
-            => VerifyOne(typeof(TP), typeof(TM), memberValue, memberName);
+        public VerifyResult VerifyOne<T, TVal>(object memberValue, string memberName) => VerifyOne(typeof(T), typeof(TVal), memberValue, memberName);
 
-        public VerifyResult VerifyOne<TP, TM>(object memberValue, string memberName, string projectName)
-            => VerifyOne(typeof(TP), typeof(TM), memberValue, memberName, projectName);
+        public VerifyResult VerifyOne<T, TVal>(object memberValue, string memberName, string projectName) => VerifyOne(typeof(T), typeof(TVal), memberValue, memberName, projectName);
 
-        internal VerifyResult VerifyOne(ObjectValueContext context, Type declaringType = default)
+        public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
+        {
+            if (propertySelector is null)
+                throw new ArgumentNullException(nameof(propertySelector));
+
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+
+            return VerifyOne(valueContext, typeof(T),"");
+        }
+
+        public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, string projectName)
+        {
+            if (propertySelector is null)
+                throw new ArgumentNullException(nameof(propertySelector));
+
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+
+            return VerifyOne(valueContext, typeof(T), projectName);
+        }
+
+        internal VerifyResult VerifyOne(ObjectValueContext context, Type declaringType = default, string projectName = "")
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            if (_typedProjects.TryGetValue((declaringType ?? context.DeclaringType).GetHashCode(), out var result))
-                return result.VerifyOne(context);
+            IProject project;
+            VerifyResult result1 = null, result2 = null;
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                var t = declaringType ?? context.DeclaringType;
+                if (_typedProjects.TryGetValue(t.GetHashCode(), out project))
+                    result1 = project.VerifyOne(context, _options);
+            }
+            else
+            {
+                var t = declaringType ?? context.DeclaringType;
+                if (_namedTypeProjects.TryGetValue((t.GetHashCode(), projectName.GetHashCode()), out project))
+                    result1 = project.VerifyOne(context, _options);
+            }
+
+            if (_options.AnnotationEnabled)
+                result2 = AnnotationValidator.VerifyOne(context);
+
+            if (result1 is null && result2 is null)
+                return _options.ReturnUnexpectedTypeOrSuccess();
+
+            if (result2 is null) return result1;
+            if (result1 is null) return result2;
+            return VerifyResult.Merge(result1, result2);
         }
 
         #endregion
@@ -156,35 +213,53 @@ namespace Cosmos.Validation
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
 
-            if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out var result))
-                return result.Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
+            var context = _objectResolver.Resolve(declaringType, keyValueCollections);
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            return VerifyMany(context,"");
         }
 
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections, string projectName)
         {
-            if (string.IsNullOrWhiteSpace(projectName))
-                return VerifyMany(declaringType, keyValueCollections);
-
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
 
-            if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out var result))
-                return result.Verify(_objectResolver.Resolve(declaringType, keyValueCollections));
+            var context = _objectResolver.Resolve(declaringType, keyValueCollections);
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            return VerifyMany(context, projectName);
         }
 
-        internal VerifyResult VerifyMany(ObjectContext context)
+        public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections) => VerifyMany(typeof(T), keyValueCollections);
+
+        public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections, string projectName) => VerifyMany(typeof(T), keyValueCollections, projectName);
+
+        internal VerifyResult VerifyMany(ObjectContext context, string projectName = "")
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out var result))
-                return result.VerifyMany(context.GetValueMap());
+            IProject project;
+            VerifyResult result1 = null, result2 = null;
 
-            return _options.ReturnUnexpectedTypeOrSuccess();
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out project))
+                    result1 = project.VerifyMany(context.GetValueMap(), _options);
+            }
+            else
+            {
+                if (_namedTypeProjects.TryGetValue((context.Type.GetHashCode(), projectName.GetHashCode()), out project))
+                    result1 = project.VerifyMany(context.GetValueMap(), _options);
+            }
+
+            if (_options.AnnotationEnabled)
+                result2 = AnnotationValidator.VerifyMany(context);
+
+            if (result1 is null && result2 is null)
+                return _options.ReturnUnexpectedTypeOrSuccess();
+
+            if (result2 is null) return result1;
+            if (result1 is null) return result2;
+            return VerifyResult.Merge(result1, result2);
         }
 
         #endregion
