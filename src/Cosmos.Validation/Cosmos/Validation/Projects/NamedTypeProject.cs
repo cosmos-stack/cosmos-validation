@@ -32,19 +32,34 @@ namespace Cosmos.Validation.Projects
             foreach (var rule in rules) _rules.Add(rule);
         }
 
-        public VerifyResult Verify(ObjectContext context)
+        public VerifyResult Verify(ObjectContext context, ValidationOptions options)
         {
-            return CorrectEngine.Valid(context, _rules, _customValidatorManager.ResolveAll());
+            return CorrectEngine.Valid(
+                context,
+                _rules,
+                options.CustomValidatorEnabled
+                    ? _customValidatorManager.ResolveAll()
+                    : _customValidatorManager.ResolveEmpty());
         }
 
-        public VerifyResult VerifyOne(ObjectValueContext context)
+        public VerifyResult VerifyOne(ObjectValueContext context, ValidationOptions options)
         {
-            return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList(),  _customValidatorManager.ResolveAll());
+            return CorrectEngine.ValidOne(
+                context, 
+                _rules.Where(x => x.MemberName == context.MemberName).ToList(),
+                options.CustomValidatorEnabled
+                    ? _customValidatorManager.ResolveAll()
+                    : _customValidatorManager.ResolveEmpty());
         }
 
-        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
+        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections, ValidationOptions options)
         {
-            return CorrectEngine.ValidMany(keyValueCollections, _rules,  _customValidatorManager.ResolveAll());
+            return CorrectEngine.ValidMany(
+                keyValueCollections, 
+                _rules,
+                options.CustomValidatorEnabled
+                    ? _customValidatorManager.ResolveAll()
+                    : _customValidatorManager.ResolveEmpty());
         }
     }
 }
