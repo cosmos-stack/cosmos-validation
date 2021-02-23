@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Cosmos.Validation.Annotations;
 using Cosmos.Validation.Annotations.Core;
+using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 
@@ -27,6 +29,11 @@ namespace Cosmos.Validation.Validators
         public static AnnotationValidator Instance { get; } = new();
 
         public static AnnotationValidator GetInstance() => Instance;
+
+        public static AnnotationValidator GetInstance(ValidationOptions options)
+        {
+            return new(new BuildInObjectResolver(), options);
+        }
 
         public static AnnotationValidator GetInstance(IValidationObjectResolver objectResolver, ValidationOptions options)
         {
@@ -64,8 +71,8 @@ namespace Cosmos.Validation.Validators
                 return Verify(context);
             if (instance is ObjectValueContext valueContext)
                 return VerifyOne(valueContext);
-            if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyMany<T>(keyValueCollections);
+            if (instance is IDictionary<string, object>)
+                return new VerifyResult(new VerifyFailure("KeyValueCollections", "Dictionary objects should specify specific types", instance));
             return Verify(_objectResolver.Resolve(instance));
         }
 
@@ -107,10 +114,12 @@ namespace Cosmos.Validation.Validators
             if (memberValue is IDictionary<string, object> keyValueCollections)
                 return VerifyMany(declaringType, keyValueCollections);
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
             return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
         }
 
-        public VerifyResult VerifyOne<TP, TM>(TM memberValue, string memberName)
+        public VerifyResult VerifyOne<T, TVal>(TVal memberValue, string memberName)
         {
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -119,8 +128,27 @@ namespace Cosmos.Validation.Validators
             if (memberValue is ObjectValueContext valueContext)
                 return VerifyOne(valueContext);
             if (memberValue is IDictionary<string, object> keyValueCollections)
-                return VerifyMany<TP>(keyValueCollections);
-            var valueContract = ObjectContractManager.Resolve<TP>()?.GetValueContract(memberName);
+                return VerifyMany<T>(keyValueCollections);
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
+        }
+
+        public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is ObjectContext context)
+                return Verify(context);
+            if (memberValue is ObjectValueContext valueContext)
+                return VerifyOne(valueContext);
+            if (memberValue is IDictionary<string, object> keyValueCollections)
+                return VerifyMany<T>(keyValueCollections);
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
             return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
         }
 
