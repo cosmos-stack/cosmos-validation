@@ -1,0 +1,12 @@
+<Project>
+	<PropertyGroup Label="Package">
+		<Product>Cosmos.Validation</Product>
+		<Authors>AlexLEWIS;Cosmos</Authors>
+		<RepositoryUrl>https://github.com/cosmos-loops/cosmos-validation</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/cosmos-loops/cosmos-validation</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageTags>Cosmos;Cosmosloops;Validation;Framework</PackageTags>
+	</PropertyGroup>
+</Project>

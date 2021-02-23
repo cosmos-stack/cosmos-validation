@@ -96,12 +96,12 @@
             <param name="instance"></param>
             <returns></returns>
         </member>
-        <member name="T:Cosmos.Validation.Annotations.ValidEmailAttribute">
+        <member name="T:Cosmos.Validation.Annotations.ValidEmailValueAttribute">
             <summary>
             Valid date
             </summary>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.Invoke(AspectCore.DynamicProxy.Parameters.ParameterAspectContext,AspectCore.DynamicProxy.Parameters.ParameterAspectDelegate)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.Invoke(AspectCore.DynamicProxy.Parameters.ParameterAspectContext,AspectCore.DynamicProxy.Parameters.ParameterAspectDelegate)">
             <summary>
             Invoke
             </summary>
@@ -109,14 +109,14 @@
             <param name="next"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify(System.String)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(System.String)">
             <summary>
             Strong Verify
             </summary>
             <param name="instance"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify``1(``0)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify``1(``0)">
             <summary>
             Strong Verify
             </summary>
@@ -124,7 +124,7 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify(System.Type,System.Object)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(System.Type,System.Object)">
             <summary>
             Strong Verify
             </summary>
@@ -132,21 +132,21 @@
             <param name="instance"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.StrongVerify(Cosmos.Validation.Objects.ObjectContext)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(Cosmos.Validation.Objects.ObjectContext)">
             <summary>
             ObjectContext Verify
             </summary>
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.QuietVerify``1(``0)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.QuietVerify``1(``0)">
             <summary>
             Quiet Verify
             </summary>
             <param name="instance"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailAttribute.QuietVerify(System.Type,System.Object)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.QuietVerify(System.Type,System.Object)">
             <summary>
             Quiet Verify
             </summary>
