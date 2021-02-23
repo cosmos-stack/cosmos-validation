@@ -37,44 +37,20 @@ namespace Cosmos.Validation
         public IValidator Resolve(Type type)
         {
             var d = typeof(AggregationValidator<>);
-            var v = d.MakeGenericType(type);
-
-#if NETFRAMEWORK
+            var v = d.MakeGenericType(type);           
             return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, _options);
-#else
-            var arguments = new List<ArgumentDescriptor>
-            {
-                new("projectManager", _projectManager, typeof(IValidationProjectManager)),
-                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
-                new("options", _options, typeof(ValidationOptions))
-            };
-
-            return TypeVisit.CreateInstance<IValidator>(v, arguments);
-#endif
         }
 
         public IValidator Resolve(Type type, string name)
         {
             var d = typeof(AggregationValidator<>);
-            var v = d.MakeGenericType(type);
-#if NETFRAMEWORK
+            var v = d.MakeGenericType(type);            
             return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, _options);
-#else
-            var arguments = new List<ArgumentDescriptor>
-            {
-                new("name", name, TypeClass.StringClazz),
-                new("projectManager", _projectManager, typeof(IValidationProjectManager)),
-                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
-                new("options", _options, typeof(ValidationOptions))
-            };
-
-            return TypeVisit.CreateInstance<IValidator>(v, arguments);
-#endif
         }
 
-        public IValidator Resolve<T>() => Resolve(typeof(T));
+        public IValidator<T> Resolve<T>() => (IValidator<T>)Resolve(typeof(T));
 
-        public IValidator Resolve<T>(string name) => Resolve(typeof(T), name);
+        public IValidator<T> Resolve<T>(string name) =>  (IValidator<T>)Resolve(typeof(T), name);
 
         IValidationProjectManager ICorrectProvider.ExposeProjectManager()
         {

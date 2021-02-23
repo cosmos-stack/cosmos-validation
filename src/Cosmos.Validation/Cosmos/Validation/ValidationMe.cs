@@ -97,9 +97,9 @@ namespace Cosmos.Validation
 
         public static IValidator Resolve(Type type, string name) => _currentProvider.Resolve(type, name);
 
-        public static IValidator Resolve<T>() => _currentProvider.Resolve<T>();
+        public static IValidator<T> Resolve<T>() => _currentProvider.Resolve<T>();
 
-        public static IValidator Resolve<T>(string name) => _currentProvider.Resolve<T>(name);
+        public static IValidator<T> Resolve<T>(string name) => _currentProvider.Resolve<T>(name);
 
         #endregion
 

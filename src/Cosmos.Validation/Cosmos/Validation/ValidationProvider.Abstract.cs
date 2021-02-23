@@ -67,9 +67,9 @@ namespace Cosmos.Validation
 #endif
         }
 
-        public virtual IValidator Resolve<T>() => Resolve(typeof(T));
+        public virtual IValidator<T> Resolve<T>() => (IValidator<T>) Resolve(typeof(T));
 
-        public virtual IValidator Resolve<T>(string name) => Resolve(typeof(T), name);
+        public virtual IValidator<T> Resolve<T>(string name) => (IValidator<T>) Resolve(typeof(T), name);
 
         IValidationProjectManager ICorrectProvider.ExposeProjectManager()
         {
