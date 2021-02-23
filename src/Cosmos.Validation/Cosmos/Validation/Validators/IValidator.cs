@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Cosmos.Validation.Validators
 {
@@ -15,10 +16,11 @@ namespace Cosmos.Validation.Validators
         VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections);
     }
 
-    public interface IValidator<in T> : IValidator
+    public interface IValidator<T> : IValidator
     {
         VerifyResult Verify(T instance);
         VerifyResult VerifyOne(Type memberType, object memberValue, string memberName);
+        VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, object memberValue);
         VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections);
     }
 }

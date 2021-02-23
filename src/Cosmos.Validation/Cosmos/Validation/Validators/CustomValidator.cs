@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Cosmos.Validation.Internals;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Registrars;
 
@@ -52,10 +53,12 @@ namespace Cosmos.Validation.Validators
         public virtual VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
             return VerifyOneImpl(valueContext);
         }
-
+        
         protected abstract VerifyResult VerifyOneImpl(ObjectValueContext context);
 
         public VerifyResult VerifyOneViaContext(ObjectValueContext context)
@@ -172,9 +175,21 @@ namespace Cosmos.Validation.Validators
             return LocalTypedHandler?.VerifyOne(context) ?? VerifyResult.Success;
         }
 
-        public VerifyResult VerifyOne(Type memberType, object memberValue, string memberName)
+        public virtual VerifyResult VerifyOne(Type memberType, object memberValue, string memberName)
         {
             var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            return VerifyOneImpl(valueContext);
+        }
+
+        public virtual VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, object memberValue)
+        {
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
             return VerifyOneImpl(valueContext);
         }
@@ -182,6 +197,8 @@ namespace Cosmos.Validation.Validators
         VerifyResult IValidator.VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
         {
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
             return VerifyOneImpl(valueContext);
         }

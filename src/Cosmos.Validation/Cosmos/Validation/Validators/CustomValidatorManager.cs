@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using Cosmos.Collections;
 
 namespace Cosmos.Validation.Validators
@@ -55,5 +57,9 @@ namespace Cosmos.Validation.Validators
         }
 
         public IEnumerable<CustomValidator> ResolveAll() => _validators.Values;
+
+        public IEnumerable<CustomValidator> ResolveEmpty() => Enumerable.Empty<CustomValidator>();
+
+        public IEnumerable<CustomValidator> ResolveBy(Func<CustomValidator, bool> filter) => _validators.Values.Where(filter);
     }
 }
