@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
@@ -62,7 +64,7 @@ namespace Cosmos.Validation.Validators
             var context = _objectResolver.Resolve(instance);
 
             if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.Verify(context);
+                result1 = project.Verify(context, _options);
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
@@ -88,7 +90,7 @@ namespace Cosmos.Validation.Validators
             var context = _objectResolver.Resolve(declaringType, instance);
 
             if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.Verify(context);
+                result1 = project.Verify(context, _options);
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
@@ -116,10 +118,47 @@ namespace Cosmos.Validation.Validators
 
             VerifyResult result1 = null, result2 = null;
             var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
 
             if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.VerifyOne(valueContext);
+                result1 = project.VerifyOne(valueContext, _options);
+
+            if (_options.AnnotationEnabled)
+                result2 = _annotationValidator.VerifyOne(valueContext);
+
+            if (result1 is null && result2 is null)
+                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
+
+            if (result2 is null)
+                return result1;
+
+            if (result1 is null)
+                return result2;
+
+            return VerifyResult.Merge(result1, result2);
+        }
+
+        public VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, object memberValue)
+        {
+            if (propertySelector is null)
+                return _options.ReturnNullReferenceOrSuccess();
+
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+
+            VerifyResult result1 = null, result2 = null;
+            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+
+            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+
+            if (_projectManager.TryResolve(_type, _name, out var project))
+                result1 = project.VerifyOne(valueContext, _options);
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.VerifyOne(valueContext);
@@ -143,10 +182,14 @@ namespace Cosmos.Validation.Validators
 
             VerifyResult result1 = null, result2 = null;
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+
+            if (valueContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
 
             if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.VerifyOne(valueContext);
+                result1 = project.VerifyOne(valueContext, _options);
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.VerifyOne(valueContext);
@@ -176,7 +219,7 @@ namespace Cosmos.Validation.Validators
             var context = _objectResolver.Resolve<T>(keyValueCollections);
 
             if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.VerifyMany(context.GetValueMap());
+                result1 = project.VerifyMany(context.GetValueMap(), _options);
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
@@ -205,7 +248,7 @@ namespace Cosmos.Validation.Validators
             var context = _objectResolver.Resolve(declaringType, keyValueCollections);
 
             if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.VerifyMany(context.GetValueMap());
+                result1 = project.VerifyMany(context.GetValueMap(), _options);
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);

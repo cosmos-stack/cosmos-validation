@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cosmos.Collections;
 using Cosmos.Text;
 using Cosmos.Validation.Internals.Exceptions;
 
@@ -27,18 +26,21 @@ namespace Cosmos.Validation
         public VerifyResult()
         {
             _failures = new List<VerifyFailure>();
+            _success = !_failures.Any();
         }
 
         public VerifyResult(VerifyFailure failure)
         {
             _failures = new List<VerifyFailure>();
-
-            _failures.AddIfNotNull(failure);
+            if(failure is not null)
+                _failures.Add(failure);
+            _success = !_failures.Any();
         }
 
         public VerifyResult(IEnumerable<VerifyFailure> failures)
         {
             _failures = failures.Where(f => f != null).ToList();
+            _success = !_failures.Any();
         }
 
         /// <summary>
@@ -131,6 +133,9 @@ namespace Cosmos.Validation
 
         internal static VerifyResult UnregisterProjectForSuchNamedType { get; } = new(VerifyFailure.Create("$NamedProject", "The Project of the corresponding type and name is not registered."));
 
+        internal static VerifyResult MemberIsNotExists(string memberName)=>new(VerifyFailure.Create(memberName, "Member name is not exists."));
+
+        
         #endregion
 
         #region Base

@@ -308,6 +308,10 @@ namespace Cosmos.Validation.Objects
                         {
                             if (annotation is not IFlagAnnotation)
                                 yield return annotation;
+                            else if (annotation is IQuietVerifiableAnnotation ||
+                                     annotation is IStrongVerifiableAnnotation ||
+                                     annotation is IObjectContextVerifiableAnnotation)
+                                yield return annotation;
                         }
                         else
                         {
