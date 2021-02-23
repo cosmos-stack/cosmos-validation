@@ -71,18 +71,20 @@ namespace Cosmos.Validation.Annotations.Core
             public static void NotNegative(ObjectValueContext context, NotNegativeAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
-                if (context.Is(TypeClass.IntClazz) && context.Value is int intVal)
-                    condition = intVal >= 0;
-                else if (context.Is(TypeClass.LongClazz) && context.Value is long longVal)
-                    condition = longVal >= 0;
-                else if (context.Is(TypeClass.FloatClazz) && context.Value is float floatVal)
-                    condition = floatVal >= 0;
-                else if (context.Is(TypeClass.DoubleClazz) && context.Value is double doubleVal)
-                    condition = doubleVal >= 0;
-                else if (context.Is(TypeClass.DecimalClazz) && context.Value is decimal decimalVal)
-                    condition = decimalVal >= 0;
+                if (context.Is(TypeClass.IntClazz))
+                    condition = context.GetValue<int>() >= 0;
+                else if (context.Is(TypeClass.LongClazz))
+                    condition = context.GetValue<long>() >= 0;
+                else if (context.Is(TypeClass.FloatClazz))
+                    condition = context.GetValue<float>() >= 0;
+                else if (context.Is(TypeClass.DoubleClazz))
+                    condition = context.GetValue<double>() >= 0;
+                else if (context.Is(TypeClass.DecimalClazz))
+                    condition = context.GetValue<decimal>() >= 0;
                 else if (context.Is(TypeClass.TimeSpanClazz) && context.Value is TimeSpan tsVal)
                     condition = tsVal >= TimeSpan.Zero;
+                else
+                    condition = false;
 
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
