@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Cosmos.Validation.Strategies;
+using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation.Registrars
 {
@@ -81,7 +83,20 @@ namespace Cosmos.Validation.Registrars
         IFluentValidationRegistrar AndForType(Type type, string name);
         IFluentValidationRegistrar<T> AndForType<T>();
         IFluentValidationRegistrar<T> AndForType<T>(string name);
+        IFluentValidationRegistrar AndForStrategy<TStrategy>(StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy, new();
+        IFluentValidationRegistrar AndForStrategy<TStrategy, T>(StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy<T>, new();
+        IFluentValidationRegistrar AndForStrategy(IValidationStrategy strategy, StrategyMode mode = StrategyMode.OverallOverwrite);
+        IFluentValidationRegistrar AndForStrategy<T>(IValidationStrategy<T> strategy, StrategyMode mode = StrategyMode.OverallOverwrite);
+        IFluentValidationRegistrar AndForStrategy<TStrategy>(string name, StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy, new();
+        IFluentValidationRegistrar AndForStrategy<TStrategy, T>(string name, StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy<T>, new();
+        IFluentValidationRegistrar AndForStrategy(IValidationStrategy strategy, string name, StrategyMode mode = StrategyMode.OverallOverwrite);
+        IFluentValidationRegistrar AndForStrategy<T>(IValidationStrategy<T> strategy, string name, StrategyMode mode = StrategyMode.OverallOverwrite);
+        IFluentValidationRegistrar AndForValidator<TValidator>() where TValidator : CustomValidator, new();
+        IFluentValidationRegistrar AndForValidator<TValidator, T>() where TValidator : CustomValidator<T>, new();
+        IFluentValidationRegistrar AndForValidator(CustomValidator validator);
+        IFluentValidationRegistrar AndForValidator<T>(CustomValidator<T> validator);
         void Build();
+        ValidationHandler TempBuild();
     }
 
     public interface IValueFluentValidationRegistrar<T>
@@ -221,6 +236,7 @@ namespace Cosmos.Validation.Registrars
         IFluentValidationRegistrar<TType> AndForType<TType>();
         IFluentValidationRegistrar<TType> AndForType<TType>(string name);
         void Build();
+        ValidationHandler TempBuild();
     }
 
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>

@@ -5,6 +5,8 @@ using System.Reflection;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
+using Cosmos.Validation.Strategies;
+using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation.Registrars
 {
@@ -163,6 +165,138 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
+        
+        #region AndForStrategy
+
+        public IFluentValidationRegistrar AndForStrategy<TStrategy>(StrategyMode mode = StrategyMode.OverallOverwrite)
+            where TStrategy : class, IValidationStrategy, new()
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy<TStrategy>(mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy<TStrategy, T2>(StrategyMode mode = StrategyMode.OverallOverwrite)
+            where TStrategy : class, IValidationStrategy<T2>, new()
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy<TStrategy, T2>(mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy(IValidationStrategy strategy, StrategyMode mode = StrategyMode.OverallOverwrite)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy(strategy, mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy<T2>(IValidationStrategy<T2> strategy, StrategyMode mode = StrategyMode.OverallOverwrite)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy(strategy, mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy<TStrategy>(string name, StrategyMode mode = StrategyMode.OverallOverwrite)
+            where TStrategy : class, IValidationStrategy, new()
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy<TStrategy>(name, mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy<TStrategy, T2>(string name, StrategyMode mode = StrategyMode.OverallOverwrite)
+            where TStrategy : class, IValidationStrategy<T2>, new()
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy<TStrategy, T2>(name, mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy(IValidationStrategy strategy, string name, StrategyMode mode = StrategyMode.OverallOverwrite)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy(strategy, name, mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForStrategy<T2>(IValidationStrategy<T2> strategy, string name, StrategyMode mode = StrategyMode.OverallOverwrite)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForStrategy(strategy, name, mode);
+            return this;
+        }
+
+        #endregion
+        
+        #region RegisterValidator
+
+        public IFluentValidationRegistrar AndForValidator<TValidator>() where TValidator : CustomValidator, new()
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForValidator<TValidator>();
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForValidator<TValidator, T2>() where TValidator : CustomValidator<T2>, new()
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForValidator<TValidator, T2>();
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForValidator(CustomValidator validator)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForValidator(validator);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForValidator<T2>(CustomValidator<T2> validator)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForValidator(validator);
+            return this;
+        }
+
+        #endregion
 
         #region Build
 
@@ -177,6 +311,12 @@ namespace Cosmos.Validation.Registrars
         {
             BuildMySelf();
             _parentRegistrar.Build();
+        }
+
+        public ValidationHandler TempBuild()
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild();
         }
 
         #endregion
