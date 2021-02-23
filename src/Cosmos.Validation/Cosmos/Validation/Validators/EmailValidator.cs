@@ -36,7 +36,7 @@ namespace Cosmos.Validation.Validators
     {
         private ValidationOptions _options { get; set; }
 
-        private EmailValidator() : base("Email Validator") { }
+        public EmailValidator() : base("Email Validator") { }
 
         private EmailValidator(ValidationOptions options) : base("Email Validator")
         {
@@ -73,7 +73,7 @@ namespace Cosmos.Validation.Validators
                 if (!ShouldSkipAtom(instance, ref index, options, failures))
                     return new VerifyResult(failures);
 
-                if (ShouldSkipAtomInLoop(instance, ref index, options, failures))
+                if (!ShouldSkipAtomInLoop(instance, ref index, options, failures))
                     return new VerifyResult(failures);
             }
 
