@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cosmos.Conversions;
 using Cosmos.Validation.Annotations;
 
 namespace Cosmos.Validation.Objects
@@ -66,7 +67,7 @@ namespace Cosmos.Validation.Objects
 
         public object GetValue() => Value;
 
-        public TVal GetValue<TVal>() => Value.As<TVal>();
+        public TVal GetValue<TVal>() => Value.CastTo<TVal>();
 
         #endregion
 
