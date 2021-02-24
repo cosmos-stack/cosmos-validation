@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals
 
         IValidationObjectResolver ExposeObjectResolver();
 
-        CustomValidatorManager ExposeCustomValidatorManager();
+        ICustomValidatorManager ExposeCustomValidatorManager();
 
         ValidationOptions ExposeValidationOptions();
 

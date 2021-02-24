@@ -12,7 +12,7 @@ namespace Cosmos.Validation
     {
         private readonly IValidationProjectManager _projectManager;
         private readonly IValidationObjectResolver _objectResolver;
-        private readonly CustomValidatorManager _customValidatorManager;
+        private readonly ICustomValidatorManager _customValidatorManager;
 
         private ValidationOptions _options;
 
@@ -37,20 +37,20 @@ namespace Cosmos.Validation
         public IValidator Resolve(Type type)
         {
             var d = typeof(AggregationValidator<>);
-            var v = d.MakeGenericType(type);           
-            return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, _options);
+            var v = d.MakeGenericType(type);
+            return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, _customValidatorManager, _options);
         }
 
         public IValidator Resolve(Type type, string name)
         {
             var d = typeof(AggregationValidator<>);
-            var v = d.MakeGenericType(type);            
-            return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, _options);
+            var v = d.MakeGenericType(type);
+            return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, _customValidatorManager, _options);
         }
 
-        public IValidator<T> Resolve<T>() => (IValidator<T>)Resolve(typeof(T));
+        public IValidator<T> Resolve<T>() => (IValidator<T>) Resolve(typeof(T));
 
-        public IValidator<T> Resolve<T>(string name) =>  (IValidator<T>)Resolve(typeof(T), name);
+        public IValidator<T> Resolve<T>(string name) => (IValidator<T>) Resolve(typeof(T), name);
 
         IValidationProjectManager ICorrectProvider.ExposeProjectManager()
         {
@@ -62,7 +62,7 @@ namespace Cosmos.Validation
             return _objectResolver;
         }
 
-        CustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager()
+        ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager()
         {
             return _customValidatorManager;
         }
@@ -91,8 +91,7 @@ namespace Cosmos.Validation
         {
             _customValidatorManager.Register(validator);
         }
-        
-        
+
 
         public void UpdateOptions(ValidationOptions options)
         {

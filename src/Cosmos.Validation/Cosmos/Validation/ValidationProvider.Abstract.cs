@@ -12,7 +12,7 @@ namespace Cosmos.Validation
     {
         private readonly IValidationProjectManager _projectManager;
         private readonly IValidationObjectResolver _objectResolver;
-        private readonly CustomValidatorManager _customValidatorManager;
+        private readonly ICustomValidatorManager _customValidatorManager;
 
         private ValidationOptions _options;
 
@@ -33,38 +33,14 @@ namespace Cosmos.Validation
         {
             var d = typeof(AggregationValidator<>);
             var v = d.MakeGenericType(type);
-
-#if NETFRAMEWORK
-            return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, _options);
-#else
-            var arguments = new List<ArgumentDescriptor>
-            {
-                new("projectManager", _projectManager, typeof(IValidationProjectManager)),
-                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
-                new("options", _options, typeof(ValidationOptions))
-            };
-
-            return TypeVisit.CreateInstance<IValidator>(v, arguments);
-#endif
+            return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, this, _options);
         }
 
         public virtual IValidator Resolve(Type type, string name)
         {
             var d = typeof(AggregationValidator<>);
             var v = d.MakeGenericType(type);
-#if NETFRAMEWORK
-            return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, _options);
-#else
-            var arguments = new List<ArgumentDescriptor>
-            {
-                new("name", name, TypeClass.StringClazz),
-                new("projectManager", _projectManager, typeof(IValidationProjectManager)),
-                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
-                new("options", _options, typeof(ValidationOptions))
-            };
-
-            return TypeVisit.CreateInstance<IValidator>(v, arguments);
-#endif
+            return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, this, _options);
         }
 
         public virtual IValidator<T> Resolve<T>() => (IValidator<T>) Resolve(typeof(T));
@@ -81,7 +57,7 @@ namespace Cosmos.Validation
             return _objectResolver;
         }
 
-        CustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager()
+        ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager()
         {
             return _customValidatorManager;
         }

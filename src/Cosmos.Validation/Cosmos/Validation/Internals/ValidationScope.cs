@@ -27,7 +27,7 @@ namespace Cosmos.Validation.Internals
 
         IValidationObjectResolver ICorrectProvider.ExposeObjectResolver() => InnerPtr.ExposeObjectResolver();
 
-        CustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager() => InnerPtr.ExposeCustomValidatorManager();
+        ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager() => InnerPtr.ExposeCustomValidatorManager();
 
         ValidationOptions ICorrectProvider.ExposeValidationOptions() => InnerPtr.ExposeValidationOptions();
 
