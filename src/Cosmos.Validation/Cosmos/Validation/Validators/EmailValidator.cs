@@ -36,7 +36,10 @@ namespace Cosmos.Validation.Validators
     {
         private ValidationOptions _options { get; set; }
 
-        public EmailValidator() : base("Email Validator") { }
+        public EmailValidator() : base("Email Validator")
+        {
+            _options = new ValidationOptions();
+        }
 
         private EmailValidator(ValidationOptions options) : base("Email Validator")
         {
@@ -189,11 +192,11 @@ namespace Cosmos.Validation.Validators
                 {
                     results.Add(VerifyImpl(value.ConvertToObjectContext()));
                 }
-                // 否则，认为其类型不是所期待的
-                else
-                {
-                    results.Add(VerifyResult.UnexpectedTypeWith(value.MemberName));
-                }
+                // // 否则，认为其类型不是所期待的
+                // else
+                // {
+                //     results.Add(VerifyResult.UnexpectedTypeWith(value.MemberName));
+                // }
             }
 
             return VerifyResult.MakeTogether(results);

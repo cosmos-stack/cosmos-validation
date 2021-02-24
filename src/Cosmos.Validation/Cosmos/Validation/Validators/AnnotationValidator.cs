@@ -26,6 +26,16 @@ namespace Cosmos.Validation.Validators
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
+        public string Name => "Annotation Validator";
+
+        public bool IsAnonymous => false;
+
+        bool ICorrectValidator.IsTypeBinding => false;
+
+        bool ICorrectValidator.IsFluentValidator { get; set; } = false;
+
+        #region GetInstance
+
         public static AnnotationValidator Instance { get; } = new();
 
         public static AnnotationValidator GetInstance() => Instance;
@@ -40,11 +50,7 @@ namespace Cosmos.Validation.Validators
             return new(objectResolver, options);
         }
 
-        public string Name => "Annotation Validator";
-
-        public bool IsAnonymous => false;
-
-        bool ICorrectValidator.IsTypeBinding => false;
+        #endregion
 
         #region Verify
 

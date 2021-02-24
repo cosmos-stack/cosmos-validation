@@ -12,19 +12,22 @@ namespace Cosmos.Validation.Validators
     {
         private readonly IValidationProjectManager _projectManager;
         private readonly IValidationObjectResolver _objectResolver;
+        private readonly ICustomValidatorManager _customValidatorManager;
         private readonly Type _type;
         private readonly string _name;
 
         private readonly ValidationOptions _options;
         private readonly AnnotationValidator _annotationValidator;
-
+        
         public AggregationValidator(
             IValidationProjectManager projectManager,
             IValidationObjectResolver objectResolver,
+            ICustomValidatorManager customValidatorManager,
             ValidationOptions options)
         {
             _projectManager = projectManager ?? throw new ArgumentNullException(nameof(projectManager));
             _objectResolver = objectResolver ?? throw new ArgumentNullException(nameof(objectResolver));
+            _customValidatorManager = customValidatorManager ?? throw new ArgumentNullException(nameof(customValidatorManager));
             _type = typeof(T);
             _name = string.Empty;
             _options = options;
@@ -36,10 +39,12 @@ namespace Cosmos.Validation.Validators
             string name,
             IValidationProjectManager projectManager,
             IValidationObjectResolver objectResolver,
+            ICustomValidatorManager customValidatorManager,
             ValidationOptions options)
         {
             _projectManager = projectManager ?? throw new ArgumentNullException(nameof(projectManager));
             _objectResolver = objectResolver ?? throw new ArgumentNullException(nameof(objectResolver));
+            _customValidatorManager = customValidatorManager ?? throw new ArgumentNullException(nameof(customValidatorManager));
             _type = typeof(T);
             _name = name;
             _options = options;
@@ -53,6 +58,8 @@ namespace Cosmos.Validation.Validators
 
         bool ICorrectValidator.IsTypeBinding => true;
 
+        bool ICorrectValidator.IsFluentValidator { get; set; } = false;
+
         #region Verify
 
         public VerifyResult Verify(T instance)
@@ -65,6 +72,8 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.Verify(context, _options);
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(context, _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
@@ -91,6 +100,8 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.Verify(context, _options);
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(context, _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
@@ -126,6 +137,8 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyOne(valueContext, _options);
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(valueContext, _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.VerifyOne(valueContext);
@@ -159,6 +172,8 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyOne(valueContext, _options);
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(valueContext, _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.VerifyOne(valueContext);
@@ -190,6 +205,8 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyOne(valueContext, _options);
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(valueContext, _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.VerifyOne(valueContext);
@@ -220,7 +237,9 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyMany(context.GetValueMap(), _options);
-
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(context.GetValueMap(), _customValidatorManager.ResolveAll());
+            
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
 
@@ -249,6 +268,8 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyMany(context.GetValueMap(), _options);
+            else if (_options.CustomValidatorEnabled)
+                result1 = CorrectEngine.ValidViaCustomValidators(context.GetValueMap(), _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
                 result2 = _annotationValidator.Verify(context);
