@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Cosmos.Collections;
 
 namespace Cosmos.Validation.Validators
 {
-    public class CustomValidatorManager
+    public class CustomValidatorManager : ICustomValidatorManager
     {
         private readonly Dictionary<string, CustomValidator> _validators = new();
 
@@ -25,6 +24,9 @@ namespace Cosmos.Validation.Validators
             if (validator is null)
                 throw new ArgumentNullException(nameof(validator));
 
+            if (((ICorrectValidator) validator).IsFluentValidator)
+                return;
+
             if (_validators.ContainsKey(validator.Name))
                 return;
 
@@ -35,6 +37,9 @@ namespace Cosmos.Validation.Validators
         {
             if (validator is null)
                 throw new ArgumentNullException(nameof(validator));
+
+            if (((ICorrectValidator) validator).IsFluentValidator)
+                return;
 
             if (_validators.ContainsKey(validator.Name))
                 return;

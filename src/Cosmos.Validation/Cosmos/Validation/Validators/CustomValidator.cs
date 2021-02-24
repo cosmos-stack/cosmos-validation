@@ -29,22 +29,25 @@ namespace Cosmos.Validation.Validators
         public bool IsAnonymous => string.IsNullOrEmpty(Name);
 
         bool ICorrectValidator.IsTypeBinding => false;
+        
+        bool ICorrectValidator.IsFluentValidator { get; set; } = false;
 
         #region Verify
 
         public virtual VerifyResult Verify(Type declaringType, object instance)
         {
-            return VerifyImpl(_objectResolver.Resolve(declaringType, instance));
+            var context = _objectResolver.Resolve(declaringType, instance);
+            return VerifyImpl(context);
         }
 
-        protected abstract VerifyResult VerifyImpl(ObjectContext context);
-
-        public VerifyResult VerifyViaContext(ObjectContext context)
+        public virtual VerifyResult VerifyViaContext(ObjectContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
             return VerifyImpl(context);
         }
+
+        protected abstract VerifyResult VerifyImpl(ObjectContext context);
 
         #endregion
 
@@ -58,15 +61,15 @@ namespace Cosmos.Validation.Validators
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
             return VerifyOneImpl(valueContext);
         }
-        
-        protected abstract VerifyResult VerifyOneImpl(ObjectValueContext context);
 
-        public VerifyResult VerifyOneViaContext(ObjectValueContext context)
+        public virtual VerifyResult VerifyOneViaContext(ObjectValueContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
             return VerifyOneImpl(context);
         }
+
+        protected abstract VerifyResult VerifyOneImpl(ObjectValueContext context);
 
         #endregion
 
@@ -82,10 +85,7 @@ namespace Cosmos.Validation.Validators
 
     public abstract class CustomValidator<T> : CustomValidator, IValidator<T>, ICorrectValidator<T>
     {
-        static CustomValidator()
-        {
-            ObjectContractManager.InitTypeFor<T>();
-        }
+        static CustomValidator() => ObjectContractManager.InitTypeFor<T>();
 
         protected CustomValidator(string name) : base(name)
         {
@@ -110,6 +110,8 @@ namespace Cosmos.Validation.Validators
         }
 
         bool ICorrectValidator.IsTypeBinding => true;
+
+        bool ICorrectValidator.IsFluentValidator { get; set; } = false;
 
         #region ValidationHandler
 
@@ -138,12 +140,14 @@ namespace Cosmos.Validation.Validators
         protected IValueFluentValidationRegistrar<T> ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
         {
             _needToBuildInternalValidationHandler = true;
+            ((ICorrectValidator<T>) this).IsFluentValidator = true;
             return _registrar.ForType<T>().ForMember(memberName, mode);
         }
 
         protected IValueFluentValidationRegistrar<T, TVal> ForMember<TVal>(Expression<Func<T, TVal>> expression, ValueRuleMode mode = ValueRuleMode.Append)
         {
             _needToBuildInternalValidationHandler = true;
+            ((ICorrectValidator<T>) this).IsFluentValidator = true;
             return _registrar.ForType<T>().ForMember(expression, mode);
         }
 
@@ -151,29 +155,36 @@ namespace Cosmos.Validation.Validators
 
         #region Verify
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
-        {
-            return LocalTypedHandler?.Verify(context) ?? VerifyResult.Success;
-        }
-
         public virtual VerifyResult Verify(T instance)
         {
+            if (instance is ObjectContext context)
+                return VerifyImpl(context);
+            if (instance is ObjectValueContext valueContext)
+                return VerifyOneImpl(valueContext);
+            if (instance is IDictionary<string, object> keyValueCollections)
+                return VerifyManyImpl(_objectResolver.Resolve<T>(keyValueCollections));
             return VerifyImpl(_objectResolver.Resolve(instance));
         }
 
         VerifyResult IValidator.Verify(Type declaringType, object instance)
         {
+            if (instance is ObjectContext context)
+                return VerifyImpl(context);
+            if (instance is ObjectValueContext valueContext)
+                return VerifyOneImpl(valueContext);
+            if (instance is IDictionary<string, object> keyValueCollections)
+                return VerifyManyImpl(_objectResolver.Resolve<T>(keyValueCollections));
             return VerifyImpl(_objectResolver.Resolve(declaringType, instance));
+        }
+
+        protected override VerifyResult VerifyImpl(ObjectContext context)
+        {
+            return LocalTypedHandler?.Verify(context, "") ?? VerifyResult.Success;
         }
 
         #endregion
 
         #region VerifyOne
-
-        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
-        {
-            return LocalTypedHandler?.VerifyOne(context) ?? VerifyResult.Success;
-        }
 
         public virtual VerifyResult VerifyOne(Type memberType, object memberValue, string memberName)
         {
@@ -203,14 +214,14 @@ namespace Cosmos.Validation.Validators
             return VerifyOneImpl(valueContext);
         }
 
+        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        {
+            return LocalTypedHandler?.VerifyOne(context) ?? VerifyResult.Success;
+        }
+
         #endregion
 
         #region VerifyMany
-
-        protected virtual VerifyResult VerifyManyImpl(ObjectContext context)
-        {
-            return LocalTypedHandler?.VerifyMany(context) ?? VerifyResult.Success;
-        }
 
         public VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections)
         {
@@ -220,6 +231,11 @@ namespace Cosmos.Validation.Validators
         VerifyResult IValidator.VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
             return VerifyManyImpl(_objectResolver.Resolve(declaringType, keyValueCollections));
+        }
+
+        protected virtual VerifyResult VerifyManyImpl(ObjectContext context)
+        {
+            return LocalTypedHandler?.VerifyMany(context, "") ?? VerifyResult.Success;
         }
 
         #endregion
