@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Projects
     {
         public static List<IProject> CreateTypeProject(
             Dictionary<Type, List<CorrectValueRule>> rulesDictionary,
-            CustomValidatorManager customValidatorManager)
+            ICustomValidatorManager customValidatorManager)
         {
             var result = new List<IProject>();
 
@@ -29,7 +29,7 @@ namespace Cosmos.Validation.Projects
 
         public static List<IProject> CreateNamedTypeProject(
             Dictionary<(Type, string), List<CorrectValueRule>> rulesDictionary,
-            CustomValidatorManager customValidatorManager)
+            ICustomValidatorManager customValidatorManager)
         {
             var result = new List<IProject>();
 

@@ -11,9 +11,9 @@ namespace Cosmos.Validation.Projects
     public class NamedTypeProject : IProject
     {
         private readonly List<CorrectValueRule> _rules;
-        private readonly CustomValidatorManager _customValidatorManager;
+        private readonly ICustomValidatorManager _customValidatorManager;
 
-        public NamedTypeProject(Type type, string name, CustomValidatorManager customValidatorManager)
+        public NamedTypeProject(Type type, string name, ICustomValidatorManager customValidatorManager)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
             _customValidatorManager = customValidatorManager ?? throw new ArgumentNullException(nameof(customValidatorManager));
