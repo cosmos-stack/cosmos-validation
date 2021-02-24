@@ -28,7 +28,7 @@ namespace Cosmos.Validation.Strategies
             return _memberValueRuleBuilders;
         }
 
-        protected IValueRuleBuilder RuleFor(string name)
+        protected IValueRuleBuilder ForMember(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
@@ -46,18 +46,18 @@ namespace Cosmos.Validation.Strategies
             }
         }
 
-        protected IValueRuleBuilder RuleFor(PropertyInfo propertyInfo)
+        protected IValueRuleBuilder ForMember(PropertyInfo propertyInfo)
         {
             if (propertyInfo is null)
                 throw new ArgumentNullException(nameof(propertyInfo));
-            return RuleFor(propertyInfo.Name);
+            return ForMember(propertyInfo.Name);
         }
 
         protected IValueRuleBuilder RuleFor(FieldInfo fieldInfo)
         {
             if (fieldInfo is null)
                 throw new ArgumentNullException(nameof(fieldInfo));
-            return RuleFor(fieldInfo.Name);
+            return ForMember(fieldInfo.Name);
         }
     }
 }
