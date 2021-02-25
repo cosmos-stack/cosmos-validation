@@ -11,8 +11,9 @@ namespace Cosmos.Validation
     {
         private static IValidationProvider DefaultProvider { get; set; }
         private static IValidationProvider CustomMainProvider { get; set; }
-
+        
         private static readonly Dictionary<string, IValidationProvider> ScopedProviders = new();
+        private static readonly object _scopedProviderLockObj = new();
 
         private static IValidationProvider _currentProvider;
         private static ICorrectProvider InnerPtr => (ICorrectProvider) _currentProvider;
@@ -46,23 +47,29 @@ namespace Cosmos.Validation
 
         internal static void RegisterProvider(IValidationProvider validationProvider, string name)
         {
-            if (validationProvider is not null
-             && !string.IsNullOrWhiteSpace(name)
-             && !ScopedProviders.ContainsKey(name))
+            lock (_scopedProviderLockObj)
             {
-                ((ICorrectProvider) validationProvider).Name = name;
-                ScopedProviders[name] = validationProvider;
+                if (validationProvider is not null
+                 && !string.IsNullOrWhiteSpace(name)
+                 && !ScopedProviders.ContainsKey(name))
+                {
+                    ((ICorrectProvider) validationProvider).Name = name;
+                    ScopedProviders[name] = validationProvider;
+                }
             }
         }
 
         internal static void OverrideProvider(IValidationProvider validationProvider, string name)
         {
-            if (validationProvider is not null
-             && !string.IsNullOrWhiteSpace(name)
-             && ScopedProviders.ContainsKey(name))
+            lock (_scopedProviderLockObj)
             {
-                ((ICorrectProvider) validationProvider).Name = name;
-                ScopedProviders[name] = validationProvider;
+                if (validationProvider is not null
+                 && !string.IsNullOrWhiteSpace(name)
+                 && ScopedProviders.ContainsKey(name))
+                {
+                    ((ICorrectProvider) validationProvider).Name = name;
+                    ScopedProviders[name] = validationProvider;
+                }
             }
         }
 
@@ -79,8 +86,11 @@ namespace Cosmos.Validation
             if (ValidationProvider.IsDefault(name))
                 return ExposeValidationProvider();
 
-            if (!string.IsNullOrWhiteSpace(name) && ScopedProviders.TryGetValue(name, out var provider))
-                return provider;
+            lock (_scopedProviderLockObj)
+            {
+                if (!string.IsNullOrWhiteSpace(name) && ScopedProviders.TryGetValue(name, out var provider))
+                    return provider;
+            }
 
             return default;
         }
@@ -107,8 +117,11 @@ namespace Cosmos.Validation
 
         public static IValidationProvider Use(string name)
         {
-            if (!string.IsNullOrWhiteSpace(name) && ScopedProviders.TryGetValue(name, out var provider))
-                return new ValidationScope(provider, name);
+            lock (_scopedProviderLockObj)
+            {
+                if (!string.IsNullOrWhiteSpace(name) && ScopedProviders.TryGetValue(name, out var provider))
+                    return new ValidationScope(provider, name);
+            }
 
             return new ValidationScope(_currentProvider, ((ICorrectProvider) _currentProvider).Name);
         }
@@ -139,18 +152,24 @@ namespace Cosmos.Validation
 
         public static void UpdateOptions(string providerName, ValidationOptions options)
         {
-            if (string.IsNullOrWhiteSpace(providerName))
-                UpdateMainOptions(options);
-            else if (ScopedProviders.TryGetValue(providerName, out var provider))
-                provider.UpdateOptions(options);
+            lock (_scopedProviderLockObj)
+            {
+                if (string.IsNullOrWhiteSpace(providerName))
+                    UpdateMainOptions(options);
+                else if (ScopedProviders.TryGetValue(providerName, out var provider))
+                    provider.UpdateOptions(options);
+            }
         }
 
         public static void UpdateOptions(string providerName, Action<ValidationOptions> optionAct)
         {
-            if (string.IsNullOrWhiteSpace(providerName))
-                UpdateMainOptions(optionAct);
-            else if (ScopedProviders.TryGetValue(providerName, out var provider))
-                provider.UpdateOptions(optionAct);
+            lock (_scopedProviderLockObj)
+            {
+                if (string.IsNullOrWhiteSpace(providerName))
+                    UpdateMainOptions(optionAct);
+                else if (ScopedProviders.TryGetValue(providerName, out var provider))
+                    provider.UpdateOptions(optionAct);
+            }
         }
 
         #endregion
