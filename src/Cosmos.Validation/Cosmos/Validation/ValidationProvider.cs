@@ -16,6 +16,13 @@ namespace Cosmos.Validation
 
         private ValidationOptions _options;
 
+        static ValidationProvider()
+        {
+#if !NETFRAMEWORK
+            NatashaInitializer.InitializeAndPreheating();
+#endif
+        }
+
         public ValidationProvider(
             IValidationProjectManager projectManager,
             IValidationObjectResolver objectResolver,
@@ -38,60 +45,52 @@ namespace Cosmos.Validation
         {
             var d = typeof(AggregationValidator<>);
             var v = d.MakeGenericType(type);
+#if !NETFRAMEWORK
+            var args = new List<ArgumentDescriptor>
+            {
+                new("projectManager", _projectManager, typeof(IValidationProjectManager)),
+                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
+                new("customValidatorManager", _customValidatorManager, typeof(ICustomValidatorManager)),
+                new("options", _options, typeof(ValidationOptions))
+            };
+            
+            return TypeVisit.CreateInstance<IValidator>(v, args);
+#else
             return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, _customValidatorManager, _options);
+#endif
         }
 
         public IValidator Resolve(Type type, string name)
         {
             var d = typeof(AggregationValidator<>);
             var v = d.MakeGenericType(type);
+#if !NETFRAMEWORK
+            var args = new List<ArgumentDescriptor>
+            {
+                new("name", name, typeof(string)),
+                new("projectManager", _projectManager, typeof(IValidationProjectManager)),
+                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
+                new("customValidatorManager", _customValidatorManager, typeof(ICustomValidatorManager)),
+                new("options", _options, typeof(ValidationOptions))
+            };
+            
+            return TypeVisit.CreateInstance<IValidator>(v, args);
+#else
             return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, _customValidatorManager, _options);
+#endif
         }
 
         public IValidator<T> Resolve<T>() => (IValidator<T>) Resolve(typeof(T));
 
         public IValidator<T> Resolve<T>(string name) => (IValidator<T>) Resolve(typeof(T), name);
 
-        IValidationProjectManager ICorrectProvider.ExposeProjectManager()
-        {
-            return _projectManager;
-        }
+        IValidationProjectManager ICorrectProvider.ExposeProjectManager() => _projectManager;
 
-        IValidationObjectResolver ICorrectProvider.ExposeObjectResolver()
-        {
-            return _objectResolver;
-        }
+        IValidationObjectResolver ICorrectProvider.ExposeObjectResolver() => _objectResolver;
 
-        ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager()
-        {
-            return _customValidatorManager;
-        }
+        ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager() => _customValidatorManager;
 
-        ValidationOptions ICorrectProvider.ExposeValidationOptions()
-        {
-            return _options;
-        }
-
-        void ICorrectProvider.RegisterValidator<TValidator>()
-        {
-            _customValidatorManager.Register<TValidator>();
-        }
-
-        void ICorrectProvider.RegisterValidator<TValidator, T>()
-        {
-            _customValidatorManager.Register<TValidator, T>();
-        }
-
-        void ICorrectProvider.RegisterValidator(CustomValidator validator)
-        {
-            _customValidatorManager.Register(validator);
-        }
-
-        void ICorrectProvider.RegisterValidator<T>(CustomValidator<T> validator)
-        {
-            _customValidatorManager.Register(validator);
-        }
-
+        ValidationOptions ICorrectProvider.ExposeValidationOptions() => _options;
 
         public void UpdateOptions(ValidationOptions options)
         {

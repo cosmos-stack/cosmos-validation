@@ -31,14 +31,6 @@ namespace Cosmos.Validation.Internals
 
         ValidationOptions ICorrectProvider.ExposeValidationOptions() => InnerPtr.ExposeValidationOptions();
 
-        void ICorrectProvider.RegisterValidator<TValidator>() => InnerPtr.RegisterValidator<TValidator>();
-
-        void ICorrectProvider.RegisterValidator<TValidator, T>() => InnerPtr.RegisterValidator<TValidator, T>();
-
-        void ICorrectProvider.RegisterValidator(CustomValidator validator) => InnerPtr.RegisterValidator(validator);
-
-        void ICorrectProvider.RegisterValidator<T>(CustomValidator<T> validator) => InnerPtr.RegisterValidator(validator);
-
         public IValidator Resolve(Type type) => _validationProvider.Resolve(type);
 
         public IValidator Resolve(Type type, string name) => _validationProvider.Resolve(type, name);
