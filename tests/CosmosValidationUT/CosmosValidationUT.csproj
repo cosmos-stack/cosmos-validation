@@ -36,9 +36,4 @@
         <ProjectReference Include="..\..\src\Cosmos.Validation\Cosmos.Validation.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="RuleUT" />
-      <Folder Include="StrategyUT" />
-    </ItemGroup>
-
 </Project>
