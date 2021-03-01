@@ -32,7 +32,7 @@ namespace Cosmos.Validation
         public VerifyResult(VerifyFailure failure)
         {
             _failures = new List<VerifyFailure>();
-            if(failure is not null)
+            if (failure is not null)
                 _failures.Add(failure);
             _success = !_failures.Any();
         }
@@ -133,9 +133,8 @@ namespace Cosmos.Validation
 
         internal static VerifyResult UnregisterProjectForSuchNamedType { get; } = new(VerifyFailure.Create("$NamedProject", "The Project of the corresponding type and name is not registered."));
 
-        internal static VerifyResult MemberIsNotExists(string memberName)=>new(VerifyFailure.Create(memberName, "Member name is not exists."));
+        internal static VerifyResult MemberIsNotExists(string memberName) => new(VerifyFailure.Create(memberName, "Member name is not exists."));
 
-        
         #endregion
 
         #region Base
@@ -190,6 +189,9 @@ namespace Cosmos.Validation
 
             foreach (var result in slaveResults)
             {
+                if (result is null)
+                    continue;
+
                 if (result.IsValid)
                     continue;
 
@@ -210,6 +212,22 @@ namespace Cosmos.Validation
         public static VerifyResult MakeTogether(List<VerifyResult> results)
         {
             if (results is null)
+                return Success;
+
+            if (results.Where(v => v is not null).All(v => v.IsValid))
+                return Success;
+
+            var mainResult = new VerifyResult();
+
+            return Merge(mainResult, results.ToArray());
+        }
+
+        public static VerifyResult MakeTogether(params VerifyResult[] results)
+        {
+            if (results is null)
+                return Success;
+
+            if (results.Where(v => v is not null).All(v => v.IsValid))
                 return Success;
 
             var mainResult = new VerifyResult();
