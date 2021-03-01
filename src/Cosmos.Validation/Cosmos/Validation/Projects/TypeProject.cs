@@ -12,12 +12,10 @@ namespace Cosmos.Validation.Projects
     public class TypeProject : IProject
     {
         private readonly List<CorrectValueRule> _rules;
-        private readonly ICustomValidatorManager _customValidatorManager;
 
-        public TypeProject(Type type, ICustomValidatorManager customValidatorManager)
+        public TypeProject(Type type)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
-            _customValidatorManager = customValidatorManager ?? throw new ArgumentNullException(nameof(customValidatorManager));
             Name = type.GetFullyQualifiedName();
             _rules = new();
         }
@@ -33,34 +31,19 @@ namespace Cosmos.Validation.Projects
             foreach (var rule in rules) _rules.Add(rule);
         }
 
-        public VerifyResult Verify(ObjectContext context, ValidationOptions options)
+        public VerifyResult Verify(ObjectContext context)
         {
-            return CorrectEngine.Valid(
-                context, 
-                _rules,
-                options.CustomValidatorEnabled
-                    ? _customValidatorManager.ResolveAll()
-                    : _customValidatorManager.ResolveEmpty());
+            return CorrectEngine.Valid(context, _rules);
         }
 
-        public VerifyResult VerifyOne(ObjectValueContext context, ValidationOptions options)
+        public VerifyResult VerifyOne(ObjectValueContext context)
         {
-            return CorrectEngine.ValidOne(
-                context,
-                _rules.Where(x => x.MemberName == context.MemberName).ToList(),
-                options.CustomValidatorEnabled
-                    ? _customValidatorManager.ResolveAll()
-                    : _customValidatorManager.ResolveEmpty());
+            return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList());
         }
 
-        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections, ValidationOptions options)
+        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
         {
-            return CorrectEngine.ValidMany(
-                keyValueCollections,
-                _rules,
-                options.CustomValidatorEnabled
-                    ? _customValidatorManager.ResolveAll()
-                    : _customValidatorManager.ResolveEmpty());
+            return CorrectEngine.ValidMany(keyValueCollections, _rules);
         }
     }
 }

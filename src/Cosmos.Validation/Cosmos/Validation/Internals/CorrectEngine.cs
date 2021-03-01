@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals
 {
     internal static class CorrectEngine
     {
-        public static VerifyResult Valid(ObjectContext context, List<CorrectValueRule> rules, IEnumerable<CustomValidator> validators)
+        public static VerifyResult Valid(ObjectContext context, List<CorrectValueRule> rules)
         {
             var len = rules.Count;
             var failures = new List<VerifyFailure>();
@@ -24,14 +24,10 @@ namespace Cosmos.Validation.Internals
                 ValidCore(context, valueRule, failures, nameOfExecutedRules);
             }
 
-            var mainResult = MakeMainResult(failures, nameOfExecutedRules);
-
-            var slaveResults = MakeSlaveResults(context, validators);
-
-            return VerifyResult.Merge(mainResult, slaveResults.ToArray());
+            return MakeMainResult(failures, nameOfExecutedRules);
         }
 
-        public static VerifyResult ValidOne(ObjectValueContext context, List<CorrectValueRule> rules, IEnumerable<CustomValidator> validators)
+        public static VerifyResult ValidOne(ObjectValueContext context, List<CorrectValueRule> rules)
         {
             var len = rules.Count;
             var failures = new List<VerifyFailure>();
@@ -44,14 +40,10 @@ namespace Cosmos.Validation.Internals
                 ValidCore(context, valueRule, failures, nameOfExecutedRules);
             }
 
-            var mainResult = MakeMainResult(failures, nameOfExecutedRules);
-
-            var slaveResults = MakeSlaveResults(context, validators);
-
-            return VerifyResult.Merge(mainResult, slaveResults.ToArray());
+            return MakeMainResult(failures, nameOfExecutedRules);
         }
 
-        public static VerifyResult ValidMany(IDictionary<string, ObjectValueContext> keyValueCollections, List<CorrectValueRule> rules, IEnumerable<CustomValidator> validators)
+        public static VerifyResult ValidMany(IDictionary<string, ObjectValueContext> keyValueCollections, List<CorrectValueRule> rules)
         {
             var len = rules.Count;
             var failures = new List<VerifyFailure>();
@@ -65,14 +57,28 @@ namespace Cosmos.Validation.Internals
                     ValidCore(context, valueRule, failures, nameOfExecutedRules);
             }
 
-            var mainResult = MakeMainResult(failures, nameOfExecutedRules);
+            return MakeMainResult(failures, nameOfExecutedRules);
+        }
 
+        public static VerifyResult ValidViaCustomValidators(ObjectContext context, IEnumerable<CustomValidator> validators)
+        {
+            return VerifyResult.MakeTogether(MakeSlaveResults(context, validators).ToList());
+        }
+
+        public static VerifyResult ValidViaCustomValidators(ObjectValueContext context, IEnumerable<CustomValidator> validators)
+        {
+            return VerifyResult.MakeTogether(MakeSlaveResults(context, validators).ToList());
+        }
+
+        public static VerifyResult ValidViaCustomValidators(IDictionary<string, ObjectValueContext> keyValueCollections, IEnumerable<CustomValidator> validators)
+        {
+            var slaveResults = new List<VerifyResult>();
             foreach (var context in keyValueCollections.Values)
             {
                 slaveResults.AddRange(MakeSlaveResults(context, validators));
             }
 
-            return VerifyResult.Merge(mainResult, slaveResults.ToArray());
+            return VerifyResult.MakeTogether(slaveResults);
         }
 
         private static void ValidCore(ObjectContext context, CorrectValueRule valueRule, List<VerifyFailure> failures, List<string> nameOfExecutedRules)
@@ -138,13 +144,13 @@ namespace Cosmos.Validation.Internals
 
         private static IEnumerable<VerifyResult> MakeSlaveResults(ObjectContext context, IEnumerable<CustomValidator> validators)
         {
-            foreach (var validator in validators)
+            foreach (var validator in validators.ToList())
                 yield return validator.VerifyViaContext(context);
         }
 
         private static IEnumerable<VerifyResult> MakeSlaveResults(ObjectValueContext context, IEnumerable<CustomValidator> validators)
         {
-            foreach (var validator in validators)
+            foreach (var validator in validators.ToList())
                 yield return validator.VerifyOneViaContext(context);
         }
     }

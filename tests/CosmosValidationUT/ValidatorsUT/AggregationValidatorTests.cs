@@ -143,11 +143,11 @@ namespace CosmosValidationUT.ValidatorsUT
 
             var validator = ValidationMe.Use("UT_VerifyOneShouldBeFailureTest").Resolve<NiceBoat>();
 
-            validator.VerifyOne(typeof(string), "", "Name").IsValid.ShouldBeFalse();
-            validator.VerifyOne(typeof(long), -1000, "Length").IsValid.ShouldBeFalse();
-            validator.VerifyOne(typeof(long), -20, "Width").IsValid.ShouldBeFalse();
-            validator.VerifyOne(typeof(DateTime), DateTimeFactory.Create(2020, 12, 21), "CreateTime").IsValid.ShouldBeTrue();
-            validator.VerifyOne(typeof(string), "nice@@boat.com", "Email").IsValid.ShouldBeTrue(); // Because Annotation and CustomValidation are all disable.
+            validator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
+            validator.VerifyOne(typeof(NiceBoat), -1000, "Length").IsValid.ShouldBeFalse();
+            validator.VerifyOne(typeof(NiceBoat), -20, "Width").IsValid.ShouldBeFalse();
+            validator.VerifyOne(typeof(NiceBoat), DateTimeFactory.Create(2020, 12, 21), "CreateTime").IsValid.ShouldBeTrue();
+            validator.VerifyOne(typeof(NiceBoat), "nice@@boat.com", "Email").IsValid.ShouldBeTrue(); // Because Annotation and CustomValidation are all disable.
         }
 
         [Fact(DisplayName = "VerifyOne with property selector and return a success VerifyResult.")]
