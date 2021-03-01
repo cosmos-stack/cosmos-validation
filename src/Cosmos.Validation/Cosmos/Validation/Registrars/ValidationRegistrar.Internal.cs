@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cosmos.Collections;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Internals.Rules;
@@ -25,9 +26,14 @@ namespace Cosmos.Validation.Registrars
 
         private ICorrectProvider InnerPtr => (ICorrectProvider) _targetProvider;
 
+        private ICustomValidatorManager CustomValidatorManager => InnerPtr.ExposeCustomValidatorManager();
+
         public string Name => _nameOfProvider;
 
-        public InternalValidationRegistrar(IValidationProvider targetProvider, RegisterMode mode, string nameOfProvider)
+        public InternalValidationRegistrar(
+            IValidationProvider targetProvider,
+            RegisterMode mode,
+            string nameOfProvider)
         {
             _targetProvider = targetProvider;
             _registerMode = mode;
@@ -122,25 +128,25 @@ namespace Cosmos.Validation.Registrars
 
         public IValidationRegistrar ForValidator<TValidator>() where TValidator : CustomValidator, new()
         {
-            InnerPtr.RegisterValidator<TValidator>();
+            CustomValidatorManager.Register<TValidator>();
             return this;
         }
 
         public IValidationRegistrar ForValidator<TValidator, T>() where TValidator : CustomValidator<T>, new()
         {
-            InnerPtr.RegisterValidator<TValidator, T>();
+            CustomValidatorManager.Register<TValidator, T>();
             return this;
         }
 
         public IValidationRegistrar ForValidator(CustomValidator validator)
         {
-            InnerPtr.RegisterValidator(validator);
+            CustomValidatorManager.Register(validator);
             return this;
         }
 
         public IValidationRegistrar ForValidator<T>(CustomValidator<T> validator)
         {
-            InnerPtr.RegisterValidator(validator);
+            CustomValidatorManager.Register(validator);
             return this;
         }
 
@@ -185,7 +191,11 @@ namespace Cosmos.Validation.Registrars
 
         public ValidationHandler TempBuild()
         {
-            return new(GetProjects(), InnerPtr.ExposeObjectResolver(), InnerPtr.ExposeValidationOptions());
+            return new(
+                GetProjects(),
+                InnerPtr.ExposeObjectResolver(),
+                CustomValidatorManager,
+                InnerPtr.ExposeValidationOptions());
         }
 
         public ValidationHandler TempBuild(ValidationHandler handler)
@@ -197,7 +207,7 @@ namespace Cosmos.Validation.Registrars
 
         #region BuildForMember
 
-        public void BuildForMember(Type type, string memberName, Func<IValueRuleBuilder, IValueRuleBuilder> func)
+        void ICorrectRegistrar.BuildForMember(Type type, string memberName, Func<IValueRuleBuilder, IValueRuleBuilder> func)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -214,11 +224,11 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, type);
         }
 
-        public void BuildForMember(Type type, string memberName, string name, Func<IValueRuleBuilder, IValueRuleBuilder> func)
+        void ICorrectRegistrar.BuildForMember(Type type, string memberName, string name, Func<IValueRuleBuilder, IValueRuleBuilder> func)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                BuildForMember(type, memberName, func);
+                ((ICorrectRegistrar) this).BuildForMember(type, memberName, func);
                 return;
             }
 
@@ -237,7 +247,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, type, name);
         }
 
-        public void BuildForMember(ObjectValueContract contract, Func<IValueRuleBuilder, IValueRuleBuilder> func)
+        void ICorrectRegistrar.BuildForMember(ObjectValueContract contract, Func<IValueRuleBuilder, IValueRuleBuilder> func)
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -248,11 +258,11 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, contract.DeclaringType);
         }
 
-        public void BuildForMember(ObjectValueContract contract, string name, Func<IValueRuleBuilder, IValueRuleBuilder> func)
+        void ICorrectRegistrar.BuildForMember(ObjectValueContract contract, string name, Func<IValueRuleBuilder, IValueRuleBuilder> func)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                BuildForMember(contract, func);
+                ((ICorrectRegistrar) this).BuildForMember(contract, func);
                 return;
             }
 
@@ -265,18 +275,18 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, contract.DeclaringType, name);
         }
 
-        public void BuildForMember(CorrectValueRule rule)
+        void ICorrectRegistrar.BuildForMember(CorrectValueRule rule)
         {
             if (rule is null)
                 throw new ArgumentNullException(nameof(rule));
             AddOrUpdateValueRule(rule, rule.Contract.DeclaringType);
         }
 
-        public void BuildForMember(string name, CorrectValueRule rule)
+        void ICorrectRegistrar.BuildForMember(string name, CorrectValueRule rule)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                BuildForMember(rule);
+                ((ICorrectRegistrar) this).BuildForMember(rule);
                 return;
             }
 
@@ -285,7 +295,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, rule.Contract.DeclaringType, name);
         }
 
-        public void BuildForMember<T>(string memberName, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        void ICorrectRegistrar.BuildForMember<T>(string memberName, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
         {
             if (string.IsNullOrWhiteSpace(memberName))
                 throw new ArgumentNullException(nameof(memberName));
@@ -302,11 +312,11 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, typeof(T));
         }
 
-        public void BuildForMember<T>(string memberName, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        void ICorrectRegistrar.BuildForMember<T>(string memberName, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                BuildForMember<T>(memberName, func);
+                ((ICorrectRegistrar) this).BuildForMember<T>(memberName, func);
                 return;
             }
 
@@ -323,7 +333,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, typeof(T), name);
         }
 
-        public void BuildForMember<T>(ObjectValueContract contract, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        void ICorrectRegistrar.BuildForMember<T>(ObjectValueContract contract, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -334,11 +344,11 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, contract.DeclaringType);
         }
 
-        public void BuildForMember<T>(ObjectValueContract contract, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        void ICorrectRegistrar.BuildForMember<T>(ObjectValueContract contract, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                BuildForMember(contract, func);
+                ((ICorrectRegistrar) this).BuildForMember(contract, func);
                 return;
             }
 
@@ -351,18 +361,18 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, contract.DeclaringType, name);
         }
 
-        public void BuildForMember<T>(CorrectValueRule rule)
+        void ICorrectRegistrar.BuildForMember<T>(CorrectValueRule rule)
         {
             if (rule is null)
                 throw new ArgumentNullException(nameof(rule));
             AddOrUpdateValueRule(rule, rule.Contract.DeclaringType);
         }
 
-        public void BuildForMember<T>(string name, CorrectValueRule rule)
+        void ICorrectRegistrar.BuildForMember<T>(string name, CorrectValueRule rule)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                BuildForMember<T>(rule);
+                ((ICorrectRegistrar) this).BuildForMember<T>(rule);
                 return;
             }
 
@@ -522,7 +532,7 @@ namespace Cosmos.Validation.Registrars
         #endregion
 
         #region GetProjects/GetProjectManager
-        
+
         private IValidationProjectManager GetProjectManager()
         {
             ICorrectProvider provider;
@@ -557,9 +567,9 @@ namespace Cosmos.Validation.Registrars
 
         private IEnumerable<IProject> GetProjects()
         {
-            foreach (var project in ProjectFactory.CreateTypeProject(_typedRulesDictionary, InnerPtr.ExposeCustomValidatorManager()))
+            foreach (var project in ProjectFactory.CreateTypeProject(_typedRulesDictionary))
                 yield return project;
-            foreach (var project in ProjectFactory.CreateNamedTypeProject(_namedRulesDictionary, InnerPtr.ExposeCustomValidatorManager()))
+            foreach (var project in ProjectFactory.CreateNamedTypeProject(_namedRulesDictionary))
                 yield return project;
         }
 

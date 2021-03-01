@@ -59,7 +59,7 @@ namespace Cosmos.Validation.Registrars
             return new InternalValidationRegistrar(provider, RegisterMode.Hosted, name);
         }
 
-        internal static IValidationRegistrar ContinueWithoutException(string name)
+        internal static IValidationRegistrar ContinueOrDefault(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 return Continue();
