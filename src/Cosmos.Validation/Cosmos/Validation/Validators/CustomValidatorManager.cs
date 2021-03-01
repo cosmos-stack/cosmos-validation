@@ -7,7 +7,10 @@ namespace Cosmos.Validation.Validators
 {
     public class CustomValidatorManager : ICustomValidatorManager
     {
+        //For all normal CustomValidator/CustomValidator<T>
         private readonly Dictionary<string, CustomValidator> _validators = new();
+
+        #region Register
 
         public void Register<TValidator>() where TValidator : CustomValidator, new()
         {
@@ -23,29 +26,30 @@ namespace Cosmos.Validation.Validators
         {
             if (validator is null)
                 throw new ArgumentNullException(nameof(validator));
-
-            if (((ICorrectValidator) validator).IsFluentValidator)
-                return;
-
-            if (_validators.ContainsKey(validator.Name))
-                return;
-
-            _validators.AddValueIfNotExist(validator.Name, validator);
+            RegisterImpl(validator);
         }
 
         public void Register<T>(CustomValidator<T> validator)
         {
             if (validator is null)
                 throw new ArgumentNullException(nameof(validator));
+            RegisterImpl(validator);
+        }
 
-            if (((ICorrectValidator) validator).IsFluentValidator)
-                return;
+        #endregion
 
+        #region RegisterImpl
+
+        private void RegisterImpl(CustomValidator validator)
+        {
             if (_validators.ContainsKey(validator.Name))
                 return;
-
             _validators.AddValueIfNotExist(validator.Name, validator);
         }
+        
+        #endregion
+
+        #region Resolve
 
         public CustomValidator Resolve(string name)
         {
@@ -66,5 +70,7 @@ namespace Cosmos.Validation.Validators
         public IEnumerable<CustomValidator> ResolveEmpty() => Enumerable.Empty<CustomValidator>();
 
         public IEnumerable<CustomValidator> ResolveBy(Func<CustomValidator, bool> filter) => _validators.Values.Where(filter);
+
+        #endregion
     }
 }

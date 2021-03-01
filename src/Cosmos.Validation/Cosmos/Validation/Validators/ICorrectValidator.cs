@@ -1,10 +1,12 @@
-﻿namespace Cosmos.Validation.Validators
+﻿using System;
+
+namespace Cosmos.Validation.Validators
 {
     internal interface ICorrectValidator
     {
         bool IsTypeBinding { get; }
 
-        bool IsFluentValidator { get; set; }
+        Type SourceType { get; }
     }
 
     internal interface ICorrectValidator<T> : ICorrectValidator { }
