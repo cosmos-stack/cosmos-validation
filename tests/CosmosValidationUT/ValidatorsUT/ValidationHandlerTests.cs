@@ -110,11 +110,11 @@ namespace CosmosValidationUT.ValidatorsUT
                                              .AndForMember("Width").GreaterThanOrEqual(0)
                                              .TempBuild();
 
-            handler.VerifyOne(typeof(NiceBoat), typeof(string), "Nice", "Name").IsValid.ShouldBeTrue();
-            handler.VerifyOne(typeof(NiceBoat), typeof(long), 1000, "Length").IsValid.ShouldBeTrue();
-            handler.VerifyOne(typeof(NiceBoat), typeof(long), 20, "Width").IsValid.ShouldBeTrue();
-            handler.VerifyOne(typeof(NiceBoat), typeof(DateTime), DateTimeFactory.Create(2020, 12, 21), "CreateTime").IsValid.ShouldBeTrue();
-            handler.VerifyOne(typeof(NiceBoat), typeof(string), "nice@boat.com", "Email").IsValid.ShouldBeTrue();
+            handler.VerifyOne(typeof(NiceBoat), "Nice", "Name").IsValid.ShouldBeTrue();
+            handler.VerifyOne(typeof(NiceBoat), 1000, "Length").IsValid.ShouldBeTrue();
+            handler.VerifyOne(typeof(NiceBoat), 20, "Width").IsValid.ShouldBeTrue();
+            handler.VerifyOne(typeof(NiceBoat), DateTimeFactory.Create(2020, 12, 21), "CreateTime").IsValid.ShouldBeTrue();
+            handler.VerifyOne(typeof(NiceBoat), "nice@boat.com", "Email").IsValid.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "VerifyOne and return a failure VerifyResult.")]
@@ -135,11 +135,11 @@ namespace CosmosValidationUT.ValidatorsUT
                                              .AndForMember("Width").GreaterThanOrEqual(0)
                                              .TempBuild();
 
-            handler.VerifyOne(typeof(NiceBoat), typeof(string), "", "Name").IsValid.ShouldBeFalse();
-            handler.VerifyOne(typeof(NiceBoat), typeof(long), -1000, "Length").IsValid.ShouldBeFalse();
-            handler.VerifyOne(typeof(NiceBoat), typeof(long), -20, "Width").IsValid.ShouldBeFalse();
-            handler.VerifyOne(typeof(NiceBoat), typeof(DateTime), DateTimeFactory.Create(2020, 12, 21), "CreateTime").IsValid.ShouldBeTrue();
-            handler.VerifyOne(typeof(NiceBoat), typeof(string), "nice@@boat.com", "Email").IsValid.ShouldBeTrue(); // Because Annotation and CustomValidation are all disable.
+            handler.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
+            handler.VerifyOne(typeof(NiceBoat), -1000, "Length").IsValid.ShouldBeFalse();
+            handler.VerifyOne(typeof(NiceBoat), -20, "Width").IsValid.ShouldBeFalse();
+            handler.VerifyOne(typeof(NiceBoat), DateTimeFactory.Create(2020, 12, 21), "CreateTime").IsValid.ShouldBeTrue();
+            handler.VerifyOne(typeof(NiceBoat), "nice@@boat.com", "Email").IsValid.ShouldBeTrue(); // Because Annotation and CustomValidation are all disable.
         }
 
         [Fact(DisplayName = "VerifyOne with property selector and return a success VerifyResult.")]

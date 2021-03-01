@@ -6,6 +6,8 @@ using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
+using Cosmos.Validation.Registrars;
+using Cosmos.Validation.Strategies;
 using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation
@@ -16,11 +18,17 @@ namespace Cosmos.Validation
         private readonly Dictionary<int, IProject> _typedProjects = new();
 
         private readonly IValidationObjectResolver _objectResolver;
+        private readonly ICustomValidatorManager _customValidatorManager;
         private readonly ValidationOptions _options;
 
-        internal ValidationHandler(IEnumerable<IProject> projects, IValidationObjectResolver objectResolver, ValidationOptions options)
+        internal ValidationHandler(
+            IEnumerable<IProject> projects,
+            IValidationObjectResolver objectResolver,
+            ICustomValidatorManager customValidatorManager,
+            ValidationOptions options)
         {
             _objectResolver = objectResolver ?? throw new ArgumentNullException(nameof(objectResolver));
+            _customValidatorManager = customValidatorManager ?? throw new ArgumentNullException(nameof(customValidatorManager));
             _options = options ?? throw new ArgumentNullException(nameof(options));
 
             if (projects is not null)
@@ -80,41 +88,41 @@ namespace Cosmos.Validation
                 throw new ArgumentNullException(nameof(context));
 
             IProject project;
-            VerifyResult result1 = null, result2 = null;
+            VerifyResult result1 = null, result2 = null, result3 = null;
 
             if (string.IsNullOrWhiteSpace(projectName))
             {
                 if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out project))
-                    result1 = project.Verify(context, _options);
+                    result1 = project.Verify(context);
             }
             else
             {
                 if (_namedTypeProjects.TryGetValue((context.Type.GetHashCode(), projectName.GetHashCode()), out project))
-                    result1 = project.Verify(context, _options);
+                    result1 = project.Verify(context);
             }
 
-            if (_options.AnnotationEnabled)
-                result2 = AnnotationValidator.Verify(context);
+            if (_options.CustomValidatorEnabled)
+                result2 = CorrectEngine.ValidViaCustomValidators(context, _customValidatorManager.ResolveAll());
 
-            if (result1 is null && result2 is null)
+            if (_options.AnnotationEnabled)
+                result3 = AnnotationValidator.Verify(context);
+
+            if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnexpectedTypeOrSuccess();
 
-            if (result2 is null) return result1;
-            if (result1 is null) return result2;
-            return VerifyResult.Merge(result1, result2);
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
+                : VerifyResult.Merge(result1, result2, result3);
         }
 
         #endregion
 
         #region VerifyOne
 
-        public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
+        public VerifyResult VerifyOne(Type declaringType, object memberValue, string memberName)
         {
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-
-            if (memberType is null)
-                throw new ArgumentNullException(nameof(memberType));
 
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
             if (valueContract is null)
@@ -124,13 +132,10 @@ namespace Cosmos.Validation
             return VerifyOne(valueContext, declaringType, "");
         }
 
-        public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName, string projectName)
+        public VerifyResult VerifyOne(Type declaringType, object memberValue, string memberName, string projectName)
         {
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
-
-            if (memberType is null)
-                throw new ArgumentNullException(nameof(memberType));
 
             var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
             if (valueContract is null)
@@ -140,9 +145,9 @@ namespace Cosmos.Validation
             return VerifyOne(valueContext, declaringType, projectName);
         }
 
-        public VerifyResult VerifyOne<T, TVal>(object memberValue, string memberName) => VerifyOne(typeof(T), typeof(TVal), memberValue, memberName);
+        public VerifyResult VerifyOne<T>(object memberValue, string memberName) => VerifyOne(typeof(T), memberValue, memberName);
 
-        public VerifyResult VerifyOne<T, TVal>(object memberValue, string memberName, string projectName) => VerifyOne(typeof(T), typeof(TVal), memberValue, memberName, projectName);
+        public VerifyResult VerifyOne<T>(object memberValue, string memberName, string projectName) => VerifyOne(typeof(T), memberValue, memberName, projectName);
 
         public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
         {
@@ -155,7 +160,7 @@ namespace Cosmos.Validation
                 return VerifyResult.MemberIsNotExists(memberName);
             var valueContext = ObjectValueContext.Create(memberValue, valueContract);
 
-            return VerifyOne(valueContext, typeof(T),"");
+            return VerifyOne(valueContext, typeof(T), "");
         }
 
         public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, string projectName)
@@ -178,30 +183,33 @@ namespace Cosmos.Validation
                 throw new ArgumentNullException(nameof(context));
 
             IProject project;
-            VerifyResult result1 = null, result2 = null;
+            VerifyResult result1 = null, result2 = null, result3 = null;
 
             if (string.IsNullOrWhiteSpace(projectName))
             {
                 var t = declaringType ?? context.DeclaringType;
                 if (_typedProjects.TryGetValue(t.GetHashCode(), out project))
-                    result1 = project.VerifyOne(context, _options);
+                    result1 = project.VerifyOne(context);
             }
             else
             {
                 var t = declaringType ?? context.DeclaringType;
                 if (_namedTypeProjects.TryGetValue((t.GetHashCode(), projectName.GetHashCode()), out project))
-                    result1 = project.VerifyOne(context, _options);
+                    result1 = project.VerifyOne(context);
             }
 
-            if (_options.AnnotationEnabled)
-                result2 = AnnotationValidator.VerifyOne(context);
+            if (_options.CustomValidatorEnabled)
+                result2 = CorrectEngine.ValidViaCustomValidators(context, _customValidatorManager.ResolveAll());
 
-            if (result1 is null && result2 is null)
+            if (_options.AnnotationEnabled)
+                result3 = AnnotationValidator.VerifyOne(context);
+
+            if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnexpectedTypeOrSuccess();
 
-            if (result2 is null) return result1;
-            if (result1 is null) return result2;
-            return VerifyResult.Merge(result1, result2);
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
+                : VerifyResult.Merge(result1, result2, result3);
         }
 
         #endregion
@@ -215,7 +223,7 @@ namespace Cosmos.Validation
 
             var context = _objectResolver.Resolve(declaringType, keyValueCollections);
 
-            return VerifyMany(context,"");
+            return VerifyMany(context, "");
         }
 
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections, string projectName)
@@ -238,28 +246,31 @@ namespace Cosmos.Validation
                 throw new ArgumentNullException(nameof(context));
 
             IProject project;
-            VerifyResult result1 = null, result2 = null;
+            VerifyResult result1 = null, result2 = null, result3 = null;
 
             if (string.IsNullOrWhiteSpace(projectName))
             {
                 if (_typedProjects.TryGetValue(context.Type.GetHashCode(), out project))
-                    result1 = project.VerifyMany(context.GetValueMap(), _options);
+                    result1 = project.VerifyMany(context.GetValueMap());
             }
             else
             {
                 if (_namedTypeProjects.TryGetValue((context.Type.GetHashCode(), projectName.GetHashCode()), out project))
-                    result1 = project.VerifyMany(context.GetValueMap(), _options);
+                    result1 = project.VerifyMany(context.GetValueMap());
             }
 
-            if (_options.AnnotationEnabled)
-                result2 = AnnotationValidator.VerifyMany(context);
+            if (_options.CustomValidatorEnabled)
+                result2 = CorrectEngine.ValidViaCustomValidators(context.GetValueMap(), _customValidatorManager.ResolveAll());
 
-            if (result1 is null && result2 is null)
+            if (_options.AnnotationEnabled)
+                result3 = AnnotationValidator.VerifyMany(context);
+
+            if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnexpectedTypeOrSuccess();
 
-            if (result2 is null) return result1;
-            if (result1 is null) return result2;
-            return VerifyResult.Merge(result1, result2);
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
+                : VerifyResult.Merge(result1, result2, result3);
         }
 
         #endregion
@@ -271,5 +282,29 @@ namespace Cosmos.Validation
                     UpdateProject(project);
             return this;
         }
+
+        #region CreateByStrategy
+
+        public static ValidationHandler CreateByStrategy<TStrategy>() where TStrategy : class, IValidationStrategy, new()
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy>().TempBuild();
+        }
+
+        public static ValidationHandler CreateByStrategy<TStrategy, T>() where TStrategy : class, IValidationStrategy<T>, new()
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy, T>().TempBuild();
+        }
+
+        public static ValidationHandler CreateByStrategy(IValidationStrategy strategy)
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild();
+        }
+
+        public static ValidationHandler CreateByStrategy<T>(IValidationStrategy<T> strategy)
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild();
+        }
+
+        #endregion
     }
 }
