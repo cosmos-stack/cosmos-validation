@@ -23,6 +23,7 @@ namespace CosmosValidationUT.ValidatorsUT
         {
             _options = options ?? new ValidationOptions();
         }
+
         public override VerifyResult Verify(Length32Model instance)
         {
             if (instance is null) return _options.ReturnNullReferenceOrSuccess();
@@ -38,6 +39,15 @@ namespace CosmosValidationUT.ValidatorsUT
             if (valueContext.Value is string {Length: 32})
                 return VerifyResult.Success;
             return new VerifyResult(new VerifyFailure(valueContext.MemberName, "Should length == 32", valueContext.Value));
+        }
+
+        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        {
+            if (context is null) return _options.ReturnNullReferenceOrSuccess();
+            if (context.MemberName != "Name") return VerifyResult.MemberIsNotExists("Name");
+            if (context.Value is string {Length: 32})
+                return VerifyResult.Success;
+            return new VerifyResult(new VerifyFailure(context.MemberName, "Should length == 32", context.Value));
         }
     }
 }
