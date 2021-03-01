@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Cosmos.Reflection;
 using Cosmos.Validation.Annotations;
 using Cosmos.Validation.Annotations.Core;
 using Cosmos.Validation.Internals;
@@ -32,7 +33,7 @@ namespace Cosmos.Validation.Validators
 
         bool ICorrectValidator.IsTypeBinding => false;
 
-        bool ICorrectValidator.IsFluentValidator { get; set; } = false;
+        Type ICorrectValidator.SourceType => TypeClass.ObjectClazz;
 
         #region GetInstance
 
@@ -105,11 +106,9 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyOne
 
-        public VerifyResult VerifyOne(Type declaringType, Type memberType, object memberValue, string memberName)
+        public VerifyResult VerifyOne(Type declaringType, object memberValue, string memberName)
         {
             if (declaringType is null)
-                return _options.ReturnNullReferenceOrSuccess();
-            if (memberType is null)
                 return _options.ReturnNullReferenceOrSuccess();
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();

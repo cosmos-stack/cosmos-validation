@@ -205,10 +205,10 @@ namespace CosmosValidationUT.ValidatorsUT
         [Fact(DisplayName = "VerifyOne a type and return a success VerifyResult.")]
         public void VerifyOneTypeAndShouldBeSuccessTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(string), "Nice", "Name").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(long), 10, "Length").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(long), 10, "Width").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(string), "2890000@qq.com", "Email").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(string), "Nice", "Name").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(long), 10, "Length").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(long), 10, "Width").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(string), "2890000@qq.com", "Email").IsValid.ShouldBeTrue();
 
             AnnotationValidator.VerifyOne<NiceBoat, string>(x => x.Name, "Nice").IsValid.ShouldBeTrue();
             AnnotationValidator.VerifyOne<NiceBoat, long>(x => x.Length, 1000).IsValid.ShouldBeTrue();
@@ -219,10 +219,10 @@ namespace CosmosValidationUT.ValidatorsUT
         [Fact(DisplayName = "VerifyOne a type and return a failure VerifyResult.")]
         public void VerifyOneTypeAndShouldBeFailureTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(string), "", "Name").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(long), -10, "Length").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(long), -10, "Width").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(string), "2890000@", "Email").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Length").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Width").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "2890000@", "Email").IsValid.ShouldBeFalse();
 
             AnnotationValidator.VerifyOne<NiceBoat, string>(x => x.Name, "").IsValid.ShouldBeFalse();
             AnnotationValidator.VerifyOne<NiceBoat, long>(x => x.Length, -1000).IsValid.ShouldBeFalse();
@@ -233,21 +233,21 @@ namespace CosmosValidationUT.ValidatorsUT
         [Fact(DisplayName = "VerifyOne a type with wrong member name and return a failure VerifyResult.")]
         public void VerifyOneTypeWithWrongMemberTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), typeof(string), "Nice", "NameNon").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "Nice", "NameNon").IsValid.ShouldBeFalse();
         }
 
         [Fact(DisplayName = "VerifyOne a structure and return a success VerifyResult.")]
         public void VerifyOneByStructureTypeAndShouldBeSuccessTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceStructWithAnnotation), typeof(string), "Nice", "Name").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceStructWithAnnotation), typeof(int), 10, "Age").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "Nice", "Name").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), 10, "Length").IsValid.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "VerifyOne a structure and return a failure VerifyResult.")]
         public void VerifyOneByStructureTypeAndShouldBeFailureTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceStructWithAnnotation), typeof(string), "", "Name").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceStructWithAnnotation), typeof(int), -10, "Age").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Length").IsValid.ShouldBeFalse();
         }
 
 #if !NETFRAMEWORK && !NETCOREAPP3_1
@@ -255,15 +255,15 @@ namespace CosmosValidationUT.ValidatorsUT
         [Fact(DisplayName = "VerifyOne a record and return a success VerifyResult.")]
         public void VerifyOneByRecordTypeAndShouldBeSuccessTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceRecordWithAnnotation), typeof(string), "Nice", "Name").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceRecordWithAnnotation), typeof(int), 10, "Age").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "Nice", "Name").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), 10, "Length").IsValid.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "VerifyOne a record and return a failure VerifyResult.")]
         public void VerifyOneByRecordTypeAndShouldBeFailureTest()
         {
-            AnnotationValidator.VerifyOne(typeof(NiceRecordWithAnnotation), typeof(string), "", "Name").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceRecordWithAnnotation), typeof(int), -10, "Age").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Length").IsValid.ShouldBeFalse();
         }
 #endif
 

@@ -89,6 +89,69 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
+            public static void NotNegativeOrZero(ObjectValueContext context, NotNegativeOrZeroAttribute attr, List<VerifyError> errors)
+            {
+                var condition = false;
+                if (context.Is(TypeClass.IntClazz))
+                    condition = context.GetValue<int>() > 0;
+                else if (context.Is(TypeClass.LongClazz))
+                    condition = context.GetValue<long>() > 0;
+                else if (context.Is(TypeClass.FloatClazz))
+                    condition = context.GetValue<float>() > 0;
+                else if (context.Is(TypeClass.DoubleClazz))
+                    condition = context.GetValue<double>() > 0;
+                else if (context.Is(TypeClass.DecimalClazz))
+                    condition = context.GetValue<decimal>() > 0;
+                else if (context.Is(TypeClass.TimeSpanClazz) && context.Value is TimeSpan tsVal)
+                    condition = tsVal > TimeSpan.Zero;
+                else
+                    condition = false;
+
+                condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
+            }
+
+            public static void NotPositive(ObjectValueContext context, NotPositiveAttribute attr, List<VerifyError> errors)
+            {
+                var condition = false;
+                if (context.Is(TypeClass.IntClazz))
+                    condition = context.GetValue<int>() <= 0;
+                else if (context.Is(TypeClass.LongClazz))
+                    condition = context.GetValue<long>() <= 0;
+                else if (context.Is(TypeClass.FloatClazz))
+                    condition = context.GetValue<float>() <= 0;
+                else if (context.Is(TypeClass.DoubleClazz))
+                    condition = context.GetValue<double>() <= 0;
+                else if (context.Is(TypeClass.DecimalClazz))
+                    condition = context.GetValue<decimal>() <= 0;
+                else if (context.Is(TypeClass.TimeSpanClazz) && context.Value is TimeSpan tsVal)
+                    condition = tsVal <= TimeSpan.Zero;
+                else
+                    condition = false;
+
+                condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
+            }
+
+            public static void NotPositiveOrZero(ObjectValueContext context, NotPositiveOrZeroAttribute attr, List<VerifyError> errors)
+            {
+                var condition = false;
+                if (context.Is(TypeClass.IntClazz))
+                    condition = context.GetValue<int>() < 0;
+                else if (context.Is(TypeClass.LongClazz))
+                    condition = context.GetValue<long>() < 0;
+                else if (context.Is(TypeClass.FloatClazz))
+                    condition = context.GetValue<float>() < 0;
+                else if (context.Is(TypeClass.DoubleClazz))
+                    condition = context.GetValue<double>() < 0;
+                else if (context.Is(TypeClass.DecimalClazz))
+                    condition = context.GetValue<decimal>() < 0;
+                else if (context.Is(TypeClass.TimeSpanClazz) && context.Value is TimeSpan tsVal)
+                    condition = tsVal < TimeSpan.Zero;
+                else
+                    condition = false;
+
+                condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
+            }
+
             public static void NotNull(ObjectValueContext context, NotNullAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
