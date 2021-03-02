@@ -285,22 +285,22 @@ namespace Cosmos.Validation
 
         #region CreateByStrategy
 
-        public static ValidationHandler CreateByStrategy<TStrategy>() where TStrategy : class, IValidationStrategy, new()
+        internal static ValidationHandler CreateByStrategy<TStrategy>() where TStrategy : class, IValidationStrategy, new()
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy>().TempBuild();
         }
 
-        public static ValidationHandler CreateByStrategy<TStrategy, T>() where TStrategy : class, IValidationStrategy<T>, new()
+        internal static ValidationHandler CreateByStrategy<TStrategy, T>() where TStrategy : class, IValidationStrategy<T>, new()
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy, T>().TempBuild();
         }
 
-        public static ValidationHandler CreateByStrategy(IValidationStrategy strategy)
+        internal static ValidationHandler CreateByStrategy(IValidationStrategy strategy)
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild();
         }
 
-        public static ValidationHandler CreateByStrategy<T>(IValidationStrategy<T> strategy)
+        internal static ValidationHandler CreateByStrategy<T>(IValidationStrategy<T> strategy)
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild();
         }
