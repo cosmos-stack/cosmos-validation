@@ -20,7 +20,7 @@ namespace Cosmos.Validation.Validators
     {
         VerifyResult Verify(T instance);
         VerifyResult VerifyOne(object memberValue, string memberName);
-        VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, object memberValue);
+        VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue);
         VerifyResult VerifyMany(IDictionary<string, object> keyValueCollections);
     }
 }

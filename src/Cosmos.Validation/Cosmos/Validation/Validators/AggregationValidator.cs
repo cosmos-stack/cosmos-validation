@@ -146,7 +146,7 @@ namespace Cosmos.Validation.Validators
                 : VerifyResult.Merge(result1, result2, result3);
         }
 
-        public VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, object memberValue)
+        public VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
         {
             if (propertySelector is null)
                 return _options.ReturnNullReferenceOrSuccess();

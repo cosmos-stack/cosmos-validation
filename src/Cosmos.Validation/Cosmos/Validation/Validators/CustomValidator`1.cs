@@ -54,7 +54,7 @@ namespace Cosmos.Validation.Validators
             return VerifyOneImpl(valueContext);
         }
 
-        public virtual VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, object memberValue)
+        public virtual VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
         {
             var memberName = PropertySelector.GetPropertyName(propertySelector);
             var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
