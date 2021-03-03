@@ -10,10 +10,10 @@ using Xunit;
 
 namespace CosmosValidationUT.ObjectUT
 {
-    [Trait("ObjectUT", "ValueContract")]
-    public class ValueContractTests
+    [Trait("ObjectUT", "VerifiableMemberContract")]
+    public class VerifiableMemberContractTests
     {
-        [Fact(DisplayName = "Create ObjectContract and touch ObjectValueContract by direct type")]
+        [Fact(DisplayName = "Create VerifiableObjectContract and touch VerifiableMemberContract by direct type")]
         public void DirectTypeCreateObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
@@ -68,7 +68,7 @@ namespace CosmosValidationUT.ObjectUT
             value5.IncludeAnnotations.ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "Create ObjectContract and touch ObjectValueContract by generic type")]
+        [Fact(DisplayName = "Create VerifiableObjectContract and touch VerifiableMemberContract by generic type")]
         public void GenericTypeCreateObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
@@ -123,7 +123,7 @@ namespace CosmosValidationUT.ObjectUT
             value5.IncludeAnnotations.ShouldBeTrue();
         }
 
-        [Fact(DisplayName="To test annotations of Property Name in ObjectValueContract")]
+        [Fact(DisplayName="To test annotations of Property Name in VerifiableMemberContract")]
         public void Annotation_Name_InObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
@@ -157,7 +157,7 @@ namespace CosmosValidationUT.ObjectUT
             a106.Count.ShouldBe(0);
         }
 
-        [Fact(DisplayName = "To test annotations of Property Length in ObjectValueContract")]
+        [Fact(DisplayName = "To test annotations of Property Length in VerifiableMemberContract")]
         public void Annotation_Length_InObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
@@ -191,7 +191,7 @@ namespace CosmosValidationUT.ObjectUT
             a206.Count.ShouldBe(0);
         }
 
-        [Fact(DisplayName = "To test annotations of Property Weight in ObjectValueContract")]
+        [Fact(DisplayName = "To test annotations of Property Weight in VerifiableMemberContract")]
         public void Annotation_Weight_InObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
@@ -225,7 +225,7 @@ namespace CosmosValidationUT.ObjectUT
             a306.Count.ShouldBe(0);
         }
 
-        [Fact(DisplayName = "To test annotations of Field CreatedTime in ObjectValueContract")]
+        [Fact(DisplayName = "To test annotations of Field CreatedTime in VerifiableMemberContract")]
         public void Annotation_CreatedTime_InObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
@@ -263,7 +263,7 @@ namespace CosmosValidationUT.ObjectUT
             a406.Count.ShouldBe(0);
         }
 
-        [Fact(DisplayName = "To test annotations of Property Email in ObjectValueContract")]
+        [Fact(DisplayName = "To test annotations of Property Email in VerifiableMemberContract")]
         public void Annotation_Email_InObjectValueContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
@@ -305,7 +305,7 @@ namespace CosmosValidationUT.ObjectUT
             a506[0].Name.ShouldBe("ValidEmailValueAnnotation");
         }
 
-        [Fact(DisplayName = "To test getting value from Instance by ObjectValueContract")]
+        [Fact(DisplayName = "To test getting value from Instance by VerifiableMemberContract")]
         public void GetValueFromInstanceTest()
         {
             var instance = new NiceBoat
@@ -332,7 +332,7 @@ namespace CosmosValidationUT.ObjectUT
             value5.GetValue(instance).ShouldBe("nice@boat.com");
         }
 
-        [Fact(DisplayName = "To test getting value from Dictionary by ObjectValueContract")]
+        [Fact(DisplayName = "To test getting value from Dictionary by VerifiableMemberContract")]
         public void GetValueFromDictionaryTest()
         {
             var d = new Dictionary<string, object>

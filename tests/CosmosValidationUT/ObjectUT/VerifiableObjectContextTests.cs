@@ -8,10 +8,10 @@ using Xunit;
 
 namespace CosmosValidationUT.ObjectUT
 {
-    [Trait("ObjectUT", "ObjectContext")]
-    public class ObjectContextTests
+    [Trait("ObjectUT", "VerifiableObjectContext")]
+    public class VerifiableObjectContextTests
     {
-        public ObjectContextTests()
+        public VerifiableObjectContextTests()
         {
             _objectResolver = new DefaultVerifiableObjectResolver();
         }

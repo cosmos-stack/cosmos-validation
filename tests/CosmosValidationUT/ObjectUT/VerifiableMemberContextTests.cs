@@ -8,17 +8,17 @@ using Xunit;
 
 namespace CosmosValidationUT.ObjectUT
 {
-    [Trait("ObjectUT", "ValueContext")]
-    public class ValueContextTests
+    [Trait("ObjectUT", "VerifiableValueContext")]
+    public class VerifiableMemberContextTests
     {
-        public ValueContextTests()
+        public VerifiableMemberContextTests()
         {
             _objectResolver = new DefaultVerifiableObjectResolver();
         }
 
         private readonly IVerifiableObjectResolver _objectResolver;
 
-        [Fact(DisplayName = "To test get ValueContext from Instance-ObjectContext")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext from Instance-VerifiableObjectContext")]
         public void GetValueContextFromInstanceObjectContextTest()
         {
             var instance = new NiceBoat
@@ -79,7 +79,7 @@ namespace CosmosValidationUT.ObjectUT
             value5.Value.ShouldBe("nice@boat.com");
         }
 
-        [Fact(DisplayName = "To test get ValueContext from Dictionary(full)-ObjectContext")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext from Dictionary(full)-VerifiableObjectContext")]
         public void GetValueContextFromDictionaryObjectContextTest()
         {
             var d = new Dictionary<string, object>
@@ -140,7 +140,7 @@ namespace CosmosValidationUT.ObjectUT
             value5.Value.ShouldBe("nice@boat.com");
         }
 
-        [Fact(DisplayName = "To test get ValueContext from Dictionary(less)-ObjectContext")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext from Dictionary(less)-VerifiableObjectContext")]
         public void GetValueContextFromDictionaryLessObjectContextTest()
         {
             var d = new Dictionary<string, object>
@@ -199,7 +199,7 @@ namespace CosmosValidationUT.ObjectUT
             value5.Value.ShouldBe("nice@boat.com");
         }
 
-        [Fact(DisplayName = "To test get ValueContext for Property Name by direct value")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext for Property Name by direct value")]
         public void GetValue_Name_ByDirectValueTest()
         {
             var objectContract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
@@ -215,7 +215,7 @@ namespace CosmosValidationUT.ObjectUT
             valueContext.Value.ShouldBe("NiceBoat1000");
         }
 
-        [Fact(DisplayName = "To test get ValueContext for Property Length by direct value")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext for Property Length by direct value")]
         public void GetValue_Length_ByDirectValueTest()
         {
             var objectContract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
@@ -231,7 +231,7 @@ namespace CosmosValidationUT.ObjectUT
             valueContext.Value.ShouldBe(1000);
         }
 
-        [Fact(DisplayName = "To test get ValueContext for Property Width by direct value")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext for Property Width by direct value")]
         public void GetValue_Width_ByDirectValueTest()
         {
             var objectContract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
@@ -247,7 +247,7 @@ namespace CosmosValidationUT.ObjectUT
             valueContext.Value.ShouldBe(30);
         }
 
-        [Fact(DisplayName = "To test get ValueContext for Field CreateTime by direct value")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext for Field CreateTime by direct value")]
         public void GetValue_CreateTime_ByDirectValueTest()
         {
             var objectContract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
@@ -263,7 +263,7 @@ namespace CosmosValidationUT.ObjectUT
             valueContext.Value.ShouldBe(DateTimeFactory.Create(2020, 12, 21));
         }
 
-        [Fact(DisplayName = "To test get ValueContext for Property Email by direct value")]
+        [Fact(DisplayName = "To test get VerifiableMemberContext for Property Email by direct value")]
         public void GetValue_Email_ByDirectValueTest()
         {
             var objectContract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));

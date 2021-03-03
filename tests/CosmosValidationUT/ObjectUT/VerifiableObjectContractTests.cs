@@ -6,10 +6,10 @@ using Xunit;
 
 namespace CosmosValidationUT.ObjectUT
 {
-    [Trait("ObjectUT", "ObjectContract")]
-    public class ObjectContractTests
+    [Trait("ObjectUT", "VerifiableObjectContract")]
+    public class VerifiableObjectContractTests
     {
-        [Fact(DisplayName = "Create ObjectContract by direct type")]
+        [Fact(DisplayName = "Create VerifiableObjectContract by direct type")]
         public void DirectTypeCreateObjectContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
@@ -39,7 +39,7 @@ namespace CosmosValidationUT.ObjectUT
             contract.GetMemberContract(4).MemberName.ShouldBe("CreateTime");
         }
 
-        [Fact(DisplayName = "Create ObjectContract by generic type")]
+        [Fact(DisplayName = "Create VerifiableObjectContract by generic type")]
         public void GenericTypeCreateObjectContractTest()
         {
             var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
