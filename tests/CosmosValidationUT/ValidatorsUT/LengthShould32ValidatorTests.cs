@@ -31,7 +31,7 @@ namespace CosmosValidationUT.ValidatorsUT
             var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_VerifyCustomValidatorAndShouldBeSuccess32Test")
-                               .ForValidator<LengthShould32Validator>()
+                               .ForCustomValidator<LengthShould32Validator>()
                                .Build();
 
             var validator1 = ValidationMe.Use("UT_VerifyCustomValidatorAndShouldBeSuccess32Test").Resolve<Length32Model>();
@@ -54,7 +54,7 @@ namespace CosmosValidationUT.ValidatorsUT
             var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_VerifyCustomValidatorAndShouldBeFailure32Test")
-                               .ForValidator(new LengthShould32Validator())
+                               .ForCustomValidator(new LengthShould32Validator())
                                .Build();
 
             var validator1 = ValidationMe.Use("UT_VerifyCustomValidatorAndShouldBeFailure32Test").Resolve<Length32Model>();

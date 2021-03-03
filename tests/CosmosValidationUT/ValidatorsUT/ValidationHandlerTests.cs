@@ -306,7 +306,7 @@ namespace CosmosValidationUT.ValidatorsUT
             var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByInstanceWithCustomValidatorTest")
-                                             .ForValidator<EmailValidator, string>()
+                                             .ForCustomValidator<EmailValidator, string>()
                                              .ForType<NiceBoat>()
                                              .ForMember("Name").NotEmpty()
                                              .AndForMember("Length").GreaterThanOrEqual(0)

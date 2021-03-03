@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using Cosmos.Validation.Strategies;
-using Cosmos.Validation.Validators;
+using Cosmos.Validation.Registrars.Interfaces;
 
 namespace Cosmos.Validation.Registrars
 {
-    public interface IValueFluentValidationRegistrar
+    public interface IValueFluentValidationRegistrar :
+        IMayContinueRegisterForStrategy,
+        IMayContinueRegisterForCustomValidator,
+        IMayContinueRegisterForType,
+        IMayContinueRegisterForMember,
+        IMayBuild,
+        IMayTempBuild
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
@@ -76,32 +79,15 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
-        IValueFluentValidationRegistrar AndForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append);
-        IValueFluentValidationRegistrar AndForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        IValueFluentValidationRegistrar AndForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        IFluentValidationRegistrar AndForType(Type type);
-        IFluentValidationRegistrar AndForType(Type type, string name);
-        IFluentValidationRegistrar<T> AndForType<T>();
-        IFluentValidationRegistrar<T> AndForType<T>(string name);
-        IFluentValidationRegistrar AndForStrategy<TStrategy>(StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy, new();
-        IFluentValidationRegistrar AndForStrategy<TStrategy, T>(StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy<T>, new();
-        IFluentValidationRegistrar AndForStrategy(IValidationStrategy strategy, StrategyMode mode = StrategyMode.OverallOverwrite);
-        IFluentValidationRegistrar AndForStrategy<T>(IValidationStrategy<T> strategy, StrategyMode mode = StrategyMode.OverallOverwrite);
-        IFluentValidationRegistrar AndForStrategy<TStrategy>(string name, StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy, new();
-        IFluentValidationRegistrar AndForStrategy<TStrategy, T>(string name, StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy<T>, new();
-        IFluentValidationRegistrar AndForStrategy(IValidationStrategy strategy, string name, StrategyMode mode = StrategyMode.OverallOverwrite);
-        IFluentValidationRegistrar AndForStrategy<T>(IValidationStrategy<T> strategy, string name, StrategyMode mode = StrategyMode.OverallOverwrite);
-        IFluentValidationRegistrar AndForValidator<TValidator>() where TValidator : CustomValidator, new();
-        IFluentValidationRegistrar AndForValidator<TValidator, T>() where TValidator : CustomValidator<T>, new();
-        IFluentValidationRegistrar AndForValidator(CustomValidator validator);
-        IFluentValidationRegistrar AndForValidator<T>(CustomValidator<T> validator);
-        void Build();
-        ValidationHandler TempBuild();
-        ValidationHandler TempBuild(ValidationOptions options);
-        ValidationHandler TempBuild(Action<ValidationOptions> optionsAct);
     }
 
-    public interface IValueFluentValidationRegistrar<T>
+    public interface IValueFluentValidationRegistrar<T> :
+        IMayContinueRegisterForStrategy,
+        IMayContinueRegisterForCustomValidator,
+        IMayContinueRegisterForType,
+        IMayContinueRegisterForMember<T>,
+        IMayBuild,
+        IMayTempBuild
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
@@ -229,18 +215,6 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
-        IValueFluentValidationRegistrar<T> AndForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append);
-        IValueFluentValidationRegistrar<T> AndForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        IValueFluentValidationRegistrar<T> AndForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        IValueFluentValidationRegistrar<T, TVal> AndForMember<TVal>(Expression<Func<T, TVal>> expression, ValueRuleMode mode = ValueRuleMode.Append);
-        IFluentValidationRegistrar AndForType(Type type);
-        IFluentValidationRegistrar AndForType(Type type, string name);
-        IFluentValidationRegistrar<TType> AndForType<TType>();
-        IFluentValidationRegistrar<TType> AndForType<TType>(string name);
-        void Build();
-        ValidationHandler TempBuild();
-        ValidationHandler TempBuild(ValidationOptions options);
-        ValidationHandler TempBuild(Action<ValidationOptions> optionsAct);
     }
 
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>

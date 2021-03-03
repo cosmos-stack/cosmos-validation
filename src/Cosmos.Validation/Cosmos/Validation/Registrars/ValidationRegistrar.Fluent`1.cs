@@ -5,6 +5,7 @@ using System.Reflection;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
+using Cosmos.Validation.Registrars.Interfaces;
 using Cosmos.Validation.Strategies;
 using Cosmos.Validation.Validators;
 
@@ -44,7 +45,7 @@ namespace Cosmos.Validation.Registrars
 
         #region ForMember
 
-        IValueFluentValidationRegistrar IFluentValidationRegistrar.ForMember(string memberName, ValueRuleMode mode)
+        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(string memberName, ValueRuleMode mode)
         {
             var valueContract = _objectContract.GetValueContract(memberName);
 
@@ -54,7 +55,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar(valueContract, Rules, mode, this);
         }
 
-        IValueFluentValidationRegistrar IFluentValidationRegistrar.ForMember(PropertyInfo propertyInfo, ValueRuleMode mode)
+        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(PropertyInfo propertyInfo, ValueRuleMode mode)
         {
             var valueContract = _objectContract.GetValueContract(propertyInfo);
 
@@ -64,7 +65,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar(valueContract, Rules, mode, this);
         }
 
-        IValueFluentValidationRegistrar IFluentValidationRegistrar.ForMember(FieldInfo fieldInfo, ValueRuleMode mode)
+        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(FieldInfo fieldInfo, ValueRuleMode mode)
         {
             var valueContract = _objectContract.GetValueContract(fieldInfo);
 
@@ -254,45 +255,45 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
         
-        #region RegisterValidator
+        #region AndForCustomValidator
 
-        public IFluentValidationRegistrar AndForValidator<TValidator>() where TValidator : CustomValidator, new()
+        public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            _parentRegistrar.ForValidator<TValidator>();
+            _parentRegistrar.ForCustomValidator<TValidator>();
             return this;
         }
 
-        public IFluentValidationRegistrar AndForValidator<TValidator, T2>() where TValidator : CustomValidator<T2>, new()
+        public IFluentValidationRegistrar AndForCustomValidator<TValidator, T2>() where TValidator : CustomValidator<T2>, new()
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            _parentRegistrar.ForValidator<TValidator, T2>();
+            _parentRegistrar.ForCustomValidator<TValidator, T2>();
             return this;
         }
 
-        public IFluentValidationRegistrar AndForValidator(CustomValidator validator)
+        public IFluentValidationRegistrar AndForCustomValidator(CustomValidator validator)
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            _parentRegistrar.ForValidator(validator);
+            _parentRegistrar.ForCustomValidator(validator);
             return this;
         }
 
-        public IFluentValidationRegistrar AndForValidator<T2>(CustomValidator<T2> validator)
+        public IFluentValidationRegistrar AndForCustomValidator<T2>(CustomValidator<T2> validator)
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            _parentRegistrar.ForValidator(validator);
+            _parentRegistrar.ForCustomValidator(validator);
             return this;
         }
 

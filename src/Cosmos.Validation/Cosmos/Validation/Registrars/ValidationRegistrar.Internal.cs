@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cosmos.Collections;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
+using Cosmos.Validation.Registrars.Interfaces;
 using Cosmos.Validation.Strategies;
 using Cosmos.Validation.Validators;
 
@@ -40,7 +40,7 @@ namespace Cosmos.Validation.Registrars
             _nameOfProvider = nameOfProvider;
         }
 
-        #region RegisterStrategy
+        #region ForStrategy
 
         public IValidationRegistrar ForStrategy<TStrategy>(StrategyMode mode = StrategyMode.OverallOverwrite) where TStrategy : class, IValidationStrategy, new()
         {
@@ -124,27 +124,27 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
-        #region RegisterValidator
+        #region ForCustomValidator
 
-        public IValidationRegistrar ForValidator<TValidator>() where TValidator : CustomValidator, new()
+        public IValidationRegistrar ForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
         {
             CustomValidatorManager.Register<TValidator>();
             return this;
         }
 
-        public IValidationRegistrar ForValidator<TValidator, T>() where TValidator : CustomValidator<T>, new()
+        public IValidationRegistrar ForCustomValidator<TValidator, T>() where TValidator : CustomValidator<T>, new()
         {
             CustomValidatorManager.Register<TValidator, T>();
             return this;
         }
 
-        public IValidationRegistrar ForValidator(CustomValidator validator)
+        public IValidationRegistrar ForCustomValidator(CustomValidator validator)
         {
             CustomValidatorManager.Register(validator);
             return this;
         }
 
-        public IValidationRegistrar ForValidator<T>(CustomValidator<T> validator)
+        public IValidationRegistrar ForCustomValidator<T>(CustomValidator<T> validator)
         {
             CustomValidatorManager.Register(validator);
             return this;
@@ -152,7 +152,7 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
-        #region RegisterType
+        #region ForType
 
         public IFluentValidationRegistrar ForType(Type type)
         {

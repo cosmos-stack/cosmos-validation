@@ -2,7 +2,7 @@
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
 
-namespace Cosmos.Validation.Registrars
+namespace Cosmos.Validation.Registrars.Interfaces
 {
     internal interface ICorrectRegistrar
     {

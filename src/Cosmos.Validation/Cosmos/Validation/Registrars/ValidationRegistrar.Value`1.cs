@@ -582,42 +582,42 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
         
-        #region RegisterValidator
+        #region AndForCustomValidator
 
-        public IFluentValidationRegistrar AndForValidator<TValidator>() where TValidator : CustomValidator, new()
+        public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            return _parentRegistrar.AndForValidator<TValidator>();
+            return _parentRegistrar.AndForCustomValidator<TValidator>();
         }
 
-        public IFluentValidationRegistrar AndForValidator<TValidator, TType>() where TValidator : CustomValidator<TType>, new()
+        public IFluentValidationRegistrar AndForCustomValidator<TValidator, TType>() where TValidator : CustomValidator<TType>, new()
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            return _parentRegistrar.AndForValidator<TValidator, TType>();
+            return _parentRegistrar.AndForCustomValidator<TValidator, TType>();
         }
 
-        public IFluentValidationRegistrar AndForValidator(CustomValidator validator)
+        public IFluentValidationRegistrar AndForCustomValidator(CustomValidator validator)
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            return _parentRegistrar.AndForValidator(validator);
+            return _parentRegistrar.AndForCustomValidator(validator);
         }
 
-        public IFluentValidationRegistrar AndForValidator<TType>(CustomValidator<TType> validator)
+        public IFluentValidationRegistrar AndForCustomValidator<TType>(CustomValidator<TType> validator)
         {
             //step 1: build this register
             BuildMySelf();
 
             //step 2: create a new register
-            return _parentRegistrar.AndForValidator(validator);
+            return _parentRegistrar.AndForCustomValidator(validator);
         }
 
         #endregion
