@@ -5,22 +5,20 @@ using Cosmos.Validation.Annotations;
 
 namespace Cosmos.Validation.Objects
 {
-    public class ObjectValueContext
+    public class VerifiableMemberContext
     {
-        private readonly ObjectValueContract _contract;
-        private readonly ObjectContext _parentContext;
-
-        // 如果为 true，则表示为强类型模式；如果为 false，则表示为字典模式
+        private readonly VerifiableMemberContract _contract;
+        private readonly VerifiableObjectContext _parentContext;
         private readonly ValueMode _valueMode;
 
-        public ObjectValueContext(ObjectContext parentContext, ObjectValueContract contract, bool directMode)
+        public VerifiableMemberContext(VerifiableObjectContext parentContext, VerifiableMemberContract contract, bool directMode)
         {
             _parentContext = parentContext;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
             _valueMode = directMode ? ValueMode.DirectType : ValueMode.Dictionary;
         }
 
-        private ObjectValueContext(object value, ObjectValueContract contract, ObjectContext parentContext)
+        private VerifiableMemberContext(object value, VerifiableMemberContract contract, VerifiableObjectContext parentContext)
         {
             _parentContext = parentContext;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
@@ -30,17 +28,17 @@ namespace Cosmos.Validation.Objects
             _valueCached = value;
         }
 
-        public ObjectValueKind ObjectValueKind => _contract.ObjectValueKind;
-
-        public bool IsBasicType => _contract.IsBasicType;
+        public string MemberName => _contract.MemberName;
 
         public Type DeclaringType => _contract.DeclaringType;
 
         public Type MemberType => _contract.MemberType;
 
-        public string MemberName => _contract.MemberName;
+        public bool IsBasicType => _contract.IsBasicType;
 
-        #region GetValue
+        public VerifiableMemberKind MemberKind => _contract.MemberKind;
+
+        #region Value
 
         private bool _hasGot;
         private object _valueCached;
@@ -71,12 +69,14 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        #region Annotations
+        #region Annotation / Attribute
 
         public bool IncludeAnnotations => _contract.IncludeAnnotations;
 
         public IReadOnlyCollection<Attribute> Attributes => _contract.Attributes;
 
+        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
+        
         public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations()
             => _contract.GetParameterAnnotations();
 
@@ -107,37 +107,35 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<IVerifiable> GetVerifiableAnnotations(
             bool excludeFlagAnnotation = false)
             => _contract.GetVerifiableAnnotations(excludeFlagAnnotation);
-
-        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
-
+        
         #endregion
 
         #region ConvertToObjectContext
 
-        public ObjectContext ConvertToObjectContext()
+        public VerifiableObjectContext ConvertToObjectContext()
         {
             if (MemberType.IsBasicType())
                 return _parentContext;
 
-            var contract = ObjectContractManager.Resolve(MemberType);
+            var contract = VerifiableObjectContractManager.Resolve(MemberType);
 
-            return new ObjectContext(Value, contract);
+            return new VerifiableObjectContext(Value, contract);
         }
-
-        #endregion
-
-        #region ExposeInternalImpl
-
-        internal ICustomValueContractImpl ExposeInternalImpl() => _contract.ExposeInternalImpl();
 
         #endregion
 
         #region Factory
 
-        public static ObjectValueContext Create<T>(T value, ObjectValueContract contract, ObjectContext parentContext = default)
+        public static VerifiableMemberContext Create<T>(T value, VerifiableMemberContract contract, VerifiableObjectContext parentContext = default)
         {
             return new(value, contract, parentContext);
         }
+
+        #endregion
+
+        #region Expose
+
+        internal ICustomVerifiableMemberContractImpl ExposeInternalImpl() => _contract.ExposeInternalImpl();
 
         #endregion
 

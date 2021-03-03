@@ -30,17 +30,17 @@ namespace Cosmos.Validation.Projects
             foreach (var rule in rules) _rules.Add(rule);
         }
 
-        public VerifyResult Verify(ObjectContext context)
+        public VerifyResult Verify(VerifiableObjectContext context)
         {
             return CorrectEngine.Valid(context, _rules);
         }
 
-        public VerifyResult VerifyOne(ObjectValueContext context)
+        public VerifyResult VerifyOne(VerifiableMemberContext context)
         {
             return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList());
         }
 
-        public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
+        public VerifyResult VerifyMany(IDictionary<string, VerifiableMemberContext> keyValueCollections)
         {
             return CorrectEngine.ValidMany(keyValueCollections, _rules);
         }

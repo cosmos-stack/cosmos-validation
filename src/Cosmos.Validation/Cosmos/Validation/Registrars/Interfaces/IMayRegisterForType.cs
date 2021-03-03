@@ -17,9 +17,4 @@ namespace Cosmos.Validation.Registrars.Interfaces
         IFluentValidationRegistrar<T> AndForType<T>();
         IFluentValidationRegistrar<T> AndForType<T>(string name);
     }
-
-    public interface IMayContinueRegisterForType<T>
-    {
-        
-    }
 }

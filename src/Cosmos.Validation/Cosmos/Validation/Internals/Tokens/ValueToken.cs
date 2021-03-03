@@ -8,9 +8,9 @@ namespace Cosmos.Validation.Internals.Tokens
         public static int[] NoMutuallyExclusiveFlags = { };
 
         // ReSharper disable once InconsistentNaming
-        private readonly ObjectValueContract _contract;
+        private readonly VerifiableMemberContract _contract;
 
-        protected ValueToken(ObjectValueContract contract)
+        protected ValueToken(VerifiableMemberContract contract)
         {
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
         }
@@ -27,12 +27,12 @@ namespace Cosmos.Validation.Internals.Tokens
 
         protected abstract CorrectVerifyVal ValidValueImpl(object value);
 
-        public virtual CorrectVerifyVal ValidValue(ObjectValueContext context)
+        public virtual CorrectVerifyVal ValidValue(VerifiableMemberContext context)
         {
             return ValidValueImpl(context.Value);
         }
 
-        protected ObjectValueContract Member => _contract;
+        protected VerifiableMemberContract VerifiableMember => _contract;
 
         public string CustomMessage { get; set; }
 
@@ -60,7 +60,7 @@ namespace Cosmos.Validation.Internals.Tokens
 
     internal abstract class ValueToken<TVal> : ValueToken, IValueToken<TVal>
     {
-        protected ValueToken(ObjectValueContract contract) : base(contract) { }
+        protected ValueToken(VerifiableMemberContract contract) : base(contract) { }
 
         protected abstract CorrectVerifyVal ValidValueImpl(TVal value);
 
@@ -74,7 +74,7 @@ namespace Cosmos.Validation.Internals.Tokens
             return CorrectVerifyVal.Success;
         }
 
-        public override CorrectVerifyVal ValidValue(ObjectValueContext context)
+        public override CorrectVerifyVal ValidValue(VerifiableMemberContext context)
         {
             if (context.Value is TVal t)
             {

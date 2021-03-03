@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public const string NAME = "ValueEnumToken";
         private readonly Type _enumType;
 
-        public ValueEnumToken(ObjectValueContract contract, Type enumType) : base(contract)
+        public ValueEnumToken(VerifiableMemberContract contract, Type enumType) : base(contract)
         {
             _enumType = enumType ?? throw new ArgumentNullException(nameof(enumType));
         }
@@ -109,7 +109,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage(message ?? $"'{Member.MemberName}' has a range of values which does not include '{obj}'.");
+            val.ErrorMessage = MergeMessage(message ?? $"'{VerifiableMember.MemberName}' has a range of values which does not include '{obj}'.");
         }
 
         public override string ToString() => NAME;

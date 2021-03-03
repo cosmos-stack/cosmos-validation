@@ -137,17 +137,17 @@ namespace CosmosValidationUT.SolutionUT
             public Type Type { get; }
             public ProjectClass Class { get; }
 
-            public VerifyResult Verify(ObjectContext context)
+            public VerifyResult Verify(VerifiableObjectContext context)
             {
                 return VerifyResult.Success;
             }
 
-            public VerifyResult VerifyOne(ObjectValueContext context)
+            public VerifyResult VerifyOne(VerifiableMemberContext context)
             {
                 return VerifyResult.Success;
             }
 
-            public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
+            public VerifyResult VerifyMany(IDictionary<string, VerifiableMemberContext> keyValueCollections)
             {
                 return VerifyResult.Success;
             }
@@ -166,17 +166,17 @@ namespace CosmosValidationUT.SolutionUT
             public Type Type { get; }
             public ProjectClass Class { get; }
 
-            public VerifyResult Verify(ObjectContext context)
+            public VerifyResult Verify(VerifiableObjectContext context)
             {
                 return VerifyResult.Success;
             }
 
-            public VerifyResult VerifyOne(ObjectValueContext context)
+            public VerifyResult VerifyOne(VerifiableMemberContext context)
             {
                 return VerifyResult.Success;
             }
 
-            public VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections)
+            public VerifyResult VerifyMany(IDictionary<string, VerifiableMemberContext> keyValueCollections)
             {
                 return VerifyResult.Success;
             }

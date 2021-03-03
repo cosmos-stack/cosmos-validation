@@ -17,8 +17,8 @@ namespace Cosmos.Validation.Annotations
         /// </summary>
         public string ErrorMessage { get; set; }
 
-        protected abstract bool IsValid(ObjectValueContext context);
+        protected abstract bool IsValid(VerifiableMemberContext context);
 
-        internal bool IsValidInternal(ObjectValueContext context) => IsValid(context);
+        internal bool IsValidInternal(VerifiableMemberContext context) => IsValid(context);
     }
 }

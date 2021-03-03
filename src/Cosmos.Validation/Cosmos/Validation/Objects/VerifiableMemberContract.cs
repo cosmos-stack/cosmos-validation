@@ -12,7 +12,7 @@ using Cosmos.Validation.Annotations;
 
 namespace Cosmos.Validation.Objects
 {
-    public class ObjectValueContract : IValueContract
+    public class VerifiableMemberContract : IVerifiableMemberContract
     {
         internal const string BASIC_TYPE = "BasicType";
 
@@ -23,12 +23,12 @@ namespace Cosmos.Validation.Objects
         private readonly Attribute[] _attributes;
 
         private readonly ICustomAttributeReflectorProvider _reflectorProvider;
-        private readonly ICustomValueContractImpl _valueContractImpl;
+        private readonly ICustomVerifiableMemberContractImpl _verifiableMemberContractImpl;
 
-        public ObjectValueContract(Type declaringType, PropertyInfo property)
+        public VerifiableMemberContract(Type declaringType, PropertyInfo property)
         {
             _declaringType = declaringType;
-            ObjectValueKind = ObjectValueKind.Property;
+            MemberKind = VerifiableMemberKind.Property;
 
             _propertyInfo = property;
             _fieldInfo = null;
@@ -37,15 +37,15 @@ namespace Cosmos.Validation.Objects
             _attributes = _reflectorProvider.GetCustomAttributes();
 
             IncludeAnnotations = HasValidationAnnotationDefined(_attributes);
-            _valueContractImpl = null;
+            _verifiableMemberContractImpl = null;
 
             IsBasicType = property.PropertyType.IsBasicType();
         }
 
-        public ObjectValueContract(Type declaringType, FieldInfo field)
+        public VerifiableMemberContract(Type declaringType, FieldInfo field)
         {
             _declaringType = declaringType;
-            ObjectValueKind = ObjectValueKind.Field;
+            MemberKind = VerifiableMemberKind.Field;
 
             _propertyInfo = null;
             _fieldInfo = field;
@@ -54,15 +54,15 @@ namespace Cosmos.Validation.Objects
             _attributes = _reflectorProvider.GetCustomAttributes();
 
             IncludeAnnotations = HasValidationAnnotationDefined(_attributes);
-            _valueContractImpl = null;
+            _verifiableMemberContractImpl = null;
 
             IsBasicType = field.FieldType.IsBasicType();
         }
 
-        public ObjectValueContract(Type declaringType)
+        public VerifiableMemberContract(Type declaringType)
         {
             _declaringType = declaringType;
-            ObjectValueKind = ObjectValueKind.Unknown;
+            MemberKind = VerifiableMemberKind.Unknown;
 
             _propertyInfo = null;
             _fieldInfo = null;
@@ -71,15 +71,15 @@ namespace Cosmos.Validation.Objects
             _attributes = Arrays.Empty<Attribute>();
 
             IncludeAnnotations = false;
-            _valueContractImpl = null;
+            _verifiableMemberContractImpl = null;
 
             IsBasicType = declaringType.IsBasicType();
         }
 
-        public ObjectValueContract(ICustomValueContractImpl contractImpl)
+        public VerifiableMemberContract(ICustomVerifiableMemberContractImpl contractImpl)
         {
             _declaringType = contractImpl.DeclaringType;
-            ObjectValueKind = ObjectValueKind.CustomContract;
+            MemberKind = VerifiableMemberKind.CustomContract;
 
             _propertyInfo = null;
             _fieldInfo = null;
@@ -88,14 +88,25 @@ namespace Cosmos.Validation.Objects
             _attributes = Arrays.Empty<Attribute>();
 
             IncludeAnnotations = contractImpl.IncludeAnnotations;
-            _valueContractImpl = contractImpl;
+            _verifiableMemberContractImpl = contractImpl;
 
             IsBasicType = contractImpl.IsBasicType;
         }
 
-        public ObjectValueKind ObjectValueKind { get; }
-
-        public bool IsBasicType { get; }
+        public string MemberName
+        {
+            get
+            {
+                return MemberKind switch
+                {
+                    VerifiableMemberKind.Property => _propertyInfo.Name,
+                    VerifiableMemberKind.Field => _fieldInfo.Name,
+                    VerifiableMemberKind.Unknown => BASIC_TYPE,
+                    VerifiableMemberKind.CustomContract => _verifiableMemberContractImpl.MemberName,
+                    _ => throw new InvalidOperationException("Unknown ObjectIn type")
+                };
+            }
+        }
 
         public Type DeclaringType => _declaringType;
 
@@ -103,68 +114,83 @@ namespace Cosmos.Validation.Objects
         {
             get
             {
-                return ObjectValueKind switch
+                return MemberKind switch
                 {
-                    ObjectValueKind.Property => _propertyInfo.PropertyType,
-                    ObjectValueKind.Field => _fieldInfo.FieldType,
-                    ObjectValueKind.Unknown => _declaringType,
-                    ObjectValueKind.CustomContract => _valueContractImpl.MemberType,
+                    VerifiableMemberKind.Property => _propertyInfo.PropertyType,
+                    VerifiableMemberKind.Field => _fieldInfo.FieldType,
+                    VerifiableMemberKind.Unknown => _declaringType,
+                    VerifiableMemberKind.CustomContract => _verifiableMemberContractImpl.MemberType,
                     _ => throw new InvalidOperationException("Unknown ObjectIn type")
                 };
             }
         }
 
-        public string MemberName
-        {
-            get
-            {
-                return ObjectValueKind switch
-                {
-                    ObjectValueKind.Property => _propertyInfo.Name,
-                    ObjectValueKind.Field => _fieldInfo.Name,
-                    ObjectValueKind.Unknown => BASIC_TYPE,
-                    ObjectValueKind.CustomContract => _valueContractImpl.MemberName,
-                    _ => throw new InvalidOperationException("Unknown ObjectIn type")
-                };
-            }
-        }
+        public bool IsBasicType { get; }
 
-        public object GetValue(object value)
-        {
-            if (ObjectValueKind == ObjectValueKind.CustomContract)
-                return _valueContractImpl.GetValue(value);
+        public VerifiableMemberKind MemberKind { get; }
 
-            if (value is IDictionary<string, object> d)
+        #region Value
+
+        public object GetValue(object instance)
+        {
+            if (MemberKind == VerifiableMemberKind.CustomContract)
+                return _verifiableMemberContractImpl.GetValue(instance);
+
+            if (instance is IDictionary<string, object> d)
                 return GetValue(d);
 
-            if (ObjectValueKind == ObjectValueKind.Property)
-                return P(_propertyInfo)(value);
+            if (MemberKind == VerifiableMemberKind.Property)
+                return P(_propertyInfo)(instance);
 
-            if (ObjectValueKind == ObjectValueKind.Field)
-                return F(_fieldInfo)(value);
+            if (MemberKind == VerifiableMemberKind.Field)
+                return F(_fieldInfo)(instance);
 
-            if (ObjectValueKind == ObjectValueKind.Unknown)
-                return value;
+            if (MemberKind == VerifiableMemberKind.Unknown)
+                return instance;
 
             throw new InvalidOperationException("Unknown ObjectInfo type.");
         }
 
-        public object GetValue(IDictionary<string, object> keyValueCollections)
+        public object GetValue(IDictionary<string, object> keyValueCollection)
         {
-            if (keyValueCollections is null)
+            if (keyValueCollection is null)
                 return default;
-            return D(MemberName)(keyValueCollections);
+            return D(MemberName)(keyValueCollection);
         }
 
-        #region Annotations
+        private static Func<PropertyInfo, Func<object, object>> P => property => property.GetValue;
+
+        private static Func<FieldInfo, Func<object, object>> F => field => field.GetValue;
+
+        private static Func<string, Func<IDictionary<string, object>, object>> D =>
+            key => dictionary => dictionary.TryGetValue(key, out var result) ? result : default;
+
+        #endregion
+
+        #region Annotation / Attribute
 
         public bool IncludeAnnotations { get; }
 
-        public IReadOnlyCollection<Attribute> Attributes => _valueContractImpl?.Attributes ?? _attributes;
+        public IReadOnlyCollection<Attribute> Attributes => _verifiableMemberContractImpl?.Attributes ?? _attributes;
+
+        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute
+        {
+            if (_verifiableMemberContractImpl is null)
+            {
+                foreach (var attribute in _attributes)
+                    if (attribute is TAttribute t)
+                        yield return t;
+            }
+            else
+            {
+                foreach (var annotation in _verifiableMemberContractImpl.GetAttributes<TAttribute>())
+                    yield return annotation;
+            }
+        }
 
         public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations()
         {
-            if (_valueContractImpl is null)
+            if (_verifiableMemberContractImpl is null)
             {
                 foreach (var attribute in _attributes)
                     if (attribute is ValidationParameterAttribute annotation)
@@ -172,7 +198,7 @@ namespace Cosmos.Validation.Objects
             }
             else
             {
-                foreach (var annotation in _valueContractImpl.GetParameterAnnotations())
+                foreach (var annotation in _verifiableMemberContractImpl.GetParameterAnnotations())
                     yield return annotation;
             }
         }
@@ -182,7 +208,7 @@ namespace Cosmos.Validation.Objects
             bool excludeObjectContextVerifiableAnnotation = false,
             bool excludeStrongVerifiableAnnotation = false)
         {
-            if (_valueContractImpl is null)
+            if (_verifiableMemberContractImpl is null)
             {
                 foreach (var attribute in _attributes)
                 {
@@ -203,7 +229,7 @@ namespace Cosmos.Validation.Objects
             }
             else
             {
-                foreach (var annotation in _valueContractImpl.GetQuietVerifiableAnnotations(
+                foreach (var annotation in _verifiableMemberContractImpl.GetQuietVerifiableAnnotations(
                     excludeFlagAnnotation,
                     excludeObjectContextVerifiableAnnotation,
                     excludeStrongVerifiableAnnotation))
@@ -215,7 +241,7 @@ namespace Cosmos.Validation.Objects
             bool excludeFlagAnnotation = false,
             bool excludeObjectContextVerifiableAnnotation = false)
         {
-            if (_valueContractImpl is null)
+            if (_verifiableMemberContractImpl is null)
             {
                 foreach (var attribute in _attributes)
                 {
@@ -233,7 +259,7 @@ namespace Cosmos.Validation.Objects
             }
             else
             {
-                foreach (var annotation in _valueContractImpl.GetStrongVerifiableAnnotations(
+                foreach (var annotation in _verifiableMemberContractImpl.GetStrongVerifiableAnnotations(
                     excludeFlagAnnotation,
                     excludeObjectContextVerifiableAnnotation))
                     yield return annotation;
@@ -243,7 +269,7 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<IObjectContextVerifiableAnnotation> GetObjectContextVerifiableAnnotations(
             bool excludeFlagAnnotation = false)
         {
-            if (_valueContractImpl is null)
+            if (_verifiableMemberContractImpl is null)
             {
                 foreach (var attribute in _attributes)
                 {
@@ -258,7 +284,7 @@ namespace Cosmos.Validation.Objects
             }
             else
             {
-                foreach (var annotation in _valueContractImpl.GetObjectContextVerifiableAnnotations(
+                foreach (var annotation in _verifiableMemberContractImpl.GetObjectContextVerifiableAnnotations(
                     excludeFlagAnnotation))
                     yield return annotation;
             }
@@ -267,7 +293,7 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<IFlagAnnotation> GetFlagAnnotations(
             bool excludeVerifiableAnnotation = false)
         {
-            if (_valueContractImpl is null)
+            if (_verifiableMemberContractImpl is null)
             {
                 foreach (var attribute in _attributes)
                 {
@@ -289,7 +315,7 @@ namespace Cosmos.Validation.Objects
             }
             else
             {
-                foreach (var annotation in _valueContractImpl.GetFlagAnnotations(
+                foreach (var annotation in _verifiableMemberContractImpl.GetFlagAnnotations(
                     excludeVerifiableAnnotation))
                     yield return annotation;
             }
@@ -298,7 +324,7 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<IVerifiable> GetVerifiableAnnotations(
             bool excludeFlagAnnotation = false)
         {
-            if (_valueContractImpl is null)
+            if (_verifiableMemberContractImpl is null)
             {
                 foreach (var attribute in _attributes)
                 {
@@ -322,23 +348,8 @@ namespace Cosmos.Validation.Objects
             }
             else
             {
-                foreach (var annotation in _valueContractImpl.GetVerifiableAnnotations(
+                foreach (var annotation in _verifiableMemberContractImpl.GetVerifiableAnnotations(
                     excludeFlagAnnotation))
-                    yield return annotation;
-            }
-        }
-
-        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute
-        {
-            if (_valueContractImpl is null)
-            {
-                foreach (var attribute in _attributes)
-                    if (attribute is TAttribute t)
-                        yield return t;
-            }
-            else
-            {
-                foreach (var annotation in _valueContractImpl.GetAttributes<TAttribute>())
                     yield return annotation;
             }
         }
@@ -361,8 +372,8 @@ namespace Cosmos.Validation.Objects
         internal bool HasAttributeDefined<TAttr>()
             where TAttr : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr>();
             return _attributes.OfType<TAttr>().Any();
         }
 
@@ -370,8 +381,8 @@ namespace Cosmos.Validation.Objects
             where TAttr1 : Attribute
             where TAttr2 : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr1, TAttr2>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr1, TAttr2>();
 
             foreach (var attribute in _attributes)
             {
@@ -391,8 +402,8 @@ namespace Cosmos.Validation.Objects
             where TAttr2 : Attribute
             where TAttr3 : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3>();
 
             foreach (var attribute in _attributes)
             {
@@ -414,8 +425,8 @@ namespace Cosmos.Validation.Objects
             where TAttr3 : Attribute
             where TAttr4 : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4>();
 
             foreach (var attribute in _attributes)
             {
@@ -439,8 +450,8 @@ namespace Cosmos.Validation.Objects
             where TAttr4 : Attribute
             where TAttr5 : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>();
 
             foreach (var attribute in _attributes)
             {
@@ -466,8 +477,8 @@ namespace Cosmos.Validation.Objects
             where TAttr5 : Attribute
             where TAttr6 : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>();
 
             foreach (var attribute in _attributes)
             {
@@ -495,8 +506,8 @@ namespace Cosmos.Validation.Objects
             where TAttr6 : Attribute
             where TAttr7 : Attribute
         {
-            if (_valueContractImpl is not null)
-                return _valueContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>();
+            if (_verifiableMemberContractImpl is not null)
+                return _verifiableMemberContractImpl.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>();
 
             foreach (var attribute in _attributes)
             {
@@ -518,13 +529,10 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        private static Func<PropertyInfo, Func<object, object>> P => property => property.GetValue;
+        #region Expose
 
-        private static Func<FieldInfo, Func<object, object>> F => field => field.GetValue;
+        internal ICustomVerifiableMemberContractImpl ExposeInternalImpl() => _verifiableMemberContractImpl;
 
-        private static Func<string, Func<IDictionary<string, object>, object>> D =>
-            key => dictionary => dictionary.TryGetValue(key, out var result) ? result : default;
-
-        internal ICustomValueContractImpl ExposeInternalImpl() => _valueContractImpl;
+        #endregion
     }
 }

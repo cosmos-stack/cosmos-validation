@@ -13,11 +13,11 @@ namespace CosmosValidationUT.ValidatorsUT
         public LengthShould16ValidatorTests()
         {
             ValidationProjectManager = new BuildInProjectManager();
-            ValidationObjectResolver = new BuildInObjectResolver();
+            VerifiableObjectResolver = new DefaultVerifiableObjectResolver();
         }
 
         private IValidationProjectManager ValidationProjectManager { get; set; }
-        private IValidationObjectResolver ValidationObjectResolver { get; set; }
+        private IVerifiableObjectResolver VerifiableObjectResolver { get; set; }
 
         [Fact(DisplayName = "Verify an instance for CustomValidator and return a success VerifyResult.")]
         public void VerifyCustomValidatorAndShouldBeSuccessTest()
@@ -28,7 +28,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = true; //important
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_VerifyCustomValidatorAndShouldBeSuccessTest")
                                .ForCustomValidator<LengthShould16Validator>()
@@ -51,7 +51,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = true; //important
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_VerifyCustomValidatorAndShouldBeFailureTest")
                                .ForCustomValidator(new LengthShould16Validator())

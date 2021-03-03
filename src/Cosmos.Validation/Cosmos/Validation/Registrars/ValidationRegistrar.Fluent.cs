@@ -13,14 +13,14 @@ namespace Cosmos.Validation.Registrars
     {
         private readonly string _name;
         private readonly IValidationRegistrar _parentRegistrar;
-        private readonly ObjectContract _objectContract;
+        private readonly VerifiableObjectContract _verifiableObjectContract;
 
         public FluentValidationRegistrar(Type type, IValidationRegistrar parentRegistrar)
         {
             _name = string.Empty;
             SourceType = type;
             _parentRegistrar = parentRegistrar ?? throw new ArgumentNullException(nameof(parentRegistrar));
-            _objectContract = ObjectContractManager.Resolve(type);
+            _verifiableObjectContract = VerifiableObjectContractManager.Resolve(type);
             Rules = new List<CorrectValueRule>();
         }
 
@@ -29,7 +29,7 @@ namespace Cosmos.Validation.Registrars
             _name = name;
             SourceType = type;
             _parentRegistrar = parentRegistrar ?? throw new ArgumentNullException(nameof(parentRegistrar));
-            _objectContract = ObjectContractManager.Resolve(type);
+            _verifiableObjectContract = VerifiableObjectContractManager.Resolve(type);
             Rules = new List<CorrectValueRule>();
         }
 
@@ -45,7 +45,7 @@ namespace Cosmos.Validation.Registrars
 
         public IValueFluentValidationRegistrar ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
         {
-            var valueContract = _objectContract.GetValueContract(memberName);
+            var valueContract = _verifiableObjectContract.GetMemberContract(memberName);
 
             if (valueContract is null)
                 throw new InvalidOperationException($"Cannot match such Member named '{memberName}'.");
@@ -58,7 +58,7 @@ namespace Cosmos.Validation.Registrars
             if (propertyInfo is null)
                 throw new ArgumentNullException(nameof(propertyInfo));
 
-            var valueContract = _objectContract.GetValueContract(propertyInfo);
+            var valueContract = _verifiableObjectContract.GetMemberContract(propertyInfo);
 
             if (valueContract is null)
                 throw new InvalidOperationException($"Cannot match such Property named '{propertyInfo.Name}'.");
@@ -71,7 +71,7 @@ namespace Cosmos.Validation.Registrars
             if (fieldInfo is null)
                 throw new ArgumentNullException(nameof(fieldInfo));
 
-            var valueContract = _objectContract.GetValueContract(fieldInfo);
+            var valueContract = _verifiableObjectContract.GetMemberContract(fieldInfo);
 
             if (valueContract is null)
                 throw new InvalidOperationException($"Cannot match such Field named '{fieldInfo.Name}'.");

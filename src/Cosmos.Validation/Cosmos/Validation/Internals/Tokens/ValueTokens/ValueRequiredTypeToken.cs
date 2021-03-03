@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public const string NAME = "ValueRequiredTypeToken";
         private readonly Type _type;
 
-        public ValueRequiredTypeToken(ObjectValueContract contract, Type type) : base(contract)
+        public ValueRequiredTypeToken(VerifiableMemberContract contract, Type type) : base(contract)
         {
             _type = type ?? throw new ArgumentNullException(nameof(type));
         }
@@ -29,17 +29,17 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
             var flag = false;
 
-            if (Member.MemberType == _type)
+            if (VerifiableMember.MemberType == _type)
             {
                 flag = true;
             }
 
-            else if (value != null && Member.MemberType == _type)
+            else if (value != null && VerifiableMember.MemberType == _type)
             {
                 flag = true;
             }
 
-            else if (Member.MemberType.IsDerivedFrom(_type))
+            else if (VerifiableMember.MemberType.IsDerivedFrom(_type))
             {
                 flag = true;
             }
@@ -56,7 +56,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage($"The given type is not a derived class of {_type.GetFriendlyName()} or its implementation. The current type is {Member.MemberType.GetFriendlyName()}.");
+            val.ErrorMessage = MergeMessage($"The given type is not a derived class of {_type.GetFriendlyName()} or its implementation. The current type is {VerifiableMember.MemberType.GetFriendlyName()}.");
         }
 
         public override string ToString() => NAME;

@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private bool _returnFalseDirectly;
 
-        public ValueRangeToken(ObjectValueContract contract, object from, object to, RangeOptions options) : base(contract)
+        public ValueRangeToken(VerifiableMemberContract contract, object from, object to, RangeOptions options) : base(contract)
         {
             if (from is null || to is null)
             {
@@ -95,7 +95,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 }
             }
 
-            else if (Member.MemberType.IsPrimitive && Member.MemberType.IsValueType)
+            else if (VerifiableMember.MemberType.IsPrimitive && VerifiableMember.MemberType.IsValueType)
             {
                 var d = Convert.ToDecimal(value);
                 var fromD = Convert.ToDecimal(_from);

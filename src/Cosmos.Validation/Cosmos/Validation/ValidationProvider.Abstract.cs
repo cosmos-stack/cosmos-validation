@@ -11,7 +11,7 @@ namespace Cosmos.Validation
     public abstract class AbstractValidationProvider : IValidationProvider, ICorrectProvider
     {
         private readonly IValidationProjectManager _projectManager;
-        private readonly IValidationObjectResolver _objectResolver;
+        private readonly IVerifiableObjectResolver _objectResolver;
         private readonly ICustomValidatorManager _customValidatorManager;
 
         private ValidationOptions _options;
@@ -25,7 +25,7 @@ namespace Cosmos.Validation
 
         protected AbstractValidationProvider(
             IValidationProjectManager projectManager,
-            IValidationObjectResolver objectResolver,
+            IVerifiableObjectResolver objectResolver,
             ValidationOptions options)
         {
             _projectManager = projectManager ?? throw new ArgumentNullException(nameof(projectManager));
@@ -44,7 +44,7 @@ namespace Cosmos.Validation
             var args = new List<ArgumentDescriptor>
             {
                 new("projectManager", _projectManager, typeof(IValidationProjectManager)),
-                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
+                new("objectResolver", _objectResolver, typeof(IVerifiableObjectResolver)),
                 new("customValidatorManager", _customValidatorManager, typeof(ICustomValidatorManager)),
                 new("options", _options, typeof(ValidationOptions))
             };
@@ -64,7 +64,7 @@ namespace Cosmos.Validation
             {
                 new("name", name, typeof(string)),
                 new("projectManager", _projectManager, typeof(IValidationProjectManager)),
-                new("objectResolver", _objectResolver, typeof(IValidationObjectResolver)),
+                new("objectResolver", _objectResolver, typeof(IVerifiableObjectResolver)),
                 new("customValidatorManager", _customValidatorManager, typeof(ICustomValidatorManager)),
                 new("options", _options, typeof(ValidationOptions))
             };
@@ -81,7 +81,7 @@ namespace Cosmos.Validation
 
         IValidationProjectManager ICorrectProvider.ExposeProjectManager() => _projectManager;
 
-        IValidationObjectResolver ICorrectProvider.ExposeObjectResolver() => _objectResolver;
+        IVerifiableObjectResolver ICorrectProvider.ExposeObjectResolver() => _objectResolver;
 
         ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager() => _customValidatorManager;
 

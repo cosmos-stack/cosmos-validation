@@ -9,7 +9,7 @@ namespace CosmosValidationUT.Fakes
 {
     public class FakeValueRuleBuilder<T, TVal> : FakeValueRuleBuilder<T>, IValueRuleBuilder<T, TVal>
     {
-        public FakeValueRuleBuilder(ObjectValueContract contract) : base(contract) { }
+        public FakeValueRuleBuilder(VerifiableMemberContract contract) : base(contract) { }
         public IValueRuleBuilder<T, TVal> AppendRule()
         {
             throw new NotImplementedException();

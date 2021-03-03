@@ -14,7 +14,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly Type _typeOfValueToCompare;
         private readonly IEqualityComparer _comparer;
 
-        public ValueNotEqualToken(ObjectValueContract contract, object valueToCompare, IEqualityComparer comparer) : base(contract)
+        public ValueNotEqualToken(VerifiableMemberContract contract, object valueToCompare, IEqualityComparer comparer) : base(contract)
         {
             _valueToCompare = valueToCompare;
             _typeOfValueToCompare = _valueToCompare.GetType();
@@ -50,9 +50,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 return _comparer.Equals(_valueToCompare, value);
             }
 
-            if (Member.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
+            if (VerifiableMember.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
             {
-                if (ValueTypeEqualCalculator.Valid(Member.MemberType, value, _typeOfValueToCompare, _valueToCompare))
+                if (ValueTypeEqualCalculator.Valid(VerifiableMember.MemberType, value, _typeOfValueToCompare, _valueToCompare))
                     return true;
             }
 
@@ -63,7 +63,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage($"The values must not be equal. The current value type is: {Member.MemberType.GetFriendlyName()}.");
+            val.ErrorMessage = MergeMessage($"The values must not be equal. The current value type is: {VerifiableMember.MemberType.GetFriendlyName()}.");
         }
 
         public override string ToString() => NAME;

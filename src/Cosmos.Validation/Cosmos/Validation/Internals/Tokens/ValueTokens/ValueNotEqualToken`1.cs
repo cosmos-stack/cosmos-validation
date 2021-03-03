@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly TVal _valueToCompare;
         private readonly IEqualityComparer<TVal> _comparer;
 
-        public ValueNotEqualToken(ObjectValueContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer) : base(contract)
+        public ValueNotEqualToken(VerifiableMemberContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer) : base(contract)
         {
             _valueToCompare = valueToCompare;
             _comparer = comparer;
@@ -53,7 +53,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage(message ?? $"The values must not be equal. The current value type is: {Member.MemberType.GetFriendlyName()}.");
+            val.ErrorMessage = MergeMessage(message ?? $"The values must not be equal. The current value type is: {VerifiableMember.MemberType.GetFriendlyName()}.");
         }
 
         public override string ToString() => NAME;

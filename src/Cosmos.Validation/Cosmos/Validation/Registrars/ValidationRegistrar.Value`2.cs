@@ -9,20 +9,20 @@ namespace Cosmos.Validation.Registrars
     internal class ValueValidationRegistrar<T, TVal> : ValueValidationRegistrar<T>, IValueFluentValidationRegistrar<T, TVal>
     {
         public ValueValidationRegistrar(
-            ObjectValueContract valueContract,
+            VerifiableMemberContract verifiableMemberContract,
             List<CorrectValueRule> rules,
             ValueRuleMode mode,
             IFluentValidationRegistrar<T> parentRegistrar)
-            : base(valueContract, rules, mode, parentRegistrar)
+            : base(verifiableMemberContract, rules, mode, parentRegistrar)
         {
-            ValueRuleBuilder = new CorrectValueRuleBuilder<T, TVal>(valueContract, mode);
+            ValueRuleBuilder = new CorrectValueRuleBuilder<T, TVal>(verifiableMemberContract, mode);
         }
 
         private CorrectValueRuleBuilder<T, TVal> ValueRuleBuilderPtr => (CorrectValueRuleBuilder<T, TVal>) ValueRuleBuilder;
 
         #region WithConfig
 
-        public IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T,TVal>, IValueRuleBuilder<T,TVal>> func)
+        public IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func)
         {
             var builder = func?.Invoke(ValueRuleBuilderPtr);
 
@@ -33,7 +33,7 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
+
         #region ValueRules`2
 
         public new IValueFluentValidationRegistrar<T, TVal> Empty()

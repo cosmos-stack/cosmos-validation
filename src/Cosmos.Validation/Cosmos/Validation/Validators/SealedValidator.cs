@@ -6,12 +6,12 @@ namespace Cosmos.Validation.Validators
     {
         public SealedValidator() : base("SealedValidator") { }
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
+        protected override VerifyResult VerifyImpl(VerifiableObjectContext context)
         {
             return VerifyResult.Success;
         }
 
-        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        protected override VerifyResult VerifyOneImpl(VerifiableMemberContext context)
         {
             return VerifyResult.Success;
         }
@@ -23,12 +23,12 @@ namespace Cosmos.Validation.Validators
     {
         public SealedValidator() : base("SealedValidator`1") { }
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
+        protected override VerifyResult VerifyImpl(VerifiableObjectContext context)
         {
             return VerifyResult.Success;
         }
 
-        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        protected override VerifyResult VerifyOneImpl(VerifiableMemberContext context)
         {            
             return VerifyResult.Success;
         }

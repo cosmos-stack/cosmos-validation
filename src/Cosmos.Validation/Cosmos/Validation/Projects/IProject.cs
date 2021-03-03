@@ -12,10 +12,10 @@ namespace Cosmos.Validation.Projects
 
         ProjectClass Class { get; }
 
-        VerifyResult Verify(ObjectContext context);
+        VerifyResult Verify(VerifiableObjectContext context);
 
-        VerifyResult VerifyOne(ObjectValueContext context);
+        VerifyResult VerifyOne(VerifiableMemberContext context);
         
-        VerifyResult VerifyMany(IDictionary<string, ObjectValueContext> keyValueCollections);
+        VerifyResult VerifyMany(IDictionary<string, VerifiableMemberContext> keyValueCollections);
     }
 }

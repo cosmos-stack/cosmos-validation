@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly TVal _valueToCompare;
         private readonly IEqualityComparer<TVal> _comparer;
 
-        public ValueEqualToken(ObjectValueContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer) : base(contract)
+        public ValueEqualToken(VerifiableMemberContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer) : base(contract)
         {
             _valueToCompare = valueToCompare;
             _comparer = comparer;

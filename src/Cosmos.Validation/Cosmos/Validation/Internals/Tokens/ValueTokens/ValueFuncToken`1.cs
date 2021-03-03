@@ -9,7 +9,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public const string NAME = "Generic Value Func condition rule";
         private readonly Func<TVal, CustomVerifyResult> _func;
 
-        public ValueFuncToken(ObjectValueContract contract, Func<TVal, CustomVerifyResult> func) : base(contract)
+        public ValueFuncToken(VerifiableMemberContract contract, Func<TVal, CustomVerifyResult> func) : base(contract)
         {
             _func = func;
         }

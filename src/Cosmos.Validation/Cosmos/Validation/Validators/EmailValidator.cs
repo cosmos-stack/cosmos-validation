@@ -50,7 +50,7 @@ namespace Cosmos.Validation.Validators
 
         private const string AtomCharacters = "!#$%&'*+-/=?^_`{|}~";
 
-        #region Verify Core
+        #region Verify By String
 
         public VerifyResult Verify(string instance, EmailValidationOptions options)
         {
@@ -131,9 +131,9 @@ namespace Cosmos.Validation.Validators
 
         #endregion
 
-        #region Verify
+        #region (Impl for CustomValidator) Verify
 
-        private VerifyResult VerifyImpl(ObjectContext context, EmailValidationOptions options)
+        private VerifyResult VerifyImpl(VerifiableObjectContext context, EmailValidationOptions options)
         {
             List<VerifyResult> results = new();
             var values = context.GetValuesWithAttribute<ValidEmailValueAttribute>();
@@ -165,7 +165,7 @@ namespace Cosmos.Validation.Validators
             return VerifyResult.MakeTogether(results);
         }
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
+        protected override VerifyResult VerifyImpl(VerifiableObjectContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -210,12 +210,12 @@ namespace Cosmos.Validation.Validators
                 return _options.ReturnNullReferenceOrSuccess(options?.ParamName ?? "Instance");
             if (instance is string str)
                 return Verify(str, options);
-            if (instance is ObjectContext context)
-                return VerifyImpl(context, options);
-            if (instance is ObjectValueContext valueContext)
-                return VerifyOneImpl(valueContext, options);
-            context = _objectResolver.Resolve(type, instance);
-            return VerifyImpl(context, options);
+            if (instance is VerifiableObjectContext objectContext)
+                return VerifyImpl(objectContext, options);
+            if (instance is VerifiableMemberContext memberContext)
+                return VerifyOneImpl(memberContext, options);
+            objectContext = _objectResolver.Resolve(type, instance);
+            return VerifyImpl(objectContext, options);
         }
 
         public VerifyResult Verify(Type type, object instance, Action<EmailValidationOptions> optionsAct)
@@ -238,12 +238,12 @@ namespace Cosmos.Validation.Validators
                 return _options.ReturnNullReferenceOrSuccess(options?.ParamName ?? "Instance");
             if (instance is string str)
                 return Verify(str, options);
-            if (instance is ObjectContext context)
-                return VerifyImpl(context, options);
-            if (instance is ObjectValueContext valueContext)
-                return VerifyOneImpl(valueContext, options);
-            context = _objectResolver.Resolve(instance);
-            return VerifyImpl(context, options);
+            if (instance is VerifiableObjectContext objectContext)
+                return VerifyImpl(objectContext, options);
+            if (instance is VerifiableMemberContext memberContext)
+                return VerifyOneImpl(memberContext, options);
+            objectContext = _objectResolver.Resolve(instance);
+            return VerifyImpl(objectContext, options);
         }
 
         public VerifyResult Verify<T>(T instance, Action<EmailValidationOptions> optionsAct)
@@ -259,9 +259,9 @@ namespace Cosmos.Validation.Validators
 
         #endregion
 
-        #region Verify One
+        #region (Impl for CustomValidator) VerifyOne
 
-        private VerifyResult VerifyOneImpl(ObjectValueContext context, EmailValidationOptions options)
+        private VerifyResult VerifyOneImpl(VerifiableMemberContext context, EmailValidationOptions options)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -287,7 +287,7 @@ namespace Cosmos.Validation.Validators
             return VerifyResult.UnexpectedTypeWith(context.MemberName);
         }
 
-        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        protected override VerifyResult VerifyOneImpl(VerifiableMemberContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();

@@ -9,7 +9,7 @@ namespace Cosmos.Validation.Internals
         string Name { get; set; }
         IValidationProjectManager ExposeProjectManager();
 
-        IValidationObjectResolver ExposeObjectResolver();
+        IVerifiableObjectResolver ExposeObjectResolver();
 
         ICustomValidatorManager ExposeCustomValidatorManager();
 

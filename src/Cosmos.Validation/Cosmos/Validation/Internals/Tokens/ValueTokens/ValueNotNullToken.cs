@@ -9,7 +9,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public static int[] _mutuallyExclusiveFlags = {90111, 90112, 90113, 90114};
 
-        public ValueNotNullToken(ObjectValueContract contract) : base(contract) { }
+        public ValueNotNullToken(VerifiableMemberContract contract) : base(contract) { }
 
         public override CorrectValueOps Ops => CorrectValueOps.Null;
 

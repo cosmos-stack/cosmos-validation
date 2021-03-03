@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public static int[] _mutuallyExclusiveFlags = {90115, 90116, 90117, 90118};
 
-        public ValueEmptyToken(ObjectValueContract contract) : base(contract) { }
+        public ValueEmptyToken(VerifiableMemberContract contract) : base(contract) { }
 
         public override CorrectValueOps Ops => CorrectValueOps.Empty;
 
@@ -47,7 +47,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     return true;
             }
 
-            if (Equals(value, Member.GetDefaultValue(value)))
+            if (Equals(value, VerifiableMember.GetDefaultValue(value)))
                 return true;
 
             return false;

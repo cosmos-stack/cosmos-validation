@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Internals.Tokens
 
         int[] MutuallyExclusiveFlags { get; }
 
-        CorrectVerifyVal ValidValue(ObjectValueContext context);
+        CorrectVerifyVal ValidValue(VerifiableMemberContext context);
 
         string CustomMessage { get; set; }
 

@@ -12,61 +12,61 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "Create ObjectContract by direct type")]
         public void DirectTypeCreateObjectContractTest()
         {
-            var contract = ObjectContractManager.Resolve(typeof(NiceBoat));
+            var contract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
 
             contract.ShouldNotBeNull();
             contract.Type.ShouldBe(typeof(NiceBoat));
-            contract.ObjectKind.ShouldBe(ObjectKind.StructureType);
-            contract.IsBasicType().ShouldBeFalse();
+            contract.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
+            contract.IsBasicType.ShouldBeFalse();
 
             //annotations/attributes - class level
             contract.Attributes.Count.ShouldBe(0);
             contract.IncludeAnnotations.ShouldBeTrue();
 
             //value-contract
-            contract.GetAllValueContracts().Count().ShouldBe(5);
+            contract.GetMemberContracts().Count().ShouldBe(5);
 
-            contract.GetValueContract("Name").MemberName.ShouldBe("Name");
-            contract.GetValueContract("Length").MemberName.ShouldBe("Length");
-            contract.GetValueContract("Width").MemberName.ShouldBe("Width");
-            contract.GetValueContract("CreateTime").MemberName.ShouldBe("CreateTime");
-            contract.GetValueContract("Email").MemberName.ShouldBe("Email");
+            contract.GetMemberContract("Name").MemberName.ShouldBe("Name");
+            contract.GetMemberContract("Length").MemberName.ShouldBe("Length");
+            contract.GetMemberContract("Width").MemberName.ShouldBe("Width");
+            contract.GetMemberContract("CreateTime").MemberName.ShouldBe("CreateTime");
+            contract.GetMemberContract("Email").MemberName.ShouldBe("Email");
 
-            contract.GetValueContract(0).MemberName.ShouldBe("Name");
-            contract.GetValueContract(1).MemberName.ShouldBe("Length");
-            contract.GetValueContract(2).MemberName.ShouldBe("Width");
-            contract.GetValueContract(3).MemberName.ShouldBe("Email"); //Property first
-            contract.GetValueContract(4).MemberName.ShouldBe("CreateTime");
+            contract.GetMemberContract(0).MemberName.ShouldBe("Name");
+            contract.GetMemberContract(1).MemberName.ShouldBe("Length");
+            contract.GetMemberContract(2).MemberName.ShouldBe("Width");
+            contract.GetMemberContract(3).MemberName.ShouldBe("Email"); //Property first
+            contract.GetMemberContract(4).MemberName.ShouldBe("CreateTime");
         }
 
         [Fact(DisplayName = "Create ObjectContract by generic type")]
         public void GenericTypeCreateObjectContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.ShouldNotBeNull();
             contract.Type.ShouldBe(typeof(NiceBoat));
-            contract.ObjectKind.ShouldBe(ObjectKind.StructureType);
-            contract.IsBasicType().ShouldBeFalse();
+            contract.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
+            contract.IsBasicType.ShouldBeFalse();
 
             //annotations/attributes - class level
             contract.Attributes.Count.ShouldBe(0);
             contract.IncludeAnnotations.ShouldBeTrue();
 
             //value-contract
-            contract.GetAllValueContracts().Count().ShouldBe(5);
+            contract.GetMemberContracts().Count().ShouldBe(5);
 
-            contract.GetValueContract("Name").MemberName.ShouldBe("Name");
-            contract.GetValueContract("Length").MemberName.ShouldBe("Length");
-            contract.GetValueContract("Width").MemberName.ShouldBe("Width");
-            contract.GetValueContract("CreateTime").MemberName.ShouldBe("CreateTime");
-            contract.GetValueContract("Email").MemberName.ShouldBe("Email");
+            contract.GetMemberContract("Name").MemberName.ShouldBe("Name");
+            contract.GetMemberContract("Length").MemberName.ShouldBe("Length");
+            contract.GetMemberContract("Width").MemberName.ShouldBe("Width");
+            contract.GetMemberContract("CreateTime").MemberName.ShouldBe("CreateTime");
+            contract.GetMemberContract("Email").MemberName.ShouldBe("Email");
 
-            contract.GetValueContract(0).MemberName.ShouldBe("Name");
-            contract.GetValueContract(1).MemberName.ShouldBe("Length");
-            contract.GetValueContract(2).MemberName.ShouldBe("Width");
-            contract.GetValueContract(3).MemberName.ShouldBe("Email"); //Property first
-            contract.GetValueContract(4).MemberName.ShouldBe("CreateTime");
+            contract.GetMemberContract(0).MemberName.ShouldBe("Name");
+            contract.GetMemberContract(1).MemberName.ShouldBe("Length");
+            contract.GetMemberContract(2).MemberName.ShouldBe("Width");
+            contract.GetMemberContract(3).MemberName.ShouldBe("Email"); //Property first
+            contract.GetMemberContract(4).MemberName.ShouldBe("CreateTime");
         }
     }
 }

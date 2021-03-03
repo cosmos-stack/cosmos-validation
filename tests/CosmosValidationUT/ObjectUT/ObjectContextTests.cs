@@ -13,10 +13,10 @@ namespace CosmosValidationUT.ObjectUT
     {
         public ObjectContextTests()
         {
-            _objectResolver = new BuildInObjectResolver();
+            _objectResolver = new DefaultVerifiableObjectResolver();
         }
 
-        private readonly IValidationObjectResolver _objectResolver;
+        private readonly IVerifiableObjectResolver _objectResolver;
 
         [Fact(DisplayName = "To test create an object context with a direct type instance")]
         public void InstanceWithDirectTypeCreateObjectContextTest()
@@ -34,7 +34,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBe(instance);
             context.KeyValueCollection.ShouldBeNull();
@@ -94,7 +94,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBe(instance);
             context.KeyValueCollection.ShouldBeNull();
@@ -154,7 +154,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBe(instance);
             context.KeyValueCollection.ShouldBeNull();
@@ -214,7 +214,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBe(instance);
             context.KeyValueCollection.ShouldBeNull();
@@ -274,7 +274,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBeNull();
             context.KeyValueCollection.ShouldBe(d);
@@ -334,7 +334,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBeNull();
             context.KeyValueCollection.ShouldBe(d);
@@ -394,7 +394,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBeNull();
             context.KeyValueCollection.ShouldBe(d);
@@ -454,7 +454,7 @@ namespace CosmosValidationUT.ObjectUT
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBeNull();
             context.KeyValueCollection.ShouldBe(d);
@@ -510,11 +510,11 @@ namespace CosmosValidationUT.ObjectUT
                 Email = "nice@boat.com"
             };
 
-            var context = ObjectContractManager.Resolve<NiceBoat>().WithInstance(instance);
+            var context = VerifiableObjectContractManager.Resolve<NiceBoat>().WithInstance(instance);
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBe(instance);
             context.KeyValueCollection.ShouldBeNull();
@@ -570,11 +570,11 @@ namespace CosmosValidationUT.ObjectUT
                 ["Email"] = "nice@boat.com"
             };
 
-            var context = ObjectContractManager.Resolve<NiceBoat>().WithDictionary(d);
+            var context = VerifiableObjectContractManager.Resolve<NiceBoat>().WithDictionary(d);
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBeNull();
             context.KeyValueCollection.ShouldBe(d);
@@ -630,11 +630,11 @@ namespace CosmosValidationUT.ObjectUT
                 Email = "nice@boat.com"
             };
 
-            var context = ObjectContractManager.Resolve<NiceBoat>().WithInstance(instance, "nice_boat_2000");
+            var context = VerifiableObjectContractManager.Resolve<NiceBoat>().WithInstance(instance, "nice_boat_2000");
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBe(instance);
             context.KeyValueCollection.ShouldBeNull();
@@ -690,11 +690,11 @@ namespace CosmosValidationUT.ObjectUT
                 ["Email"] = "nice@boat.com"
             };
 
-            var context = ObjectContractManager.Resolve<NiceBoat>().WithDictionary(d, "nice_boat_2000");
+            var context = VerifiableObjectContractManager.Resolve<NiceBoat>().WithDictionary(d, "nice_boat_2000");
 
             context.ShouldNotBeNull();
             context.Type.ShouldBe(typeof(NiceBoat));
-            context.ObjectKind.ShouldBe(ObjectKind.StructureType);
+            context.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
             context.IsBasicType().ShouldBeFalse();
             context.Instance.ShouldBeNull();
             context.KeyValueCollection.ShouldBe(d);

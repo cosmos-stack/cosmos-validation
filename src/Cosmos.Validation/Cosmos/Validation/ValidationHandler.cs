@@ -17,13 +17,13 @@ namespace Cosmos.Validation
         private readonly Dictionary<(int, int), IProject> _namedTypeProjects = new();
         private readonly Dictionary<int, IProject> _typedProjects = new();
 
-        private readonly IValidationObjectResolver _objectResolver;
+        private readonly IVerifiableObjectResolver _objectResolver;
         private readonly ICustomValidatorManager _customValidatorManager;
         private readonly ValidationOptions _options;
 
         internal ValidationHandler(
             IEnumerable<IProject> projects,
-            IValidationObjectResolver objectResolver,
+            IVerifiableObjectResolver objectResolver,
             ICustomValidatorManager customValidatorManager,
             ValidationOptions options)
         {
@@ -82,7 +82,7 @@ namespace Cosmos.Validation
 
         public VerifyResult Verify<T>(T instance, string projectName) => Verify(typeof(T), instance, projectName);
 
-        internal VerifyResult Verify(ObjectContext context, string projectName = "")
+        internal VerifyResult Verify(VerifiableObjectContext context, string projectName = "")
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -124,10 +124,10 @@ namespace Cosmos.Validation
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
 
-            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            var valueContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
             if (valueContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            var valueContext = VerifiableMemberContext.Create(memberValue, valueContract);
 
             return VerifyOne(valueContext, declaringType, "");
         }
@@ -137,10 +137,10 @@ namespace Cosmos.Validation
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
 
-            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
+            var valueContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
             if (valueContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            var valueContext = VerifiableMemberContext.Create(memberValue, valueContract);
 
             return VerifyOne(valueContext, declaringType, projectName);
         }
@@ -155,10 +155,10 @@ namespace Cosmos.Validation
                 throw new ArgumentNullException(nameof(propertySelector));
 
             var memberName = PropertySelector.GetPropertyName(propertySelector);
-            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            var valueContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
             if (valueContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            var valueContext = VerifiableMemberContext.Create(memberValue, valueContract);
 
             return VerifyOne(valueContext, typeof(T), "");
         }
@@ -169,15 +169,15 @@ namespace Cosmos.Validation
                 throw new ArgumentNullException(nameof(propertySelector));
 
             var memberName = PropertySelector.GetPropertyName(propertySelector);
-            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
+            var valueContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
             if (valueContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
+            var valueContext = VerifiableMemberContext.Create(memberValue, valueContract);
 
             return VerifyOne(valueContext, typeof(T), projectName);
         }
 
-        internal VerifyResult VerifyOne(ObjectValueContext context, Type declaringType = default, string projectName = "")
+        internal VerifyResult VerifyOne(VerifiableMemberContext context, Type declaringType = default, string projectName = "")
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -240,7 +240,7 @@ namespace Cosmos.Validation
 
         public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections, string projectName) => VerifyMany(typeof(T), keyValueCollections, projectName);
 
-        internal VerifyResult VerifyMany(ObjectContext context, string projectName = "")
+        internal VerifyResult VerifyMany(VerifiableObjectContext context, string projectName = "")
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));

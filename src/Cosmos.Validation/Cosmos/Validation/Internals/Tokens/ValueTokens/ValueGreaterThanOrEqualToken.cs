@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly object _valueToCompare;
         private readonly Type _typeOfValueToCompare;
 
-        public ValueGreaterThanOrEqualToken(ObjectValueContract contract, object valueToCompare) : base(contract)
+        public ValueGreaterThanOrEqualToken(VerifiableMemberContract contract, object valueToCompare) : base(contract)
         {
             _valueToCompare = valueToCompare;
             _typeOfValueToCompare = _valueToCompare.GetType();
@@ -43,9 +43,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             message = null;
 
-            if (Member.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
+            if (VerifiableMember.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
             {
-                if (ValueTypeEqualCalculator.CompareTo(Member.MemberType, value, _typeOfValueToCompare, _valueToCompare) >= 0)
+                if (ValueTypeEqualCalculator.CompareTo(VerifiableMember.MemberType, value, _typeOfValueToCompare, _valueToCompare) >= 0)
                 {
                     return true;
                 }

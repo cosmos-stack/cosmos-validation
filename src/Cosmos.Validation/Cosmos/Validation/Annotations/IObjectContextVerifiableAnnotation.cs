@@ -12,6 +12,6 @@ namespace Cosmos.Validation.Annotations
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        VerifyResult StrongVerify(ObjectContext context);
+        VerifyResult StrongVerify(VerifiableObjectContext context);
     }
 }

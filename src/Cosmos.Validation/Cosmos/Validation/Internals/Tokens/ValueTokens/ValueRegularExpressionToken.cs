@@ -10,32 +10,32 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public const string NAME = "ValueRegularExpressionToken";
         readonly Func<object, Regex> _regexFunc;
 
-        public ValueRegularExpressionToken(ObjectValueContract contract, string expression) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, string expression) : base(contract)
         {
             _regexFunc = x => CreateRegex(expression);
         }
 
-        public ValueRegularExpressionToken(ObjectValueContract contract, Regex regex) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Regex regex) : base(contract)
         {
             _regexFunc = x => regex;
         }
 
-        public ValueRegularExpressionToken(ObjectValueContract contract, string expression, RegexOptions options) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, string expression, RegexOptions options) : base(contract)
         {
             _regexFunc = x => CreateRegex(expression, options);
         }
 
-        public ValueRegularExpressionToken(ObjectValueContract contract, Func<object, string> expressionFunc) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc) : base(contract)
         {
             _regexFunc = x => CreateRegex(expressionFunc(x));
         }
 
-        public ValueRegularExpressionToken(ObjectValueContract contract, Func<object, Regex> regexFunc) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, Regex> regexFunc) : base(contract)
         {
             _regexFunc = regexFunc;
         }
 
-        public ValueRegularExpressionToken(ObjectValueContract contract, Func<object, string> expressionFunc, RegexOptions options) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc, RegexOptions options) : base(contract)
         {
             _regexFunc = x => CreateRegex(expressionFunc(x), options);
         }

@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Annotations.Core
     {
         private static class VerifyImpls
         {
-            public static void MustNumericType(ObjectValueContext context, MustNumericTypeAttribute attr, List<VerifyError> errors)
+            public static void MustNumericType(VerifiableMemberContext context, MustNumericTypeAttribute attr, List<VerifyError> errors)
             {
                 var condition = attr.MayBeNullable
                     ? Types.IsNumericType(context.MemberType)
@@ -20,7 +20,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void MustIntType(ObjectValueContext context, MustIntTypeAttribute attr, List<VerifyError> errors)
+            public static void MustIntType(VerifiableMemberContext context, MustIntTypeAttribute attr, List<VerifyError> errors)
             {
                 var condition = attr.MayBeNullable
                     ? context.IsNot(TypeClass.IntClazz).OrNot(TypeClass.IntNullableClazz)
@@ -28,7 +28,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.Result.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void MustLongType(ObjectValueContext context, MustLongTypeAttribute attr, List<VerifyError> errors)
+            public static void MustLongType(VerifiableMemberContext context, MustLongTypeAttribute attr, List<VerifyError> errors)
             {
                 var condition = attr.MayBeNullable
                     ? context.IsNot(TypeClass.LongClazz).OrNot(TypeClass.LongNullableClazz)
@@ -36,13 +36,13 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.Result.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void MustStringType(ObjectValueContext context, MustStringTypeAttribute attr, List<VerifyError> errors)
+            public static void MustStringType(VerifiableMemberContext context, MustStringTypeAttribute attr, List<VerifyError> errors)
             {
                 var condition = context.Is(TypeClass.StringClazz);
                 condition.Result.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void ValidDateValue(ObjectValueContext context, ValidDateValueAttribute attr, List<VerifyError> errors)
+            public static void ValidDateValue(VerifiableMemberContext context, ValidDateValueAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.DateTimeClazz) && context.Value is DateTime)
@@ -52,7 +52,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotInTheFuture(ObjectValueContext context, NotInTheFutureAttribute attr, List<VerifyError> errors)
+            public static void NotInTheFuture(VerifiableMemberContext context, NotInTheFutureAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.DateTimeClazz) && context.Value is DateTime d)
@@ -60,7 +60,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotInThePast(ObjectValueContext context, NotInThePastAttribute attr, List<VerifyError> errors)
+            public static void NotInThePast(VerifiableMemberContext context, NotInThePastAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.DateTimeClazz) && context.Value is DateTime d)
@@ -68,7 +68,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotNegative(ObjectValueContext context, NotNegativeAttribute attr, List<VerifyError> errors)
+            public static void NotNegative(VerifiableMemberContext context, NotNegativeAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.IntClazz))
@@ -89,7 +89,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotNegativeOrZero(ObjectValueContext context, NotNegativeOrZeroAttribute attr, List<VerifyError> errors)
+            public static void NotNegativeOrZero(VerifiableMemberContext context, NotNegativeOrZeroAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.IntClazz))
@@ -110,7 +110,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotPositive(ObjectValueContext context, NotPositiveAttribute attr, List<VerifyError> errors)
+            public static void NotPositive(VerifiableMemberContext context, NotPositiveAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.IntClazz))
@@ -131,7 +131,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotPositiveOrZero(ObjectValueContext context, NotPositiveOrZeroAttribute attr, List<VerifyError> errors)
+            public static void NotPositiveOrZero(VerifiableMemberContext context, NotPositiveOrZeroAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.IntClazz))
@@ -152,7 +152,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotNull(ObjectValueContext context, NotNullAttribute attr, List<VerifyError> errors)
+            public static void NotNull(VerifiableMemberContext context, NotNullAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.StringClazz) && context.Value is string s)
@@ -162,7 +162,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotWhiteSpace(ObjectValueContext context, NotWhiteSpaceAttribute attr, List<VerifyError> errors)
+            public static void NotWhiteSpace(VerifiableMemberContext context, NotWhiteSpaceAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.StringClazz) && context.Value is string s)
@@ -170,7 +170,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotOutOfLength(ObjectValueContext context, NotOutOfLengthAttribute attr, List<VerifyError> errors)
+            public static void NotOutOfLength(VerifiableMemberContext context, NotOutOfLengthAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.StringClazz) && context.Value is string s)
@@ -178,7 +178,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void NotOutOfRange(ObjectValueContext context, NotOutOfRangeAttribute attr, List<VerifyError> errors)
+            public static void NotOutOfRange(VerifiableMemberContext context, NotOutOfRangeAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.IntClazz) && context.Value is int intVal)
@@ -215,7 +215,7 @@ namespace Cosmos.Validation.Annotations.Core
                 condition.IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
             }
 
-            public static void ValidEmailValue(ObjectValueContext context, ValidEmailValueAttribute attr, List<VerifyError> errors)
+            public static void ValidEmailValue(VerifiableMemberContext context, ValidEmailValueAttribute attr, List<VerifyError> errors)
             {
                 var condition = false;
                 if (context.Is(TypeClass.StringClazz) && context.Value is string emailStr)

@@ -14,7 +14,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private readonly Func<TItem, bool> _func;
 
-        public ValueAllToken(ObjectValueContract contract, Func<TItem, bool> func) : base(contract)
+        public ValueAllToken(VerifiableMemberContract contract, Func<TItem, bool> func) : base(contract)
         {
             _func = func;
         }

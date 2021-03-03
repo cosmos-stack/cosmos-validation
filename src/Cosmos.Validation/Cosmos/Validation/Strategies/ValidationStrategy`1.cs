@@ -13,14 +13,14 @@ namespace Cosmos.Validation.Strategies
     {
         private readonly List<CorrectValueRuleBuilder<T>> _memberValueRuleBuilders;
         private readonly object _builderLockObj = new();
-        private readonly ObjectContract _contract;
+        private readonly VerifiableObjectContract _contract;
 
         protected ValidationStrategy()
         {
             SourceType = typeof(T);
 
             _memberValueRuleBuilders = new List<CorrectValueRuleBuilder<T>>();
-            _contract = ObjectContractManager.Resolve<T>();
+            _contract = VerifiableObjectContractManager.Resolve<T>();
         }
 
         public Type SourceType { get; }
@@ -40,7 +40,7 @@ namespace Cosmos.Validation.Strategies
                 var builder = _memberValueRuleBuilders.FirstOrDefault(b => b.MemberName == name);
                 if (builder is null)
                 {
-                    builder = new CorrectValueRuleBuilder<T>(_contract.GetValueContract(name));
+                    builder = new CorrectValueRuleBuilder<T>(_contract.GetMemberContract(name));
                     _memberValueRuleBuilders.Add(builder);
                 }
 
@@ -73,7 +73,7 @@ namespace Cosmos.Validation.Strategies
                 var builder = _memberValueRuleBuilders.FirstOrDefault(b => b.MemberName == name);
                 if (builder is null)
                 {
-                    builder = new CorrectValueRuleBuilder<T, TVal>(_contract.GetValueContract(name));
+                    builder = new CorrectValueRuleBuilder<T, TVal>(_contract.GetMemberContract(name));
                     _memberValueRuleBuilders.Add(builder);
                 }
 

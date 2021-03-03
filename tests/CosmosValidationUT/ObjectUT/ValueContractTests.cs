@@ -16,54 +16,54 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "Create ObjectContract and touch ObjectValueContract by direct type")]
         public void DirectTypeCreateObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve(typeof(NiceBoat));
+            var contract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
 
             contract.ShouldNotBeNull();
             contract.Type.ShouldBe(typeof(NiceBoat));
-            contract.ObjectKind.ShouldBe(ObjectKind.StructureType);
-            contract.IsBasicType().ShouldBeFalse();
+            contract.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
+            contract.IsBasicType.ShouldBeFalse();
 
             //value-contract
-            contract.GetAllValueContracts().Count().ShouldBe(5);
+            contract.GetMemberContracts().Count().ShouldBe(5);
 
-            var value1 = contract.GetValueContract("Name");
-            var value2 = contract.GetValueContract("Length");
-            var value3 = contract.GetValueContract("Width");
-            var value4 = contract.GetValueContract("CreateTime");
-            var value5 = contract.GetValueContract("Email");
+            var value1 = contract.GetMemberContract("Name");
+            var value2 = contract.GetMemberContract("Length");
+            var value3 = contract.GetMemberContract("Width");
+            var value4 = contract.GetMemberContract("CreateTime");
+            var value5 = contract.GetMemberContract("Email");
             
             value1.MemberName.ShouldBe("Name");
             value1.MemberType.ShouldBe(TypeClass.StringClazz);
             value1.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value1.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value1.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value1.IsBasicType.ShouldBeTrue();
             value1.IncludeAnnotations.ShouldBeTrue();
             
             value2.MemberName.ShouldBe("Length");
             value2.MemberType.ShouldBe(TypeClass.LongClazz);
             value2.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value2.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value2.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value2.IsBasicType.ShouldBeTrue();
             value2.IncludeAnnotations.ShouldBeTrue();
             
             value3.MemberName.ShouldBe("Width");
             value3.MemberType.ShouldBe(TypeClass.LongClazz);
             value3.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value3.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value3.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value3.IsBasicType.ShouldBeTrue();
             value3.IncludeAnnotations.ShouldBeTrue();
             
             value4.MemberName.ShouldBe("CreateTime");
             value4.MemberType.ShouldBe(TypeClass.DateTimeClazz);
             value4.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value4.ObjectValueKind.ShouldBe(ObjectValueKind.Field);
+            value4.MemberKind.ShouldBe(VerifiableMemberKind.Field);
             value4.IsBasicType.ShouldBeTrue();
             value4.IncludeAnnotations.ShouldBeTrue();
             
             value5.MemberName.ShouldBe("Email");
             value5.MemberType.ShouldBe(TypeClass.StringClazz);
             value5.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value5.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value5.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value5.IsBasicType.ShouldBeTrue();
             value5.IncludeAnnotations.ShouldBeTrue();
         }
@@ -71,54 +71,54 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "Create ObjectContract and touch ObjectValueContract by generic type")]
         public void GenericTypeCreateObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.ShouldNotBeNull();
             contract.Type.ShouldBe(typeof(NiceBoat));
-            contract.ObjectKind.ShouldBe(ObjectKind.StructureType);
-            contract.IsBasicType().ShouldBeFalse();
+            contract.ObjectKind.ShouldBe(VerifiableObjectKind.StructureType);
+            contract.IsBasicType.ShouldBeFalse();
 
             //value-contract
-            contract.GetAllValueContracts().Count().ShouldBe(5);
+            contract.GetMemberContracts().Count().ShouldBe(5);
 
-            var value1 = contract.GetValueContract("Name");
-            var value2 = contract.GetValueContract("Length");
-            var value3 = contract.GetValueContract("Width");
-            var value4 = contract.GetValueContract("CreateTime");
-            var value5 = contract.GetValueContract("Email");
+            var value1 = contract.GetMemberContract("Name");
+            var value2 = contract.GetMemberContract("Length");
+            var value3 = contract.GetMemberContract("Width");
+            var value4 = contract.GetMemberContract("CreateTime");
+            var value5 = contract.GetMemberContract("Email");
             
             value1.MemberName.ShouldBe("Name");
             value1.MemberType.ShouldBe(TypeClass.StringClazz);
             value1.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value1.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value1.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value1.IsBasicType.ShouldBeTrue();
             value1.IncludeAnnotations.ShouldBeTrue();
             
             value2.MemberName.ShouldBe("Length");
             value2.MemberType.ShouldBe(TypeClass.LongClazz);
             value2.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value2.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value2.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value2.IsBasicType.ShouldBeTrue();
             value2.IncludeAnnotations.ShouldBeTrue();
             
             value3.MemberName.ShouldBe("Width");
             value3.MemberType.ShouldBe(TypeClass.LongClazz);
             value3.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value3.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value3.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value3.IsBasicType.ShouldBeTrue();
             value3.IncludeAnnotations.ShouldBeTrue();
             
             value4.MemberName.ShouldBe("CreateTime");
             value4.MemberType.ShouldBe(TypeClass.DateTimeClazz);
             value4.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value4.ObjectValueKind.ShouldBe(ObjectValueKind.Field);
+            value4.MemberKind.ShouldBe(VerifiableMemberKind.Field);
             value4.IsBasicType.ShouldBeTrue();
             value4.IncludeAnnotations.ShouldBeTrue();
             
             value5.MemberName.ShouldBe("Email");
             value5.MemberType.ShouldBe(TypeClass.StringClazz);
             value5.DeclaringType.ShouldBe(typeof(NiceBoat));
-            value5.ObjectValueKind.ShouldBe(ObjectValueKind.Property);
+            value5.MemberKind.ShouldBe(VerifiableMemberKind.Property);
             value5.IsBasicType.ShouldBeTrue();
             value5.IncludeAnnotations.ShouldBeTrue();
         }
@@ -126,11 +126,11 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName="To test annotations of Property Name in ObjectValueContract")]
         public void Annotation_Name_InObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.IncludeAnnotations.ShouldBeTrue();
             
-            var value1 = contract.GetValueContract("Name");
+            var value1 = contract.GetMemberContract("Name");
 
             value1.IncludeAnnotations.ShouldBeTrue();
             value1.Attributes.Count.ShouldBe(1);
@@ -160,11 +160,11 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "To test annotations of Property Length in ObjectValueContract")]
         public void Annotation_Length_InObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.IncludeAnnotations.ShouldBeTrue();
             
-            var value2 = contract.GetValueContract("Length");
+            var value2 = contract.GetMemberContract("Length");
 
             value2.IncludeAnnotations.ShouldBeTrue();
             value2.Attributes.Count.ShouldBe(1);
@@ -194,11 +194,11 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "To test annotations of Property Weight in ObjectValueContract")]
         public void Annotation_Weight_InObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.IncludeAnnotations.ShouldBeTrue();
             
-            var value3 = contract.GetValueContract("Width");
+            var value3 = contract.GetMemberContract("Width");
             
             value3.IncludeAnnotations.ShouldBeTrue();
             value3.Attributes.Count.ShouldBe(1);
@@ -228,11 +228,11 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "To test annotations of Field CreatedTime in ObjectValueContract")]
         public void Annotation_CreatedTime_InObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.IncludeAnnotations.ShouldBeTrue();
             
-            var value4 = contract.GetValueContract("CreateTime");
+            var value4 = contract.GetMemberContract("CreateTime");
             
             value4.IncludeAnnotations.ShouldBeTrue();
             value4.Attributes.Count.ShouldBe(1);
@@ -266,11 +266,11 @@ namespace CosmosValidationUT.ObjectUT
         [Fact(DisplayName = "To test annotations of Property Email in ObjectValueContract")]
         public void Annotation_Email_InObjectValueContractTest()
         {
-            var contract = ObjectContractManager.Resolve<NiceBoat>();
+            var contract = VerifiableObjectContractManager.Resolve<NiceBoat>();
 
             contract.IncludeAnnotations.ShouldBeTrue();
             
-            var value5 = contract.GetValueContract("Email");
+            var value5 = contract.GetMemberContract("Email");
             
             value5.IncludeAnnotations.ShouldBeTrue();
             value5.Attributes.Count.ShouldBe(1);
@@ -317,13 +317,13 @@ namespace CosmosValidationUT.ObjectUT
                 Email = "nice@boat.com"
             };
             
-            var contract = ObjectContractManager.Resolve(typeof(NiceBoat));
+            var contract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
 
-            var value1 = contract.GetValueContract("Name");
-            var value2 = contract.GetValueContract("Length");
-            var value3 = contract.GetValueContract("Width");
-            var value4 = contract.GetValueContract("CreateTime");
-            var value5 = contract.GetValueContract("Email");
+            var value1 = contract.GetMemberContract("Name");
+            var value2 = contract.GetMemberContract("Length");
+            var value3 = contract.GetMemberContract("Width");
+            var value4 = contract.GetMemberContract("CreateTime");
+            var value5 = contract.GetMemberContract("Email");
             
             value1.GetValue(instance).ShouldBe("NiceBoat1000");
             value2.GetValue(instance).ShouldBe(1000);
@@ -344,13 +344,13 @@ namespace CosmosValidationUT.ObjectUT
                 ["Email"] = "nice@boat.com"
             };
             
-            var contract = ObjectContractManager.Resolve(typeof(NiceBoat));
+            var contract = VerifiableObjectContractManager.Resolve(typeof(NiceBoat));
 
-            var value1 = contract.GetValueContract("Name");
-            var value2 = contract.GetValueContract("Length");
-            var value3 = contract.GetValueContract("Width");
-            var value4 = contract.GetValueContract("CreateTime");
-            var value5 = contract.GetValueContract("Email");
+            var value1 = contract.GetMemberContract("Name");
+            var value2 = contract.GetMemberContract("Length");
+            var value3 = contract.GetMemberContract("Width");
+            var value4 = contract.GetMemberContract("CreateTime");
+            var value5 = contract.GetMemberContract("Email");
             
             value1.GetValue(d).ShouldBe("NiceBoat1000");
             value2.GetValue(d).ShouldBe(1000);

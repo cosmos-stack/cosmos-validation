@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly TVal _to;
         private readonly RangeOptions _options;
 
-        public ValueRangeToken(ObjectValueContract contract, TVal from, TVal to, RangeOptions options) : base(contract)
+        public ValueRangeToken(VerifiableMemberContract contract, TVal from, TVal to, RangeOptions options) : base(contract)
         {
             _from = from;
             _to = to;

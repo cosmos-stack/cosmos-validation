@@ -18,11 +18,11 @@ namespace CosmosValidationUT.ValidatorsUT
         public ValidationHandlerTests()
         {
             ValidationProjectManager = new BuildInProjectManager();
-            ValidationObjectResolver = new BuildInObjectResolver();
+            VerifiableObjectResolver = new DefaultVerifiableObjectResolver();
         }
 
         private IValidationProjectManager ValidationProjectManager { get; set; }
-        private IValidationObjectResolver ValidationObjectResolver { get; set; }
+        private IVerifiableObjectResolver VerifiableObjectResolver { get; set; }
 
         [Fact(DisplayName = "Verify an instance and return a success VerifyResult.")]
         public void VerifyAnByInstanceShouldBeSuccessTest()
@@ -33,7 +33,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByInstanceShouldBeSuccessTest")
                                              .ForType<NiceBoat>()
@@ -67,7 +67,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByInstanceShouldBeFailureTest")
                                              .ForType<NiceBoat>()
@@ -101,7 +101,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyOneShouldBeSuccessTest")
                                              .ForType<NiceBoat>()
@@ -126,7 +126,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyOneShouldBeFailureTest")
                                              .ForType<NiceBoat>()
@@ -151,7 +151,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyOneWithPropertySelectorAndShouldBeSuccessTest")
                                              .ForType<NiceBoat>()
@@ -176,7 +176,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyOneWithPropertySelectorAndShouldBeFailureTest")
                                              .ForType<NiceBoat>()
@@ -201,7 +201,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByDictionaryShouldBeSuccessTest")
                                              .ForType<NiceBoat>()
@@ -235,7 +235,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.CustomValidatorEnabled = false;
             options.FailureIfProjectNotMatch = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByDictionaryShouldBeFailureTest")
                                              .ForType<NiceBoat>()
@@ -269,7 +269,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByInstanceWithAnnotationTest")
                                              .ForType<NiceBoat>()
@@ -303,7 +303,7 @@ namespace CosmosValidationUT.ValidatorsUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = true;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             var handler = ValidationRegistrar.ForProvider(provider, "UTH_VerifyAnByInstanceWithCustomValidatorTest")
                                              .ForCustomValidator<EmailValidator, string>()

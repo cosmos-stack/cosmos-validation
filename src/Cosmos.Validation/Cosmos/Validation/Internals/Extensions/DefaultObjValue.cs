@@ -36,12 +36,12 @@ namespace Cosmos.Validation.Internals.Extensions
     
     internal static class DefaultObjValueExtensions
     {
-        public static object GetDefaultValue(this ObjectValueContext context, object value)
+        public static object GetDefaultValue(this VerifiableMemberContext context, object value)
         {
             return DefaultObjValue.Get(context.MemberType, value);
         }
         
-        public static object GetDefaultValue(this ObjectValueContract context, object value)
+        public static object GetDefaultValue(this VerifiableMemberContract context, object value)
         {
             return DefaultObjValue.Get(context.MemberType, value);
         }

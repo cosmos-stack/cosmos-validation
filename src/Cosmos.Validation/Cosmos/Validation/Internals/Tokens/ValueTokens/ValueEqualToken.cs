@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly Type _typeOfValueToCompare;
         private readonly IEqualityComparer _comparer;
 
-        public ValueEqualToken(ObjectValueContract contract, object valueToCompare, IEqualityComparer comparer) : base(contract)
+        public ValueEqualToken(VerifiableMemberContract contract, object valueToCompare, IEqualityComparer comparer) : base(contract)
         {
             _valueToCompare = valueToCompare;
             _typeOfValueToCompare = _valueToCompare.GetType();
@@ -49,9 +49,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 return _comparer.Equals(_valueToCompare, value);
             }
 
-            if (Member.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
+            if (VerifiableMember.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
             {
-                if (ValueTypeEqualCalculator.Valid(Member.MemberType, value, _typeOfValueToCompare, _valueToCompare))
+                if (ValueTypeEqualCalculator.Valid(VerifiableMember.MemberType, value, _typeOfValueToCompare, _valueToCompare))
                     return true;
             }
 

@@ -8,14 +8,14 @@ namespace CosmosValidationUT.Fakes
     public abstract class FakeValidationStrategy : IValidationStrategy, IFakeCorrectStrategy
     {
         private readonly List<FakeValueRuleBuilder> _memberValueRuleBuilders;
-        private readonly ObjectContract _contract;
+        private readonly VerifiableObjectContract _contract;
 
         protected FakeValidationStrategy(Type type)
         {
             SourceType = type ?? throw new ArgumentNullException(nameof(type));
 
             _memberValueRuleBuilders = new List<FakeValueRuleBuilder>();
-            _contract = ObjectContractManager.Resolve(type);
+            _contract = VerifiableObjectContractManager.Resolve(type);
         }
 
         public Type SourceType { get; }

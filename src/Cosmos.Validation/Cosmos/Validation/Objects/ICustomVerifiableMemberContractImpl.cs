@@ -2,7 +2,7 @@
 
 namespace Cosmos.Validation.Objects
 {
-    public interface ICustomValueContractImpl : IValueContract
+    public interface ICustomVerifiableMemberContractImpl : IVerifiableMemberContract
     {
         bool HasAttributeDefined<TAttr>()
             where TAttr : Attribute;

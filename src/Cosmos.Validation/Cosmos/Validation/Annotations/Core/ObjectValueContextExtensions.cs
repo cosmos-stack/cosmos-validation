@@ -8,24 +8,24 @@ namespace Cosmos.Validation.Annotations.Core
     /// </summary>
     internal static class ObjectValueContextExtensions
     {
-        public static ParameterTypeValidation Is(this ObjectValueContext context, Type targetType)
+        public static ParameterTypeValidation Is(this VerifiableMemberContext context, Type targetType)
         {
             var parameterType = context.MemberType;
             return new ParameterTypeValidation(parameterType == targetType, parameterType);
         }
 
-        public static ParameterTypeValidation IsNot(this ObjectValueContext context, Type targetType)
+        public static ParameterTypeValidation IsNot(this VerifiableMemberContext context, Type targetType)
         {
             var parameterType = context.MemberType;
             return new ParameterTypeValidation(parameterType == targetType, parameterType);
         }
 
-        public static ParameterTypeValidation Is<T>(this ObjectValueContext context)
+        public static ParameterTypeValidation Is<T>(this VerifiableMemberContext context)
         {
             return context.Is(typeof(T));
         }
 
-        public static ParameterTypeValidation IsNot<T>(this ObjectValueContext context)
+        public static ParameterTypeValidation IsNot<T>(this VerifiableMemberContext context)
         {
             return context.IsNot(typeof(T));
         }

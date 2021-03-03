@@ -16,12 +16,12 @@ namespace Cosmos.Validation.Validators
     /// </summary>
     public class AnnotationValidator : IValidator, ICorrectValidator
     {
-        private readonly IValidationObjectResolver _objectResolver;
+        private readonly IVerifiableObjectResolver _objectResolver;
         private readonly ValidationOptions _options;
 
-        private AnnotationValidator() : this(new BuildInObjectResolver(), new ValidationOptions()) { }
+        private AnnotationValidator() : this(new DefaultVerifiableObjectResolver(), new ValidationOptions()) { }
 
-        private AnnotationValidator(IValidationObjectResolver objectResolver, ValidationOptions options)
+        private AnnotationValidator(IVerifiableObjectResolver objectResolver, ValidationOptions options)
         {
             _objectResolver = objectResolver ?? throw new ArgumentNullException(nameof(objectResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -43,10 +43,10 @@ namespace Cosmos.Validation.Validators
 
         public static AnnotationValidator GetInstance(ValidationOptions options)
         {
-            return new(new BuildInObjectResolver(), options);
+            return new(new DefaultVerifiableObjectResolver(), options);
         }
 
-        public static AnnotationValidator GetInstance(IValidationObjectResolver objectResolver, ValidationOptions options)
+        public static AnnotationValidator GetInstance(IVerifiableObjectResolver objectResolver, ValidationOptions options)
         {
             return new(objectResolver, options);
         }
@@ -61,12 +61,12 @@ namespace Cosmos.Validation.Validators
                 return _options.ReturnNullReferenceOrSuccess();
             if (instance is null)
                 return _options.ReturnNullReferenceOrSuccess();
-            if (instance is ObjectContext context)
-                return Verify(context);
-            if (instance is ObjectValueContext valueContext)
-                return VerifyOne(valueContext);
-            if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyMany(declaringType, keyValueCollections);
+            if (instance is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (instance is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (instance is IDictionary<string, object> keyValueCollection)
+                return VerifyMany(declaringType, keyValueCollection);
             return Verify(_objectResolver.Resolve(declaringType, instance));
         }
 
@@ -74,16 +74,16 @@ namespace Cosmos.Validation.Validators
         {
             if (instance is null)
                 return _options.ReturnNullReferenceOrSuccess();
-            if (instance is ObjectContext context)
-                return Verify(context);
-            if (instance is ObjectValueContext valueContext)
-                return VerifyOne(valueContext);
+            if (instance is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (instance is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
             if (instance is IDictionary<string, object>)
                 return new VerifyResult(new VerifyFailure("KeyValueCollections", "Dictionary objects should specify specific types", instance));
             return Verify(_objectResolver.Resolve(instance));
         }
 
-        public VerifyResult Verify(ObjectContext context)
+        public VerifyResult Verify(VerifiableObjectContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -112,52 +112,52 @@ namespace Cosmos.Validation.Validators
                 return _options.ReturnNullReferenceOrSuccess();
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();
-            if (memberValue is ObjectContext context)
-                return Verify(context);
-            if (memberValue is ObjectValueContext valueContext)
-                return VerifyOne(valueContext);
-            if (memberValue is IDictionary<string, object> keyValueCollections)
-                return VerifyMany(declaringType, keyValueCollections);
-            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
-            if (valueContract is null)
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollection)
+                return VerifyMany(declaringType, keyValueCollection);
+            var memberContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
         public VerifyResult VerifyOne<T, TVal>(TVal memberValue, string memberName)
         {
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();
-            if (memberValue is ObjectContext context)
-                return Verify(context);
-            if (memberValue is ObjectValueContext valueContext)
-                return VerifyOne(valueContext);
-            if (memberValue is IDictionary<string, object> keyValueCollections)
-                return VerifyMany<T>(keyValueCollections);
-            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
-            if (valueContract is null)
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollection)
+                return VerifyMany<T>(keyValueCollection);
+            var memberContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
         public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
         {
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();
-            if (memberValue is ObjectContext context)
-                return Verify(context);
-            if (memberValue is ObjectValueContext valueContext)
-                return VerifyOne(valueContext);
-            if (memberValue is IDictionary<string, object> keyValueCollections)
-                return VerifyMany<T>(keyValueCollections);
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollection)
+                return VerifyMany<T>(keyValueCollection);
             var memberName = PropertySelector.GetPropertyName(propertySelector);
-            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
-            if (valueContract is null)
+            var memberContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            return VerifyOne(ObjectValueContext.Create(memberValue, valueContract));
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
-        public VerifyResult VerifyOne(ObjectValueContext context)
+        public VerifyResult VerifyOne(VerifiableMemberContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -193,7 +193,7 @@ namespace Cosmos.Validation.Validators
             return VerifyMany(_objectResolver.Resolve<T>(keyValueCollections));
         }
 
-        public VerifyResult VerifyMany(ObjectContext context)
+        public VerifyResult VerifyMany(VerifiableObjectContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -214,7 +214,7 @@ namespace Cosmos.Validation.Validators
 
         #endregion
 
-        private static void VerifyViaFlagAnnotations(ObjectValueContext context, List<VerifyResult> results)
+        private static void VerifyViaFlagAnnotations(VerifiableMemberContext context, List<VerifyResult> results)
         {
             var annotations = context.GetFlagAnnotations(true).ToList();
 
@@ -225,7 +225,7 @@ namespace Cosmos.Validation.Validators
             }
         }
 
-        private static void VerifyViaVerifiableAnnotations(ObjectValueContext context, List<VerifyResult> results)
+        private static void VerifyViaVerifiableAnnotations(VerifiableMemberContext context, List<VerifyResult> results)
         {
             var annotations = context.GetVerifiableAnnotations(true).ToList();
 

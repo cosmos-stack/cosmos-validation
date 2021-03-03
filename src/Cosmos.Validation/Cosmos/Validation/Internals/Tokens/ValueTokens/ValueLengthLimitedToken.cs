@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly int _minLength;
         private readonly int _maxLength;
 
-        public ValueLengthLimitedToken(ObjectValueContract contract, int min, int max) : base(contract)
+        public ValueLengthLimitedToken(VerifiableMemberContract contract, int min, int max) : base(contract)
         {
             if (min < 0)
                 throw new ArgumentOutOfRangeException(nameof(min));
@@ -47,7 +47,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 }
             }
 
-            else if (Member.MemberType == typeof(string) && _minLength > 0)
+            else if (VerifiableMember.MemberType == typeof(string) && _minLength > 0)
             {
                 // for ""
                 UpdateVal(val, value, 0);

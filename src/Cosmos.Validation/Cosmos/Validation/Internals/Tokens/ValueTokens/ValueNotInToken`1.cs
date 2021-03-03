@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private readonly ICollection<TVal> _objects;
 
-        public ValueNotInToken(ObjectValueContract contract, ICollection<TVal> objects) : base(contract)
+        public ValueNotInToken(VerifiableMemberContract contract, ICollection<TVal> objects) : base(contract)
         {
             _objects = objects ?? Arrays.Empty<TVal>();
         }

@@ -64,10 +64,10 @@ namespace Cosmos.Validation.Annotations
             if (instance is string str)
                 return StrongVerify(str);
 
-            if (instance is ObjectContext ctx1)
+            if (instance is VerifiableObjectContext ctx1)
                 return EmailValidator.Instance.VerifyViaContext(ctx1);
 
-            if (instance is ObjectValueContext ctx2)
+            if (instance is VerifiableMemberContext ctx2)
                 return EmailValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
 
             return EmailValidator.Instance.Verify(typeof(T), instance);
@@ -87,10 +87,10 @@ namespace Cosmos.Validation.Annotations
             if (instance is string str)
                 return StrongVerify(str);
 
-            if (instance is ObjectContext ctx1)
+            if (instance is VerifiableObjectContext ctx1)
                 return EmailValidator.Instance.VerifyViaContext(ctx1);
 
-            if (instance is ObjectValueContext ctx2)
+            if (instance is VerifiableMemberContext ctx2)
                 return EmailValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
 
             return EmailValidator.Instance.Verify(type, instance);
@@ -101,7 +101,7 @@ namespace Cosmos.Validation.Annotations
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public VerifyResult StrongVerify(ObjectContext context)
+        public VerifyResult StrongVerify(VerifiableObjectContext context)
         {
             return EmailValidator.Instance.VerifyViaContext(context);
         }

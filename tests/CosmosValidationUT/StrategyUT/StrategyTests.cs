@@ -15,11 +15,11 @@ namespace CosmosValidationUT.StrategyUT
         public StrategyTests()
         {
             ValidationProjectManager = new BuildInProjectManager();
-            ValidationObjectResolver = new BuildInObjectResolver();
+            VerifiableObjectResolver = new DefaultVerifiableObjectResolver();
         }
 
         private IValidationProjectManager ValidationProjectManager { get; set; }
-        private IValidationObjectResolver ValidationObjectResolver { get; set; }
+        private IVerifiableObjectResolver VerifiableObjectResolver { get; set; }
 
         [Fact(DisplayName = "Use normal strategy by generic way and verify an instance and return success")]
         public void UseNormalStrategyAndVerifyInstanceAndReturnSuccessTest()
@@ -30,7 +30,7 @@ namespace CosmosValidationUT.StrategyUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_UseNormalStrategyAndVerifyInstanceAndReturnSuccessTest")
                                .ForStrategy<NormalNiceBoatStrategy>()
@@ -63,7 +63,7 @@ namespace CosmosValidationUT.StrategyUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_UseNormalStrategyAndVerifyInstanceAndReturnFailureTest")
                                .ForStrategy(new NormalNiceBoatStrategy())
@@ -96,7 +96,7 @@ namespace CosmosValidationUT.StrategyUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UT_UseGenericStrategyAndVerifyInstanceAndReturnSuccessTest")
                                .ForStrategy<GenericNiceBoatStrategy, NiceBoat>()
@@ -129,7 +129,7 @@ namespace CosmosValidationUT.StrategyUT
             options.FailureIfProjectNotMatch = false;
             options.CustomValidatorEnabled = false;
 
-            var provider = new ValidationProvider(ValidationProjectManager, ValidationObjectResolver, options);
+            var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
             
             ValidationRegistrar.ForProvider(provider, "UT_UseGenericStrategyAndVerifyInstanceAndReturnFailureTest")
                                .ForStrategy(new GenericNiceBoatStrategy())

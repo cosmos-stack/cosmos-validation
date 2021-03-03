@@ -8,18 +8,18 @@ namespace Cosmos.Validation.Validators
     public abstract class CustomValidator : IValidator, ICorrectValidator
     {
         // ReSharper disable once InconsistentNaming
-        protected readonly IValidationObjectResolver _objectResolver;
+        protected readonly IVerifiableObjectResolver _objectResolver;
 
         protected CustomValidator(string name)
         {
             Name = name;
-            _objectResolver = new BuildInObjectResolver();
+            _objectResolver = new DefaultVerifiableObjectResolver();
         }
 
-        protected CustomValidator(string name, IValidationObjectResolver objectResolver)
+        protected CustomValidator(string name, IVerifiableObjectResolver objectResolver)
         {
             Name = name;
-            _objectResolver = objectResolver ?? new BuildInObjectResolver();
+            _objectResolver = objectResolver ?? new DefaultVerifiableObjectResolver();
         }
 
         public string Name { get; }
@@ -38,14 +38,14 @@ namespace Cosmos.Validation.Validators
             return VerifyImpl(context);
         }
 
-        public virtual VerifyResult VerifyViaContext(ObjectContext context)
+        public virtual VerifyResult VerifyViaContext(VerifiableObjectContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
             return VerifyImpl(context);
         }
 
-        protected abstract VerifyResult VerifyImpl(ObjectContext context);
+        protected abstract VerifyResult VerifyImpl(VerifiableObjectContext context);
 
         #endregion
 
@@ -53,21 +53,21 @@ namespace Cosmos.Validation.Validators
 
         public virtual VerifyResult VerifyOne(Type declaringType, object memberValue, string memberName)
         {
-            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
-            if (valueContract is null)
+            var memberContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
-            return VerifyOneImpl(valueContext);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
+            return VerifyOneImpl(memberContext);
         }
 
-        public virtual VerifyResult VerifyOneViaContext(ObjectValueContext context)
+        public virtual VerifyResult VerifyOneViaContext(VerifiableMemberContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
             return VerifyOneImpl(context);
         }
 
-        protected abstract VerifyResult VerifyOneImpl(ObjectValueContext context);
+        protected abstract VerifyResult VerifyOneImpl(VerifiableMemberContext context);
 
         #endregion
 

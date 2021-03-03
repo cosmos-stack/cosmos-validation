@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Validators
     {
         protected CustomValidator(string name) : base(name) { }
 
-        protected CustomValidator(string name, IValidationObjectResolver objectResolver)
+        protected CustomValidator(string name, IVerifiableObjectResolver objectResolver)
             : base(name, objectResolver) { }
 
         bool ICorrectValidator.IsTypeBinding => true;
@@ -21,23 +21,23 @@ namespace Cosmos.Validation.Validators
 
         public virtual VerifyResult Verify(T instance)
         {
-            if (instance is ObjectContext context)
-                return VerifyImpl(context);
-            if (instance is ObjectValueContext valueContext)
-                return VerifyOneImpl(valueContext);
-            if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollections));
+            if (instance is VerifiableObjectContext objectContext)
+                return VerifyImpl(objectContext);
+            if (instance is VerifiableMemberContext memberContext)
+                return VerifyOneImpl(memberContext);
+            if (instance is IDictionary<string, object> keyValueCollection)
+                return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollection));
             return VerifyImpl(_objectResolver.Resolve(instance));
         }
 
         VerifyResult IValidator.Verify(Type declaringType, object instance)
         {
-            if (instance is ObjectContext context)
-                return VerifyImpl(context);
-            if (instance is ObjectValueContext valueContext)
-                return VerifyOneImpl(valueContext);
-            if (instance is IDictionary<string, object> keyValueCollections)
-                return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollections));
+            if (instance is VerifiableObjectContext objectContext)
+                return VerifyImpl(objectContext);
+            if (instance is VerifiableMemberContext memberContext)
+                return VerifyOneImpl(memberContext);
+            if (instance is IDictionary<string, object> keyValueCollection)
+                return VerifyImpl(_objectResolver.Resolve<T>(keyValueCollection));
             return VerifyImpl(_objectResolver.Resolve(declaringType, instance));
         }
 
@@ -47,30 +47,30 @@ namespace Cosmos.Validation.Validators
 
         public virtual VerifyResult VerifyOne(object memberValue, string memberName)
         {
-            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
-            if (valueContract is null)
+            var memberContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
-            return VerifyOneImpl(valueContext);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
+            return VerifyOneImpl(memberContext);
         }
 
-        public virtual VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
+        public virtual VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> expression, TVal memberValue)
         {
-            var memberName = PropertySelector.GetPropertyName(propertySelector);
-            var valueContract = ObjectContractManager.Resolve<T>()?.GetValueContract(memberName);
-            if (valueContract is null)
+            var memberName = PropertySelector.GetPropertyName(expression);
+            var memberContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
-            return VerifyOneImpl(valueContext);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
+            return VerifyOneImpl(memberContext);
         }
 
         VerifyResult IValidator.VerifyOne(Type declaringType, object memberValue, string memberName)
         {
-            var valueContract = ObjectContractManager.Resolve(declaringType)?.GetValueContract(memberName);
-            if (valueContract is null)
+            var memberContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = ObjectValueContext.Create(memberValue, valueContract);
-            return VerifyOneImpl(valueContext);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
+            return VerifyOneImpl(memberContext);
         }
 
         #endregion

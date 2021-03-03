@@ -8,9 +8,9 @@ namespace Cosmos.Validation.Internals.Rules
 {
     internal class CorrectValueRuleBuilder<T, TVal> : CorrectValueRuleBuilder<T>, IValueRuleBuilder<T, TVal>
     {
-        public CorrectValueRuleBuilder(ObjectValueContract contract) : base(contract) { }
+        public CorrectValueRuleBuilder(VerifiableMemberContract contract) : base(contract) { }
 
-        public CorrectValueRuleBuilder(ObjectValueContract contract, ValueRuleMode mode) : base(contract, mode) { }
+        public CorrectValueRuleBuilder(VerifiableMemberContract contract, ValueRuleMode mode) : base(contract, mode) { }
 
         public new IValueRuleBuilder<T, TVal> AppendRule()
         {

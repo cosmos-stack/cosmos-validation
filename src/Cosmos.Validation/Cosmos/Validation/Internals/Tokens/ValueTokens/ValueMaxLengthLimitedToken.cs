@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private readonly int _maxLength;
 
-        public ValueMaxLengthLimitedToken(ObjectValueContract contract, int max) : base(contract)
+        public ValueMaxLengthLimitedToken(VerifiableMemberContract contract, int max) : base(contract)
         {
             if (max < 0)
                 throw new ArgumentOutOfRangeException(nameof(max));

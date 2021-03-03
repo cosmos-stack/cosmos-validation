@@ -15,23 +15,23 @@ namespace Cosmos.Validation.Registrars
     {
         protected readonly IFluentValidationRegistrar<T> _parentRegistrar;
         protected readonly List<CorrectValueRule> _parentRulesRef;
-        protected readonly ObjectValueContract _valueContract;
+        protected readonly VerifiableMemberContract _verifiableMemberContract;
 
         public ValueValidationRegistrar(
-            ObjectValueContract valueContract,
+            VerifiableMemberContract verifiableMemberContract,
             List<CorrectValueRule> rules,
             ValueRuleMode mode,
             IFluentValidationRegistrar<T> parentRegistrar)
         {
             _parentRegistrar = parentRegistrar ?? throw new ArgumentNullException(nameof(parentRegistrar));
-            _valueContract = valueContract ?? throw new ArgumentNullException(nameof(valueContract));
-            ValueRuleBuilder = new CorrectValueRuleBuilder<T>(valueContract, mode);
+            _verifiableMemberContract = verifiableMemberContract ?? throw new ArgumentNullException(nameof(verifiableMemberContract));
+            ValueRuleBuilder = new CorrectValueRuleBuilder<T>(verifiableMemberContract, mode);
             _parentRulesRef = rules;
         }
 
-        public Type DeclaringType => _valueContract.DeclaringType;
+        public Type DeclaringType => _verifiableMemberContract.DeclaringType;
 
-        public Type MemberType => _valueContract.MemberType;
+        public Type MemberType => _verifiableMemberContract.MemberType;
 
         protected CorrectValueRuleBuilder<T> ValueRuleBuilder { get; set; }
 

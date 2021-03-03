@@ -9,9 +9,9 @@ namespace CosmosValidationUT.Fakes
 {
     public class FakeValueRuleBuilder : IValueRuleBuilder
     {
-        internal readonly ObjectValueContract Contract;
+        internal readonly VerifiableMemberContract Contract;
 
-        public FakeValueRuleBuilder(ObjectValueContract contract)
+        public FakeValueRuleBuilder(VerifiableMemberContract contract)
         {
             Contract = contract;
         }

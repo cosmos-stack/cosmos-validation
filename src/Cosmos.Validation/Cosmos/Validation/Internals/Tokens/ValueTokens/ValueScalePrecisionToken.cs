@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueScalePrecisionToken";
 
-        public ValueScalePrecisionToken(ObjectValueContract contract, int scale, int precision, bool ignoreTrailingZeros = false) : base(contract)
+        public ValueScalePrecisionToken(VerifiableMemberContract contract, int scale, int precision, bool ignoreTrailingZeros = false) : base(contract)
         {
             Init(scale, precision);
             IgnoreTrailingZeros = ignoreTrailingZeros;

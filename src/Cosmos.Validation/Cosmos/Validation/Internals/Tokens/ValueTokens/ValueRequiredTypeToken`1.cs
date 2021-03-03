@@ -4,6 +4,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
     internal class ValueRequiredTypeToken<T> : ValueRequiredTypeToken
     {
-        public ValueRequiredTypeToken(ObjectValueContract contract) : base(contract, typeof(T)) { }
+        public ValueRequiredTypeToken(VerifiableMemberContract contract) : base(contract, typeof(T)) { }
     }
 }

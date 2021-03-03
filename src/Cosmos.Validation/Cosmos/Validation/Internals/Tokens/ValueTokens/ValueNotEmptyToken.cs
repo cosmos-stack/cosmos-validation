@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public const string NAME = "ValueNotEmptyToken";
         public static int[] _mutuallyExclusiveFlags = {90118};
 
-        public ValueNotEmptyToken(ObjectValueContract contract) : base(contract) { }
+        public ValueNotEmptyToken(VerifiableMemberContract contract) : base(contract) { }
 
         public override CorrectValueOps Ops => CorrectValueOps.NotEmpty;
 
@@ -46,7 +46,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     return false;
             }
 
-            if (Equals(value, Member.GetDefaultValue(value)))
+            if (Equals(value, VerifiableMember.GetDefaultValue(value)))
                 return false;
 
             return true;

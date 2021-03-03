@@ -33,7 +33,7 @@ namespace CosmosValidationUT.ValidatorsUT
             _options = options ?? new ValidationOptions();
         }
 
-        protected override VerifyResult VerifyImpl(ObjectContext context)
+        protected override VerifyResult VerifyImpl(VerifiableObjectContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();
@@ -64,7 +64,7 @@ namespace CosmosValidationUT.ValidatorsUT
             return VerifyResult.MakeTogether(results);
         }
 
-        protected override VerifyResult VerifyOneImpl(ObjectValueContext context)
+        protected override VerifyResult VerifyOneImpl(VerifiableMemberContext context)
         {
             if (context is null)
                 return _options.ReturnNullReferenceOrSuccess();

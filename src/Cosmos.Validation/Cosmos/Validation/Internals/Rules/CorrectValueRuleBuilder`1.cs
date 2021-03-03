@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Internals.Rules
 {
     internal class CorrectValueRuleBuilder<T> : IValueRuleBuilder<T>
     {
-        internal readonly ObjectValueContract Contract;
+        internal readonly VerifiableMemberContract Contract;
 
         protected readonly List<IValueToken> _valueTokens;
 
@@ -34,13 +34,13 @@ namespace Cosmos.Validation.Internals.Rules
             _currentTokenPtr = null;
         }
 
-        public CorrectValueRuleBuilder(ObjectValueContract contract)
+        public CorrectValueRuleBuilder(VerifiableMemberContract contract)
         {
             Contract = contract;
             _valueTokens = new List<IValueToken>();
         }
 
-        public CorrectValueRuleBuilder(ObjectValueContract contract, ValueRuleMode mode)
+        public CorrectValueRuleBuilder(VerifiableMemberContract contract, ValueRuleMode mode)
         {
             Contract = contract;
             _valueTokens = new List<IValueToken>();

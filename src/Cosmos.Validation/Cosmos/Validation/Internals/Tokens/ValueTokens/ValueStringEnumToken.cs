@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly Type _enumType;
         private readonly bool _caseSensitive;
 
-        public ValueStringEnumToken(ObjectValueContract contract, Type enumType, bool caseSensitive) : base(contract)
+        public ValueStringEnumToken(VerifiableMemberContract contract, Type enumType, bool caseSensitive) : base(contract)
         {
             _enumType = enumType ?? throw new ArgumentNullException(nameof(enumType));
             _caseSensitive = caseSensitive;

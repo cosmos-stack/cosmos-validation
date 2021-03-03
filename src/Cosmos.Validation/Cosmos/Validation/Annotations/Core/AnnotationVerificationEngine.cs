@@ -7,7 +7,7 @@ namespace Cosmos.Validation.Annotations.Core
 {
     internal static partial class AnnotationVerificationEngine
     {
-        public static bool Verify(ObjectValueContext context, IEnumerable<IFlagAnnotation> annotations, out VerifyFailure failure)
+        public static bool Verify(VerifiableMemberContext context, IEnumerable<IFlagAnnotation> annotations, out VerifyFailure failure)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -32,7 +32,7 @@ namespace Cosmos.Validation.Annotations.Core
             }
         }
 
-        private static void VerifyAnnotation(ObjectValueContext context, IFlagAnnotation annotation, List<VerifyError> errors)
+        private static void VerifyAnnotation(VerifiableMemberContext context, IFlagAnnotation annotation, List<VerifyError> errors)
         {
             switch (annotation)
             {

@@ -5,24 +5,24 @@ using Cosmos.Validation.Annotations;
 
 namespace Cosmos.Validation.Objects
 {
-    public class ObjectContext
+    public class VerifiableObjectContext
     {
         private readonly object _targetObject;
         private readonly IDictionary<string, object> _keyValueRef;
-        private readonly ObjectContract _contract;
+        private readonly VerifiableObjectContract _contract;
 
         private readonly bool _directMode;
 
-        public ObjectContext(object targetObject, ObjectContract contract)
+        public VerifiableObjectContext(object targetObject, VerifiableObjectContract contract)
         {
             _targetObject = targetObject;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
             _directMode = true;
             _keyValueRef = null;
-            InstanceName = contract.IsBasicType() ? ObjectValueContract.BASIC_TYPE : "Instance";
+            InstanceName = contract.IsBasicType ? VerifiableMemberContract.BASIC_TYPE : "Instance";
         }
 
-        public ObjectContext(object targetObject, ObjectContract contract, string instanceName)
+        public VerifiableObjectContext(object targetObject, VerifiableObjectContract contract, string instanceName)
         {
             _targetObject = targetObject;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
@@ -31,71 +31,71 @@ namespace Cosmos.Validation.Objects
             InstanceName = instanceName;
         }
 
-        public ObjectContext(IDictionary<string, object> keyValueCollections, ObjectContract contract)
+        public VerifiableObjectContext(IDictionary<string, object> keyValueCollection, VerifiableObjectContract contract)
         {
             _targetObject = null;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
             _directMode = false;
-            _keyValueRef = keyValueCollections ?? throw new ArgumentNullException(nameof(keyValueCollections));
+            _keyValueRef = keyValueCollection ?? throw new ArgumentNullException(nameof(keyValueCollection));
             InstanceName = "KeyValueCollection";
         }
 
-        public ObjectContext(IDictionary<string, object> keyValueCollections, ObjectContract contract, string instanceName)
+        public VerifiableObjectContext(IDictionary<string, object> keyValueCollection, VerifiableObjectContract contract, string instanceName)
         {
             _targetObject = null;
             _contract = contract ?? throw new ArgumentNullException(nameof(contract));
             _directMode = false;
-            _keyValueRef = keyValueCollections ?? throw new ArgumentNullException(nameof(keyValueCollections));
+            _keyValueRef = keyValueCollection ?? throw new ArgumentNullException(nameof(keyValueCollection));
             InstanceName = instanceName;
         }
 
+        public string InstanceName { get; }
+        
         public Type Type => _contract.Type;
-
-        public ObjectKind ObjectKind => _contract.ObjectKind;
-
-        public bool IsBasicType() => ObjectKind == ObjectKind.BasicType;
 
         public object Instance => _targetObject;
 
         public IDictionary<string, object> KeyValueCollection => _keyValueRef;
 
-        public string InstanceName { get; }
+        public VerifiableObjectKind ObjectKind => _contract.ObjectKind;
 
-        #region GetValue
+        public bool IsBasicType() => ObjectKind == VerifiableObjectKind.BasicType;
 
-        public ObjectValueContext GetValue(string memberName)
+        #region Value
+
+        public VerifiableMemberContext GetValue(string memberName)
         {
-            var contract = _contract.GetValueContract(memberName);
+            var contract = _contract.GetMemberContract(memberName);
 
             if (contract is null)
                 return default;
 
-            return new ObjectValueContext(this, contract, _directMode);
+            return new VerifiableMemberContext(this, contract, _directMode);
         }
 
-        public ObjectValueContext GetValue(int indexOfMember)
+        public VerifiableMemberContext GetValue(int indexOfMember)
         {
-            var contract = _contract.GetValueContract(indexOfMember);
+            var contract = _contract.GetMemberContract(indexOfMember);
 
             if (contract is null)
                 return default;
 
-            return new ObjectValueContext(this, contract, _directMode);
+            return new VerifiableMemberContext(this, contract, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValues()
+        public IEnumerable<VerifiableMemberContext> GetValues()
         {
             foreach (var contract in GetMembers())
-                yield return new ObjectValueContext(this, contract, _directMode);
+                yield return new VerifiableMemberContext(this, contract, _directMode);
         }
 
-        public IDictionary<string, ObjectValueContext> GetValueMap()
+        public IDictionary<string, VerifiableMemberContext> GetValueMap()
         {
-            var map = new Dictionary<string, ObjectValueContext>();
+            var map = new Dictionary<string, VerifiableMemberContext>();
 
             foreach (var contract in GetMembers())
             {
-                map[contract.MemberName] = new ObjectValueContext(this, contract, _directMode);
+                map[contract.MemberName] = new VerifiableMemberContext(this, contract, _directMode);
             }
 
             return map;
@@ -103,35 +103,35 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        #region GetValuesWithAttribute
+        #region Value with Attribute
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute()
         {
             return from member in GetMembers()
                 where member.IncludeAnnotations
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr>()
             where TAttr : Attribute
         {
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr1, TAttr2>()
             where TAttr1 : Attribute
             where TAttr2 : Attribute
         {
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr1, TAttr2>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3>()
             where TAttr1 : Attribute
             where TAttr2 : Attribute
             where TAttr3 : Attribute
@@ -139,10 +139,10 @@ namespace Cosmos.Validation.Objects
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4>()
             where TAttr1 : Attribute
             where TAttr2 : Attribute
             where TAttr3 : Attribute
@@ -151,10 +151,10 @@ namespace Cosmos.Validation.Objects
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>()
             where TAttr1 : Attribute
             where TAttr2 : Attribute
             where TAttr3 : Attribute
@@ -164,10 +164,10 @@ namespace Cosmos.Validation.Objects
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>()
             where TAttr1 : Attribute
             where TAttr2 : Attribute
             where TAttr3 : Attribute
@@ -178,10 +178,10 @@ namespace Cosmos.Validation.Objects
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
-        public IEnumerable<ObjectValueContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>()
+        public IEnumerable<VerifiableMemberContext> GetValuesWithAttribute<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>()
             where TAttr1 : Attribute
             where TAttr2 : Attribute
             where TAttr3 : Attribute
@@ -193,31 +193,31 @@ namespace Cosmos.Validation.Objects
             return from member in GetMembers()
                 where member.IncludeAnnotations
                 where member.HasAttributeDefined<TAttr1, TAttr2, TAttr3, TAttr4, TAttr5, TAttr6, TAttr7>()
-                select new ObjectValueContext(this, member, _directMode);
+                select new VerifiableMemberContext(this, member, _directMode);
         }
 
         #endregion
 
-        #region GetMember
+        #region MemberContract
 
-        public ObjectValueContract GetMember(string memberName)
+        public VerifiableMemberContract GetMember(string memberName)
         {
-            return _contract.GetValueContract(memberName);
+            return _contract.GetMemberContract(memberName);
         }
 
-        public ObjectValueContract GetMember(int indexOfMember)
+        public VerifiableMemberContract GetMember(int indexOfMember)
         {
-            return _contract.GetValueContract(indexOfMember);
+            return _contract.GetMemberContract(indexOfMember);
         }
 
-        public IEnumerable<ObjectValueContract> GetMembers()
+        public IEnumerable<VerifiableMemberContract> GetMembers()
         {
-            return _contract.GetAllValueContracts();
+            return _contract.GetMemberContracts();
         }
 
-        public IDictionary<string, ObjectValueContract> GetMemberMap()
+        public IDictionary<string, VerifiableMemberContract> GetMemberMap()
         {
-            var map = new Dictionary<string, ObjectValueContract>();
+            var map = new Dictionary<string, VerifiableMemberContract>();
 
             foreach (var contract in GetMembers())
             {
@@ -229,11 +229,13 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
-        #region Annotations
+        #region Annotation / Attribute
 
         public bool IncludeAnnotations => _contract.IncludeAnnotations;
 
         public IReadOnlyCollection<Attribute> Attributes => _contract.Attributes;
+
+        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
 
         public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations() => _contract.GetParameterAnnotations();
 
@@ -241,7 +243,11 @@ namespace Cosmos.Validation.Objects
 
         public IEnumerable<IStrongVerifiableAnnotation> GetStrongVerifiableAnnotations() => _contract.GetStrongVerifiableAnnotations();
 
-        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
+        #endregion
+
+        #region Expose
+
+        internal ICustomVerifiableObjectContractImpl ExposeInternalImpl() => _contract.ExposeInternalImpl();
 
         #endregion
     }

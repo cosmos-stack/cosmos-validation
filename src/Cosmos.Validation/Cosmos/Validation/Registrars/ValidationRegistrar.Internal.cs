@@ -236,8 +236,8 @@ namespace Cosmos.Validation.Registrars
                 throw new ArgumentNullException(nameof(memberName));
             if (func is null)
                 throw new ArgumentNullException(nameof(func));
-            var contract = ObjectContractManager.Resolve(type);
-            var value = contract.GetValueContract(memberName);
+            var contract = VerifiableObjectContractManager.Resolve(type);
+            var value = contract.GetMemberContract(memberName);
             if (value is null)
                 throw new ArgumentException($"Member name '{memberName}' is not a valid Member of type '{type.GetFriendlyName()}'");
             var builder = new CorrectValueRuleBuilder(value);
@@ -259,8 +259,8 @@ namespace Cosmos.Validation.Registrars
                 throw new ArgumentNullException(nameof(memberName));
             if (func is null)
                 throw new ArgumentNullException(nameof(func));
-            var contract = ObjectContractManager.Resolve(type);
-            var value = contract.GetValueContract(memberName);
+            var contract = VerifiableObjectContractManager.Resolve(type);
+            var value = contract.GetMemberContract(memberName);
             if (value is null)
                 throw new ArgumentException($"Member name '{memberName}' is not a valid Member of type '{type.GetFriendlyName()}'");
             var builder = new CorrectValueRuleBuilder(value);
@@ -268,7 +268,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, type, name);
         }
 
-        void ICorrectRegistrar.BuildForMember(ObjectValueContract contract, Func<IValueRuleBuilder, IValueRuleBuilder> func)
+        void ICorrectRegistrar.BuildForMember(VerifiableMemberContract contract, Func<IValueRuleBuilder, IValueRuleBuilder> func)
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -279,7 +279,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, contract.DeclaringType);
         }
 
-        void ICorrectRegistrar.BuildForMember(ObjectValueContract contract, string name, Func<IValueRuleBuilder, IValueRuleBuilder> func)
+        void ICorrectRegistrar.BuildForMember(VerifiableMemberContract contract, string name, Func<IValueRuleBuilder, IValueRuleBuilder> func)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -324,8 +324,8 @@ namespace Cosmos.Validation.Registrars
                 throw new ArgumentNullException(nameof(memberName));
             if (func is null)
                 throw new ArgumentNullException(nameof(func));
-            var contract = ObjectContractManager.Resolve<T>();
-            var value = contract.GetValueContract(memberName);
+            var contract = VerifiableObjectContractManager.Resolve<T>();
+            var value = contract.GetMemberContract(memberName);
             if (value is null)
                 throw new ArgumentException($"Member name '{memberName}' is not a valid Member of type '{typeof(T).GetFriendlyName()}'");
             var builder = new CorrectValueRuleBuilder<T>(value);
@@ -337,7 +337,7 @@ namespace Cosmos.Validation.Registrars
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                ((ICorrectRegistrar) this).BuildForMember<T>(memberName, func);
+                ((ICorrectRegistrar) this).BuildForMember(memberName, func);
                 return;
             }
 
@@ -345,8 +345,8 @@ namespace Cosmos.Validation.Registrars
                 throw new ArgumentNullException(nameof(memberName));
             if (func is null)
                 throw new ArgumentNullException(nameof(func));
-            var contract = ObjectContractManager.Resolve<T>();
-            var value = contract.GetValueContract(memberName);
+            var contract = VerifiableObjectContractManager.Resolve<T>();
+            var value = contract.GetMemberContract(memberName);
             if (value is null)
                 throw new ArgumentException($"Member name '{memberName}' is not a valid Member of type '{typeof(T).GetFriendlyName()}'");
             var builder = new CorrectValueRuleBuilder<T>(value);
@@ -354,7 +354,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, typeof(T), name);
         }
 
-        void ICorrectRegistrar.BuildForMember<T>(ObjectValueContract contract, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        void ICorrectRegistrar.BuildForMember<T>(VerifiableMemberContract contract, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
         {
             if (contract is null)
                 throw new ArgumentNullException(nameof(contract));
@@ -365,7 +365,7 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, contract.DeclaringType);
         }
 
-        void ICorrectRegistrar.BuildForMember<T>(ObjectValueContract contract, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
+        void ICorrectRegistrar.BuildForMember<T>(VerifiableMemberContract contract, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

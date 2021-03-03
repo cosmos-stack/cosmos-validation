@@ -21,7 +21,7 @@ namespace Cosmos.Validation
         static ValidationMe()
         {
             var manager = new BuildInProjectManager();
-            var resolver = new BuildInObjectResolver();
+            var resolver = new DefaultVerifiableObjectResolver();
             DefaultProvider = new ValidationProvider(manager, resolver, new());
 
             _currentProvider = DefaultProvider;
@@ -97,7 +97,7 @@ namespace Cosmos.Validation
 
         internal static IValidationProjectManager ExposeProjectManager() => InnerPtr.ExposeProjectManager();
 
-        internal static IValidationObjectResolver ExposeObjectResolver() => InnerPtr.ExposeObjectResolver();
+        internal static IVerifiableObjectResolver ExposeObjectResolver() => InnerPtr.ExposeObjectResolver();
 
         #endregion
 
