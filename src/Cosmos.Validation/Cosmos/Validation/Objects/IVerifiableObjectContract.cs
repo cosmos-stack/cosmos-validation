@@ -10,10 +10,6 @@ namespace Cosmos.Validation.Objects
         Type Type { get; }
         bool IsBasicType { get; }
         VerifiableObjectKind ObjectKind { get; }
-        VerifiableObjectContext WithInstance(object instance);
-        VerifiableObjectContext WithInstance(object instance, string instanceName);
-        VerifiableObjectContext WithDictionary(IDictionary<string, object> keyValueCollection);
-        VerifiableObjectContext WithDictionary(IDictionary<string, object> keyValueCollection, string instanceName);
         object GetValue(object instance, string memberName);
         object GetValue(object instance, int memberIndex);
         object GetValue(IDictionary<string, object> keyValueCollection, string memberName);
