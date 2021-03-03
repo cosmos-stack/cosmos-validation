@@ -97,6 +97,8 @@ namespace Cosmos.Validation.Registrars
         IFluentValidationRegistrar AndForValidator<T>(CustomValidator<T> validator);
         void Build();
         ValidationHandler TempBuild();
+        ValidationHandler TempBuild(ValidationOptions options);
+        ValidationHandler TempBuild(Action<ValidationOptions> optionsAct);
     }
 
     public interface IValueFluentValidationRegistrar<T>
@@ -237,6 +239,8 @@ namespace Cosmos.Validation.Registrars
         IFluentValidationRegistrar<TType> AndForType<TType>(string name);
         void Build();
         ValidationHandler TempBuild();
+        ValidationHandler TempBuild(ValidationOptions options);
+        ValidationHandler TempBuild(Action<ValidationOptions> optionsAct);
     }
 
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>

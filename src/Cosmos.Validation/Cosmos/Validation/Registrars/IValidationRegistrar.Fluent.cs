@@ -32,13 +32,15 @@ namespace Cosmos.Validation.Registrars
         IFluentValidationRegistrar AndForValidator<T>(CustomValidator<T> validator);
         void Build();
         ValidationHandler TempBuild();
+        ValidationHandler TempBuild(ValidationOptions options);
+        ValidationHandler TempBuild(Action<ValidationOptions> optionsAct);
     }
 
     public interface IFluentValidationRegistrar<T> : IFluentValidationRegistrar
-    {
-        new IValueFluentValidationRegistrar<T> ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append);
-        new IValueFluentValidationRegistrar<T> ForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        new IValueFluentValidationRegistrar<T> ForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        IValueFluentValidationRegistrar<T, TVal> ForMember<TVal>(Expression<Func<T, TVal>> expression, ValueRuleMode mode = ValueRuleMode.Append);
+        {
+            new IValueFluentValidationRegistrar<T> ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append);
+            new IValueFluentValidationRegistrar<T> ForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append);
+            new IValueFluentValidationRegistrar<T> ForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append);
+            IValueFluentValidationRegistrar<T, TVal> ForMember<TVal>(Expression<Func<T, TVal>> expression, ValueRuleMode mode = ValueRuleMode.Append);
+        }
     }
-}

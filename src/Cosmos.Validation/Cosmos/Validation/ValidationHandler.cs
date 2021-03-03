@@ -295,6 +295,16 @@ namespace Cosmos.Validation
             return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy, T>().TempBuild();
         }
 
+        internal static ValidationHandler CreateByStrategy<TStrategy>(ValidationOptions options) where TStrategy : class, IValidationStrategy, new()
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy>().TempBuild(options);
+        }
+
+        internal static ValidationHandler CreateByStrategy<TStrategy, T>(ValidationOptions options) where TStrategy : class, IValidationStrategy<T>, new()
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy<TStrategy, T>().TempBuild(options);
+        }
+
         internal static ValidationHandler CreateByStrategy(IValidationStrategy strategy)
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild();
@@ -303,6 +313,16 @@ namespace Cosmos.Validation
         internal static ValidationHandler CreateByStrategy<T>(IValidationStrategy<T> strategy)
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild();
+        }
+
+        internal static ValidationHandler CreateByStrategy(IValidationStrategy strategy, ValidationOptions options)
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild(options);
+        }
+
+        internal static ValidationHandler CreateByStrategy<T>(IValidationStrategy<T> strategy, ValidationOptions options)
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild(options);
         }
 
         #endregion

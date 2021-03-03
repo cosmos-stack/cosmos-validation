@@ -643,6 +643,18 @@ namespace Cosmos.Validation.Registrars
             return _parentRegistrar.TempBuild();
         }
 
+        public ValidationHandler TempBuild(ValidationOptions options)
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild(options);
+        }
+
+        public ValidationHandler TempBuild(Action<ValidationOptions> optionsAct)
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild(optionsAct);
+        }
+
         #endregion
     }
 }

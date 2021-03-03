@@ -14,6 +14,14 @@ namespace Cosmos.Validation.Validators
             Name = $"Strategy Validator for '{strategy.GetType().GetFriendlyName()}'";
         }
 
+        public StrategyValidator(IValidationStrategy strategy, ValidationOptions options)
+        {
+            if (strategy is null) throw new ArgumentNullException(nameof(strategy));
+            if (options is null) throw new ArgumentNullException(nameof(options));
+            Handler = ValidationHandler.CreateByStrategy(strategy, options);
+            Name = $"Strategy Validator for '{strategy.GetType().GetFriendlyName()}'";
+        }
+
         private ValidationHandler Handler { get; }
 
         public string Name { get; }
@@ -40,6 +48,11 @@ namespace Cosmos.Validation.Validators
             return new StrategyValidator(strategy);
         }
 
+        public static IValidator By(IValidationStrategy strategy, ValidationOptions options)
+        {
+            return new StrategyValidator(strategy, options);
+        }
+
         public static IValidator By<TStrategy>() where TStrategy : class, IValidationStrategy, new()
         {
             return new StrategyValidator<TStrategy>();
@@ -48,6 +61,16 @@ namespace Cosmos.Validation.Validators
         public static IValidator<T> By<TStrategy, T>() where TStrategy : class, IValidationStrategy<T>, new()
         {
             return new StrategyValidator<TStrategy, T>();
+        }
+
+        public static IValidator By<TStrategy>(ValidationOptions options) where TStrategy : class, IValidationStrategy, new()
+        {
+            return new StrategyValidator<TStrategy>(options);
+        }
+
+        public static IValidator<T> By<TStrategy, T>(ValidationOptions options) where TStrategy : class, IValidationStrategy<T>, new()
+        {
+            return new StrategyValidator<TStrategy, T>(options);
         }
     }
 }

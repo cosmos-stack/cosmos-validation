@@ -198,6 +198,27 @@ namespace Cosmos.Validation.Registrars
                 InnerPtr.ExposeValidationOptions());
         }
 
+        public ValidationHandler TempBuild(ValidationOptions options)
+        {
+            return new(
+                GetProjects(),
+                InnerPtr.ExposeObjectResolver(),
+                CustomValidatorManager,
+                options);
+        }
+
+        public ValidationHandler TempBuild(Action<ValidationOptions> optionsAct)
+        {
+            var options = new ValidationOptions();
+            optionsAct?.Invoke(options);
+
+            return new(
+                GetProjects(),
+                InnerPtr.ExposeObjectResolver(),
+                CustomValidatorManager,
+                options);
+        }
+
         public ValidationHandler TempBuild(ValidationHandler handler)
         {
             return handler.Merge(GetProjects());

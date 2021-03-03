@@ -13,6 +13,12 @@ namespace Cosmos.Validation.Validators
         {
             Handler = ValidationHandler.CreateByStrategy<TStrategy, T>();
         }
+        
+        public StrategyValidator(ValidationOptions options)
+        {
+            if (options is null) throw new ArgumentNullException(nameof(options));
+            Handler = ValidationHandler.CreateByStrategy<TStrategy, T>(options);
+        }
 
         private ValidationHandler Handler { get; }
 
