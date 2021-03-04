@@ -66,6 +66,8 @@ namespace Cosmos.Validation
             }
         }
 
+        public IEnumerable<string> MemberNames => Errors.Select(e => e.PropertyName);
+
         #region ToString
 
         /// <summary>
@@ -137,7 +139,7 @@ namespace Cosmos.Validation
 
         #endregion
 
-        #region Base
+        #region Operator
 
         public static bool operator ==(VerifyResult left, VerifyResult right)
         {
