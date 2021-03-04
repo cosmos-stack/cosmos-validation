@@ -14,6 +14,11 @@
             <Version Condition=" '$(TargetFramework)' == 'net452' ">3.0.2</Version>
             <Version Condition=" '$(TargetFramework)' != 'net452' ">4.0.3</Version>
         </PackageReference>
+        <PackageReference Include="FluentAssertions">
+            <Version Condition=" '$(TargetFramework)' == 'net452'">5.10.3</Version>
+            <Version Condition=" '$(TargetFramework)' == 'net462'">5.10.3</Version>
+            <Version Condition=" '$(TargetFramework)' != 'net452' AND '$(TargetFramework)' != 'net462' ">6.0.0-alpha0002</Version>            
+        </PackageReference>
         <PackageReference Include="Verify.Xunit" Condition=" '$(TargetFramework)' != 'net452' AND '$(TargetFramework)' != 'net462' ">
             <Version>11.0.0-beta.3</Version>
         </PackageReference>
@@ -33,7 +38,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\Cosmos.Validation.Sinks.DataAnnotations\Cosmos.Validation.Sinks.DataAnnotations.csproj" />
+        <ProjectReference Include="..\..\src\Cosmos.Validation.Sinks.FluentValidation\Cosmos.Validation.Sinks.FluentValidation.csproj" />
         <ProjectReference Include="..\..\src\Cosmos.Validation\Cosmos.Validation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="SinkUTs\FluentValidationUT\Models" />
     </ItemGroup>
 
 </Project>

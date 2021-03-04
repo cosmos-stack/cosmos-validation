@@ -2,6 +2,7 @@
 using System.Linq;
 using Cosmos.Validation.Objects;
 using CosmosValidationUT.Models;
+using FluentAssertions;
 using Shouldly;
 using Xunit;
 
@@ -49,11 +50,11 @@ namespace CosmosValidationUT.ObjectUT
             single32Contract.IsBasicType.ShouldBeTrue();
             single64Contract.IsBasicType.ShouldBeTrue();
 
-            int16Contract.GetMemberContracts().Count().ShouldBe(1);
-            int32Contract.GetMemberContracts().Count().ShouldBe(1);
-            int64Contract.GetMemberContracts().Count().ShouldBe(1);
-            single32Contract.GetMemberContracts().Count().ShouldBe(1);
-            single64Contract.GetMemberContracts().Count().ShouldBe(1);
+            int16Contract.GetMemberContracts().Should().HaveCount(1);
+            int32Contract.GetMemberContracts().Should().HaveCount(1);
+            int64Contract.GetMemberContracts().Should().HaveCount(1);
+            single32Contract.GetMemberContracts().Should().HaveCount(1);
+            single64Contract.GetMemberContracts().Should().HaveCount(1);
 
             int16Contract.GetMemberContract(VerifiableMemberContract.BASIC_TYPE).MemberType.ShouldBe(typeof(Int16));
             int32Contract.GetMemberContract(VerifiableMemberContract.BASIC_TYPE).MemberType.ShouldBe(typeof(Int32));
