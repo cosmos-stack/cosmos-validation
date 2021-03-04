@@ -6,7 +6,7 @@ namespace Cosmos.Validation.Validators
 {
     public class DataAnnotationValidator : CustomValidator
     {
-        public DataAnnotationValidator() : base("DataAnnotationValidator") { }
+        public DataAnnotationValidator() : base("DataAnnotationWrappedValidator") { }
         
         public static DataAnnotationValidator Instance { get; } = new();
 
