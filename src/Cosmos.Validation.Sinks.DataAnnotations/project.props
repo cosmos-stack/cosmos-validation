@@ -1,0 +1,9 @@
+<Project>
+
+    <PropertyGroup>
+        <AssemblyName>Cosmos.Validation.Sinks.DataAnnotations</AssemblyName>
+        <PackageId>Cosmos.Validation.Sinks.DataAnnotations</PackageId>
+        <Description>Cosmos Validation Extensions package for System.ComponentModel.DataAnnotations.</Description>
+    </PropertyGroup>
+
+</Project>

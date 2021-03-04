@@ -1,0 +1,11 @@
+<Project>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cosmos.Validation\Cosmos.Validation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    </ItemGroup>
+
+</Project>
