@@ -1,0 +1,14 @@
+<Project>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cosmos.Validation\Cosmos.Validation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation">
+            <Version Condition=" '$(TargetFramework)' == 'net452' ">8.6.3</Version>
+            <Version Condition=" '$(TargetFramework)' != 'net452' ">9.5.1</Version>
+        </PackageReference>
+    </ItemGroup>
+
+</Project>

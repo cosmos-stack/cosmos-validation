@@ -1,0 +1,9 @@
+<Project>
+
+    <PropertyGroup>
+        <AssemblyName>Cosmos.Validation.Sinks.FluentValidation</AssemblyName>
+        <PackageId>Cosmos.Validation.Sinks.FluentValidation</PackageId>
+        <Description>Cosmos Validation Extensions package for FluentValidation.</Description>
+    </PropertyGroup>
+
+</Project>

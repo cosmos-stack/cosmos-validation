@@ -43,8 +43,4 @@
         <ProjectReference Include="..\..\src\Cosmos.Validation\Cosmos.Validation.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="SinkUTs\FluentValidationUT\Models" />
-    </ItemGroup>
-
 </Project>
