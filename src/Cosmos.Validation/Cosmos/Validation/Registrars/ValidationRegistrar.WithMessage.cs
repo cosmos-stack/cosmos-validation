@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using Cosmos.Validation.Objects;
 using Cosmos.Validation.Strategies;
 using Cosmos.Validation.Validators;
 
@@ -185,6 +186,25 @@ namespace Cosmos.Validation.Registrars
             return WithMessage(string.Empty).TempBuild(optionsAct);
         }
 
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver)
+        {
+            return WithMessage(string.Empty).TempBuild(objectResolver);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver, ValidationOptions options)
+        {
+            return WithMessage(string.Empty).TempBuild(objectResolver, options);
+        }
+
+        #endregion
+
+        #region TakeEffect
+
+        public IValueFluentValidationRegistrar TakeEffect()
+        {
+            return WithMessage(string.Empty).TakeEffect();
+        }
+
         #endregion
     }
 
@@ -246,7 +266,7 @@ namespace Cosmos.Validation.Registrars
         {
             return WithMessage(string.Empty).AndForMember(fieldInfo, mode);
         }
-        
+
         public IValueFluentValidationRegistrar<T, TVal2> AndForMember<TVal2>(Expression<Func<T, TVal2>> expression, ValueRuleMode mode = ValueRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(expression, mode);
@@ -370,6 +390,25 @@ namespace Cosmos.Validation.Registrars
         public ValidationHandler TempBuild(Action<ValidationOptions> optionsAct)
         {
             return WithMessage(string.Empty).TempBuild(optionsAct);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver)
+        {
+            return WithMessage(string.Empty).TempBuild(objectResolver);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver, ValidationOptions options)
+        {
+            return WithMessage(string.Empty).TempBuild(objectResolver, options);
+        }
+
+        #endregion
+
+        #region TakeEffect
+
+        public IValueFluentValidationRegistrar<T> TakeEffect()
+        {
+            return WithMessage(string.Empty).TakeEffect();
         }
 
         #endregion
@@ -557,6 +596,25 @@ namespace Cosmos.Validation.Registrars
         public ValidationHandler TempBuild(Action<ValidationOptions> optionsAct)
         {
             return WithMessage(string.Empty).TempBuild(optionsAct);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver)
+        {
+            return WithMessage(string.Empty).TempBuild(objectResolver);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver, ValidationOptions options)
+        {
+            return WithMessage(string.Empty).TempBuild(objectResolver, options);
+        }
+
+        #endregion
+
+        #region TakeEffect
+
+        public IValueFluentValidationRegistrar<T, TVal> TakeEffect()
+        {
+            return WithMessage(string.Empty).TakeEffect();
         }
 
         #endregion

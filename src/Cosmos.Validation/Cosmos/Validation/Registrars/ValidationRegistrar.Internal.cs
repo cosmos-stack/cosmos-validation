@@ -204,7 +204,7 @@ namespace Cosmos.Validation.Registrars
                 GetProjects(),
                 InnerPtr.ExposeObjectResolver(),
                 CustomValidatorManager,
-                options);
+                options ?? InnerPtr.ExposeValidationOptions());
         }
 
         public ValidationHandler TempBuild(Action<ValidationOptions> optionsAct)
@@ -217,6 +217,24 @@ namespace Cosmos.Validation.Registrars
                 InnerPtr.ExposeObjectResolver(),
                 CustomValidatorManager,
                 options);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver)
+        {
+            return new(
+                GetProjects(),
+                objectResolver ?? InnerPtr.ExposeObjectResolver(),
+                CustomValidatorManager,
+                InnerPtr.ExposeValidationOptions());
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver, ValidationOptions options)
+        {
+            return new(
+                GetProjects(),
+                objectResolver ?? InnerPtr.ExposeObjectResolver(),
+                CustomValidatorManager,
+                options ?? InnerPtr.ExposeValidationOptions());
         }
 
         public ValidationHandler TempBuild(ValidationHandler handler)
@@ -595,5 +613,6 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
+        
     }
 }

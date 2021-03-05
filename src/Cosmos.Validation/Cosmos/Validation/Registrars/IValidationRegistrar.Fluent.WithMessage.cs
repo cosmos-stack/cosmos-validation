@@ -8,7 +8,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember,
         IMayBuild,
-        IMayTempBuild
+        IMayTempBuild,
+        IMayTakeEffect<IValueFluentValidationRegistrar>
     {
         IValueFluentValidationRegistrar WithMessage(string message);
     }
@@ -19,7 +20,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember<T>,
         IMayBuild,
-        IMayTempBuild
+        IMayTempBuild,
+        IMayTakeEffect<IValueFluentValidationRegistrar<T>>
     {
         IValueFluentValidationRegistrar<T> WithMessage(string message);
     }
@@ -30,7 +32,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember<T>,
         IMayBuild,
-        IMayTempBuild
+        IMayTempBuild,
+        IMayTakeEffect<IValueFluentValidationRegistrar<T, TVal>>
     {
         IValueFluentValidationRegistrar<T, TVal> WithMessage(string message);
     }

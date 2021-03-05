@@ -166,7 +166,7 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
+
         #region AndForStrategy
 
         public IFluentValidationRegistrar AndForStrategy<TStrategy>(StrategyMode mode = StrategyMode.OverallOverwrite)
@@ -254,7 +254,7 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
+
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -330,6 +330,33 @@ namespace Cosmos.Validation.Registrars
         {
             BuildMySelf();
             return _parentRegistrar.TempBuild(optionsAct);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver)
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild(objectResolver);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver, ValidationOptions options)
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild(objectResolver, options);
+        }
+
+        #endregion
+
+        #region TakeEffect
+
+        public IFluentValidationRegistrar<T> TakeEffect()
+        {
+            BuildMySelf();
+            return this;
+        }
+
+        IFluentValidationRegistrar IMayTakeEffect<IFluentValidationRegistrar>.TakeEffect()
+        {
+            return TakeEffect();
         }
 
         #endregion

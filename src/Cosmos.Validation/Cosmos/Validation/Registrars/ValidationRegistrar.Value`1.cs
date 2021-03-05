@@ -655,6 +655,28 @@ namespace Cosmos.Validation.Registrars
             return _parentRegistrar.TempBuild(optionsAct);
         }
 
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver)
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild(objectResolver);
+        }
+
+        public ValidationHandler TempBuild(IVerifiableObjectResolver objectResolver, ValidationOptions options)
+        {
+            BuildMySelf();
+            return _parentRegistrar.TempBuild(objectResolver, options);
+        }
+
+        #endregion
+
+        #region TakeEffect
+
+        public IValueFluentValidationRegistrar<T> TakeEffect()
+        {
+            BuildMySelf();
+            return this;
+        }
+
         #endregion
     }
 }
