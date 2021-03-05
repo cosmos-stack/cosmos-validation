@@ -6,16 +6,18 @@ using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
 using Cosmos.Validation.Validators;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Cosmos.Validation
 {
     public abstract class AbstractValidationProvider : IValidationProvider, ICorrectProvider
     {
-        private readonly IValidationProjectManager _projectManager;
-        private readonly IVerifiableObjectResolver _objectResolver;
-        private readonly ICustomValidatorManager _customValidatorManager;
+        protected readonly IValidationProjectManager _projectManager;
+        protected readonly IVerifiableObjectResolver _objectResolver;
+        protected readonly ICustomValidatorManager _customValidatorManager;
 
-        private ValidationOptions _options;
-        
+        protected ValidationOptions _options;
+
         static AbstractValidationProvider()
         {
 #if !NETFRAMEWORK
@@ -48,7 +50,7 @@ namespace Cosmos.Validation
                 new("customValidatorManager", _customValidatorManager, typeof(ICustomValidatorManager)),
                 new("options", _options, typeof(ValidationOptions))
             };
-            
+
             return TypeVisit.CreateInstance<IValidator>(v, args);
 #else
             return TypeVisit.CreateInstance<IValidator>(v, _projectManager, _objectResolver, this, _options);
@@ -68,7 +70,7 @@ namespace Cosmos.Validation
                 new("customValidatorManager", _customValidatorManager, typeof(ICustomValidatorManager)),
                 new("options", _options, typeof(ValidationOptions))
             };
-            
+
             return TypeVisit.CreateInstance<IValidator>(v, args);
 #else
             return TypeVisit.CreateInstance<IValidator>(v, name, _projectManager, _objectResolver, this, _options);

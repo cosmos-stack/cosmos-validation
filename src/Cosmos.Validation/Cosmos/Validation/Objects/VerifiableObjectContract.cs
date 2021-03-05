@@ -13,7 +13,6 @@ namespace Cosmos.Validation.Objects
 {
     public class VerifiableObjectContract : IVerifiableObjectContract
     {
-        private readonly Type _type;
         private readonly Dictionary<string, VerifiableMemberContract> _memberContracts;
         private readonly string[] _valueKeys;
 
@@ -27,34 +26,34 @@ namespace Cosmos.Validation.Objects
             Dictionary<string, VerifiableMemberContract> memberContracts)
         {
             _verifiableObjectContractImpl = null;
-            _type = type ?? throw new ArgumentNullException(nameof(type));
+            Type = type ?? throw new ArgumentNullException(nameof(type));
+            ObjectKind = type.GetObjectKind();
+            IsBasicType = ObjectKind == VerifiableObjectKind.BasicType;
+            
             _memberContracts = memberContracts ?? throw new ArgumentNullException(nameof(memberContracts));
             _valueKeys = _memberContracts.Keys.ToArray();
-            _reflectorProvider = _type.GetReflector();
+            
+            _reflectorProvider = Type.GetReflector();
             _attributes = _reflectorProvider.GetCustomAttributes();
-
             IncludeAnnotationsForType = HasValidationAnnotationDefined(_attributes);
-            ObjectKind = type.GetObjectKind();
-
-            IsBasicType = ObjectKind == VerifiableObjectKind.BasicType;
         }
 
         public VerifiableObjectContract(ICustomVerifiableObjectContractImpl contractImpl)
         {
             _verifiableObjectContractImpl = contractImpl ?? throw new ArgumentNullException(nameof(contractImpl));
-            _type = contractImpl.Type;
+            Type = contractImpl.Type;
+            ObjectKind = contractImpl.ObjectKind;
+            IsBasicType = contractImpl.IsBasicType;
+            
             _memberContracts = contractImpl.GetMemberContractMap();
             _valueKeys = _memberContracts.Keys.ToArray();
+            
             _reflectorProvider = null;
             _attributes = Arrays.Empty<Attribute>();
-
             IncludeAnnotationsForType = false;
-            ObjectKind = contractImpl.ObjectKind;
-
-            IsBasicType = contractImpl.IsBasicType;
         }
 
-        public Type Type => _type;
+        public Type Type { get; }
 
         public VerifiableObjectKind ObjectKind { get; }
 

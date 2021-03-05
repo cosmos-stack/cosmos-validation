@@ -10,7 +10,6 @@ namespace Cosmos.Validation.Internals
     {
         public static IEnumerable<VerifyFailure> ConvertToVerifyFailures(this IList<ValidationFailure> originalFailures, Type typeOfValidator)
         {
-            var targetFailures = new List<VerifyFailure>();
             var failureHolding = new Dictionary<string, VerifyFailure>();
 
             foreach (var originalFailure in originalFailures)
@@ -25,7 +24,7 @@ namespace Cosmos.Validation.Internals
                 {
                     ErrorMessage = originalFailure.ErrorMessage,
                     ViaValidatorType = ValidatorType.Custom,
-                    ValidatorName = $"FluentValidation {typeOfValidator.GetFriendlyName()} Validator"
+                    ValidatorName = $"FluentValidation-{typeOfValidator.GetFriendlyName()}"
                 };
 
                 targetFailure.Details.Add(error);

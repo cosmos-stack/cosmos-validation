@@ -16,7 +16,6 @@ namespace Cosmos.Validation.Objects
     {
         internal const string BASIC_TYPE = "BasicType";
 
-        private readonly Type _declaringType;
         private readonly PropertyInfo _propertyInfo;
         private readonly FieldInfo _fieldInfo;
 
@@ -27,70 +26,62 @@ namespace Cosmos.Validation.Objects
 
         public VerifiableMemberContract(Type declaringType, PropertyInfo property)
         {
-            _declaringType = declaringType;
+            _verifiableMemberContractImpl = null;
+            DeclaringType = declaringType;
             MemberKind = VerifiableMemberKind.Property;
+            IsBasicType = property.PropertyType.IsBasicType();
 
             _propertyInfo = property;
             _fieldInfo = null;
 
             _reflectorProvider = property.GetReflector();
             _attributes = _reflectorProvider.GetCustomAttributes();
-
             IncludeAnnotations = HasValidationAnnotationDefined(_attributes);
-            _verifiableMemberContractImpl = null;
-
-            IsBasicType = property.PropertyType.IsBasicType();
         }
 
         public VerifiableMemberContract(Type declaringType, FieldInfo field)
         {
-            _declaringType = declaringType;
+            _verifiableMemberContractImpl = null;
+            DeclaringType = declaringType;
             MemberKind = VerifiableMemberKind.Field;
+            IsBasicType = field.FieldType.IsBasicType();
 
             _propertyInfo = null;
             _fieldInfo = field;
 
             _reflectorProvider = field.GetReflector();
             _attributes = _reflectorProvider.GetCustomAttributes();
-
             IncludeAnnotations = HasValidationAnnotationDefined(_attributes);
-            _verifiableMemberContractImpl = null;
-
-            IsBasicType = field.FieldType.IsBasicType();
         }
 
         public VerifiableMemberContract(Type declaringType)
         {
-            _declaringType = declaringType;
+            _verifiableMemberContractImpl = null;
+            DeclaringType = declaringType;
             MemberKind = VerifiableMemberKind.Unknown;
+            IsBasicType = declaringType.IsBasicType();
 
             _propertyInfo = null;
             _fieldInfo = null;
 
             _reflectorProvider = null;
             _attributes = Arrays.Empty<Attribute>();
-
             IncludeAnnotations = false;
-            _verifiableMemberContractImpl = null;
-
-            IsBasicType = declaringType.IsBasicType();
         }
 
         public VerifiableMemberContract(ICustomVerifiableMemberContractImpl contractImpl)
         {
-            _declaringType = contractImpl.DeclaringType;
+            _verifiableMemberContractImpl = contractImpl ?? throw new ArgumentNullException(nameof(contractImpl));
+            DeclaringType = contractImpl.DeclaringType;
             MemberKind = VerifiableMemberKind.CustomContract;
+            IsBasicType = contractImpl.IsBasicType;
 
             _propertyInfo = null;
             _fieldInfo = null;
 
             _reflectorProvider = null;
             _attributes = Arrays.Empty<Attribute>();
-
             IncludeAnnotations = contractImpl.IncludeAnnotations;
-            _verifiableMemberContractImpl = contractImpl;
-
-            IsBasicType = contractImpl.IsBasicType;
         }
 
         public string MemberName
@@ -108,7 +99,7 @@ namespace Cosmos.Validation.Objects
             }
         }
 
-        public Type DeclaringType => _declaringType;
+        public Type DeclaringType { get; }
 
         public Type MemberType
         {
@@ -118,7 +109,7 @@ namespace Cosmos.Validation.Objects
                 {
                     VerifiableMemberKind.Property => _propertyInfo.PropertyType,
                     VerifiableMemberKind.Field => _fieldInfo.FieldType,
-                    VerifiableMemberKind.Unknown => _declaringType,
+                    VerifiableMemberKind.Unknown => DeclaringType,
                     VerifiableMemberKind.CustomContract => _verifiableMemberContractImpl.MemberType,
                     _ => throw new InvalidOperationException("Unknown ObjectIn type")
                 };
