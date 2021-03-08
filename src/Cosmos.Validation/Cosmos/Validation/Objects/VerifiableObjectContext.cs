@@ -20,6 +20,21 @@ namespace Cosmos.Validation.Objects
             _directMode = true;
             _keyValueRef = null;
             InstanceName = contract.IsBasicType ? VerifiableMemberContract.BASIC_TYPE : "Instance";
+
+            ParentContext = null;
+            IsChildContext = false;
+        }
+
+        internal VerifiableObjectContext(object targetObject, VerifiableObjectContract contract, VerifiableObjectContext parentContext)
+        {
+            _targetObject = targetObject;
+            _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            _directMode = true;
+            _keyValueRef = null;
+            InstanceName = contract.IsBasicType ? VerifiableMemberContract.BASIC_TYPE : "Instance";
+
+            ParentContext = parentContext;
+            IsChildContext = parentContext is not null;
         }
 
         public VerifiableObjectContext(object targetObject, VerifiableObjectContract contract, string instanceName)
@@ -29,6 +44,9 @@ namespace Cosmos.Validation.Objects
             _directMode = true;
             _keyValueRef = null;
             InstanceName = instanceName;
+
+            ParentContext = null;
+            IsChildContext = false;
         }
 
         public VerifiableObjectContext(IDictionary<string, object> keyValueCollection, VerifiableObjectContract contract)
@@ -38,6 +56,9 @@ namespace Cosmos.Validation.Objects
             _directMode = false;
             _keyValueRef = keyValueCollection ?? throw new ArgumentNullException(nameof(keyValueCollection));
             InstanceName = "KeyValueCollection";
+
+            ParentContext = null;
+            IsChildContext = false;
         }
 
         public VerifiableObjectContext(IDictionary<string, object> keyValueCollection, VerifiableObjectContract contract, string instanceName)
@@ -47,19 +68,34 @@ namespace Cosmos.Validation.Objects
             _directMode = false;
             _keyValueRef = keyValueCollection ?? throw new ArgumentNullException(nameof(keyValueCollection));
             InstanceName = instanceName;
+
+            ParentContext = null;
+            IsChildContext = false;
         }
 
         public string InstanceName { get; }
-        
+
         public Type Type => _contract.Type;
-
-        public object Instance => _targetObject;
-
-        public IDictionary<string, object> KeyValueCollection => _keyValueRef;
 
         public VerifiableObjectKind ObjectKind => _contract.ObjectKind;
 
         public bool IsBasicType() => ObjectKind == VerifiableObjectKind.BasicType;
+
+        #region Instance
+        
+        public object Instance => _targetObject;
+
+        public IDictionary<string, object> KeyValueCollection => _keyValueRef;
+
+        #endregion
+
+        #region Parent Context
+        
+        public bool IsChildContext { get; }
+
+        public VerifiableObjectContext ParentContext { get; }
+
+        #endregion
 
         #region Value
 

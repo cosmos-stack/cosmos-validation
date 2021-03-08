@@ -76,7 +76,7 @@ namespace Cosmos.Validation.Objects
         public IReadOnlyCollection<Attribute> Attributes => _contract.Attributes;
 
         public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
-        
+
         public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations()
             => _contract.GetParameterAnnotations();
 
@@ -107,7 +107,7 @@ namespace Cosmos.Validation.Objects
         public IEnumerable<IVerifiable> GetVerifiableAnnotations(
             bool excludeFlagAnnotation = false)
             => _contract.GetVerifiableAnnotations(excludeFlagAnnotation);
-        
+
         #endregion
 
         #region ConvertToObjectContext
@@ -119,7 +119,7 @@ namespace Cosmos.Validation.Objects
 
             var contract = VerifiableObjectContractManager.Resolve(MemberType);
 
-            return new VerifiableObjectContext(Value, contract);
+            return new VerifiableObjectContext(Value, contract, _parentContext);
         }
 
         #endregion
