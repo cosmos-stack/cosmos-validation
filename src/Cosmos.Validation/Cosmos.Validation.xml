@@ -56,7 +56,7 @@
             A ObjectContext Verify Interface
             </summary>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.IObjectContextVerifiableAnnotation.StrongVerify(Cosmos.Validation.Objects.ObjectContext)">
+        <member name="M:Cosmos.Validation.Annotations.IObjectContextVerifiableAnnotation.StrongVerify(Cosmos.Validation.Objects.VerifiableObjectContext)">
             <summary>
             ObjectContext Verify
             </summary>
@@ -132,7 +132,7 @@
             <param name="instance"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(Cosmos.Validation.Objects.ObjectContext)">
+        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(Cosmos.Validation.Objects.VerifiableObjectContext)">
             <summary>
             ObjectContext Verify
             </summary>
