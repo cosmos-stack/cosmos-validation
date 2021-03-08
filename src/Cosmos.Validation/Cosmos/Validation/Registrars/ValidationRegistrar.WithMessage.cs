@@ -200,9 +200,9 @@ namespace Cosmos.Validation.Registrars
 
         #region TakeEffect
 
-        public IValueFluentValidationRegistrar TakeEffect()
+        public void TakeEffect()
         {
-            return WithMessage(string.Empty).TakeEffect();
+            WithMessage(string.Empty).TakeEffect();
         }
 
         #endregion
@@ -406,9 +406,9 @@ namespace Cosmos.Validation.Registrars
 
         #region TakeEffect
 
-        public IValueFluentValidationRegistrar<T> TakeEffect()
+        public void TakeEffect()
         {
-            return WithMessage(string.Empty).TakeEffect();
+            WithMessage(string.Empty).TakeEffect();
         }
 
         #endregion
@@ -612,9 +612,9 @@ namespace Cosmos.Validation.Registrars
 
         #region TakeEffect
 
-        public IValueFluentValidationRegistrar<T, TVal> TakeEffect()
+        public void TakeEffect()
         {
-            return WithMessage(string.Empty).TakeEffect();
+            WithMessage(string.Empty).TakeEffect();
         }
 
         #endregion

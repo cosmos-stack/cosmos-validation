@@ -7,5 +7,6 @@ namespace Cosmos.Validation.Registrars
         IMayRegisterForCustomValidator,
         IMayRegisterForType,
         IMayBuild,
-        IMayTempBuild { }
+        IMayTempBuild,
+        IMayTakeEffect { }
 }

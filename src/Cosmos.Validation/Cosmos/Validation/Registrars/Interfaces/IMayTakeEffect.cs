@@ -1,7 +1,7 @@
 ﻿namespace Cosmos.Validation.Registrars.Interfaces
 {
-    public interface IMayTakeEffect<out TCallbackEntry>
+    public interface IMayTakeEffect
     {
-        TCallbackEntry TakeEffect();
+        void TakeEffect();
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
-using Cosmos.Validation.Registrars.Interfaces;
 
 namespace Cosmos.Validation.Registrars
 {
@@ -404,21 +403,6 @@ namespace Cosmos.Validation.Registrars
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
             return this;
-        }
-
-        #endregion
-
-        #region TakeEffect
-
-        public new IValueFluentValidationRegistrar<T, TVal> TakeEffect()
-        {
-            BuildMySelf();
-            return this;
-        }
-
-        IValueFluentValidationRegistrar<T> IMayTakeEffect<IValueFluentValidationRegistrar<T>>.TakeEffect()
-        {
-            return TakeEffect();
         }
 
         #endregion

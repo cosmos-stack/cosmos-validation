@@ -298,10 +298,10 @@ namespace Cosmos.Validation.Registrars
 
         #region TakeEffect
 
-        public IFluentValidationRegistrar TakeEffect()
+        public void TakeEffect()
         {
             BuildMySelf();
-            return this;
+            _parentRegistrar.TakeEffect();
         }
 
         #endregion

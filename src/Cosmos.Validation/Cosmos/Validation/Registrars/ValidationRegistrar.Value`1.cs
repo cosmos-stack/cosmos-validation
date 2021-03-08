@@ -671,10 +671,10 @@ namespace Cosmos.Validation.Registrars
 
         #region TakeEffect
 
-        public IValueFluentValidationRegistrar<T> TakeEffect()
+        public void TakeEffect()
         {
             BuildMySelf();
-            return this;
+            _parentRegistrar.TakeEffect();
         }
 
         #endregion

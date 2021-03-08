@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForMember,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect<IValueFluentValidationRegistrar>
+        IMayTakeEffect
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
@@ -89,7 +89,7 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForMember<T>,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect<IValueFluentValidationRegistrar<T>>
+        IMayTakeEffect
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
@@ -219,8 +219,7 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
-    public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>,
-        IMayTakeEffect<IValueFluentValidationRegistrar<T, TVal>>
+    public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
         new IValueFluentValidationRegistrar<T, TVal> Empty();
@@ -338,6 +337,5 @@ namespace Cosmos.Validation.Registrars
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
-        new IValueFluentValidationRegistrar<T, TVal> TakeEffect();
     }
 }

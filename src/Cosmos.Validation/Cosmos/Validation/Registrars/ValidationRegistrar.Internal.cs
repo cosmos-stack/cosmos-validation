@@ -422,6 +422,12 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region TakeEffect
+
+        public void TakeEffect() { }
+
+        #endregion
+
         #region AddOrUpdateValueRule
 
         protected void AddOrUpdateValueRules(IEnumerable<CorrectValueRule> rules, Type sourceType, StrategyMode mode)
@@ -612,7 +618,11 @@ namespace Cosmos.Validation.Registrars
                 yield return project;
         }
 
+        internal (Dictionary<Type, List<CorrectValueRule>>, Dictionary<(Type, string), List<CorrectValueRule>>) GetCorrectValueRulesForUnitTests()
+        {
+            return (_typedRulesDictionary, _namedRulesDictionary);
+        }
+
         #endregion
-        
     }
 }
