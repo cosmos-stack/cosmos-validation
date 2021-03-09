@@ -1,7 +1,6 @@
 ﻿using System;
-
 #if NET452
-using System.Reflection;
+using Cosmos.Reflection;
 
 #endif
 

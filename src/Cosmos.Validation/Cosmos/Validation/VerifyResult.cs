@@ -89,11 +89,11 @@ namespace Cosmos.Validation
             return string.Join(separator, _failures.Select(f => f.ToString()));
         }
 
-        public StringVal ToStringVal(bool includeDetails = false, string message = null)
+        public StructuredStringVal ToStringVal(bool includeDetails = false, string message = null)
         {
             var result = InternalSuccess
-                ? new StringVal("Success")
-                : new StringVal(message ?? $"Verification failure: A total of {_failures.Count} failures occurred.");
+                ? new StructuredStringVal("Success")
+                : new StructuredStringVal(message ?? $"Verification failure: A total of {_failures.Count} failures occurred.");
 
             if (includeDetails)
             {

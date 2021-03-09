@@ -69,9 +69,9 @@ namespace Cosmos.Validation
             return builder.ToString();
         }
 
-        public StringVal ToStringVal()
+        public StructuredStringVal ToStringVal()
         {
-            var result = new StringVal(ErrorMessage);
+            var result = new StructuredStringVal(ErrorMessage);
 
             if (Details is not null && Details.Any())
             {

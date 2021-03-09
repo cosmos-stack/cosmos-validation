@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using Cosmos.Reflection;
 using Cosmos.Validation;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
