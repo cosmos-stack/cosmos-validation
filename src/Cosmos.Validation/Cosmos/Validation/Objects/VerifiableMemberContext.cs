@@ -69,6 +69,14 @@ namespace Cosmos.Validation.Objects
 
         #endregion
 
+        #region ParentInstance
+
+        public object GetParentInstance() => _parentContext?.Instance;
+
+        public T GetParentInstance<T>() => (T) _parentContext?.Instance;
+
+        #endregion
+
         #region Annotation / Attribute
 
         public bool IncludeAnnotations => _contract.IncludeAnnotations;
