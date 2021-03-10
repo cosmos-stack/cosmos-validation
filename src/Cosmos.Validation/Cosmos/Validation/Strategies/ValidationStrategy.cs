@@ -53,7 +53,7 @@ namespace Cosmos.Validation.Strategies
             return ForMember(propertyInfo.Name);
         }
 
-        protected IValueRuleBuilder RuleFor(FieldInfo fieldInfo)
+        protected IValueRuleBuilder ForMember(FieldInfo fieldInfo)
         {
             if (fieldInfo is null)
                 throw new ArgumentNullException(nameof(fieldInfo));
