@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace Cosmos.Validation
@@ -57,11 +58,17 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder Matches(string regexExpression, RegexOptions options);
 
-        IValueRuleBuilder Matches(Func<object, Regex> regexFunc);
-
-        IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc);
-
-        IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        // IValueRuleBuilder Matches(Func<object, Regex> regexFunc);
+        //
+        // IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc);
+        //
+        // IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        //
+        // IValueRuleBuilder Matches(Expression<Func<object, Regex>> expression);
+        //
+        // IValueRuleBuilder Matches(Expression<Func<object, string>> expression);
+        //
+        // IValueRuleBuilder Matches(Expression<Func<object, string>> expression, RegexOptions options);
 
         IValueRuleBuilder Func(Func<object, CustomVerifyResult> func);
 
@@ -80,6 +87,7 @@ namespace Cosmos.Validation
         IValueRuleBuilder NotAny(Func<object, bool> func);
 
         IValueRuleBuilder NotAll(Func<object, bool> func);
+        IValueRuleBuilder None(Func<object, bool> func);
 
         IValueRuleBuilder In(ICollection<object> collection);
 
@@ -188,11 +196,17 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder<T> Matches(string regexExpression, RegexOptions options);
 
-        IValueRuleBuilder<T> Matches(Func<object, Regex> regexFunc);
-
-        IValueRuleBuilder<T> Matches(Func<object, string> regexExpressionFunc);
-
-        IValueRuleBuilder<T> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        // IValueRuleBuilder<T> Matches(Func<T, Regex> regexFunc);
+        //
+        // IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc);
+        //
+        // IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
+        //
+        // IValueRuleBuilder<T> Matches(Expression<Func<T, Regex>> expression);
+        //
+        // IValueRuleBuilder<T> Matches(Expression<Func<T, string>> expression);
+        //
+        // IValueRuleBuilder<T> Matches(Expression<Func<T, string>> expression, RegexOptions options);
 
         IValueRuleBuilder<T> Func(Func<object, CustomVerifyResult> func);
 
@@ -319,11 +333,17 @@ namespace Cosmos.Validation
 
         new IValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options);
 
-        new IValueRuleBuilder<T, TVal> Matches(Func<object, Regex> regexFunc);
-
-        new IValueRuleBuilder<T, TVal> Matches(Func<object, string> regexExpressionFunc);
-
-        new IValueRuleBuilder<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        // new IValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc);
+        //
+        // new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc);
+        //
+        // new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
+        //
+        // new IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, Regex>> expression);
+        //
+        // new IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression);
+        //
+        // new IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression, RegexOptions options);
 
         IValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
 

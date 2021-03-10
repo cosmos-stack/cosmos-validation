@@ -7,12 +7,9 @@ namespace Cosmos.Validation.Internals.Tokens
     {
         public static int[] NoMutuallyExclusiveFlags = { };
 
-        // ReSharper disable once InconsistentNaming
-        private readonly VerifiableMemberContract _contract;
-
         protected ValueToken(VerifiableMemberContract contract)
         {
-            _contract = contract ?? throw new ArgumentNullException(nameof(contract));
+            VerifiableMember = contract ?? throw new ArgumentNullException(nameof(contract));
         }
 
         public abstract CorrectValueOps Ops { get; }
@@ -32,7 +29,7 @@ namespace Cosmos.Validation.Internals.Tokens
             return ValidValueImpl(context.Value);
         }
 
-        protected VerifiableMemberContract VerifiableMember => _contract;
+        protected VerifiableMemberContract VerifiableMember { get; }
 
         public string CustomMessage { get; set; }
 

@@ -8,6 +8,8 @@ namespace Cosmos.Validation.Internals
         All_T1,
         Any,
         Any_T1,
+        None,
+        None_T1,
         Empty,
         NotEmpty,
         Null,
@@ -40,6 +42,7 @@ namespace Cosmos.Validation.Internals
         ScalePrecision,
         Enum,
         StringEnum,
-        RegularExpression
+        RegularExpression,
+        RegularExpression_T1
     }
 }

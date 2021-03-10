@@ -201,23 +201,23 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
-        public IValueRuleBuilder<T> Matches(Func<object, Regex> regexFunc)
-        {
-            CurrentToken = new ValueRegularExpressionToken(Contract, regexFunc);
-            return this;
-        }
-
-        public IValueRuleBuilder<T> Matches(Func<object, string> regexExpressionFunc)
-        {
-            CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc);
-            return this;
-        }
-
-        public IValueRuleBuilder<T> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
-        {
-            CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc, options);
-            return this;
-        }
+        // public IValueRuleBuilder<T> Matches(Func<object, Regex> regexFunc)
+        // {
+        //     CurrentToken = new ValueRegularExpressionToken(Contract, regexFunc);
+        //     return this;
+        // }
+        //
+        // public IValueRuleBuilder<T> Matches(Func<object, string> regexExpressionFunc)
+        // {
+        //     CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc);
+        //     return this;
+        // }
+        //
+        // public IValueRuleBuilder<T> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
+        // {
+        //     CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc, options);
+        //     return this;
+        // }
 
         public IValueRuleBuilder<T> Func(Func<object, CustomVerifyResult> func)
         {
@@ -246,29 +246,29 @@ namespace Cosmos.Validation.Internals.Rules
             return new CorrectWaitForMessageValueRuleBuilder<T>(this, func);
         }
 
-        public IValueRuleBuilder<T> Any(Func<object, bool> func)
-        {
-            CurrentToken = new ValueAnyToken(Contract, func);
-            return this;
-        }
-
-        public IValueRuleBuilder<T> All(Func<object, bool> func)
-        {
-            CurrentToken = new ValueAllToken(Contract, func);
-            return this;
-        }
-
-        public IValueRuleBuilder<T> NotAny(Func<object, bool> func)
-        {
-            CurrentToken = new ValueAllToken(Contract, func);
-            return this;
-        }
-
-        public IValueRuleBuilder<T> NotAll(Func<object, bool> func)
-        {
-            CurrentToken = new ValueAnyToken(Contract, func);
-            return this;
-        }
+        // public IValueRuleBuilder<T> Any(Func<object, bool> func)
+        // {
+        //     CurrentToken = new ValueAnyToken(Contract, func);
+        //     return this;
+        // }
+        //
+        // public IValueRuleBuilder<T> All(Func<object, bool> func)
+        // {
+        //     CurrentToken = new ValueAllToken(Contract, func);
+        //     return this;
+        // }
+        //
+        // public IValueRuleBuilder<T> NotAny(Func<object, bool> func)
+        // {
+        //     CurrentToken = new ValueAllToken(Contract, func);
+        //     return this;
+        // }
+        //
+        // public IValueRuleBuilder<T> NotAll(Func<object, bool> func)
+        // {
+        //     CurrentToken = new ValueAnyToken(Contract, func);
+        //     return this;
+        // }
 
         public IValueRuleBuilder<T> In(ICollection<object> collection)
         {

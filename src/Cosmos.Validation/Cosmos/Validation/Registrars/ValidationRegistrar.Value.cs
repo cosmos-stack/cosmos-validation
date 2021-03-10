@@ -35,7 +35,13 @@ namespace Cosmos.Validation.Registrars
 
         public Type MemberType => _verifiableMemberContract.MemberType;
 
+        #region ValueRuleBuilder
+        
         private CorrectValueRuleBuilder ValueRuleBuilder { get; set; }
+
+        internal CorrectValueRuleBuilder ExposeValueRuleBuilder() => ValueRuleBuilder;
+        
+        #endregion
 
         #region WithConfig
 
@@ -191,23 +197,23 @@ namespace Cosmos.Validation.Registrars
             return this;
         }
 
-        public IValueFluentValidationRegistrar Matches(Func<object, Regex> regexFunc)
-        {
-            ValueRuleBuilder.Matches(regexFunc);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc)
-        {
-            ValueRuleBuilder.Matches(regexExpressionFunc);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
-        {
-            ValueRuleBuilder.Matches(regexExpressionFunc, options);
-            return this;
-        }
+        // public IValueFluentValidationRegistrar Matches(Func<object, Regex> regexFunc)
+        // {
+        //     ValueRuleBuilder.Matches(regexFunc);
+        //     return this;
+        // }
+        //
+        // public IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc)
+        // {
+        //     ValueRuleBuilder.Matches(regexExpressionFunc);
+        //     return this;
+        // }
+        //
+        // public IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
+        // {
+        //     ValueRuleBuilder.Matches(regexExpressionFunc, options);
+        //     return this;
+        // }
 
         public IValueFluentValidationRegistrar Func(Func<object, CustomVerifyResult> func)
         {

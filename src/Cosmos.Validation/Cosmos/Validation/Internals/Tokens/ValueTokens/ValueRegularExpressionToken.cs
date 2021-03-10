@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using Cosmos.Validation.Objects;
 
@@ -25,20 +26,38 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _regexFunc = x => CreateRegex(expression, options);
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc) : base(contract)
-        {
-            _regexFunc = x => CreateRegex(expressionFunc(x));
-        }
-
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, Regex> regexFunc) : base(contract)
-        {
-            _regexFunc = regexFunc;
-        }
-
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc, RegexOptions options) : base(contract)
-        {
-            _regexFunc = x => CreateRegex(expressionFunc(x), options);
-        }
+        // public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc) : base(contract)
+        // {
+        //     _regexFunc = x => CreateRegex(expressionFunc(x));
+        // }
+        //
+        // public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, Regex> regexFunc) : base(contract)
+        // {
+        //     _regexFunc = regexFunc;
+        // }
+        //
+        // public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc, RegexOptions options) : base(contract)
+        // {
+        //     _regexFunc = x => CreateRegex(expressionFunc(x), options);
+        // }
+        //
+        // public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression) : base(contract)
+        // {
+        //     var expressionFunc = expression.Compile();
+        //     _regexFunc = x => CreateRegex(expressionFunc(x));
+        // }
+        //
+        // public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, Regex>> expression) : base(contract)
+        // {
+        //     var regexFunc = expression.Compile();
+        //     _regexFunc = regexFunc;
+        // }
+        //
+        // public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression, RegexOptions options) : base(contract)
+        // {
+        //     var expressionFunc = expression.Compile();
+        //     _regexFunc = x => CreateRegex(expressionFunc(x), options);
+        // }
 
         public override CorrectValueOps Ops => CorrectValueOps.RegularExpression;
 

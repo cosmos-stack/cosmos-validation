@@ -19,7 +19,13 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder = new CorrectValueRuleBuilder<T, TVal>(verifiableMemberContract, mode);
         }
 
+        #region ValueRuleBuilder
+        
         private CorrectValueRuleBuilder<T, TVal> ValueRuleBuilderPtr => (CorrectValueRuleBuilder<T, TVal>) ValueRuleBuilder;
+        
+        internal CorrectValueRuleBuilder<T, TVal> ExposeValueRuleBuilder2() => ValueRuleBuilderPtr;
+        
+        #endregion
 
         #region WithConfig
 
@@ -175,23 +181,23 @@ namespace Cosmos.Validation.Registrars
             return this;
         }
 
-        public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, Regex> regexFunc)
-        {
-            ValueRuleBuilder.Matches(regexFunc);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc)
-        {
-            ValueRuleBuilder.Matches(regexExpressionFunc);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
-        {
-            ValueRuleBuilder.Matches(regexExpressionFunc, options);
-            return this;
-        }
+        // public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, Regex> regexFunc)
+        // {
+        //     ValueRuleBuilder.Matches(regexFunc);
+        //     return this;
+        // }
+        //
+        // public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc)
+        // {
+        //     ValueRuleBuilder.Matches(regexExpressionFunc);
+        //     return this;
+        // }
+        //
+        // public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
+        // {
+        //     ValueRuleBuilder.Matches(regexExpressionFunc, options);
+        //     return this;
+        // }
 
         public IValueFluentValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func)
         {
@@ -220,29 +226,29 @@ namespace Cosmos.Validation.Registrars
             return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
         }
 
-        public new IValueFluentValidationRegistrar<T, TVal> Any(Func<object, bool> func)
-        {
-            ValueRuleBuilder.Any(func);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> All(Func<object, bool> func)
-        {
-            ValueRuleBuilder.All(func);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> NotAny(Func<object, bool> func)
-        {
-            ValueRuleBuilder.NotAny(func);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> NotAll(Func<object, bool> func)
-        {
-            ValueRuleBuilder.NotAll(func);
-            return this;
-        }
+        // public new IValueFluentValidationRegistrar<T, TVal> Any(Func<object, bool> func)
+        // {
+        //     ValueRuleBuilder.Any(func);
+        //     return this;
+        // }
+        //
+        // public new IValueFluentValidationRegistrar<T, TVal> All(Func<object, bool> func)
+        // {
+        //     ValueRuleBuilder.All(func);
+        //     return this;
+        // }
+        //
+        // public new IValueFluentValidationRegistrar<T, TVal> NotAny(Func<object, bool> func)
+        // {
+        //     ValueRuleBuilder.NotAny(func);
+        //     return this;
+        // }
+        //
+        // public new IValueFluentValidationRegistrar<T, TVal> NotAll(Func<object, bool> func)
+        // {
+        //     ValueRuleBuilder.NotAll(func);
+        //     return this;
+        // }
 
         public IValueFluentValidationRegistrar<T, TVal> In(ICollection<TVal> collection)
         {

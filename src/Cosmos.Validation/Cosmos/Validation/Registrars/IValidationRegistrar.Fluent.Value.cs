@@ -41,9 +41,9 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar Matches(Regex regex);
         IValueFluentValidationRegistrar Matches(string regexExpression);
         IValueFluentValidationRegistrar Matches(string regexExpression, RegexOptions options);
-        IValueFluentValidationRegistrar Matches(Func<object, Regex> regexFunc);
-        IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc);
-        IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        // IValueFluentValidationRegistrar Matches(Func<object, Regex> regexFunc);
+        // IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc);
+        // IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
         IValueFluentValidationRegistrar Func(Func<object, CustomVerifyResult> func);
         IWaitForMessageValidationRegistrar Func(Func<object, bool> func);
         IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate);
@@ -140,11 +140,11 @@ namespace Cosmos.Validation.Registrars
 
         IValueFluentValidationRegistrar<T> Matches(string regexExpression, RegexOptions options);
 
-        IValueFluentValidationRegistrar<T> Matches(Func<object, Regex> regexFunc);
-
-        IValueFluentValidationRegistrar<T> Matches(Func<object, string> regexExpressionFunc);
-
-        IValueFluentValidationRegistrar<T> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        // IValueFluentValidationRegistrar<T> Matches(Func<object, Regex> regexFunc);
+        //
+        // IValueFluentValidationRegistrar<T> Matches(Func<object, string> regexExpressionFunc);
+        //
+        // IValueFluentValidationRegistrar<T> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
 
         IValueFluentValidationRegistrar<T> Func(Func<object, CustomVerifyResult> func);
 
@@ -156,13 +156,13 @@ namespace Cosmos.Validation.Registrars
 
         IWaitForMessageValidationRegistrar<T> Must(Func<object, bool> func);
 
-        IValueFluentValidationRegistrar<T> Any(Func<object, bool> func);
-
-        IValueFluentValidationRegistrar<T> All(Func<object, bool> func);
-
-        IValueFluentValidationRegistrar<T> NotAny(Func<object, bool> func);
-
-        IValueFluentValidationRegistrar<T> NotAll(Func<object, bool> func);
+        // IValueFluentValidationRegistrar<T> Any(Func<object, bool> func);
+        //
+        // IValueFluentValidationRegistrar<T> All(Func<object, bool> func);
+        //
+        // IValueFluentValidationRegistrar<T> NotAny(Func<object, bool> func);
+        //
+        // IValueFluentValidationRegistrar<T> NotAll(Func<object, bool> func);
 
         IValueFluentValidationRegistrar<T> In(ICollection<object> collection);
 
@@ -268,11 +268,11 @@ namespace Cosmos.Validation.Registrars
 
         new IValueFluentValidationRegistrar<T, TVal> Matches(string regexExpression, RegexOptions options);
 
-        new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, Regex> regexFunc);
-
-        new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc);
-
-        new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        // new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, Regex> regexFunc);
+        //
+        // new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc);
+        //
+        // new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
 
         IValueFluentValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
 

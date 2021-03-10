@@ -201,6 +201,11 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IValueRuleBuilder None(Func<object, bool> func)
+        {
+            throw new NotImplementedException();
+        }
+
         public IValueRuleBuilder In(ICollection<object> collection)
         {
             throw new NotImplementedException();
