@@ -82,7 +82,7 @@ namespace Cosmos.Validation.Objects
         public bool IsBasicType() => ObjectKind == VerifiableObjectKind.BasicType;
 
         #region Instance
-        
+
         public object Instance => _targetObject;
 
         public IDictionary<string, object> KeyValueCollection => _keyValueRef;
@@ -90,7 +90,7 @@ namespace Cosmos.Validation.Objects
         #endregion
 
         #region Parent Context
-        
+
         public bool IsChildContext { get; }
 
         public VerifiableObjectContext ParentContext { get; }
@@ -261,6 +261,11 @@ namespace Cosmos.Validation.Objects
             }
 
             return map;
+        }
+        
+        public bool ContainsMember(string memberName)
+        {
+            return _contract.ContainsMember(memberName);
         }
 
         #endregion

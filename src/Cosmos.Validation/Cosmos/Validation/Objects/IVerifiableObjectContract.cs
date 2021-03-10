@@ -18,6 +18,7 @@ namespace Cosmos.Validation.Objects
         VerifiableMemberContract GetMemberContract(PropertyInfo propertyInfo);
         VerifiableMemberContract GetMemberContract(FieldInfo fieldInfo);
         VerifiableMemberContract GetMemberContract(int memberIndex);
+        bool ContainsMember(string memberName);
         IEnumerable<VerifiableMemberContract> GetMemberContracts();
         bool IncludeAnnotations { get; }
         IReadOnlyCollection<Attribute> Attributes { get; }

@@ -168,6 +168,15 @@ namespace Cosmos.Validation.Objects
             return _memberContracts.Values.AsReadOnly();
         }
 
+        public bool ContainsMember(string memberName)
+        {
+            if (_verifiableObjectContractImpl is not null)
+                return _verifiableObjectContractImpl.ContainsMember(memberName);
+            if (ObjectKind == VerifiableObjectKind.BasicType)
+                return false;
+            return _memberContracts.ContainsKey(memberName);
+        }
+
         #endregion
 
         #region Annotation / Attribute
