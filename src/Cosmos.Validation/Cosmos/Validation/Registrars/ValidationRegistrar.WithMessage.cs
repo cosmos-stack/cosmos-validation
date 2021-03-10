@@ -9,20 +9,23 @@ namespace Cosmos.Validation.Registrars
 {
     internal class ValidationRegistrarWithMessage : IWaitForMessageValidationRegistrar
     {
+        private readonly IValidationRegistrar _rootRegistrar;
         private readonly ValueValidationRegistrar _registrar;
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar, Func<object, bool> func)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar,IValidationRegistrar rootRegistrar, Func<object, bool> func)
         {
             _registrar = registrar;
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _func = func ?? throw new ArgumentNullException(nameof(func));
             _predicate = null;
         }
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar, Predicate<object> predicate)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar,IValidationRegistrar rootRegistrar, Predicate<object> predicate)
         {
             _registrar = registrar;
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _func = null;
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
@@ -205,25 +208,34 @@ namespace Cosmos.Validation.Registrars
             WithMessage(string.Empty).TakeEffect();
         }
 
+        public IValidationRegistrar TakeEffectAndBack()
+        {
+            TakeEffect();
+            return _rootRegistrar;
+        }
+
         #endregion
     }
 
     internal class ValidationRegistrarWithMessage<T> : IWaitForMessageValidationRegistrar<T>
     {
+        private readonly IValidationRegistrar _rootRegistrar;
         private readonly ValueValidationRegistrar<T> _registrar;
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, Func<object, bool> func)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, IValidationRegistrar rootRegistrar,Func<object, bool> func)
         {
             _registrar = registrar;
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _func = func ?? throw new ArgumentNullException(nameof(func));
             _predicate = null;
         }
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, Predicate<object> predicate)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar,IValidationRegistrar rootRegistrar, Predicate<object> predicate)
         {
             _registrar = registrar;
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _func = null;
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
@@ -411,25 +423,34 @@ namespace Cosmos.Validation.Registrars
             WithMessage(string.Empty).TakeEffect();
         }
 
+        public IValidationRegistrar TakeEffectAndBack()
+        {
+            TakeEffect();
+            return _rootRegistrar;
+        }
+
         #endregion
     }
 
     internal class ValidationRegistrarWithMessage<T, TVal> : IWaitForMessageValidationRegistrar<T, TVal>
     {
+        private readonly IValidationRegistrar _rootRegistrar;
         private readonly ValueValidationRegistrar<T, TVal> _registrar;
         private readonly Func<TVal, bool> _func;
         private readonly Predicate<TVal> _predicate;
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, Func<TVal, bool> func)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar,IValidationRegistrar rootRegistrar, Func<TVal, bool> func)
         {
             _registrar = registrar;
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _func = func ?? throw new ArgumentNullException(nameof(func));
             _predicate = null;
         }
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, Predicate<TVal> predicate)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, IValidationRegistrar rootRegistrar,Predicate<TVal> predicate)
         {
             _registrar = registrar;
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _func = null;
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
@@ -615,6 +636,12 @@ namespace Cosmos.Validation.Registrars
         public void TakeEffect()
         {
             WithMessage(string.Empty).TakeEffect();
+        }
+
+        public IValidationRegistrar TakeEffectAndBack()
+        {
+            TakeEffect();
+            return _rootRegistrar;
         }
 
         #endregion

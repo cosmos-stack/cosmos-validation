@@ -12,8 +12,9 @@ namespace Cosmos.Validation.Registrars
             VerifiableMemberContract verifiableMemberContract,
             List<CorrectValueRule> rules,
             ValueRuleMode mode,
-            IFluentValidationRegistrar<T> parentRegistrar)
-            : base(verifiableMemberContract, rules, mode, parentRegistrar)
+            IFluentValidationRegistrar<T> parentRegistrar,
+            IValidationRegistrar rootRegistrar)
+            : base(verifiableMemberContract, rules, mode, parentRegistrar, rootRegistrar)
         {
             ValueRuleBuilder = new CorrectValueRuleBuilder<T, TVal>(verifiableMemberContract, mode);
         }
@@ -200,12 +201,12 @@ namespace Cosmos.Validation.Registrars
 
         public IWaitForMessageValidationRegistrar<T, TVal> Func(Func<TVal, bool> func)
         {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, func);
+            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
         }
 
         public IWaitForMessageValidationRegistrar<T, TVal> Predicate(Predicate<TVal> predicate)
         {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, predicate);
+            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, predicate);
         }
 
         public IValueFluentValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func)
@@ -216,7 +217,7 @@ namespace Cosmos.Validation.Registrars
 
         public IWaitForMessageValidationRegistrar<T, TVal> Must(Func<TVal, bool> func)
         {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, func);
+            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
         }
 
         public new IValueFluentValidationRegistrar<T, TVal> Any(Func<object, bool> func)

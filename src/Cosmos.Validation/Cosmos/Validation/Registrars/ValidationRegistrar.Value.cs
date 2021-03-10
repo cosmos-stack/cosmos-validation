@@ -12,6 +12,7 @@ namespace Cosmos.Validation.Registrars
 {
     internal class ValueValidationRegistrar : IValueFluentValidationRegistrar
     {
+        private readonly IValidationRegistrar _rootRegistrar;
         private readonly IFluentValidationRegistrar _parentRegistrar;
         private readonly List<CorrectValueRule> _parentRulesRef;
         private readonly VerifiableMemberContract _verifiableMemberContract;
@@ -20,8 +21,10 @@ namespace Cosmos.Validation.Registrars
             VerifiableMemberContract verifiableMemberContract,
             List<CorrectValueRule> rules,
             ValueRuleMode mode,
-            IFluentValidationRegistrar parentRegistrar)
+            IFluentValidationRegistrar parentRegistrar,
+            IValidationRegistrar rootRegistrar)
         {
+            _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
             _parentRegistrar = parentRegistrar ?? throw new ArgumentNullException(nameof(parentRegistrar));
             _verifiableMemberContract = verifiableMemberContract ?? throw new ArgumentNullException(nameof(verifiableMemberContract));
             ValueRuleBuilder = new CorrectValueRuleBuilder(verifiableMemberContract, mode);
@@ -214,12 +217,12 @@ namespace Cosmos.Validation.Registrars
 
         public IWaitForMessageValidationRegistrar Func(Func<object, bool> func)
         {
-            return new ValidationRegistrarWithMessage(this, func);
+            return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
         }
 
         public IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate)
         {
-            return new ValidationRegistrarWithMessage(this, predicate);
+            return new ValidationRegistrarWithMessage(this, _rootRegistrar, predicate);
         }
 
         public IValueFluentValidationRegistrar Must(Func<object, CustomVerifyResult> func)
@@ -230,7 +233,7 @@ namespace Cosmos.Validation.Registrars
 
         public IWaitForMessageValidationRegistrar Must(Func<object, bool> func)
         {
-            return new ValidationRegistrarWithMessage(this, func);
+            return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
         }
 
         public IValueFluentValidationRegistrar Any(Func<object, bool> func)
@@ -665,6 +668,12 @@ namespace Cosmos.Validation.Registrars
         {
             BuildMySelf();
             _parentRegistrar.TakeEffect();
+        }
+
+        public IValidationRegistrar TakeEffectAndBack()
+        {
+            TakeEffect();
+            return _rootRegistrar;
         }
 
         #endregion

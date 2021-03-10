@@ -15,6 +15,8 @@ namespace Cosmos.Validation.Registrars
         private readonly IValidationRegistrar _parentRegistrar;
         private readonly VerifiableObjectContract _verifiableObjectContract;
 
+        private ICorrectRegistrar ParentRgPtr => (ICorrectRegistrar) _parentRegistrar;
+
         public FluentValidationRegistrar(Type type, IValidationRegistrar parentRegistrar)
         {
             _name = string.Empty;
@@ -50,7 +52,7 @@ namespace Cosmos.Validation.Registrars
             if (valueContract is null)
                 throw new InvalidOperationException($"Cannot match such Member named '{memberName}'.");
 
-            return new ValueValidationRegistrar(valueContract, Rules, mode, this);
+            return new ValueValidationRegistrar(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
         public IValueFluentValidationRegistrar ForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append)
@@ -63,7 +65,7 @@ namespace Cosmos.Validation.Registrars
             if (valueContract is null)
                 throw new InvalidOperationException($"Cannot match such Property named '{propertyInfo.Name}'.");
 
-            return new ValueValidationRegistrar(valueContract, Rules, mode, this);
+            return new ValueValidationRegistrar(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
         public IValueFluentValidationRegistrar ForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append)
@@ -76,7 +78,7 @@ namespace Cosmos.Validation.Registrars
             if (valueContract is null)
                 throw new InvalidOperationException($"Cannot match such Field named '{fieldInfo.Name}'.");
 
-            return new ValueValidationRegistrar(valueContract, Rules, mode, this);
+            return new ValueValidationRegistrar(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
         #endregion
@@ -253,9 +255,8 @@ namespace Cosmos.Validation.Registrars
 
         internal void BuildMySelf()
         {
-            var registrar = (ICorrectRegistrar) _parentRegistrar;
             foreach (var rule in Rules)
-                registrar.BuildForMember(rule);
+                ParentRgPtr.BuildForMember(rule);
         }
 
         public void Build()
@@ -304,6 +305,12 @@ namespace Cosmos.Validation.Registrars
             _parentRegistrar.TakeEffect();
         }
 
+        public IValidationRegistrar TakeEffectAndBack()
+        {
+            TakeEffect();
+            return _parentRegistrar;
+        }
+        
         #endregion
     }
 }
