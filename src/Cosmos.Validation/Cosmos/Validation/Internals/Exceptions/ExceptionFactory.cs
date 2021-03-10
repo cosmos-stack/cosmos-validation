@@ -2,6 +2,12 @@
 {
     internal static class ExceptionFactory
     {
+        public static ValidationException Create(VerifyResult result)
+        {
+            var messageVal = result.ToStringVal(true);
+            return new ValidationException(messageVal);
+        }
+
         public static ValidationException Create(VerifyResult result, string message)
         {
             var messageVal = result.ToStringVal(true, message);

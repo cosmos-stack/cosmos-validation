@@ -262,6 +262,14 @@ namespace Cosmos.Validation
 
         #region Raise
 
+        public void Raise()
+        {
+            if (!IsValid)
+            {
+                throw ExceptionFactory.Create(this);
+            }
+        }
+
         public void Raise(string message)
         {
             if (!IsValid)
