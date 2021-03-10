@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Internals.Rules;
@@ -420,11 +421,59 @@ namespace Cosmos.Validation.Registrars
             AddOrUpdateValueRule(rule, rule.Contract.DeclaringType, name);
         }
 
+        void ICorrectRegistrar.BuildForMember<T, TVal>(Expression<Func<T, TVal>> expression, Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func)
+        {
+            if (expression is null)
+                throw new ArgumentNullException(nameof(expression));
+            if (func is null)
+                throw new ArgumentNullException(nameof(func));
+            var memberName = PropertySelector.GetPropertyName(expression);
+            if (string.IsNullOrWhiteSpace(memberName))
+                throw new ArgumentException("No member can be matched.", nameof(memberName));
+            var contract = VerifiableObjectContractManager.Resolve<T>();
+            var value = contract.GetMemberContract(memberName);
+            if (value is null)
+                throw new ArgumentException($"Member name '{memberName}' is not a valid Member of type '{typeof(T).GetFriendlyName()}'");
+            var builder = new CorrectValueRuleBuilder<T, TVal>(value);
+            var rule = ((CorrectValueRuleBuilder<T>) func(builder)).Build();
+            AddOrUpdateValueRule(rule, typeof(T));
+        }
+
+        void ICorrectRegistrar.BuildForMember<T, TVal>(Expression<Func<T, TVal>> expression, string name, Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                ((ICorrectRegistrar) this).BuildForMember(expression, func);
+                return;
+            }
+
+            if (expression is null)
+                throw new ArgumentNullException(nameof(expression));
+            if (func is null)
+                throw new ArgumentNullException(nameof(func));
+            var memberName = PropertySelector.GetPropertyName(expression);
+            if (string.IsNullOrWhiteSpace(memberName))
+                throw new ArgumentException("No member can be matched.", nameof(memberName));
+            var contract = VerifiableObjectContractManager.Resolve<T>();
+            var value = contract.GetMemberContract(memberName);
+            if (value is null)
+                throw new ArgumentException($"Member name '{memberName}' is not a valid Member of type '{typeof(T).GetFriendlyName()}'");
+            var builder = new CorrectValueRuleBuilder<T, TVal>(value);
+            var rule = ((CorrectValueRuleBuilder<T>) func(builder)).Build();
+            AddOrUpdateValueRule(rule, typeof(T), name);
+        }
+
         #endregion
 
         #region TakeEffect
 
         public void TakeEffect() { }
+
+        public IValidationRegistrar TakeEffectAndBack()
+        {
+            TakeEffect();
+            return this;
+        }
 
         #endregion
 

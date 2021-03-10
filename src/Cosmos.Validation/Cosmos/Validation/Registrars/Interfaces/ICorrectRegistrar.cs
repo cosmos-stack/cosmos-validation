@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
 
@@ -18,5 +19,7 @@ namespace Cosmos.Validation.Registrars.Interfaces
         void BuildForMember<T>(VerifiableMemberContract contract, string name, Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
         void BuildForMember<T>(CorrectValueRule rule);
         void BuildForMember<T>(string name, CorrectValueRule rule);
+        void BuildForMember<T, TVal>(Expression<Func<T, TVal>> expression, Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
+        void BuildForMember<T, TVal>(Expression<Func<T, TVal>> expression, string name, Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
     }
 }
