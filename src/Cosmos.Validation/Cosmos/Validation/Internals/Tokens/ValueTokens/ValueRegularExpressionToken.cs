@@ -43,20 +43,17 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         //
         // public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression) : base(contract)
         // {
-        //     var expressionFunc = expression.Compile();
-        //     _regexFunc = x => CreateRegex(expressionFunc(x));
+        //     _regexFunc = x => CreateRegex(PropertyValueGetter.Get(expression, x));
         // }
         //
         // public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, Regex>> expression) : base(contract)
         // {
-        //     var regexFunc = expression.Compile();
-        //     _regexFunc = regexFunc;
+        //     _regexFunc = expression.Compile();
         // }
         //
         // public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression, RegexOptions options) : base(contract)
         // {
-        //     var expressionFunc = expression.Compile();
-        //     _regexFunc = x => CreateRegex(expressionFunc(x), options);
+        //     _regexFunc = x => CreateRegex(PropertyValueGetter.Get(expression, x), options);
         // }
 
         public override CorrectValueOps Ops => CorrectValueOps.RegularExpression;
@@ -67,18 +64,50 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
 
-            var regex = _regexFunc(value);
+            var value = GetValueFrom(context);
 
-            if (regex is null || value is null || !regex.IsMatch((string) value))
+            if (context is null)
             {
-                UpdateVal(val, value, regex?.ToString());
+                UpdateVal(verifyVal, value);
+            }
+            else
+            {
+                var regex = _regexFunc(context.Instance);
+
+                if (regex is null || value is null || !regex.IsMatch((string) value))
+                {
+                    UpdateVal(verifyVal, value, regex?.ToString());
+                }
             }
 
-            return val;
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (context is null)
+            {
+                UpdateVal(verifyVal, value);
+            }
+            else
+            {
+                var regex = _regexFunc(context.GetParentInstance());
+
+                if (regex is null || value is null || !regex.IsMatch((string) value))
+                {
+                    UpdateVal(verifyVal, value, regex?.ToString());
+                }
+            }
+
+            return verifyVal;
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj, string expression = null)
@@ -94,7 +123,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private static Regex CreateRegex(string expression, RegexOptions options = RegexOptions.None)
         {
-            return new Regex(expression, options, TimeSpan.FromSeconds(2.0));
+            return new(expression, options, TimeSpan.FromSeconds(2.0));
         }
 
         public override string ToString() => NAME;

@@ -8,7 +8,7 @@ namespace Cosmos.Validation.Internals.Rules
     internal class CorrectValueRule
     {
         public string MemberName { get; set; }
-        
+
         public VerifiableMemberContract Contract { get; set; }
 
         public CorrectValueRuleMode Mode { get; set; }
@@ -40,12 +40,12 @@ namespace Cosmos.Validation.Internals.Rules
 
         public IEnumerable<CorrectVerifyVal> ValidValue(VerifiableObjectContext context)
         {
-            return Tokens.Select(token => token.ValidValue(context.GetValue(MemberName)));
+            return Tokens.Select(token => token.Valid(context));
         }
-        
+
         public IEnumerable<CorrectVerifyVal> ValidValue(VerifiableMemberContext context)
         {
-            return Tokens.Select(token => token.ValidValue(context));
+            return Tokens.Select(token => token.Valid(context));
         }
 
         public VerifiableMemberContext GetValue(VerifiableObjectContext context)

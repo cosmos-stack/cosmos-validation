@@ -25,21 +25,35 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+        
+            var value = GetValueFrom(context);
 
-            var success = ValidCore(value, out var message);
-
-            if (!success)
+            if (!IsValidImpl(value, out var message))
             {
-                UpdateVal(val, value, message);
+                UpdateVal(verifyVal, value, message);
             }
 
-            return val;
+            return verifyVal;
         }
 
-        private bool ValidCore(object value, out string message)
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+          
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var message))
+            {
+                UpdateVal(verifyVal, value, message);
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(object value, out string message)
         {
             message = null;
 

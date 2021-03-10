@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cosmos.Reflection;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
@@ -26,30 +27,52 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public override bool MutuallyExclusive => false;
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
-       
-        protected override CorrectVerifyVal ValidValueImpl(TVal value)
+
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
-            var flag = true;
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
 
-            if (value is ICollection collection)
+            var value = GetValueFrom(context);
+
+            if (ContainsMember(context) && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
             {
-                if (collection.Cast<TItem>().Any(one => !_func.Invoke(one)))
+                if (!IsValidImpl(collection))
                 {
-                    flag = false;
-                }
-
-                if (!flag)
-                {
-                    UpdateVal(val, value);
+                    UpdateVal(verifyVal, value);
                 }
             }
             else
             {
-                UpdateVal(val, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
+                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
             }
 
-            return val;
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (context is not null && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
+            {
+                if (!IsValidImpl(collection))
+                {
+                    UpdateVal(verifyVal, value);
+                }
+            }
+            else
+            {
+                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(ICollection collection)
+        {
+            return collection.Cast<TItem>().All(one => _func.Invoke(one));
         }
 
         private void UpdateVal(CorrectVerifyVal val, TVal obj, string message = null)

@@ -58,31 +58,62 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var currentValue, out var message))
+            {
+                UpdateVal(verifyVal, currentValue, message);
+            }
+
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var currentValue, out var message))
+            {
+                UpdateVal(verifyVal, currentValue, message);
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(object value, out object currentValue, out string message)
+        {
+            message = "";
+            currentValue = value;
 
             if (_returnFalseDirectly)
             {
-                UpdateVal(val, value);
+                return false;
             }
 
             else if (value is null)
             {
-                UpdateVal(val, null);
+                currentValue = null;
+                return false;
             }
 
             else if (value is char c)
             {
                 var fromC = Convert.ToChar(_from);
                 var toC = Convert.ToChar(_to);
+                currentValue = c;
 
                 if (_options == RangeOptions.OpenInterval)
                 {
                     // Open Interval
                     if (c <= fromC || c >= toC)
                     {
-                        UpdateVal(val, c);
+                        return false;
                     }
                 }
                 else
@@ -90,7 +121,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     // Close Interval
                     if (c < fromC || c > toC)
                     {
-                        UpdateVal(val, c);
+                        return false;
                     }
                 }
             }
@@ -101,12 +132,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 var fromD = Convert.ToDecimal(_from);
                 var toD = Convert.ToDecimal(_to);
 
+                currentValue = d;
                 if (_options == RangeOptions.OpenInterval)
                 {
                     // Open Interval
                     if (d <= fromD || d >= toD)
                     {
-                        UpdateVal(val, d);
+                        return false;
                     }
                 }
                 else
@@ -114,7 +146,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     // Close Interval
                     if (d < fromD || d > toD)
                     {
-                        UpdateVal(val, d);
+                        return false;
                     }
                 }
             }
@@ -130,7 +162,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     // Open Interval
                     if (t <= fromT || t >= toT)
                     {
-                        UpdateVal(val, value);
+                        return false;
                     }
                 }
                 else
@@ -138,19 +170,21 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     // Close Interval
                     if (t < fromT || t > toT)
                     {
-                        UpdateVal(val, value);
+                        return false;
                     }
                 }
             }
 
             else if (value is IComparable comparable)
             {
+                currentValue = comparable;
+
                 if (_options == RangeOptions.OpenInterval)
                 {
                     // Open Interval
                     if (comparable.CompareTo(_from) <= 0 || comparable.CompareTo(_to) >= 0)
                     {
-                        UpdateVal(val, comparable);
+                        return false;
                     }
                 }
                 else
@@ -158,17 +192,19 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     // Close Interval
                     if (comparable.CompareTo(_from) < 0 || comparable.CompareTo(_to) > 0)
                     {
-                        UpdateVal(val, comparable);
+                        return false;
                     }
                 }
             }
 
             else
             {
-                UpdateVal(val, value, "The given value cannot be compared.");
+                message = "The given value cannot be compared.";
+
+                return false;
             }
 
-            return val;
+            return true;
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)

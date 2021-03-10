@@ -27,23 +27,53 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(TVal value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var currentValue, out var message))
+            {
+                UpdateVal(verifyVal, currentValue, message);
+            }
+
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var currentValue, out var message))
+            {
+                UpdateVal(verifyVal, currentValue, message);
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(TVal value, out TVal currentValue, out string message)
+        {
+            message = "";
+            currentValue = value;
 
             if (value is null)
             {
-                UpdateVal(val, default);
+                currentValue = default;
+                return false;
             }
 
-            if (value is IComparable<TVal> comparable)
+            else if (value is IComparable<TVal> comparable)
             {
                 if (_options == RangeOptions.OpenInterval)
                 {
                     // Open Interval
                     if (comparable.CompareTo(_from) <= 0 || comparable.CompareTo(_to) >= 0)
                     {
-                        UpdateVal(val, value);
+                        return false;
                     }
                 }
                 else
@@ -51,17 +81,19 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     // Close Interval
                     if (comparable.CompareTo(_from) < 0 || comparable.CompareTo(_to) > 0)
                     {
-                        UpdateVal(val, value);
+                        return false;
                     }
                 }
             }
 
             else
             {
-                UpdateVal(val, value, "The given value cannot be compared.");
+                message = "The given value cannot be compared.";
+
+                return false;
             }
 
-            return val;
+            return true;
         }
 
         private void UpdateVal(CorrectVerifyVal val, TVal obj, string message = null)

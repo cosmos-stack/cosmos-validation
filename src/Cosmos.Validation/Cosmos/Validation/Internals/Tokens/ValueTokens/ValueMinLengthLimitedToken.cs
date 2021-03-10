@@ -27,33 +27,58 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => _mutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+           
+            var value = GetValueFrom(context);
 
+            if (!IsValidImpl(value, out var currentLength))
+            {
+                UpdateVal(verifyVal, value, currentLength);
+            }
+
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+           
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var currentLength))
+            {
+                UpdateVal(verifyVal, value, currentLength);
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(object value, out int currentLength)
+        {
             if (value is string stringVal)
             {
-                if (stringVal.Length < _minLength)
-                {
-                    UpdateVal(val, value, stringVal.Length);
-                }
+                currentLength = stringVal.Length;
+                if (currentLength < _minLength)
+                    return false;
             }
 
             else if (VerifiableMember.MemberType == typeof(string) && _minLength > 0)
             {
-                UpdateVal(val, value, 0);
+                currentLength = 0;
+                return false;
             }
 
             else if (value is ICollection collection)
             {
-                var len = collection.Count;
-                if (len < _minLength)
-                {
-                    UpdateVal(val, value, len);
-                }
+                currentLength = collection.Count;
+                if (currentLength < _minLength)
+                    return false;
             }
 
-            return val;
+            currentLength = 0;
+            return true;
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj, int currentLength)

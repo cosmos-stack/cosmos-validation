@@ -1,4 +1,5 @@
-﻿using Cosmos.Validation.Objects;
+﻿using System;
+using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens
 {
@@ -10,7 +11,9 @@ namespace Cosmos.Validation.Internals.Tokens
 
         int[] MutuallyExclusiveFlags { get; }
 
-        CorrectVerifyVal ValidValue(VerifiableMemberContext context);
+        CorrectVerifyVal Valid(VerifiableObjectContext context);
+
+        CorrectVerifyVal Valid(VerifiableMemberContext context);
 
         string CustomMessage { get; set; }
 

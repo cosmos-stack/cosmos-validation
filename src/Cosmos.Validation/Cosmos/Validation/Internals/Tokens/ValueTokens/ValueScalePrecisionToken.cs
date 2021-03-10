@@ -50,24 +50,52 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
 
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var scale, out var actualIntegerDigits))
+            {
+                UpdateVal(verifyVal, value, scale, actualIntegerDigits);
+            }
+
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (!IsValidImpl(value, out var scale, out var actualIntegerDigits))
+            {
+                UpdateVal(verifyVal, value, scale, actualIntegerDigits);
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(object value, out int scale, out int actualIntegerDigits)
+        {
             if (value is decimal decimalValue)
             {
-                var scale = GetScale(decimalValue);
+                scale = GetScale(decimalValue);
                 var precision = GetPrecision(decimalValue);
-                var actualIntegerDigits = precision - scale;
+                actualIntegerDigits = precision - scale;
                 var expectedIntegerDigits = Precision - Scale;
 
                 if (scale > Scale || actualIntegerDigits > expectedIntegerDigits)
                 {
-                    UpdateVal(val, value, scale, actualIntegerDigits);
+                    return false;
                 }
             }
 
-            return val;
+            scale = 0;
+            actualIntegerDigits = 0;
+            return true;
         }
 
         private static uint[] GetBits(decimal @decimal)

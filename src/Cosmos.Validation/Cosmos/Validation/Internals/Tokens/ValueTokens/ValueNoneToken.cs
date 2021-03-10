@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Cosmos.Reflection;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
@@ -25,29 +26,51 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
-            var flag = true;
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
 
-            if (value is ICollection collection)
+            var value = GetValueFrom(context);
+
+            if (ContainsMember(context) && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
             {
-                if (collection.Cast<object>().Any(one => _func.Invoke(one)))
+                if (!IsValidImpl(collection))
                 {
-                    flag = false;
-                }
-
-                if (!flag)
-                {
-                    UpdateVal(val, value);
+                    UpdateVal(verifyVal, value);
                 }
             }
             else
             {
-                UpdateVal(val, value, "The type is not a collection or an array, and an exception occurs when using NoneToken.");
+                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using NoneToken.");
             }
 
-            return val;
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+
+            var value = GetValueFrom(context);
+
+            if (context is not null && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
+            {
+                if (!IsValidImpl(collection))
+                {
+                    UpdateVal(verifyVal, value);
+                }
+            }
+            else
+            {
+                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using NoneToken.");
+            }
+
+            return verifyVal;
+        }
+
+        private bool IsValidImpl(ICollection collection)
+        {
+            return !collection.Cast<object>().Any(one => _func.Invoke(one));
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)

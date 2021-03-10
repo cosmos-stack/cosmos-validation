@@ -22,12 +22,9 @@ namespace Cosmos.Validation.Internals.Tokens
 
         public abstract int[] MutuallyExclusiveFlags { get; }
 
-        protected abstract CorrectVerifyVal ValidValueImpl(object value);
+        public abstract CorrectVerifyVal Valid(VerifiableObjectContext context);
 
-        public virtual CorrectVerifyVal ValidValue(VerifiableMemberContext context)
-        {
-            return ValidValueImpl(context.Value);
-        }
+        public abstract CorrectVerifyVal Valid(VerifiableMemberContext context);
 
         protected VerifiableMemberContract VerifiableMember { get; }
 
@@ -53,32 +50,42 @@ namespace Cosmos.Validation.Internals.Tokens
 
             return messageSinceToken;
         }
+
+        protected object GetValueFrom(VerifiableObjectContext context)
+        {
+            var memberContext = context?.GetValue(VerifiableMember.MemberName);
+            return memberContext?.GetValue();
+        }
+
+        protected object GetValueFrom(VerifiableMemberContext context)
+        {
+            return context?.GetValue();
+        }
+
+        protected bool ContainsMember(VerifiableObjectContext context)
+        {
+            if (context is null) return false;
+            return context.ContainsMember(VerifiableMember.MemberName);
+        }
     }
 
     internal abstract class ValueToken<TVal> : ValueToken, IValueToken<TVal>
     {
         protected ValueToken(VerifiableMemberContract contract) : base(contract) { }
 
-        protected abstract CorrectVerifyVal ValidValueImpl(TVal value);
-
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        protected new TVal GetValueFrom(VerifiableObjectContext context)
         {
-            if (value is TVal t)
-            {
-                return ValidValueImpl(t);
-            }
-
-            return CorrectVerifyVal.Success;
+            var memberContext = context?.GetValue(VerifiableMember.MemberName);
+            if (memberContext is null)
+                return default;
+            return memberContext.GetValue<TVal>();
         }
 
-        public override CorrectVerifyVal ValidValue(VerifiableMemberContext context)
+        protected new TVal GetValueFrom(VerifiableMemberContext context)
         {
-            if (context.Value is TVal t)
-            {
-                return ValidValueImpl(t);
-            }
-
-            return CorrectVerifyVal.Success;
+            if (context is null)
+                return default;
+            return context.GetValue<TVal>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cosmos.Collections;
 using Cosmos.Validation.Objects;
 
@@ -24,16 +25,32 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        protected override CorrectVerifyVal ValidValueImpl(object value)
+        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var val = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+           
+            var value = GetValueFrom(context);
 
             if (!_objects.Contains(value))
             {
-                UpdateVal(val, value);
+                UpdateVal(verifyVal, value);
             }
 
-            return val;
+            return verifyVal;
+        }
+
+        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        {
+            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+           
+            var value = GetValueFrom(context);
+
+            if (!_objects.Contains(value))
+            {
+                UpdateVal(verifyVal, value);
+            }
+
+            return verifyVal;
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)

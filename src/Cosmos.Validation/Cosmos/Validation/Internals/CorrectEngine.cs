@@ -48,7 +48,6 @@ namespace Cosmos.Validation.Internals
             var len = rules.Count;
             var failures = new List<VerifyFailure>();
             var nameOfExecutedRules = new List<string>();
-            var slaveResults = new List<VerifyResult>();
 
             for (var i = 0; i < len; i++)
             {
