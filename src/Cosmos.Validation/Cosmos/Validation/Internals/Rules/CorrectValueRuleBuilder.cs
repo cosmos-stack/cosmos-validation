@@ -202,41 +202,41 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
-        // public IValueRuleBuilder Matches(Func<object, Regex> regexFunc)
-        // {
-        //     CurrentToken = new ValueRegularExpressionToken(Contract, regexFunc);
-        //     return this;
-        // }
-        //
-        // public IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc)
-        // {
-        //     CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc);
-        //     return this;
-        // }
-        //
-        // public IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
-        // {
-        //     CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc, options);
-        //     return this;
-        // }
-        //
-        // public IValueRuleBuilder Matches(Expression<Func<object, Regex>> expression)
-        // {
-        //     CurrentToken = new ValueRegularExpressionToken(Contract, expression);
-        //     return this;
-        // }
-        //
-        // public IValueRuleBuilder Matches(Expression<Func<object, string>> expression)
-        // {
-        //     CurrentToken = new ValueRegularExpressionToken(Contract, expression);
-        //     return this;
-        // }
-        //
-        // public IValueRuleBuilder Matches(Expression<Func<object, string>> expression, RegexOptions options)
-        // {
-        //     CurrentToken = new ValueRegularExpressionToken(Contract, expression, options);
-        //     return this;
-        // }
+        public IValueRuleBuilder Matches(Func<object, Regex> regexFunc)
+        {
+            CurrentToken = new ValueRegularExpressionToken(Contract, regexFunc);
+            return this;
+        }
+
+        public IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc)
+        {
+            CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc);
+            return this;
+        }
+
+        public IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
+        {
+            CurrentToken = new ValueRegularExpressionToken(Contract, regexExpressionFunc, options);
+            return this;
+        }
+
+        public IValueRuleBuilder Matches(Expression<Func<object, Regex>> expression)
+        {
+            CurrentToken = new ValueRegularExpressionToken(Contract, expression);
+            return this;
+        }
+
+        public IValueRuleBuilder Matches(Expression<Func<object, string>> expression)
+        {
+            CurrentToken = new ValueRegularExpressionToken(Contract, expression);
+            return this;
+        }
+
+        public IValueRuleBuilder Matches(Expression<Func<object, string>> expression, RegexOptions options)
+        {
+            CurrentToken = new ValueRegularExpressionToken(Contract, expression, options);
+            return this;
+        }
 
         public IValueRuleBuilder Func(Func<object, CustomVerifyResult> func)
         {

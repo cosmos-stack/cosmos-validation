@@ -86,6 +86,19 @@ namespace CosmosValidationUT.ObjectUT
             return null;
         }
 
+        public bool ContainsMember(string memberName)
+        {
+            return memberName switch
+            {
+                "Name" => true,
+                "Length" => true,
+                "Width" => true,
+                "CreateTime" => true,
+                "Email" => true,
+                _ => false
+            };
+        }
+
         public IEnumerable<VerifiableMemberContract> GetMemberContracts()
         {
             return null;

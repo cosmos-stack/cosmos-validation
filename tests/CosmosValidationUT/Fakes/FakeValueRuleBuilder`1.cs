@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using Cosmos.Validation;
 using Cosmos.Validation.Objects;
@@ -137,6 +138,36 @@ namespace CosmosValidationUT.Fakes
         }
 
         public IValueRuleBuilder<T> Matches(string regexExpression, RegexOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Matches(Func<T, Regex> regexFunc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc, RegexOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Matches(Expression<Func<T, Regex>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Matches(Expression<Func<T, string>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Matches(Expression<Func<T, string>> expression, RegexOptions options)
         {
             throw new NotImplementedException();
         }

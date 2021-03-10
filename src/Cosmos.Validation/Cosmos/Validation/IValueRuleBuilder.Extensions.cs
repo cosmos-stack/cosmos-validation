@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 
@@ -84,7 +85,7 @@ namespace Cosmos.Validation
         }
 
         #endregion
-
+        
         #region WithMessage
 
         public static IValueRuleBuilder WithMessage(this IValueRuleBuilder builder, string message)

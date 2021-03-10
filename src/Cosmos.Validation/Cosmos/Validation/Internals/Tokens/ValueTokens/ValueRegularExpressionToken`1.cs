@@ -5,11 +5,11 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
-    internal class ValueRegularExpressionToken : ValueToken
+    internal class ValueRegularExpressionToken<T> : ValueToken
     {
         // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRegularExpressionToken";
-        readonly Func<object, Regex> _regexFunc;
+        public const string NAME = "GenericValueRegularExpressionToken";
+        readonly Func<T, Regex> _regexFunc;
 
         public ValueRegularExpressionToken(VerifiableMemberContract contract, string expression) : base(contract)
         {
@@ -26,37 +26,37 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _regexFunc = x => CreateRegex(expression, options);
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<T, string> expressionFunc) : base(contract)
         {
             _regexFunc = x => CreateRegex(expressionFunc(x));
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, Regex> regexFunc) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<T, Regex> regexFunc) : base(contract)
         {
             _regexFunc = regexFunc;
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<object, string> expressionFunc, RegexOptions options) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<T, string> expressionFunc, RegexOptions options) : base(contract)
         {
             _regexFunc = x => CreateRegex(expressionFunc(x), options);
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<T, string>> expression) : base(contract)
         {
             _regexFunc = x => CreateRegex(PropertyValueGetter.Get(expression, x));
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, Regex>> expression) : base(contract)
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<T, Regex>> expression) : base(contract)
         {
             _regexFunc = expression.Compile();
         }
-        
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression, RegexOptions options) : base(contract)
+
+        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<T, string>> expression, RegexOptions options) : base(contract)
         {
             _regexFunc = x => CreateRegex(PropertyValueGetter.Get(expression, x), options);
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.RegularExpression;
+        public override CorrectValueOps Ops => CorrectValueOps.RegularExpression_T1;
 
         public override string TokenName => NAME;
 
@@ -76,7 +76,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             }
             else
             {
-                var regex = _regexFunc(context.Instance);
+                var regex = _regexFunc((T) context.Instance);
 
                 if (regex is null || value is null || !regex.IsMatch((string) value))
                 {
@@ -99,7 +99,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             }
             else
             {
-                var regex = _regexFunc(context.GetParentInstance());
+                var regex = _regexFunc(context.GetParentInstance<T>());
 
                 if (regex is null || value is null || !regex.IsMatch((string) value))
                 {

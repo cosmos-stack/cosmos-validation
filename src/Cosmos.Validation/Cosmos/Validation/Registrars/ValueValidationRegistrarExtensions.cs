@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Cosmos.Validation.Registrars
 {
@@ -87,12 +88,23 @@ namespace Cosmos.Validation.Registrars
 
         #region Matches
 
-        // public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> builder, Expression<Func<T, string>> expression)
-        // {
-        //     var current = builder._impl().ExposeValueRuleBuilder2();
-        //     var regexExpression = PropertyValueGetter.Get(expression, current.CorrespondingInstance);
-        //     return current.Matches();
-        // }
+        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Expression<Func<object, string>> expression)
+        {
+            registrar._impl().ExposeValueRuleBuilder().Matches(expression);
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Expression<Func<T, string>> expression)
+        {
+            registrar._impl().ExposeValueRuleBuilder().Matches(expression);
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Expression<Func<T, string>> expression)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().Matches(expression);
+            return registrar;
+        }
 
         #endregion
 
