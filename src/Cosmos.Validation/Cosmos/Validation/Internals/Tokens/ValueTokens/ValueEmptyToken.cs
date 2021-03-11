@@ -25,7 +25,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -39,7 +39,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -63,10 +63,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     return true;
             }
 
-            if (Equals(value, VerifiableMember.GetDefaultValue(value)))
-                return true;
-
-            return false;
+            return Equals(value, VerifiableMember.GetDefaultValue());
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)
