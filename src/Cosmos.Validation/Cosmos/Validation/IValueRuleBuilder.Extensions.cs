@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Cosmos.Validation.Internals.Rules;
@@ -56,18 +57,26 @@ namespace Cosmos.Validation
         }
 
         public static IValueRuleBuilder<T, TItem[]> NotAny<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
-            => builder.All(func);
+        {
+            return builder.All(func);
+        }
 
         public static IValueRuleBuilder<T, TVal> NotAny<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
-            => builder.All(func);
+        {
+            return builder.All(func);
+        }
 
         public static IValueRuleBuilder<T, TItem[]> NotAll<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
-            => builder.Any(func);
+        {
+            return builder.Any(func);
+        }
 
         public static IValueRuleBuilder<T, TVal> NotAll<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
-            => builder.Any(func);
+        {
+            return builder.Any(func);
+        }
 
         public static IValueRuleBuilder<T, TItem[]> None<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
@@ -85,7 +94,43 @@ namespace Cosmos.Validation
         }
 
         #endregion
-        
+
+        #region In/NotIn
+
+        public static IValueRuleBuilder<T, TVal> In<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, ICollection<TItem> collection)
+            where TVal : IEnumerable<TItem>
+        {
+            var current = builder._impl();
+            current.CurrentToken = new ValueInToken<TVal, TItem>(current.Contract, collection);
+            return builder;
+        }
+
+        public static IValueRuleBuilder<T, TVal> In<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, params TItem[] objects)
+            where TVal : IEnumerable<TItem>
+        {
+            var current = builder._impl();
+            current.CurrentToken = new ValueInToken<TVal, TItem>(current.Contract, objects);
+            return builder;
+        }
+
+        public static IValueRuleBuilder<T, TVal> NotIn<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, ICollection<TItem> collection)
+            where TVal : IEnumerable<TItem>
+        {
+            var current = builder._impl();
+            current.CurrentToken = new ValueNotInToken<TVal, TItem>(current.Contract, collection);
+            return builder;
+        }
+
+        public static IValueRuleBuilder<T, TVal> NotIn<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, params TItem[] objects)
+            where TVal : IEnumerable<TItem>
+        {
+            var current = builder._impl();
+            current.CurrentToken = new ValueNotInToken<TVal, TItem>(current.Contract, objects);
+            return builder;
+        }
+
+        #endregion
+
         #region WithMessage
 
         public static IValueRuleBuilder WithMessage(this IValueRuleBuilder builder, string message)

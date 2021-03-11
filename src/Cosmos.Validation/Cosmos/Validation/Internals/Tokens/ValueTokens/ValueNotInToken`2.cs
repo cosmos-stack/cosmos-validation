@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Collections;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
-    internal class ValueInToken : ValueToken
+    internal class ValueNotInToken<TVal, TItem> : ValueToken<TVal>
+        where TVal : IEnumerable<TItem>
     {
         // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueInToken";
+        public const string NAME = "GenericValueInToken";
 
-        private readonly ICollection<object> _objects;
+        private readonly ICollection<TItem> _objects;
 
-        public ValueInToken(VerifiableMemberContract contract, ICollection<object> objects) : base(contract)
+        public ValueNotInToken(VerifiableMemberContract contract, ICollection<TItem> objects) : base(contract)
         {
-            _objects = objects ?? Arrays.Empty<object>();
+            _objects = objects ?? Arrays.Empty<TItem>();
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.In;
+        public override CorrectValueOps Ops => CorrectValueOps.NotIn_T2;
 
         public override string TokenName => NAME;
 
@@ -33,7 +32,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
            
             var value = GetValueFrom(context);
 
-            if (!IsValidImpl(value))
+            if(!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
             }
@@ -47,32 +46,24 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
            
             var value = GetValueFrom(context);
 
-            if (!IsValidImpl(value))
+            if(!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
             }
 
             return verifyVal;
         }
-
-        private bool IsValidImpl(object value)
+        
+        private bool IsValidImpl(IEnumerable<TItem> items)
         {
-            if (value is ICollection collection)
-            {
-                if (collection.Cast<object>().Any(item => _objects.Contains(item)))
-                {
-                    return true;
-                }
-            }
-
-            return _objects.Contains(value);
+            return items.All(item => !_objects.Contains(item));
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage("The value is not contained in the given value array or collection.");
+            val.ErrorMessage = MergeMessage("The value is contained in the given value array or collection.");
         }
 
         public override string ToString() => NAME;

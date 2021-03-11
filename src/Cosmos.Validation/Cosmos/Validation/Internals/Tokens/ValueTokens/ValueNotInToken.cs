@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Cosmos.Collections;
 using Cosmos.Validation.Objects;
 
@@ -26,11 +28,11 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
-            if (_objects.Contains(value))
+            if (!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
             }
@@ -40,16 +42,29 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
-            if (_objects.Contains(value))
+            if (!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
             }
 
             return verifyVal;
+        }
+
+        private bool IsValidImpl(object value)
+        {
+            if (value is ICollection collection)
+            {
+                if (collection.Cast<object>().Any(item => _objects.Contains(item)))
+                {
+                    return false;
+                }
+            }
+
+            return !_objects.Contains(value);
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)
