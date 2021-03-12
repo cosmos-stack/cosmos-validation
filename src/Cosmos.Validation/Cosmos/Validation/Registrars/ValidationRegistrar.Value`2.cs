@@ -189,54 +189,6 @@ namespace Cosmos.Validation.Registrars
             return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
         }
 
-        // public new IValueFluentValidationRegistrar<T, TVal> Any(Func<object, bool> func)
-        // {
-        //     ValueRuleBuilder.Any(func);
-        //     return this;
-        // }
-        //
-        // public new IValueFluentValidationRegistrar<T, TVal> All(Func<object, bool> func)
-        // {
-        //     ValueRuleBuilder.All(func);
-        //     return this;
-        // }
-        //
-        // public new IValueFluentValidationRegistrar<T, TVal> NotAny(Func<object, bool> func)
-        // {
-        //     ValueRuleBuilder.NotAny(func);
-        //     return this;
-        // }
-        //
-        // public new IValueFluentValidationRegistrar<T, TVal> NotAll(Func<object, bool> func)
-        // {
-        //     ValueRuleBuilder.NotAll(func);
-        //     return this;
-        // }
-
-        public IValueFluentValidationRegistrar<T, TVal> In(ICollection<TVal> collection)
-        {
-            ValueRuleBuilder.In(collection);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar<T, TVal> In(params TVal[] objects)
-        {
-            ValueRuleBuilder.In(objects);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar<T, TVal> NotIn(ICollection<TVal> collection)
-        {
-            ValueRuleBuilder.NotIn(collection);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar<T, TVal> NotIn(params TVal[] objects)
-        {
-            ValueRuleBuilder.NotIn(objects);
-            return this;
-        }
-
         public new IValueFluentValidationRegistrar<T, TVal> InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);

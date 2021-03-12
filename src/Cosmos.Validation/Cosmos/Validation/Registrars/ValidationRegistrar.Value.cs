@@ -204,55 +204,7 @@ namespace Cosmos.Validation.Registrars
         {
             return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
         }
-
-        public IValueFluentValidationRegistrar Any(Func<object, bool> func)
-        {
-            ValueRuleBuilder.Any(func);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar All(Func<object, bool> func)
-        {
-            ValueRuleBuilder.All(func);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotAny(Func<object, bool> func)
-        {
-            ValueRuleBuilder.NotAny(func);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotAll(Func<object, bool> func)
-        {
-            ValueRuleBuilder.NotAll(func);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar In(ICollection<object> collection)
-        {
-            ValueRuleBuilder.In(collection);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar In(params object[] objects)
-        {
-            ValueRuleBuilder.In(objects);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotIn(ICollection<object> collection)
-        {
-            ValueRuleBuilder.NotIn(collection);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotIn(params object[] objects)
-        {
-            ValueRuleBuilder.NotIn(objects);
-            return this;
-        }
-
+        
         public IValueFluentValidationRegistrar InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);

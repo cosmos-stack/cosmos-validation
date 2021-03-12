@@ -43,14 +43,6 @@ namespace Cosmos.Validation.Registrars
         IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate);
         IValueFluentValidationRegistrar Must(Func<object, CustomVerifyResult> func);
         IWaitForMessageValidationRegistrar Must(Func<object, bool> func);
-        IValueFluentValidationRegistrar Any(Func<object, bool> func);
-        IValueFluentValidationRegistrar All(Func<object, bool> func);
-        IValueFluentValidationRegistrar NotAny(Func<object, bool> func);
-        IValueFluentValidationRegistrar NotAll(Func<object, bool> func);
-        IValueFluentValidationRegistrar In(ICollection<object> collection);
-        IValueFluentValidationRegistrar In(params object[] objects);
-        IValueFluentValidationRegistrar NotIn(ICollection<object> collection);
-        IValueFluentValidationRegistrar NotIn(params object[] objects);
         IValueFluentValidationRegistrar InEnum(Type enumType);
         IValueFluentValidationRegistrar InEnum<TEnum>();
         IValueFluentValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
@@ -137,22 +129,6 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T> Must(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T> Must(Func<object, bool> func);
-
-        // IValueFluentValidationRegistrar<T> Any(Func<object, bool> func);
-        //
-        // IValueFluentValidationRegistrar<T> All(Func<object, bool> func);
-        //
-        // IValueFluentValidationRegistrar<T> NotAny(Func<object, bool> func);
-        //
-        // IValueFluentValidationRegistrar<T> NotAll(Func<object, bool> func);
-
-        IValueFluentValidationRegistrar<T> In(ICollection<object> collection);
-
-        IValueFluentValidationRegistrar<T> In(params object[] objects);
-
-        IValueFluentValidationRegistrar<T> NotIn(ICollection<object> collection);
-
-        IValueFluentValidationRegistrar<T> NotIn(params object[] objects);
 
         IValueFluentValidationRegistrar<T> InEnum(Type enumType);
 
@@ -253,14 +229,6 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T, TVal> Must(Func<TVal, bool> func);
-
-        IValueFluentValidationRegistrar<T, TVal> In(ICollection<TVal> collection);
-
-        IValueFluentValidationRegistrar<T, TVal> In(params TVal[] objects);
-
-        IValueFluentValidationRegistrar<T, TVal> NotIn(ICollection<TVal> collection);
-
-        IValueFluentValidationRegistrar<T, TVal> NotIn(params TVal[] objects);
 
         new IValueFluentValidationRegistrar<T, TVal> InEnum(Type enumType);
 

@@ -9,7 +9,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         where TVal : IEnumerable<TItem>
     {
         // ReSharper disable once InconsistentNaming
-        public const string NAME = "GenericValueInToken";
+        public const string NAME = "GenericValueInToken2";
 
         private readonly ICollection<TItem> _objects;
 

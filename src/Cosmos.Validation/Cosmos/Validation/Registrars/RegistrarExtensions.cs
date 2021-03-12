@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Cosmos.Validation.Registrars
+﻿namespace Cosmos.Validation.Registrars
 {
     internal static class RegistrarExtensions
     {
@@ -20,76 +17,9 @@ namespace Cosmos.Validation.Registrars
             return (ValueValidationRegistrar) builder;
         }
     }
-    
+
     public static partial class ValueValidationRegistrarExtensions
     {
-        
-
-        #region Any/All/NotAny/NotAll/None
-
-        public static IValueFluentValidationRegistrar<T, TItem[]> Any<T, TItem>(this IValueFluentValidationRegistrar<T, TItem[]> registrar, Func<TItem, bool> func)
-        {
-            registrar._impl().ExposeValueRuleBuilder2().Any(func);
-            return registrar;
-        }
-
-        public static IValueFluentValidationRegistrar<T, TVal> Any<T, TVal, TItem>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<TItem, bool> func)
-            where TVal : ICollection<TItem>
-        {
-            registrar._impl().ExposeValueRuleBuilder2().Any(func);
-            return registrar;
-        }
-
-        public static IValueFluentValidationRegistrar<T, TItem[]> All<T, TItem>(this IValueFluentValidationRegistrar<T, TItem[]> registrar, Func<TItem, bool> func)
-        {
-            registrar._impl().ExposeValueRuleBuilder2().All(func);
-            return registrar;
-        }
-
-        public static IValueFluentValidationRegistrar<T, TVal> All<T, TVal, TItem>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<TItem, bool> func)
-            where TVal : ICollection<TItem>
-        {
-            registrar._impl().ExposeValueRuleBuilder2().All(func);
-            return registrar;
-        }
-
-        public static IValueFluentValidationRegistrar<T, TItem[]> NotAny<T, TItem>(this IValueFluentValidationRegistrar<T, TItem[]> registrar, Func<TItem, bool> func)
-        {
-            return registrar.All(func);
-        }
-
-        public static IValueFluentValidationRegistrar<T, TVal> NotAny<T, TVal, TItem>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<TItem, bool> func)
-            where TVal : ICollection<TItem>
-        {
-            return registrar.All(func);
-        }
-
-        public static IValueFluentValidationRegistrar<T, TItem[]> NotAll<T, TItem>(this IValueFluentValidationRegistrar<T, TItem[]> registrar, Func<TItem, bool> func)
-        {
-            return registrar.Any(func);
-        }
-
-        public static IValueFluentValidationRegistrar<T, TVal> NotAll<T, TVal, TItem>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<TItem, bool> func)
-            where TVal : ICollection<TItem>
-        {
-            return registrar.Any(func);
-        }
-
-        public static IValueFluentValidationRegistrar<T, TItem[]> None<T, TItem>(this IValueFluentValidationRegistrar<T, TItem[]> registrar, Func<TItem, bool> func)
-        {
-            registrar._impl().ExposeValueRuleBuilder2().None(func);
-            return registrar;
-        }
-
-        public static IValueFluentValidationRegistrar<T, TVal> None<T, TVal, TItem>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<TItem, bool> func)
-            where TVal : ICollection<TItem>
-        {
-            registrar._impl().ExposeValueRuleBuilder2().None(func);
-            return registrar;
-        }
-
-        #endregion
-
         #region WithMessage
 
         public static IValueFluentValidationRegistrar WithMessage(this IValueFluentValidationRegistrar registrar, string message)

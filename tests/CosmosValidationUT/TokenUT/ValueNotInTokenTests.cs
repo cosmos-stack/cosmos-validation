@@ -12,7 +12,7 @@ namespace CosmosValidationUT.TokenUT
     public class ValueNotInTokenTests
     {
         [Fact]
-        public void AunnCoo_List_For_InToken_And_ShouldBeValid()
+        public void AunnCoo_List_For_NotInToken_And_ShouldBeValid()
         {
             var model = new AunnCoo
             {
@@ -30,7 +30,7 @@ namespace CosmosValidationUT.TokenUT
         }
 
         [Fact]
-        public void AunnCoo_List_For_InToken_And_ShouldBeInvalid()
+        public void AunnCoo_List_For_NotInToken_And_ShouldBeInvalid()
         {
             var model = new AunnCoo
             {
@@ -48,7 +48,7 @@ namespace CosmosValidationUT.TokenUT
         }
 
         [Fact]
-        public void AunnCoo_One_For_InToken_And_ShouldBeValid()
+        public void AunnCoo_One_For_NotInToken_And_ShouldBeValid()
         {
             var model = new AunnCoo
             {
@@ -59,14 +59,14 @@ namespace CosmosValidationUT.TokenUT
             var member = context.GetValue("Name");
             var contract = member.ExposeContract();
 
-            var token = new ValueNotInToken(contract, new List<object> {"Bad", "Duo", "Long", "N"});
+            var token = new ValueNotInToken(contract, new List<object> {"Bad", "Duo", "Long", "Niu"});
 
             token.Valid(context).IsSuccess.ShouldBeTrue();
             token.Valid(member).IsSuccess.ShouldBeTrue();
         }
 
         [Fact]
-        public void AunnCoo_One_For_InToken_And_ShouldBeInvalid()
+        public void AunnCoo_One_For_NotInToken_And_ShouldBeInvalid()
         {
             var model = new AunnCoo
             {
@@ -77,14 +77,14 @@ namespace CosmosValidationUT.TokenUT
             var member = context.GetValue("Name");
             var contract = member.ExposeContract();
 
-            var token = new ValueNotInToken(contract, new List<object> {"Nice", "Duo", "Long"});
+            var token = new ValueNotInToken(contract, new List<object> {"Nice", "Duo", "Long", "N"});
 
             token.Valid(context).IsSuccess.ShouldBeFalse();
             token.Valid(member).IsSuccess.ShouldBeFalse();
         }
 
         [Fact]
-        public void AunnCoo_List_For_GenericInToken_And_ShouldBeValid()
+        public void AunnCoo_List_For_GenericNotInToken_And_ShouldBeValid()
         {
             var model = new AunnCoo
             {
@@ -102,7 +102,7 @@ namespace CosmosValidationUT.TokenUT
         }
 
         [Fact]
-        public void AunnCoo_List_For_GenericInToken_And_ShouldBeInvalid()
+        public void AunnCoo_List_For_GenericNotInToken_And_ShouldBeInvalid()
         {
             var model = new AunnCoo
             {
@@ -120,7 +120,7 @@ namespace CosmosValidationUT.TokenUT
         }
 
         [Fact]
-        public void AunnCoo_One_For_GenericInToken_And_ShouldBeValid()
+        public void AunnCoo_One_For_GenericNotInToken_And_ShouldBeValid()
         {
             var model = new AunnCoo
             {
@@ -138,7 +138,7 @@ namespace CosmosValidationUT.TokenUT
         }
 
         [Fact]
-        public void AunnCoo_One_For_GenericInToken_And_ShouldBeInvalid()
+        public void AunnCoo_One_For_GenericNotInToken_And_ShouldBeInvalid()
         {
             var model = new AunnCoo
             {
