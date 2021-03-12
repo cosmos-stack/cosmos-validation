@@ -29,7 +29,7 @@ namespace Cosmos.Validation
         public static IValueRuleBuilder<T, TItem[]> Any<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueAnyToken<TItem[], TItem>(current.Contract, func);
+            current.CurrentToken = new ValueAnyToken<TItem[], TItem>(current._contract, func);
             return builder;
         }
 
@@ -37,14 +37,14 @@ namespace Cosmos.Validation
             where TVal : ICollection<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueAnyToken<TVal, TItem>(current.Contract, func);
+            current.CurrentToken = new ValueAnyToken<TVal, TItem>(current._contract, func);
             return builder;
         }
 
         public static IValueRuleBuilder<T, TItem[]> All<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueAllToken<TItem[], TItem>(current.Contract, func);
+            current.CurrentToken = new ValueAllToken<TItem[], TItem>(current._contract, func);
             return builder;
         }
 
@@ -52,7 +52,7 @@ namespace Cosmos.Validation
             where TVal : ICollection<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueAllToken<TVal, TItem>(current.Contract, func);
+            current.CurrentToken = new ValueAllToken<TVal, TItem>(current._contract, func);
             return builder;
         }
 
@@ -81,7 +81,7 @@ namespace Cosmos.Validation
         public static IValueRuleBuilder<T, TItem[]> None<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueNoneToken<TItem[], TItem>(current.Contract, func);
+            current.CurrentToken = new ValueNoneToken<TItem[], TItem>(current._contract, func);
             return builder;
         }
 
@@ -89,7 +89,7 @@ namespace Cosmos.Validation
             where TVal : ICollection<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueNoneToken<TVal, TItem>(current.Contract, func);
+            current.CurrentToken = new ValueNoneToken<TVal, TItem>(current._contract, func);
             return builder;
         }
 
@@ -101,7 +101,7 @@ namespace Cosmos.Validation
             where TVal : IEnumerable<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueInToken<TVal, TItem>(current.Contract, collection);
+            current.CurrentToken = new ValueInToken<TVal, TItem>(current._contract, collection);
             return builder;
         }
 
@@ -109,7 +109,7 @@ namespace Cosmos.Validation
             where TVal : IEnumerable<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueInToken<TVal, TItem>(current.Contract, objects);
+            current.CurrentToken = new ValueInToken<TVal, TItem>(current._contract, objects);
             return builder;
         }
 
@@ -117,7 +117,7 @@ namespace Cosmos.Validation
             where TVal : IEnumerable<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueNotInToken<TVal, TItem>(current.Contract, collection);
+            current.CurrentToken = new ValueNotInToken<TVal, TItem>(current._contract, collection);
             return builder;
         }
 
@@ -125,7 +125,7 @@ namespace Cosmos.Validation
             where TVal : IEnumerable<TItem>
         {
             var current = builder._impl();
-            current.CurrentToken = new ValueNotInToken<TVal, TItem>(current.Contract, objects);
+            current.CurrentToken = new ValueNotInToken<TVal, TItem>(current._contract, objects);
             return builder;
         }
 

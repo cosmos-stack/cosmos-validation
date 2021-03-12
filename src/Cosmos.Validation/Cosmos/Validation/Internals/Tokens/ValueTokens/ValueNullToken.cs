@@ -11,7 +11,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public ValueNullToken(VerifiableMemberContract contract) : base(contract) { }
 
-        public override CorrectValueOps Ops => CorrectValueOps.NotNull;
+        public override CorrectValueOps Ops => CorrectValueOps.Null;
 
         public override string TokenName => NAME;
 
@@ -21,7 +21,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -35,7 +35,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 

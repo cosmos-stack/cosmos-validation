@@ -67,6 +67,11 @@ namespace Cosmos.Validation.Internals.Tokens
             if (context is null) return false;
             return context.ContainsMember(VerifiableMember.MemberName);
         }
+
+        protected CorrectVerifyVal CreateVerifyVal()
+        {
+            return new CorrectVerifyVal {NameOfExecutedRule = TokenName};
+        } 
     }
 
     internal abstract class ValueToken<TVal> : ValueToken, IValueToken<TVal>

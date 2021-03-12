@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Cosmos.Exceptions;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
@@ -25,8 +26,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
-            
+            var verifyVal = CreateVerifyVal();
+
             var value = GetValueFrom(context);
 
             if (!IsValidImpl(value, out var message))
@@ -37,8 +38,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
-            
+            var verifyVal = CreateVerifyVal();
+
             var value = GetValueFrom(context);
 
             if (!IsValidImpl(value, out var message))
@@ -50,19 +51,19 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private bool IsValidImpl(object value, out string message)
         {
             message = null;
-            
-            if (value is null) 
+
+            if (value is null)
                 return true;
 
             var enumType = Nullable.GetUnderlyingType(_enumType) ?? _enumType;
 
-            if (!enumType.IsEnum) 
+            if (!enumType.IsEnum)
                 return false;
 
             if (enumType.GetCustomAttribute<FlagsAttribute>() is not null)
                 return IsFlagsEnumDefined(enumType, value, out message);
 
-            return Enum.IsDefined(enumType, value);
+            return Try.Create(() => Enum.IsDefined(enumType, value)).IsSuccess;
         }
 
         private static bool IsFlagsEnumDefined(Type enumType, object value, out string message)

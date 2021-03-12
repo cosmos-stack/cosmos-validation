@@ -5,13 +5,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     internal class ValueNotNullToken : ValueToken
     {
         // ReSharper disable once InconsistentNaming
-        public const string NAME = "NullValueToken";
+        public const string NAME = "NotNullValueToken";
 
         public static int[] _mutuallyExclusiveFlags = {90111, 90112, 90113, 90114};
 
         public ValueNotNullToken(VerifiableMemberContract contract) : base(contract) { }
 
-        public override CorrectValueOps Ops => CorrectValueOps.Null;
+        public override CorrectValueOps Ops => CorrectValueOps.NotNull;
 
         public override string TokenName => NAME;
 
@@ -21,7 +21,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -35,7 +35,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 

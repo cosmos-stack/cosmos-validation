@@ -65,7 +65,7 @@ namespace Cosmos.Validation.Objects
 
         public object GetValue() => Value;
 
-        public TVal GetValue<TVal>() => Value.CastTo<TVal>();
+        public TVal GetValue<TVal>() => (TVal) Value; //.CastTo<TVal>();
 
         #endregion
 
@@ -142,6 +142,8 @@ namespace Cosmos.Validation.Objects
         #endregion
 
         #region Expose
+
+        internal VerifiableMemberContract ExposeContract() => _contract;
 
         internal ICustomVerifiableMemberContractImpl ExposeInternalImpl() => _contract.ExposeInternalImpl();
 

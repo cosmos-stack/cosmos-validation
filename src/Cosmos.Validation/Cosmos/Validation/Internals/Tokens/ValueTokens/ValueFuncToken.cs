@@ -24,34 +24,36 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
-           
+            var verifyVal = CreateVerifyVal();
+
             var value = GetValueFrom(context);
 
-            var result = _func.Invoke(value);
-
-            if (result is not null && !result.VerifyResult)
+            if (!IsValidImpl(value, out var result))
             {
-                UpdateVal(verifyVal, value, result.ErrorMessage);
+                UpdateVal(verifyVal, value, result?.ErrorMessage);
             }
-
+            
             return verifyVal;
         }
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
-            
+            var verifyVal = CreateVerifyVal();
+
             var value = GetValueFrom(context);
 
-            var result = _func.Invoke(value);
-
-            if (result is not null && !result.VerifyResult)
+            if (!IsValidImpl(value, out var result))
             {
-                UpdateVal(verifyVal, value, result.ErrorMessage);
+                UpdateVal(verifyVal, value, result?.ErrorMessage);
             }
 
             return verifyVal;
+        }
+
+        private bool IsValidImpl(object value, out CustomVerifyResult result)
+        {
+            result = _func.Invoke(value);
+            return result?.VerifyResult ?? false;
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj, string message)
