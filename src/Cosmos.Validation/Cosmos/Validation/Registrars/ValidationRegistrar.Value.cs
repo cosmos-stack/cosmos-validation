@@ -57,37 +57,7 @@ namespace Cosmos.Validation.Registrars
         #endregion
 
         #region ValueRules
-
-        public IValueFluentValidationRegistrar Empty()
-        {
-            ValueRuleBuilder.Empty();
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotEmpty()
-        {
-            ValueRuleBuilder.NotEmpty();
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar Required()
-        {
-            ValueRuleBuilder.Required();
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar Null()
-        {
-            ValueRuleBuilder.Null();
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotNull()
-        {
-            ValueRuleBuilder.NotNull();
-            return this;
-        }
-
+        
         public IValueFluentValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval)
         {
             ValueRuleBuilder.Range(from, to, options);
@@ -130,54 +100,6 @@ namespace Cosmos.Validation.Registrars
             return this;
         }
 
-        public IValueFluentValidationRegistrar Equal(object value)
-        {
-            ValueRuleBuilder.Equal(value);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar Equal(object value, IEqualityComparer comparer)
-        {
-            ValueRuleBuilder.Equal(value, comparer);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotEqual(object value)
-        {
-            ValueRuleBuilder.NotEqual(value);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar NotEqual(object value, IEqualityComparer comparer)
-        {
-            ValueRuleBuilder.NotEqual(value, comparer);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar LessThan(object value)
-        {
-            ValueRuleBuilder.LessThan(value);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar LessThanOrEqual(object value)
-        {
-            ValueRuleBuilder.LessThanOrEqual(value);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar GreaterThan(object value)
-        {
-            ValueRuleBuilder.GreaterThan(value);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar GreaterThanOrEqual(object value)
-        {
-            ValueRuleBuilder.GreaterThanOrEqual(value);
-            return this;
-        }
-        
         public IValueFluentValidationRegistrar Func(Func<object, CustomVerifyResult> func)
         {
             ValueRuleBuilder.Func(func);
@@ -234,19 +156,7 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder.ScalePrecision(scale, precision, ignoreTrailingZeros);
             return this;
         }
-
-        public IValueFluentValidationRegistrar RequiredType(Type type)
-        {
-            ValueRuleBuilder.RequiredType(type);
-            return this;
-        }
-
-        public IValueFluentValidationRegistrar RequiredTypes(params Type[] types)
-        {
-            ValueRuleBuilder.RequiredTypes(types);
-            return this;
-        }
-
+        
         public IValueFluentValidationRegistrar RequiredTypes<T1>()
         {
             ValueRuleBuilder.RequiredTypes<T1>();
