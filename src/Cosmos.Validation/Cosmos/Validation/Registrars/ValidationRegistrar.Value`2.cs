@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using Cosmos.Validation.Internals.Rules;
 using Cosmos.Validation.Objects;
 
@@ -162,43 +161,7 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder.GreaterThanOrEqual(value);
             return this;
         }
-
-        public new IValueFluentValidationRegistrar<T, TVal> Matches(Regex regex)
-        {
-            ValueRuleBuilder.Matches(regex);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> Matches(string regexExpression)
-        {
-            ValueRuleBuilder.Matches(regexExpression);
-            return this;
-        }
-
-        public new IValueFluentValidationRegistrar<T, TVal> Matches(string regexExpression, RegexOptions options)
-        {
-            ValueRuleBuilder.Matches(regexExpression, options);
-            return this;
-        }
-
-        // public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, Regex> regexFunc)
-        // {
-        //     ValueRuleBuilder.Matches(regexFunc);
-        //     return this;
-        // }
-        //
-        // public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc)
-        // {
-        //     ValueRuleBuilder.Matches(regexExpressionFunc);
-        //     return this;
-        // }
-        //
-        // public new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
-        // {
-        //     ValueRuleBuilder.Matches(regexExpressionFunc, options);
-        //     return this;
-        // }
-
+        
         public IValueFluentValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func)
         {
             ValueRuleBuilderPtr.Func(func);

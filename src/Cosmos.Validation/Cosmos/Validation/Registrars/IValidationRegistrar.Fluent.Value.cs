@@ -38,12 +38,6 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar LessThanOrEqual(object value);
         IValueFluentValidationRegistrar GreaterThan(object value);
         IValueFluentValidationRegistrar GreaterThanOrEqual(object value);
-        IValueFluentValidationRegistrar Matches(Regex regex);
-        IValueFluentValidationRegistrar Matches(string regexExpression);
-        IValueFluentValidationRegistrar Matches(string regexExpression, RegexOptions options);
-        // IValueFluentValidationRegistrar Matches(Func<object, Regex> regexFunc);
-        // IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc);
-        // IValueFluentValidationRegistrar Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
         IValueFluentValidationRegistrar Func(Func<object, CustomVerifyResult> func);
         IWaitForMessageValidationRegistrar Func(Func<object, bool> func);
         IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate);
@@ -133,18 +127,6 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T> GreaterThan(object value);
 
         IValueFluentValidationRegistrar<T> GreaterThanOrEqual(object value);
-
-        IValueFluentValidationRegistrar<T> Matches(Regex regex);
-
-        IValueFluentValidationRegistrar<T> Matches(string regexExpression);
-
-        IValueFluentValidationRegistrar<T> Matches(string regexExpression, RegexOptions options);
-
-        // IValueFluentValidationRegistrar<T> Matches(Func<object, Regex> regexFunc);
-        //
-        // IValueFluentValidationRegistrar<T> Matches(Func<object, string> regexExpressionFunc);
-        //
-        // IValueFluentValidationRegistrar<T> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
 
         IValueFluentValidationRegistrar<T> Func(Func<object, CustomVerifyResult> func);
 
@@ -261,18 +243,6 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T, TVal> GreaterThan(TVal value);
 
         IValueFluentValidationRegistrar<T, TVal> GreaterThanOrEqual(TVal value);
-
-        new IValueFluentValidationRegistrar<T, TVal> Matches(Regex regex);
-
-        new IValueFluentValidationRegistrar<T, TVal> Matches(string regexExpression);
-
-        new IValueFluentValidationRegistrar<T, TVal> Matches(string regexExpression, RegexOptions options);
-
-        // new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, Regex> regexFunc);
-        //
-        // new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc);
-        //
-        // new IValueFluentValidationRegistrar<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
 
         IValueFluentValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
 

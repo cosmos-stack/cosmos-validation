@@ -41,21 +41,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _regexFunc = x => CreateRegex(expressionFunc(x), options);
         }
 
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression) : base(contract)
-        {
-            _regexFunc = x => CreateRegex(PropertyValueGetter.Get(expression, x));
-        }
-
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, Regex>> expression) : base(contract)
-        {
-            _regexFunc = expression.Compile();
-        }
-        
-        public ValueRegularExpressionToken(VerifiableMemberContract contract, Expression<Func<object, string>> expression, RegexOptions options) : base(contract)
-        {
-            _regexFunc = x => CreateRegex(PropertyValueGetter.Get(expression, x), options);
-        }
-
         public override CorrectValueOps Ops => CorrectValueOps.RegularExpression;
 
         public override string TokenName => NAME;
@@ -66,7 +51,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -89,7 +74,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 

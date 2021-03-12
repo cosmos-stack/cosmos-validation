@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 using Cosmos.Validation.Objects;
@@ -27,181 +26,163 @@ namespace Cosmos.Validation.Internals.Rules
 
         public new IValueRuleBuilder<T, TVal> Empty()
         {
-            CurrentToken = new ValueEmptyToken(Contract);
+            CurrentToken = new ValueEmptyToken(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> NotEmpty()
         {
-            CurrentToken = new ValueNotEmptyToken(Contract);
+            CurrentToken = new ValueNotEmptyToken(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Required()
         {
-            CurrentToken = new ValueNotEmptyToken(Contract);
+            CurrentToken = new ValueNotEmptyToken(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Null()
         {
-            CurrentToken = new ValueNullToken(Contract);
+            CurrentToken = new ValueNullToken(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> NotNull()
         {
-            CurrentToken = new ValueNotNullToken(Contract);
+            CurrentToken = new ValueNotNullToken(_contract);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval)
         {
-            CurrentToken = new ValueRangeToken<TVal>(Contract, from, to, options);
+            CurrentToken = new ValueRangeToken<TVal>(_contract, from, to, options);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> RangeWithOpenInterval(TVal from, TVal to)
         {
-            CurrentToken = new ValueRangeToken<TVal>(Contract, from, to, RangeOptions.OpenInterval);
+            CurrentToken = new ValueRangeToken<TVal>(_contract, from, to, RangeOptions.OpenInterval);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> RangeWithCloseInterval(TVal from, TVal to)
         {
-            CurrentToken = new ValueRangeToken<TVal>(Contract, from, to, RangeOptions.CloseInterval);
+            CurrentToken = new ValueRangeToken<TVal>(_contract, from, to, RangeOptions.CloseInterval);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Length(int min, int max)
         {
-            CurrentToken = new ValueLengthLimitedToken(Contract, min, max);
+            CurrentToken = new ValueLengthLimitedToken(_contract, min, max);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> MinLength(int min)
         {
-            CurrentToken = new ValueMinLengthLimitedToken(Contract, min);
+            CurrentToken = new ValueMinLengthLimitedToken(_contract, min);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> MaxLength(int max)
         {
-            CurrentToken = new ValueMaxLengthLimitedToken(Contract, max);
+            CurrentToken = new ValueMaxLengthLimitedToken(_contract, max);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> AtLeast(int count)
         {
-            CurrentToken = new ValueMinLengthLimitedToken(Contract, count);
+            CurrentToken = new ValueMinLengthLimitedToken(_contract, count);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> Equal(TVal value)
         {
-            CurrentToken = new ValueEqualToken<TVal>(Contract, value, null);
+            CurrentToken = new ValueEqualToken<TVal>(_contract, value, null);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> Equal(TVal value, IEqualityComparer<TVal> comparer)
         {
-            CurrentToken = new ValueEqualToken<TVal>(Contract, value, comparer);
+            CurrentToken = new ValueEqualToken<TVal>(_contract, value, comparer);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> NotEqual(TVal value)
         {
-            CurrentToken = new ValueNotEqualToken<TVal>(Contract, value, null);
+            CurrentToken = new ValueNotEqualToken<TVal>(_contract, value, null);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> NotEqual(TVal value, IEqualityComparer<TVal> comparer)
         {
-            CurrentToken = new ValueNotEqualToken<TVal>(Contract, value, comparer);
+            CurrentToken = new ValueNotEqualToken<TVal>(_contract, value, comparer);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> LessThan(TVal value)
         {
-            CurrentToken = new ValueLessThanToken<TVal>(Contract, value);
+            CurrentToken = new ValueLessThanToken<TVal>(_contract, value);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value)
         {
-            CurrentToken = new ValueLessThanOrEqualToken<TVal>(Contract, value);
+            CurrentToken = new ValueLessThanOrEqualToken<TVal>(_contract, value);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> GreaterThan(TVal value)
         {
-            CurrentToken = new ValueGreaterThanToken<TVal>(Contract, value);
+            CurrentToken = new ValueGreaterThanToken<TVal>(_contract, value);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value)
         {
-            CurrentToken = new ValueGreaterThanOrEqualToken<TVal>(Contract, value);
+            CurrentToken = new ValueGreaterThanOrEqualToken<TVal>(_contract, value);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Matches(Regex regex)
         {
-            CurrentToken = new ValueRegularExpressionToken(Contract, regex);
+            CurrentToken = new ValueRegularExpressionToken(_contract, regex);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Matches(string regexExpression)
         {
-            CurrentToken = new ValueRegularExpressionToken(Contract, regexExpression);
+            CurrentToken = new ValueRegularExpressionToken(_contract, regexExpression);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options)
         {
-            CurrentToken = new ValueRegularExpressionToken(Contract, regexExpression, options);
+            CurrentToken = new ValueRegularExpressionToken(_contract, regexExpression, options);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc)
         {
-            CurrentToken = new ValueRegularExpressionToken<T>(Contract, regexFunc);
+            CurrentToken = new ValueRegularExpressionToken<T>(_contract, regexFunc);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc)
         {
-            CurrentToken = new ValueRegularExpressionToken<T>(Contract, regexExpressionFunc);
+            CurrentToken = new ValueRegularExpressionToken<T>(_contract, regexExpressionFunc);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options)
         {
-            CurrentToken = new ValueRegularExpressionToken<T>(Contract, regexExpressionFunc, options);
-            return this;
-        }
-
-        public new IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, Regex>> expression)
-        {
-            CurrentToken = new ValueRegularExpressionToken<T>(Contract, expression);
-            return this;
-        }
-
-        public new IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression)
-        {
-            CurrentToken = new ValueRegularExpressionToken<T>(Contract, expression);
-            return this;
-        }
-
-        public new IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression, RegexOptions options)
-        {
-            CurrentToken = new ValueRegularExpressionToken<T>(Contract, expression, options);
+            CurrentToken = new ValueRegularExpressionToken<T>(_contract, regexExpressionFunc, options);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func)
         {
-            CurrentToken = new ValueFuncToken<TVal>(Contract, func);
+            CurrentToken = new ValueFuncToken<TVal>(_contract, func);
             return this;
         }
 
@@ -217,7 +198,7 @@ namespace Cosmos.Validation.Internals.Rules
 
         public IValueRuleBuilder<T, TVal> Must(Func<TVal, CustomVerifyResult> func)
         {
-            CurrentToken = new ValueFuncToken<TVal>(Contract, func);
+            CurrentToken = new ValueFuncToken<TVal>(_contract, func);
             return this;
         }
 
@@ -228,163 +209,163 @@ namespace Cosmos.Validation.Internals.Rules
 
         public IValueRuleBuilder<T, TVal> In(ICollection<TVal> collection)
         {
-            CurrentToken = new ValueInToken<TVal>(Contract, collection);
+            CurrentToken = new ValueInToken<TVal>(_contract, collection);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> In(params TVal[] objects)
         {
-            CurrentToken = new ValueInToken<TVal>(Contract, objects);
+            CurrentToken = new ValueInToken<TVal>(_contract, objects);
             return this;
         }
-
+        
         public IValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection)
         {
-            CurrentToken = new ValueNotInToken<TVal>(Contract, collection);
+            CurrentToken = new ValueNotInToken<TVal>(_contract, collection);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> NotIn(params TVal[] objects)
         {
-            CurrentToken = new ValueInToken<TVal>(Contract, objects);
+            CurrentToken = new ValueInToken<TVal>(_contract, objects);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> InEnum(Type enumType)
         {
-            CurrentToken = new ValueEnumToken(Contract, enumType);
+            CurrentToken = new ValueEnumToken(_contract, enumType);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> InEnum<TEnum>()
         {
-            CurrentToken = new ValueEnumToken<TEnum>(Contract);
+            CurrentToken = new ValueEnumToken<TEnum>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> IsEnumName(Type enumType, bool caseSensitive)
         {
-            CurrentToken = new ValueStringEnumToken(Contract, enumType, caseSensitive);
+            CurrentToken = new ValueStringEnumToken(_contract, enumType, caseSensitive);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> IsEnumName<TEnum>(bool caseSensitive)
         {
-            CurrentToken = new ValueStringEnumToken<TEnum>(Contract, caseSensitive);
+            CurrentToken = new ValueStringEnumToken<TEnum>(_contract, caseSensitive);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
         {
-            CurrentToken = new ValueScalePrecisionToken(Contract, scale, precision, ignoreTrailingZeros);
+            CurrentToken = new ValueScalePrecisionToken(_contract, scale, precision, ignoreTrailingZeros);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredType(Type type)
         {
-            CurrentToken = new ValueRequiredTypeToken(Contract, type);
+            CurrentToken = new ValueRequiredTypeToken(_contract, type);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types)
         {
-            CurrentToken = new ValueRequiredTypesToken(Contract, types);
+            CurrentToken = new ValueRequiredTypesToken(_contract, types);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1>()
         {
-            CurrentToken = new ValueRequiredTypeToken<T1>(Contract);
+            CurrentToken = new ValueRequiredTypeToken<T1>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(_contract);
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
-            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Contract);
+            CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(_contract);
             return this;
         }
 
