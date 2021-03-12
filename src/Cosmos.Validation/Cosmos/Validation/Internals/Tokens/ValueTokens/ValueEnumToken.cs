@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Cosmos.Exceptions;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
@@ -63,7 +62,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             if (enumType.GetCustomAttribute<FlagsAttribute>() is not null)
                 return IsFlagsEnumDefined(enumType, value, out message);
 
-            return Try.Create(() => Enum.IsDefined(enumType, value)).IsSuccess;
+            if (!EnumsNET.Enums.IsValid(enumType, value, EnumsNET.EnumValidation.Default))
+                return false;
+
+            if (value.GetType() != enumType)
+                return false;
+
+            return Enum.IsDefined(enumType, value);
         }
 
         private static bool IsFlagsEnumDefined(Type enumType, object value, out string message)

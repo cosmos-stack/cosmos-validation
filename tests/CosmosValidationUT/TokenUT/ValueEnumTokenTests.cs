@@ -40,6 +40,21 @@ namespace CosmosValidationUT.TokenUT
         }
 
         [Fact]
+        public void AunnCoo_UndefinedEnum_For_EnumToken_And_ShouldBeInvalid()
+        {
+            var model = new AunnCoo {AunnClass = (AunnEnum) 100};
+
+            var context = VerifiableObjectContractManager.Resolve<AunnCoo>().WithInstance(model);
+            var member = context.GetValue("AunnClass");
+            var contract = member.ExposeContract();
+
+            var token = new ValueEnumToken(contract, typeof(AunnEnum2));
+
+            token.Valid(context).IsSuccess.ShouldBeFalse();
+            token.Valid(member).IsSuccess.ShouldBeFalse();
+        }
+
+        [Fact]
         public void AunnCoo_Enum_For_GenericEnumToken_And_ShouldBeValid()
         {
             var model = new AunnCoo {AunnClass = AunnEnum.One};
@@ -58,6 +73,21 @@ namespace CosmosValidationUT.TokenUT
         public void AunnCoo_Enum_For_GenericEnumToken_And_ShouldBeInvalid()
         {
             var model = new AunnCoo {AunnClass = AunnEnum.One};
+
+            var context = VerifiableObjectContractManager.Resolve<AunnCoo>().WithInstance(model);
+            var member = context.GetValue("AunnClass");
+            var contract = member.ExposeContract();
+
+            var token = new ValueEnumToken<AunnEnum2>(contract);
+
+            token.Valid(context).IsSuccess.ShouldBeFalse();
+            token.Valid(member).IsSuccess.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void AunnCoo_UndefinedEnum_For_GenericEnumToken_And_ShouldBeInvalid()
+        {
+            var model = new AunnCoo {AunnClass = (AunnEnum) 100};
 
             var context = VerifiableObjectContractManager.Resolve<AunnCoo>().WithInstance(model);
             var member = context.GetValue("AunnClass");
