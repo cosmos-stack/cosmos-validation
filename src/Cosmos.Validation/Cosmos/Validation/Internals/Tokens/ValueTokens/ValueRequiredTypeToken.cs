@@ -23,16 +23,16 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public override bool MutuallyExclusive => true;
 
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
-        
+
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
             if (!IsValidImpl(value))
             {
-                UpdateVal(verifyVal, value);
+                UpdateVal(verifyVal, GetValueFrom(context));
             }
 
             return verifyVal;
@@ -40,13 +40,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
             if (!IsValidImpl(value))
             {
-                UpdateVal(verifyVal, value);
+                UpdateVal(verifyVal, GetValueFrom(context));
             }
 
             return verifyVal;
@@ -54,29 +54,22 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private bool IsValidImpl(object value)
         {
-            var flag = false;
+            var realType = _getType();
 
-            if (VerifiableMember.MemberType == _type)
+            if (VerifiableMember.MemberType == _type || VerifiableMember.MemberType.IsDerivedFrom(_type))
+                return true;
+
+            if(realType is not null && (realType == _type || realType.IsDerivedFrom(_type)))
+                return true;
+
+            return false;
+
+            Type _getType()
             {
-                flag = true;
+                if (value is Type t)
+                    return t;
+                return value?.GetType();
             }
-
-            else if (value != null && VerifiableMember.MemberType == _type)
-            {
-                flag = true;
-            }
-
-            else if (VerifiableMember.MemberType.IsDerivedFrom(_type))
-            {
-                flag = true;
-            }
-
-            if (!flag)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)

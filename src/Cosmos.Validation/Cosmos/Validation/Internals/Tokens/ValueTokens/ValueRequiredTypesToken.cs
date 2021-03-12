@@ -27,7 +27,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -41,7 +41,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = new CorrectVerifyVal {NameOfExecutedRule = NAME};
+            var verifyVal = CreateVerifyVal();
 
             var value = GetValueFrom(context);
 
@@ -55,33 +55,28 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private bool IsValidImpl(object value)
         {
-            if (_types.Any())
+            if (!_types.Any())
+                return true;
+
+            var realType = _getType();
+
+            foreach (var type in _types)
             {
-                var flag = false;
-                var typeOfValue = value?.GetType();
+                if (VerifiableMember.MemberType == type || VerifiableMember.MemberType.IsDerivedFrom(type))
+                    return true;
 
-                foreach (var type in _types)
-                {
-                    if (VerifiableMember.MemberType == type || (typeOfValue != null && typeOfValue == type))
-                    {
-                        flag = true;
-                        break;
-                    }
-
-                    if (VerifiableMember.MemberType.IsDerivedFrom(type))
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
-
-                if (!flag)
-                {
-                    return false;
-                }
+                if (realType is not null && (realType == type || realType.IsDerivedFrom(type)))
+                    return true;
             }
 
-            return true;
+            return false;
+
+            Type _getType()
+            {
+                if (value is Type t)
+                    return t;
+                return value?.GetType();
+            }
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)
