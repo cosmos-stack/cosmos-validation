@@ -3,6 +3,7 @@ using Cosmos.Date;
 using Cosmos.Validation;
 using Cosmos.Validation.Validators;
 using CosmosValidationUT.Models;
+using FluentAssertions;
 using Shouldly;
 using Xunit;
 
@@ -63,9 +64,9 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-
-            result1.Errors.Count.ShouldBe(4);
-            result2.Errors.Count.ShouldBe(4);
+            
+            result1.Errors.Should().HaveCount(4);
+            result2.Errors.Should().HaveCount(4);
         }
 
         [Fact(DisplayName = "Verify a dictionary and return a success VerifyResult.")]
@@ -110,9 +111,9 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-
-            result1.Errors.Count.ShouldBe(1);
-            result2.Errors.Count.ShouldBe(4);
+            
+            result1.Errors.Should().HaveCount(1);
+            result2.Errors.Should().HaveCount(4);
         }
 
         [Fact(DisplayName = "Verify a basic type.")]
@@ -161,9 +162,9 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-
-            result1.Errors.Count.ShouldBe(2);
-            result2.Errors.Count.ShouldBe(2);
+            
+            result1.Errors.Should().HaveCount(2);
+            result2.Errors.Should().HaveCount(2);
         }
 
 #if !NETFRAMEWORK && !NETCOREAPP3_1
@@ -196,9 +197,9 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-
-            result1.Errors.Count.ShouldBe(2);
-            result2.Errors.Count.ShouldBe(2);
+            
+            result1.Errors.Should().HaveCount(2);
+            result2.Errors.Should().HaveCount(2);
         }
 #endif
 

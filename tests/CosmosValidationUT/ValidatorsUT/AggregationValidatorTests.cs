@@ -7,6 +7,7 @@ using Cosmos.Validation.Projects;
 using Cosmos.Validation.Registrars;
 using Cosmos.Validation.Validators;
 using CosmosValidationUT.Models;
+using FluentAssertions;
 using Shouldly;
 using Xunit;
 
@@ -93,7 +94,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.ShouldNotBeNull();
             result1.IsValid.ShouldBeFalse();
-            result1.Errors.Count.ShouldBe(3);
+            result1.Errors.Should().HaveCount(3);
         }
 
         [Fact(DisplayName = "VerifyOne and return a success VerifyResult.")]
@@ -273,7 +274,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.ShouldNotBeNull();
             result1.IsValid.ShouldBeFalse();
-            result1.Errors.Count.ShouldBe(3);
+            result1.Errors.Should().HaveCount(3);
         }
 
         [Fact(DisplayName = "Verify an instance with Annotations and return a failure VerifyResult.")]
@@ -309,7 +310,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.ShouldNotBeNull();
             result1.IsValid.ShouldBeFalse();
-            result1.Errors.Count.ShouldBe(4);
+            result1.Errors.Should().HaveCount(4);
         }
 
         [Fact(DisplayName = "Verify an instance with CustomValidators and return a failure VerifyResult.")]
@@ -346,7 +347,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.ShouldNotBeNull();
             result1.IsValid.ShouldBeFalse();
-            result1.Errors.Count.ShouldBe(4);
+            result1.Errors.Should().HaveCount(4);
         }
     }
 }

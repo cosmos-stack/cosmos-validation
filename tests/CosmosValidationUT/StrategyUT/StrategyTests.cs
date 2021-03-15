@@ -4,6 +4,7 @@ using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
 using Cosmos.Validation.Registrars;
 using CosmosValidationUT.Models;
+using FluentAssertions;
 using Shouldly;
 using Xunit;
 
@@ -84,7 +85,7 @@ namespace CosmosValidationUT.StrategyUT
 
             result1.ShouldNotBeNull();
             result1.IsValid.ShouldBeFalse();
-            result1.Errors.Count.ShouldBe(3);
+            result1.Errors.Should().HaveCount(3);
         }
 
         [Fact(DisplayName = "Use generic strategy by generic way and verify an instance and return success")]
@@ -150,7 +151,7 @@ namespace CosmosValidationUT.StrategyUT
 
             result1.ShouldNotBeNull();
             result1.IsValid.ShouldBeFalse();
-            result1.Errors.Count.ShouldBe(3);
+            result1.Errors.Should().HaveCount(3);
         }
     }
 }
