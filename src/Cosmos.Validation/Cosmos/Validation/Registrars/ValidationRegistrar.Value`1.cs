@@ -34,13 +34,13 @@ namespace Cosmos.Validation.Registrars
         public Type DeclaringType => _verifiableMemberContract.DeclaringType;
 
         public Type MemberType => _verifiableMemberContract.MemberType;
-        
+
         #region ValueRuleBuilder
-        
+
         protected CorrectValueRuleBuilder<T> ValueRuleBuilder { get; set; }
 
         internal CorrectValueRuleBuilder<T> ExposeValueRuleBuilder() => ValueRuleBuilder;
-        
+
         #endregion
 
         #region WithConfig
@@ -58,7 +58,7 @@ namespace Cosmos.Validation.Registrars
         #endregion
 
         #region ValueRules
-        
+
         public IValueFluentValidationRegistrar<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval)
         {
             ValueRuleBuilder.Range(from, to, options);
@@ -127,7 +127,7 @@ namespace Cosmos.Validation.Registrars
         {
             return new ValidationRegistrarWithMessage<T>(this, _rootRegistrar, func);
         }
-        
+
         public IValueFluentValidationRegistrar<T> InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);
@@ -152,102 +152,309 @@ namespace Cosmos.Validation.Registrars
             return this;
         }
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
         {
             ValueRuleBuilder.ScalePrecision(scale, precision, ignoreTrailingZeros);
             return this;
         }
-        
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1>()
         {
             ValueRuleBuilder.RequiredTypes<T1>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();

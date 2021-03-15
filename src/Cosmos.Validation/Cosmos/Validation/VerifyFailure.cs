@@ -6,11 +6,20 @@ using Cosmos.Text;
 
 namespace Cosmos.Validation
 {
+    /// <summary>
+    /// It is used to keep the information of verification failure.
+    /// </summary>
     [Serializable]
     public class VerifyFailure
     {
         private VerifyFailure() { }
 
+        /// <summary>
+        /// Create an instance of VerifyFailure.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="errorMessage"></param>
+        /// <param name="verifiedValue"></param>
         public VerifyFailure(
             string propertyName,
             string errorMessage,
@@ -69,6 +78,10 @@ namespace Cosmos.Validation
             return builder.ToString();
         }
 
+        /// <summary>
+        /// To Structured StringVal
+        /// </summary>
+        /// <returns></returns>
         public StructuredStringVal ToStringVal()
         {
             var result = new StructuredStringVal(ErrorMessage);
@@ -84,11 +97,24 @@ namespace Cosmos.Validation
             return result;
         }
 
+        /// <summary>
+        /// Create a VerifyFailure object based on the given parameters.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
         public static VerifyFailure Create(string propertyName, string errorMessage)
         {
             return new(propertyName, errorMessage);
         }
 
+        /// <summary>
+        /// Create a VerifyFailure object based on the given parameters.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="errorMessage"></param>
+        /// <param name="verifiedValue"></param>
+        /// <returns></returns>
         public static VerifyFailure Create(string propertyName, string errorMessage, object verifiedValue)
         {
             return new(propertyName, errorMessage, verifiedValue);

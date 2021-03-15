@@ -8,6 +8,9 @@ using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation
 {
+    /// <summary>
+    /// Validation Provider
+    /// </summary>
     public class ValidationProvider : IValidationProvider, ICorrectProvider
     {
         private readonly IValidationProjectManager _projectManager;
@@ -23,6 +26,13 @@ namespace Cosmos.Validation
 #endif
         }
 
+        /// <summary>
+        /// Create an instance of ValidationProvider.
+        /// </summary>
+        /// <param name="projectManager"></param>
+        /// <param name="objectResolver"></param>
+        /// <param name="options"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public ValidationProvider(
             IValidationProjectManager projectManager,
             IVerifiableObjectResolver objectResolver,
@@ -41,6 +51,11 @@ namespace Cosmos.Validation
 
         string ICorrectProvider.Name { get; set; } = DefaultName;
 
+        /// <summary>
+        /// Resolve a validator based on a given type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public IValidator Resolve(Type type)
         {
             var d = typeof(AggregationValidator<>);
@@ -60,6 +75,12 @@ namespace Cosmos.Validation
 #endif
         }
 
+        /// <summary>
+        /// Resolve a validator based on a given type and name.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public IValidator Resolve(Type type, string name)
         {
             var d = typeof(AggregationValidator<>);
@@ -80,24 +101,47 @@ namespace Cosmos.Validation
 #endif
         }
 
+        /// <summary>
+        /// Resolve a validator based on a given type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IValidator<T> Resolve<T>() => (IValidator<T>) Resolve(typeof(T));
 
+        /// <summary>
+        /// Resolve a validator based on a given type and name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public IValidator<T> Resolve<T>(string name) => (IValidator<T>) Resolve(typeof(T), name);
 
+        /// <inheritdoc />
         IValidationProjectManager ICorrectProvider.ExposeProjectManager() => _projectManager;
 
+        /// <inheritdoc />
         IVerifiableObjectResolver ICorrectProvider.ExposeObjectResolver() => _objectResolver;
 
+        /// <inheritdoc />
         ICustomValidatorManager ICorrectProvider.ExposeCustomValidatorManager() => _customValidatorManager;
 
+        /// <inheritdoc />
         ValidationOptions ICorrectProvider.ExposeValidationOptions() => _options;
 
+        /// <summary>
+        /// Override the configuration of the validator.
+        /// </summary>
+        /// <param name="options"></param>
         public void UpdateOptions(ValidationOptions options)
         {
             if (options is not null)
                 _options = options;
         }
 
+        /// <summary>
+        /// Update the configuration of the validator.
+        /// </summary>
+        /// <param name="optionAct"></param>
         public void UpdateOptions(Action<ValidationOptions> optionAct)
         {
             optionAct?.Invoke(_options);

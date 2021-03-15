@@ -257,7 +257,7 @@ namespace Cosmos.Validation.Validators
 
                         if (!result.IsValid)
                         {
-                            var localErrors = result.Errors[0].Details.Select(x => new VerifyError
+                            var localErrors = result.Errors.First().Details.Select(x => new VerifyError
                             {
                                 ErrorMessage = x.ErrorMessage,
                                 ValidatorName = strongVerifiableAnnotation.GetType().FullName,
@@ -274,7 +274,7 @@ namespace Cosmos.Validation.Validators
 
                         if (!result.IsValid)
                         {
-                            var localErrors = result.Errors[0].Details.Select(x => new VerifyError
+                            var localErrors = result.Errors.First().Details.Select(x => new VerifyError
                             {
                                 ErrorMessage = x.ErrorMessage,
                                 ValidatorName = contextVerifiableAnnotation.GetType().FullName,

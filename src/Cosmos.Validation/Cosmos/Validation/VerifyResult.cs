@@ -6,8 +6,11 @@ using Cosmos.Validation.Internals.Exceptions;
 
 namespace Cosmos.Validation
 {
+    /// <summary>
+    /// The object containing the verification result.
+    /// </summary>
     [Serializable]
-    public class VerifyResult
+    public class VerifyResult : IVerifyResult
     {
         private readonly List<VerifyFailure> _failures;
 
@@ -23,12 +26,19 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// Create an instance of VerifyResult.
+        /// </summary>
         public VerifyResult()
         {
             _failures = new List<VerifyFailure>();
             _success = !_failures.Any();
         }
 
+        /// <summary>
+        /// Create an instance of VerifyResult.
+        /// </summary>
+        /// <param name="failure"></param>
         public VerifyResult(VerifyFailure failure)
         {
             _failures = new List<VerifyFailure>();
@@ -37,6 +47,10 @@ namespace Cosmos.Validation
             _success = !_failures.Any();
         }
 
+        /// <summary>
+        /// Create an instance of VerifyResult.
+        /// </summary>
+        /// <param name="failures"></param>
         public VerifyResult(IEnumerable<VerifyFailure> failures)
         {
             _failures = failures.Where(f => f != null).ToList();
@@ -49,14 +63,14 @@ namespace Cosmos.Validation
         public string[] NameOfExecutedRules { get; internal set; }
 
         /// <summary>
-        /// Is valid
+        /// Return the verification result.
         /// </summary>
         public bool IsValid => InternalSuccess;
 
         /// <summary>
-        /// A collection of errors
+        /// Return all error messages.
         /// </summary>
-        public IList<VerifyFailure> Errors
+        public IEnumerable<VerifyFailure> Errors
         {
             get
             {
@@ -66,12 +80,15 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// Returns the names of all fields with errors.
+        /// </summary>
         public IEnumerable<string> MemberNames => Errors.Select(e => e.PropertyName);
 
         #region ToString
 
         /// <summary>
-        /// To string
+        /// Output the result of VerifyResult as a string, and separate each VerifyFailure message with a newline character.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -80,7 +97,7 @@ namespace Cosmos.Validation
         }
 
         /// <summary>
-        /// To string
+        /// Output the result of VerifyResult as a string, and use the given separator to separate each VerifyFailure message.
         /// </summary>
         /// <param name="separator"></param>
         /// <returns></returns>
@@ -110,8 +127,16 @@ namespace Cosmos.Validation
 
         #region Success
 
+        /// <summary>
+        /// Returns a VerifyResult object marked as successful.
+        /// </summary>
         public static VerifyResult Success { get; } = new() {InternalSuccess = true};
 
+        /// <summary>
+        /// Determine whether the given VerifyResult object is marked as a successful verification.
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public static bool IsSuccess(VerifyResult result)
         {
             return result?.InternalSuccess ?? false;
@@ -121,20 +146,50 @@ namespace Cosmos.Validation
 
         #region Failure
 
+        /// <summary>
+        /// For design reasons, return verification failure.
+        /// </summary>
         public static VerifyResult ByDesign { get; } = new(VerifyFailure.Create("Instance", "By Design."));
 
+        /// <summary>
+        /// Because it is a null reference, the return verification failed.
+        /// </summary>
         public static VerifyResult NullReference { get; } = new(VerifyFailure.Create("Instance", "Null Reference."));
 
+        /// <summary>
+        /// Because it is a null reference, the verification failed with the given error message returned.
+        /// </summary>
+        /// <param name="paramName"></param>
+        /// <returns></returns>
         public static VerifyResult NullReferenceWith(string paramName) => new(VerifyFailure.Create(paramName, "Null Reference."));
 
+        /// <summary>
+        /// Since it is not the expected type, the return verification failed.
+        /// </summary>
         public static VerifyResult UnexpectedType { get; } = new(VerifyFailure.Create("$Type", "Unexpected Type."));
 
+        /// <summary>
+        /// Since it is not the expected type, the verification failed with the given error message.
+        /// </summary>
+        /// <param name="paramName"></param>
+        /// <returns></returns>
         public static VerifyResult UnexpectedTypeWith(string paramName) => new(VerifyFailure.Create(paramName, "Unexpected Type."));
 
+        /// <summary>
+        /// No rules are registered for this type, and verification failure is returned.
+        /// </summary>
         internal static VerifyResult UnregisterProjectForSuchType { get; } = new(VerifyFailure.Create("$TypedProject", "The corresponding type of Project is not registered."));
 
+        /// <summary>
+        /// No rules are registered for this type and name, and verification failure is returned.
+        /// </summary>
         internal static VerifyResult UnregisterProjectForSuchNamedType { get; } = new(VerifyFailure.Create("$NamedProject", "The Project of the corresponding type and name is not registered."));
 
+        /// <summary>
+        /// The member does not exist, and the verification fails.
+        /// </summary>
+        /// <param name="memberName"></param>
+        /// <returns></returns>
         internal static VerifyResult MemberIsNotExists(string memberName) => new(VerifyFailure.Create(memberName, "Member name is not exists."));
 
         #endregion
@@ -184,6 +239,12 @@ namespace Cosmos.Validation
 
         #region Merge
 
+        /// <summary>
+        /// Combine multiple sub-results into one main result.
+        /// </summary>
+        /// <param name="masterResult"></param>
+        /// <param name="slaveResults"></param>
+        /// <returns></returns>
         public static VerifyResult Merge(VerifyResult masterResult, params VerifyResult[] slaveResults)
         {
             if (slaveResults is null || !slaveResults.Any())
@@ -211,6 +272,11 @@ namespace Cosmos.Validation
             return masterResult;
         }
 
+        /// <summary>
+        /// Combine multiple results into one result.
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
         public static VerifyResult MakeTogether(List<VerifyResult> results)
         {
             if (results is null)
@@ -224,6 +290,11 @@ namespace Cosmos.Validation
             return Merge(mainResult, results.ToArray());
         }
 
+        /// <summary>
+        /// Combine multiple results into one result.
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
         public static VerifyResult MakeTogether(params VerifyResult[] results)
         {
             if (results is null)
@@ -237,6 +308,12 @@ namespace Cosmos.Validation
             return Merge(mainResult, results.ToArray());
         }
 
+        /// <summary>
+        /// Create a VerifyResultCollection object, which contains a set of given VerifyResult.
+        /// </summary>
+        /// <param name="masterResult"></param>
+        /// <param name="slaveResults"></param>
+        /// <returns></returns>
         public static VerifyResultCollection ToList(VerifyResult masterResult, params VerifyResult[] slaveResults)
         {
             var results = new List<VerifyResult>();
@@ -251,6 +328,11 @@ namespace Cosmos.Validation
             return new VerifyResultCollection(results);
         }
 
+        /// <summary>
+        /// Create a VerifyResultCollection object, which contains a set of given VerifyResult.
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
         public static VerifyResultCollection ToList(List<VerifyResult> results)
         {
             if (results is null)
@@ -262,6 +344,10 @@ namespace Cosmos.Validation
 
         #region Raise
 
+        /// <summary>
+        /// If the verification result fails, an exception is thrown.
+        /// </summary>
+        /// <exception cref="ValidationException"></exception>
         public void Raise()
         {
             if (!IsValid)
@@ -270,6 +356,11 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// If the verification result fails, an exception is thrown.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="ValidationException"></exception>
         public void Raise(string message)
         {
             if (!IsValid)
@@ -278,6 +369,12 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// If the verification result fails, an exception is thrown.
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="message"></param>
+        /// <exception cref="ValidationException"></exception>
         public void Raise(long errorCode, string message)
         {
             if (!IsValid)
@@ -286,6 +383,12 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// If the verification result fails, an exception is thrown.
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="message"></param>
+        /// <exception cref="ValidationException"></exception>
         public void Raise(string flag, string message)
         {
             if (!IsValid)
@@ -294,6 +397,13 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// If the verification result fails, an exception is thrown.
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="flag"></param>
+        /// <param name="message"></param>
+        /// <exception cref="ValidationException"></exception>
         public void Raise(long errorCode, string flag, string message)
         {
             if (!IsValid)

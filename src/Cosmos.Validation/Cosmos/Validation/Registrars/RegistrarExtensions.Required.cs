@@ -108,24 +108,50 @@ namespace Cosmos.Validation.Registrars
 
         #region RequiredType/RequiredTypes
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="registrar"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static IValueFluentValidationRegistrar RequiredType(this IValueFluentValidationRegistrar registrar, Type type)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredType(type);
             return registrar;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="registrar"></param>
+        /// <param name="types"></param>
+        /// <returns></returns>
         public static IValueFluentValidationRegistrar RequiredTypes(this IValueFluentValidationRegistrar registrar, params Type[] types)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredTypes(types);
             return registrar;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="registrar"></param>
+        /// <param name="type"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IValueFluentValidationRegistrar<T> RequiredType<T>(this IValueFluentValidationRegistrar<T> registrar, Type type)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredType(type);
             return registrar;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="registrar"></param>
+        /// <param name="types"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IValueFluentValidationRegistrar<T> RequiredTypes<T>(this IValueFluentValidationRegistrar<T> registrar, params Type[] types)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredTypes(types);
@@ -138,6 +164,14 @@ namespace Cosmos.Validation.Registrars
             return registrar;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="registrar"></param>
+        /// <param name="types"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public static IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, params Type[] types)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredTypes(types);

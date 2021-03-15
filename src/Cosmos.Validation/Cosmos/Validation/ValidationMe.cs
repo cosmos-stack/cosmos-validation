@@ -7,11 +7,14 @@ using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation
 {
+    /// <summary>
+    /// The entry of the static validator component.
+    /// </summary>
     public static class ValidationMe
     {
         private static IValidationProvider DefaultProvider { get; set; }
         private static IValidationProvider CustomMainProvider { get; set; }
-        
+
         private static readonly Dictionary<string, IValidationProvider> ScopedProviders = new();
         private static readonly object _scopedProviderLockObj = new();
 
@@ -29,6 +32,11 @@ namespace Cosmos.Validation
 
         #region Register & Unregister
 
+        /// <summary>
+        /// Register a new ValidationProvider. <br />
+        /// 注册一个新的 ValidationProvider。
+        /// </summary>
+        /// <param name="validationProvider"></param>
         internal static void RegisterProvider(IValidationProvider validationProvider)
         {
             if (validationProvider is not null)
@@ -39,12 +47,22 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// Unregister <br />
+        /// 反注册
+        /// </summary>
         internal static void Unregister()
         {
             CustomMainProvider = null;
             _currentProvider = DefaultProvider;
         }
 
+        /// <summary>
+        /// Register a new ValidationProvider. <br />
+        /// 注册一个新的 ValidationProvider。
+        /// </summary>
+        /// <param name="validationProvider"></param>
+        /// <param name="name"></param>
         internal static void RegisterProvider(IValidationProvider validationProvider, string name)
         {
             lock (_scopedProviderLockObj)
@@ -59,6 +77,12 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// Override a ValidationProvider. <br />
+        /// 覆盖一个 ValidationProvider。
+        /// </summary>
+        /// <param name="validationProvider"></param>
+        /// <param name="name"></param>
         internal static void OverrideProvider(IValidationProvider validationProvider, string name)
         {
             lock (_scopedProviderLockObj)
@@ -103,18 +127,45 @@ namespace Cosmos.Validation
 
         #region Resolve
 
+        /// <summary>
+        /// Resolve a validator based on a given type.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static IValidator Resolve(Type type) => _currentProvider.Resolve(type);
 
+        /// <summary>
+        /// Resolve a validator based on a given type and name.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static IValidator Resolve(Type type, string name) => _currentProvider.Resolve(type, name);
 
+        /// <summary>
+        /// Resolve a validator based on a given type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IValidator<T> Resolve<T>() => _currentProvider.Resolve<T>();
 
+        /// <summary>
+        /// Resolve a validator based on a given type and name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IValidator<T> Resolve<T>(string name) => _currentProvider.Resolve<T>(name);
 
         #endregion
 
         #region Use Scope
 
+        /// <summary>
+        /// According to the given name, an instance of IValidationProvider is returned.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static IValidationProvider Use(string name)
         {
             lock (_scopedProviderLockObj)
@@ -130,26 +181,47 @@ namespace Cosmos.Validation
 
         #region Update Options
 
+        /// <summary>
+        /// Override the default options.
+        /// </summary>
+        /// <param name="options"></param>
         public static void UpdateDefaultOptions(ValidationOptions options)
         {
             DefaultProvider.UpdateOptions(options);
         }
 
+        /// <summary>
+        /// Update the default options.
+        /// </summary>
+        /// <param name="optionAct"></param>
         public static void UpdateDefaultOptions(Action<ValidationOptions> optionAct)
         {
             DefaultProvider.UpdateOptions(optionAct);
         }
 
+        /// <summary>
+        /// Override the main validation provider's options
+        /// </summary>
+        /// <param name="options"></param>
         public static void UpdateMainOptions(ValidationOptions options)
         {
             _currentProvider.UpdateOptions(options);
         }
 
+        /// <summary>
+        /// Update the main validation provider's options
+        /// </summary>
+        /// <param name="optionAct"></param>
         public static void UpdateMainOptions(Action<ValidationOptions> optionAct)
         {
             _currentProvider.UpdateOptions(optionAct);
         }
 
+        /// <summary>
+        /// Override the validation provider's options with the given name.
+        /// </summary>
+        /// <param name="providerName"></param>
+        /// <param name="options"></param>
         public static void UpdateOptions(string providerName, ValidationOptions options)
         {
             lock (_scopedProviderLockObj)
@@ -161,6 +233,11 @@ namespace Cosmos.Validation
             }
         }
 
+        /// <summary>
+        /// Update the validation provider's options with the given name.
+        /// </summary>
+        /// <param name="providerName"></param>
+        /// <param name="optionAct"></param>
         public static void UpdateOptions(string providerName, Action<ValidationOptions> optionAct)
         {
             lock (_scopedProviderLockObj)

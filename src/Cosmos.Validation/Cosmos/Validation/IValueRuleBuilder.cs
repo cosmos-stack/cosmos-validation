@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace Cosmos.Validation
 {
+    /// <summary>
+    /// Interface of ValueRuleBuilder
+    /// </summary>
     public interface IValueRuleBuilder
     {
         IValueRuleBuilder AppendRule();
@@ -59,9 +61,9 @@ namespace Cosmos.Validation
         IValueRuleBuilder Matches(string regexExpression, RegexOptions options);
 
         IValueRuleBuilder Matches(Func<object, Regex> regexFunc);
-        
+
         IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc);
-        
+
         IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
 
         IValueRuleBuilder Func(Func<object, CustomVerifyResult> func);
@@ -99,45 +101,266 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder IsEnumName<TEnum>(bool caseSensitive);
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         IValueRuleBuilder ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         IValueRuleBuilder RequiredType(Type type);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes(params Type[] types);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
+    /// <summary>
+    /// Interface of ValueRuleBuilder
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IValueRuleBuilder<T>
     {
         IValueRuleBuilder<T> AppendRule();
@@ -191,9 +414,9 @@ namespace Cosmos.Validation
         IValueRuleBuilder<T> Matches(string regexExpression, RegexOptions options);
 
         IValueRuleBuilder<T> Matches(Func<T, Regex> regexFunc);
-        
+
         IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc);
-        
+
         IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
 
         IValueRuleBuilder<T> Func(Func<object, CustomVerifyResult> func);
@@ -230,45 +453,267 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder<T> IsEnumName<TEnum>(bool caseSensitive);
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         IValueRuleBuilder<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredType(Type type);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes(params Type[] types);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
+    /// <summary>
+    /// Interface of ValueRuleBuilder
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TVal"></typeparam>
     public interface IValueRuleBuilder<T, TVal> : IValueRuleBuilder<T>
     {
         new IValueRuleBuilder<T, TVal> AppendRule();
@@ -322,9 +767,9 @@ namespace Cosmos.Validation
         new IValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options);
 
         new IValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc);
-        
+
         new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc);
-        
+
         new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
 
         IValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
@@ -353,42 +798,259 @@ namespace Cosmos.Validation
 
         new IValueRuleBuilder<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredType(Type type);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 }

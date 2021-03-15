@@ -7,6 +7,9 @@ using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation.Registrars
 {
+    /// <summary>
+    /// The lower-level interface of ValidationRegistrar. Used to wait for verification information.
+    /// </summary>
     internal class ValidationRegistrarWithMessage : IWaitForMessageValidationRegistrar
     {
         private readonly IValidationRegistrar _rootRegistrar;
@@ -14,7 +17,7 @@ namespace Cosmos.Validation.Registrars
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar,IValidationRegistrar rootRegistrar, Func<object, bool> func)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar, IValidationRegistrar rootRegistrar, Func<object, bool> func)
         {
             _registrar = registrar;
             _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
@@ -22,7 +25,7 @@ namespace Cosmos.Validation.Registrars
             _predicate = null;
         }
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar,IValidationRegistrar rootRegistrar, Predicate<object> predicate)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar, IValidationRegistrar rootRegistrar, Predicate<object> predicate)
         {
             _registrar = registrar;
             _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
@@ -30,6 +33,11 @@ namespace Cosmos.Validation.Registrars
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
@@ -217,6 +225,10 @@ namespace Cosmos.Validation.Registrars
         #endregion
     }
 
+    /// <summary>
+    /// The lower-level interface of ValidationRegistrar. Used to wait for verification information.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class ValidationRegistrarWithMessage<T> : IWaitForMessageValidationRegistrar<T>
     {
         private readonly IValidationRegistrar _rootRegistrar;
@@ -224,7 +236,7 @@ namespace Cosmos.Validation.Registrars
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, IValidationRegistrar rootRegistrar,Func<object, bool> func)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, IValidationRegistrar rootRegistrar, Func<object, bool> func)
         {
             _registrar = registrar;
             _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
@@ -232,7 +244,7 @@ namespace Cosmos.Validation.Registrars
             _predicate = null;
         }
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar,IValidationRegistrar rootRegistrar, Predicate<object> predicate)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, IValidationRegistrar rootRegistrar, Predicate<object> predicate)
         {
             _registrar = registrar;
             _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
@@ -240,6 +252,11 @@ namespace Cosmos.Validation.Registrars
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T> WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
@@ -432,6 +449,11 @@ namespace Cosmos.Validation.Registrars
         #endregion
     }
 
+    /// <summary>
+    /// The lower-level interface of ValidationRegistrar. Used to wait for verification information.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TVal"></typeparam>
     internal class ValidationRegistrarWithMessage<T, TVal> : IWaitForMessageValidationRegistrar<T, TVal>
     {
         private readonly IValidationRegistrar _rootRegistrar;
@@ -439,7 +461,7 @@ namespace Cosmos.Validation.Registrars
         private readonly Func<TVal, bool> _func;
         private readonly Predicate<TVal> _predicate;
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar,IValidationRegistrar rootRegistrar, Func<TVal, bool> func)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, IValidationRegistrar rootRegistrar, Func<TVal, bool> func)
         {
             _registrar = registrar;
             _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
@@ -447,7 +469,7 @@ namespace Cosmos.Validation.Registrars
             _predicate = null;
         }
 
-        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, IValidationRegistrar rootRegistrar,Predicate<TVal> predicate)
+        public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, IValidationRegistrar rootRegistrar, Predicate<TVal> predicate)
         {
             _registrar = registrar;
             _rootRegistrar = rootRegistrar ?? throw new ArgumentNullException(nameof(rootRegistrar));
@@ -455,6 +477,11 @@ namespace Cosmos.Validation.Registrars
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public IValueFluentValidationRegistrar<T, TVal> WithMessage(string message)
         {
             Func<TVal, CustomVerifyResult> realFunc;

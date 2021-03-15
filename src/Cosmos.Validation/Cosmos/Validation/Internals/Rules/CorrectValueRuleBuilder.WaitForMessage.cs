@@ -2,6 +2,9 @@
 
 namespace Cosmos.Validation.Internals.Rules
 {
+    /// <summary>
+    /// The lower-level interface of ValueRuleBuilder. Used to wait for verification information.
+    /// </summary>
     internal class CorrectWaitForMessageValueRuleBuilder : IWaitForMessageValueRuleBuilder
     {
         private readonly CorrectValueRuleBuilder _builder;
@@ -22,6 +25,11 @@ namespace Cosmos.Validation.Internals.Rules
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public IValueRuleBuilder WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
@@ -45,6 +53,10 @@ namespace Cosmos.Validation.Internals.Rules
         }
     }
 
+    /// <summary>
+    /// The lower-level interface of ValueRuleBuilder. Used to wait for verification information.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class CorrectWaitForMessageValueRuleBuilder<T> : IWaitForMessageValueRuleBuilder<T>
     {
         private readonly CorrectValueRuleBuilder<T> _builder;
@@ -65,6 +77,11 @@ namespace Cosmos.Validation.Internals.Rules
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public IValueRuleBuilder<T> WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
@@ -88,6 +105,11 @@ namespace Cosmos.Validation.Internals.Rules
         }
     }
 
+    /// <summary>
+    /// The lower-level interface of ValueRuleBuilder. Used to wait for verification information.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TVal"></typeparam>
     internal class CorrectWaitForMessageValueRuleBuilder<T, TVal> : IWaitForMessageValueRuleBuilder<T, TVal>
     {
         private readonly CorrectValueRuleBuilder<T, TVal> _builder;
@@ -108,6 +130,11 @@ namespace Cosmos.Validation.Internals.Rules
             _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public IValueRuleBuilder<T, TVal> WithMessage(string message)
         {
             Func<TVal, CustomVerifyResult> realFunc;

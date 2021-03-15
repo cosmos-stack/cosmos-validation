@@ -31,22 +31,246 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar InEnum<TEnum>();
         IValueFluentValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
         IValueFluentValidationRegistrar IsEnumName<TEnum>(bool caseSensitive);
+
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         IValueFluentValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
@@ -95,38 +319,245 @@ namespace Cosmos.Validation.Registrars
 
         IValueFluentValidationRegistrar<T> IsEnumName<TEnum>(bool caseSensitive);
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
@@ -166,38 +597,245 @@ namespace Cosmos.Validation.Registrars
 
         new IValueFluentValidationRegistrar<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 }

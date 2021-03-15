@@ -7,6 +7,9 @@ using Cosmos.Validation.Internals.Tokens.ValueTokens;
 
 namespace Cosmos.Validation
 {
+    /// <summary>
+    /// Extensions for ValueRuleBuilder
+    /// </summary>
     public static class ValueRuleBuilderExtensions
     {
         private static CorrectValueRuleBuilder<T, TVal> _impl<T, TVal>(this IValueRuleBuilder<T, TVal> builder)
@@ -26,6 +29,14 @@ namespace Cosmos.Validation
 
         #region Any/All/NotAny/NotAll/None
 
+        /// <summary>
+        /// Any
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TItem[]> Any<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             var current = builder._impl();
@@ -33,6 +44,15 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// Any
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> Any<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
         {
@@ -41,6 +61,14 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// All
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TItem[]> All<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             var current = builder._impl();
@@ -48,6 +76,15 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// All
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> All<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
         {
@@ -56,28 +93,70 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// Not any
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TItem[]> NotAny<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             return builder.All(func);
         }
 
+        /// <summary>
+        /// Not any
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> NotAny<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
         {
             return builder.All(func);
         }
 
+        /// <summary>
+        /// Not all
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TItem[]> NotAll<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             return builder.Any(func);
         }
 
+        /// <summary>
+        /// Not all
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> NotAll<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
         {
             return builder.Any(func);
         }
 
+        /// <summary>
+        /// None
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TItem[]> None<T, TItem>(this IValueRuleBuilder<T, TItem[]> builder, Func<TItem, bool> func)
         {
             var current = builder._impl();
@@ -85,6 +164,15 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// None
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="func"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> None<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<TItem, bool> func)
             where TVal : ICollection<TItem>
         {
@@ -97,6 +185,15 @@ namespace Cosmos.Validation
 
         #region In/NotIn
 
+        /// <summary>
+        /// In
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="collection"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> In<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, ICollection<TItem> collection)
             where TVal : IEnumerable<TItem>
         {
@@ -105,6 +202,15 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// In
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="objects"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> In<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, params TItem[] objects)
             where TVal : IEnumerable<TItem>
         {
@@ -113,6 +219,15 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// Not in
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="collection"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> NotIn<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, ICollection<TItem> collection)
             where TVal : IEnumerable<TItem>
         {
@@ -121,6 +236,15 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// Not in
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="objects"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> NotIn<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, params TItem[] objects)
             where TVal : IEnumerable<TItem>
         {
@@ -133,11 +257,24 @@ namespace Cosmos.Validation
 
         #region WithMessage
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static IValueRuleBuilder WithMessage(this IValueRuleBuilder builder, string message)
         {
             return builder.WithMessage(message, true);
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="message"></param>
+        /// <param name="appendOrOverwrite"></param>
+        /// <returns></returns>
         public static IValueRuleBuilder WithMessage(this IValueRuleBuilder builder, string message, bool appendOrOverwrite)
         {
             var current = builder._impl().CurrentToken;
@@ -162,11 +299,26 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="message"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T> WithMessage<T>(this IValueRuleBuilder<T> builder, string message)
         {
             return builder.WithMessage(message, true);
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="message"></param>
+        /// <param name="appendOrOverwrite"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T> WithMessage<T>(this IValueRuleBuilder<T> builder, string message, bool appendOrOverwrite)
         {
             var current = builder._impl().CurrentToken;
@@ -191,11 +343,28 @@ namespace Cosmos.Validation
             return builder;
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="message"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> WithMessage<T, TVal>(this IValueRuleBuilder<T, TVal> builder, string message)
         {
             return builder.WithMessage(message, true);
         }
 
+        /// <summary>
+        /// Fill in the message.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="message"></param>
+        /// <param name="appendOrOverwrite"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public static IValueRuleBuilder<T, TVal> WithMessage<T, TVal>(this IValueRuleBuilder<T, TVal> builder, string message, bool appendOrOverwrite)
         {
             var current = builder._impl().CurrentToken;

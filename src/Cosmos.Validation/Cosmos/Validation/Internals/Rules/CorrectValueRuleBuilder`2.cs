@@ -218,7 +218,7 @@ namespace Cosmos.Validation.Internals.Rules
             CurrentToken = new ValueInToken<TVal>(_contract, objects);
             return this;
         }
-        
+
         public IValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection)
         {
             CurrentToken = new ValueNotInToken<TVal>(_contract, collection);
@@ -255,114 +255,331 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
+        /// <summary>
+        /// Limit the scale and precision of the value.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="ignoreTrailingZeros"></param>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
         {
             CurrentToken = new ValueScalePrecisionToken(_contract, scale, precision, ignoreTrailingZeros);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredType(Type type)
         {
             CurrentToken = new ValueRequiredTypeToken(_contract, type);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types)
         {
             CurrentToken = new ValueRequiredTypesToken(_contract, types);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1>()
         {
             CurrentToken = new ValueRequiredTypeToken<T1>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(_contract);
             return this;
         }
 
+        /// <summary>
+        /// To restrict the type, it must be one of the given types (equal, or a derived class).
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <typeparam name="T4"></typeparam>
+        /// <typeparam name="T5"></typeparam>
+        /// <typeparam name="T6"></typeparam>
+        /// <typeparam name="T7"></typeparam>
+        /// <typeparam name="T8"></typeparam>
+        /// <typeparam name="T9"></typeparam>
+        /// <typeparam name="T10"></typeparam>
+        /// <typeparam name="T11"></typeparam>
+        /// <typeparam name="T12"></typeparam>
+        /// <typeparam name="T13"></typeparam>
+        /// <typeparam name="T14"></typeparam>
+        /// <typeparam name="T15"></typeparam>
+        /// <typeparam name="T16"></typeparam>
+        /// <returns></returns>
         public new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
             CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(_contract);
