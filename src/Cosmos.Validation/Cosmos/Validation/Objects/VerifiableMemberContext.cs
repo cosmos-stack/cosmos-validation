@@ -49,23 +49,24 @@ namespace Cosmos.Validation.Objects
             {
                 if (!_hasGot)
                 {
-                    _valueCached = _valueMode switch
-                    {
-                        ValueMode.DirectType => _contract.GetValue(_parentContext.Instance),
-                        ValueMode.Dictionary => _contract.GetValue(_parentContext.KeyValueCollection),
-                        _ => default
-                    };
-
-                    _hasGot = true;
+                    RefreshValue();
                 }
 
                 return _valueCached;
             }
         }
 
-        public object GetValue() => Value;
+        internal void RefreshValue()
+        {
+            _valueCached = _valueMode switch
+            {
+                ValueMode.DirectType => _contract.GetValue(_parentContext.Instance),
+                ValueMode.Dictionary => _contract.GetValue(_parentContext.KeyValueCollection),
+                _ => default
+            };
 
-        public TVal GetValue<TVal>() => (TVal) Value; //.CastTo<TVal>();
+            _hasGot = true;
+        }
 
         #endregion
 
