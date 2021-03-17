@@ -17,8 +17,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _typeOfValueToCompare = _valueToCompare.GetType();
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.GreaterThan;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => false;

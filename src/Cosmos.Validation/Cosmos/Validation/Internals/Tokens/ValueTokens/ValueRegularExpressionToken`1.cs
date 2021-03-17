@@ -41,8 +41,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _regexFunc = x => CreateRegex(expressionFunc(x), options);
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.RegularExpression_T1;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => false;

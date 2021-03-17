@@ -19,8 +19,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _maxLength = max;
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.MaxLen;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => true;

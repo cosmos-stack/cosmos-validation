@@ -15,8 +15,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _enumType = enumType ?? throw new ArgumentNullException(nameof(enumType));
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.Enum;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => false;

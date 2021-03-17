@@ -20,8 +20,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _comparer = comparer;
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.Equal;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => false;

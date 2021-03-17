@@ -12,8 +12,6 @@ namespace Cosmos.Validation.Internals.Tokens
             VerifiableMember = contract ?? throw new ArgumentNullException(nameof(contract));
         }
 
-        public abstract CorrectValueOps Ops { get; }
-
         public abstract string TokenName { get; }
 
         public virtual TokenClass TokenClass => TokenClass.ValueToken;

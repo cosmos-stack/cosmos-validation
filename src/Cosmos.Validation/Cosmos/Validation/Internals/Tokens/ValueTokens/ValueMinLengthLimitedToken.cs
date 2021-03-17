@@ -19,8 +19,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _minLength = min;
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.MinLen;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => true;

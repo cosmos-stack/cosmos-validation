@@ -1,12 +1,9 @@
-﻿using System;
-using Cosmos.Validation.Objects;
+﻿using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens
 {
     internal interface IValueToken : IToken
     {
-        CorrectValueOps Ops { get; }
-
         bool MutuallyExclusive { get; }
 
         int[] MutuallyExclusiveFlags { get; }

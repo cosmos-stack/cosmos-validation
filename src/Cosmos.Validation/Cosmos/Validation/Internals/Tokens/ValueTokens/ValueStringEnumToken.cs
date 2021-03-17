@@ -23,8 +23,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             }
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.StringEnum;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => false;

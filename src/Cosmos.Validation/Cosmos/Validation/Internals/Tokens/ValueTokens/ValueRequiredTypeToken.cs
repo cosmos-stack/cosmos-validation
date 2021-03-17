@@ -16,8 +16,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _type = type ?? throw new ArgumentNullException(nameof(type));
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.Type;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => true;

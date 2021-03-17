@@ -19,8 +19,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _objects = objects ?? Arrays.Empty<object>();
         }
 
-        public override CorrectValueOps Ops => CorrectValueOps.In;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => false;

@@ -42,8 +42,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public bool IgnoreTrailingZeros { get; set; }
 
-        public override CorrectValueOps Ops => CorrectValueOps.ScalePrecision;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => true;

@@ -14,8 +14,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public ValueNotEmptyToken(VerifiableMemberContract contract) : base(contract) { }
 
-        public override CorrectValueOps Ops => CorrectValueOps.NotEmpty;
-
         public override string TokenName => NAME;
 
         public override bool MutuallyExclusive => true;
