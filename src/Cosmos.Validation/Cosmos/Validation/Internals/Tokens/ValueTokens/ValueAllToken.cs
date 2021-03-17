@@ -1,84 +1,36 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using Cosmos.Collections;
-using Cosmos.Reflection;
+using Cosmos.Validation.Internals.Tokens.ValueTokens.Basic;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
-    internal class ValueAllToken : ValueToken
+    internal class ValueAllToken : ValueCollBasicToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueAllToken";
 
-        private readonly Func<object, bool> _func;
+        public ValueAllToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract, func, NAME) { }
 
-        public ValueAllToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract)
+        protected override bool IsValidImpl(ICollection collection, Func<object, bool> func)
         {
-            _func = func;
+            return collection.Cast<object>().All(one => func!.Invoke(one));
         }
+    }
 
-        public override string TokenName => NAME;
+    internal class ValueAllToken<TVal, TItem> : ValueCollBasicToken<TVal, TItem>
+        where TVal : IEnumerable<TItem>
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string NAME = "GenericValueAllToken";
 
-        public override bool MutuallyExclusive => false;
+        public ValueAllToken(VerifiableMemberContract contract, Func<TItem, bool> func) : base(contract, func, NAME) { }
 
-        public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
-
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        protected override bool IsValidImpl(ICollection collection, Func<TItem, bool> func)
         {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (ContainsMember(context) && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
-            {
-                if (!IsValidImpl(collection))
-                {
-                    UpdateVal(verifyVal, value);
-                }
-            }
-            else
-            {
-                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
-            }
-
-            return verifyVal;
+            return collection.Cast<TItem>().All(one => func!.Invoke(one));
         }
-
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
-        {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (context is not null && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
-            {
-                if (!IsValidImpl(collection))
-                {
-                    UpdateVal(verifyVal, value);
-                }
-            }
-            else
-            {
-                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
-            }
-
-            return verifyVal;
-        }
-
-        private bool IsValidImpl(ICollection collection)
-        {
-            return collection.Cast<object>().All(one => _func.Invoke(one));
-        }
-
-        private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)
-        {
-            val.IsSuccess = false;
-            val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage(message ?? "There is at least one unsatisfied member in the array or collection.");
-        }
-
-        public override string ToString() => NAME;
     }
 }

@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Cosmos.Reflection;
 using Cosmos.Validation.Objects;
 
-namespace Cosmos.Validation.Internals.Tokens.ValueTokens
+namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
 {
-    internal class ValueAllToken<TVal, TItem> : ValueToken<TVal>
-        where TVal : IEnumerable<TItem>
+    internal abstract class ValueCollBasicToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "GenericValueAllToken";
+        private readonly Func<object, bool> _func;
 
-        private readonly Func<TItem, bool> _func;
-
-        public ValueAllToken(VerifiableMemberContract contract, Func<TItem, bool> func) : base(contract)
+        protected ValueCollBasicToken(VerifiableMemberContract contract, Func<object, bool> func, string tokenName) : base(contract)
         {
             _func = func;
+
+            TokenName = tokenName;
         }
 
-        public override string TokenName => NAME;
+        public override string TokenName { get; }
 
         public override bool MutuallyExclusive => false;
 
@@ -34,14 +30,14 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             if (ContainsMember(context) && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
             {
-                if (!IsValidImpl(collection))
+                if (!IsValidImpl(collection, _func))
                 {
                     UpdateVal(verifyVal, value);
                 }
             }
             else
             {
-                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
+                UpdateVal(verifyVal, value, $"The type is not a collection or an array, and an exception occurs when using {TokenName}.");
             }
 
             return verifyVal;
@@ -55,31 +51,28 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             if (context is not null && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
             {
-                if (!IsValidImpl(collection))
+                if (!IsValidImpl(collection, _func))
                 {
                     UpdateVal(verifyVal, value);
                 }
             }
             else
             {
-                UpdateVal(verifyVal, value, "The type is not a collection or an array, and an exception occurs when using AllToken.");
+                UpdateVal(verifyVal, value, $"The type is not a collection or an array, and an exception occurs when using {TokenName}.");
             }
 
             return verifyVal;
         }
 
-        private bool IsValidImpl(ICollection collection)
-        {
-            return collection.Cast<TItem>().All(one => _func.Invoke(one));
-        }
+        protected abstract bool IsValidImpl(ICollection collection, Func<object, bool> func);
 
-        private void UpdateVal(CorrectVerifyVal val, TVal obj, string message = null)
+        private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage(message ?? "There is at least one unsatisfied member in the array or collection.");
+            val.ErrorMessage = MergeMessage(message ?? "There are no members that meet the conditions in the array or collection.");
         }
 
-        public override string ToString() => NAME;
+        public override string ToString() => TokenName;
     }
 }
