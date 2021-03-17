@@ -48,20 +48,20 @@ namespace CosmosValidationUT.BuildingUT
                     .And.Match<CorrectValueRule>(x => x.MemberName == "Name")
                     .And.Match<CorrectValueRule>(x => x.Mode == CorrectValueRuleMode.Append)
                     .And.Match<CorrectValueRule>(x => x.Tokens.Count == 1)
-                    .And.Match<CorrectValueRule>(x => x.Tokens[0].Ops == CorrectValueOps.NotEmpty);
+                    .And.Match<CorrectValueRule>(x => x.Tokens[0].TokenName == "ValueNotEmptyToken");
 
 
             rules[1].Should().NotBeNull()
                     .And.Match<CorrectValueRule>(x => x.MemberName == "Length")
                     .And.Match<CorrectValueRule>(x => x.Mode == CorrectValueRuleMode.Append)
                     .And.Match<CorrectValueRule>(x => x.Tokens.Count == 1)
-                    .And.Match<CorrectValueRule>(x => x.Tokens[0].Ops == CorrectValueOps.GreaterThanOrEqual);
+                    .And.Match<CorrectValueRule>(x => x.Tokens[0].TokenName == "ValueGreaterThanOrEqualToken");
 
             rules[2].Should().NotBeNull()
                     .And.Match<CorrectValueRule>(x => x.MemberName == "Width")
                     .And.Match<CorrectValueRule>(x => x.Mode == CorrectValueRuleMode.Append)
                     .And.Match<CorrectValueRule>(x => x.Tokens.Count == 1)
-                    .And.Match<CorrectValueRule>(x => x.Tokens[0].Ops == CorrectValueOps.GreaterThanOrEqual);
+                    .And.Match<CorrectValueRule>(x => x.Tokens[0].TokenName == "ValueGreaterThanOrEqualToken");
         }
 
         [Fact(DisplayName = "Type and member level register ops and take effect test")]
@@ -118,20 +118,20 @@ namespace CosmosValidationUT.BuildingUT
                     .And.Match<CorrectValueRule>(x => x.MemberName == "Name")
                     .And.Match<CorrectValueRule>(x => x.Mode == CorrectValueRuleMode.Append)
                     .And.Match<CorrectValueRule>(x => x.Tokens.Count == 1)
-                    .And.Match<CorrectValueRule>(x => x.Tokens[0].Ops == CorrectValueOps.NotEmpty);
+                    .And.Match<CorrectValueRule>(x => x.Tokens[0].TokenName == "ValueNotEmptyToken");
 
 
             rules[1].Should().NotBeNull()
                     .And.Match<CorrectValueRule>(x => x.MemberName == "Length")
                     .And.Match<CorrectValueRule>(x => x.Mode == CorrectValueRuleMode.Append)
                     .And.Match<CorrectValueRule>(x => x.Tokens.Count == 1)
-                    .And.Match<CorrectValueRule>(x => x.Tokens[0].Ops == CorrectValueOps.GreaterThanOrEqual);
+                    .And.Match<CorrectValueRule>(x => x.Tokens[0].TokenName == "ValueGreaterThanOrEqualToken");
 
             rules[2].Should().NotBeNull()
                     .And.Match<CorrectValueRule>(x => x.MemberName == "Width")
                     .And.Match<CorrectValueRule>(x => x.Mode == CorrectValueRuleMode.Append)
                     .And.Match<CorrectValueRule>(x => x.Tokens.Count == 1)
-                    .And.Match<CorrectValueRule>(x => x.Tokens[0].Ops == CorrectValueOps.GreaterThanOrEqual);
+                    .And.Match<CorrectValueRule>(x => x.Tokens[0].TokenName == "ValueGreaterThanOrEqualToken");
         }
     }
 }

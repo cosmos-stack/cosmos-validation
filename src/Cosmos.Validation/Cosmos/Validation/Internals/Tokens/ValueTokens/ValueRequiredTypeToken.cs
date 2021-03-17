@@ -79,4 +79,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override string ToString() => NAME;
     }
+    
+    internal class ValueRequiredTypeToken<T> : ValueRequiredTypeToken
+    {
+        public ValueRequiredTypeToken(VerifiableMemberContract contract) : base(contract, typeof(T)) { }
+    }
 }

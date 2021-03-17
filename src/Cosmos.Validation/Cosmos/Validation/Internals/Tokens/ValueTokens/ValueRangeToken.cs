@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly RangeOptions _options;
 
         private bool _returnFalseDirectly;
-
+        
         public ValueRangeToken(VerifiableMemberContract contract, object from, object to, RangeOptions options) : base(contract)
         {
             if (from is null || to is null)

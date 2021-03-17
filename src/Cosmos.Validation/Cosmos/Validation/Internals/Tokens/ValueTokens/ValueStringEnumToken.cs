@@ -76,4 +76,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         public override string ToString() => NAME;
     }
+    
+    internal class ValueStringEnumToken<TEnum> : ValueStringEnumToken
+    {
+        public ValueStringEnumToken(VerifiableMemberContract contract, bool caseSensitive) : base(contract, typeof(TEnum), caseSensitive) { }
+    }
 }
