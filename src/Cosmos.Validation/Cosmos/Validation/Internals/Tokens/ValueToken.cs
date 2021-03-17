@@ -20,6 +20,22 @@ namespace Cosmos.Validation.Internals.Tokens
 
         public abstract int[] MutuallyExclusiveFlags { get; }
 
+        public void Verify(VerifiableOpsContext context)
+        {
+            var val = context.OpsMode switch
+            {
+                VerifiableOpsMode.Object => Valid(context.VerifiableObjectContext),
+                VerifiableOpsMode.Member => Valid(context.VerifiableMemberContext),
+                _ => null
+            };
+
+            if (val is not null && val.IsSuccess == false)
+            {
+                context.AppendVerifyVal(VerifiableMember.MemberName, val);
+                context.AppendNameOfExecutedRule(val.NameOfExecutedRule);
+            }
+        }
+
         public abstract CorrectVerifyVal Valid(VerifiableObjectContext context);
 
         public abstract CorrectVerifyVal Valid(VerifiableMemberContext context);
@@ -69,7 +85,7 @@ namespace Cosmos.Validation.Internals.Tokens
         protected CorrectVerifyVal CreateVerifyVal()
         {
             return new CorrectVerifyVal {NameOfExecutedRule = TokenName};
-        } 
+        }
     }
 
     internal abstract class ValueToken<TVal> : ValueToken, IValueToken<TVal>

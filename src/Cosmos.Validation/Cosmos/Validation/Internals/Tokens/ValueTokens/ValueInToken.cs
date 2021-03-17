@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Collections;
@@ -28,8 +27,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
-           
+
             var value = GetValueFrom(context);
+
 
             if (!IsValidImpl(value))
             {
@@ -42,7 +42,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         public override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
-           
+
             var value = GetValueFrom(context);
 
             if (!IsValidImpl(value))
@@ -66,11 +66,11 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return _objects.Contains(value);
         }
 
-        private void UpdateVal(CorrectVerifyVal val, object obj)
+        private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage("The value is not contained in the given value array or collection.");
+            val.ErrorMessage = MergeMessage(message ?? "The value is not contained in the given value array or collection.");
         }
 
         public override string ToString() => NAME;

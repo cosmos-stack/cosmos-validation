@@ -64,7 +64,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-            
+
             result1.Errors.Should().HaveCount(4);
             result2.Errors.Should().HaveCount(4);
         }
@@ -75,8 +75,8 @@ namespace CosmosValidationUT.ValidatorsUT
             var d = new Dictionary<string, object>
             {
                 ["Name"] = "NiceBoat1000",
-                ["Length"] = 1000,
-                ["Width"] = 30,
+                ["Length"] = 1000L,
+                ["Width"] = 30L,
                 ["CreateTime"] = DateTimeFactory.Create(2020, 12, 21),
                 ["Email"] = "nice@boat.com"
             };
@@ -97,8 +97,8 @@ namespace CosmosValidationUT.ValidatorsUT
             var d = new Dictionary<string, object>
             {
                 ["Name"] = "",
-                ["Length"] = -1000,
-                ["Width"] = -30,
+                ["Length"] = -1000L,
+                ["Width"] = -30L,
                 ["CreateTime"] = DateTimeFactory.Create(2020, 12, 21),
                 ["Email"] = "nice@@boat.com"
             };
@@ -111,7 +111,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-            
+
             result1.Errors.Should().HaveCount(1);
             result2.Errors.Should().HaveCount(4);
         }
@@ -162,7 +162,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-            
+
             result1.Errors.Should().HaveCount(2);
             result2.Errors.Should().HaveCount(2);
         }
@@ -197,7 +197,7 @@ namespace CosmosValidationUT.ValidatorsUT
 
             result1.IsValid.ShouldBeFalse();
             result2.IsValid.ShouldBeFalse();
-            
+
             result1.Errors.Should().HaveCount(2);
             result2.Errors.Should().HaveCount(2);
         }
@@ -221,8 +221,8 @@ namespace CosmosValidationUT.ValidatorsUT
         public void VerifyOneTypeAndShouldBeFailureTest()
         {
             AnnotationValidator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Length").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Width").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10L, "Length").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10L, "Width").IsValid.ShouldBeFalse();
             AnnotationValidator.VerifyOne(typeof(NiceBoat), "2890000@", "Email").IsValid.ShouldBeFalse();
 
             AnnotationValidator.VerifyOne<NiceBoat, string>(x => x.Name, "").IsValid.ShouldBeFalse();
@@ -241,14 +241,14 @@ namespace CosmosValidationUT.ValidatorsUT
         public void VerifyOneByStructureTypeAndShouldBeSuccessTest()
         {
             AnnotationValidator.VerifyOne(typeof(NiceBoat), "Nice", "Name").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), 10, "Length").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), 10L, "Length").IsValid.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "VerifyOne a structure and return a failure VerifyResult.")]
         public void VerifyOneByStructureTypeAndShouldBeFailureTest()
         {
             AnnotationValidator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Length").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10L, "Length").IsValid.ShouldBeFalse();
         }
 
 #if !NETFRAMEWORK && !NETCOREAPP3_1
@@ -257,14 +257,14 @@ namespace CosmosValidationUT.ValidatorsUT
         public void VerifyOneByRecordTypeAndShouldBeSuccessTest()
         {
             AnnotationValidator.VerifyOne(typeof(NiceBoat), "Nice", "Name").IsValid.ShouldBeTrue();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), 10, "Length").IsValid.ShouldBeTrue();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), 10L, "Length").IsValid.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "VerifyOne a record and return a failure VerifyResult.")]
         public void VerifyOneByRecordTypeAndShouldBeFailureTest()
         {
             AnnotationValidator.VerifyOne(typeof(NiceBoat), "", "Name").IsValid.ShouldBeFalse();
-            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10, "Length").IsValid.ShouldBeFalse();
+            AnnotationValidator.VerifyOne(typeof(NiceBoat), -10L, "Length").IsValid.ShouldBeFalse();
         }
 #endif
 
@@ -274,8 +274,8 @@ namespace CosmosValidationUT.ValidatorsUT
             var d = new Dictionary<string, object>
             {
                 ["Name"] = "NiceBoat1000",
-                ["Length"] = 1000,
-                ["Width"] = 30,
+                ["Length"] = 1000L,
+                ["Width"] = 30L,
                 ["CreateTime"] = DateTimeFactory.Create(2020, 12, 21),
                 ["Email"] = "nice@boat.com"
             };
@@ -290,8 +290,8 @@ namespace CosmosValidationUT.ValidatorsUT
             var d = new Dictionary<string, object>
             {
                 ["Name"] = "",
-                ["Length"] = -1000,
-                ["Width"] = -30,
+                ["Length"] = -1000L,
+                ["Width"] = -30L,
                 ["CreateTime"] = DateTimeFactory.Create(2020, 12, 21),
                 ["Email"] = "nice@@boat.com"
             };

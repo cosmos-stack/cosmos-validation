@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cosmos.Validation.Internals;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 using Cosmos.Validation.Objects;
 using CosmosValidationUT.TokenUT.Models;
@@ -25,7 +26,6 @@ namespace CosmosValidationUT.TokenUT
             Func<object, bool> condition = obj => obj is string str && str.StartsWith("N");
 
             var token = new ValueAllToken(contract, condition);
-
             token.Valid(context).IsSuccess.ShouldBeTrue();
             token.Valid(member).IsSuccess.ShouldBeTrue();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cosmos.Reflection;
+using Cosmos.Validation.Internals;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Validators
@@ -76,6 +77,21 @@ namespace Cosmos.Validation.Validators
         public virtual VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
             return VerifyImpl(_objectResolver.Resolve(declaringType, keyValueCollections));
+        }
+
+        #endregion
+
+        #region VerifyViaContext
+
+        internal virtual VerifyResult VerifyViaContext(VerifiableOpsContext context)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+            if (context.OpsMode == VerifiableOpsMode.Object)
+                return VerifyImpl(context.VerifiableObjectContext);
+            if (context.OpsMode == VerifiableOpsMode.Member)
+                return VerifyOneImpl(context.VerifiableMemberContext);
+            return VerifyResult.Success;
         }
 
         #endregion

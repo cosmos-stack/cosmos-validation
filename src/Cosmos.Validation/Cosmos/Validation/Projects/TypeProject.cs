@@ -32,12 +32,16 @@ namespace Cosmos.Validation.Projects
 
         public VerifyResult Verify(VerifiableObjectContext context)
         {
-            return CorrectEngine.Valid(context, _rules);
+            return CorrectEngine.Valid(
+                VerifiableOpsContext.Create(context),
+                _rules);
         }
 
         public VerifyResult VerifyOne(VerifiableMemberContext context)
         {
-            return CorrectEngine.ValidOne(context, _rules.Where(x => x.MemberName == context.MemberName).ToList());
+            return CorrectEngine.ValidOne(
+                VerifiableOpsContext.Create(context),
+                _rules.Where(x => x.MemberName == context.MemberName).ToList());
         }
 
         public VerifyResult VerifyMany(IDictionary<string, VerifiableMemberContext> keyValueCollections)
