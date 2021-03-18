@@ -2,54 +2,29 @@
 using System.Collections;
 using System.Linq;
 using Cosmos.Validation.Internals.Extensions;
+using Cosmos.Validation.Internals.Tokens.ValueTokens.Basic;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
-    internal class ValueEmptyToken : ValueToken
+    /// <summary>
+    /// Empty token
+    /// </summary>
+    internal class ValueEmptyToken : ValueRequiredBasicToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "EmptyValueToken";
 
-        public static int[] _mutuallyExclusiveFlags = {90115, 90116, 90117, 90118};
+        // ReSharper disable once InconsistentNaming
+        public static readonly int[] _mutuallyExclusiveFlags = {90115, 90116, 90117, 90118};
 
-        public ValueEmptyToken(VerifiableMemberContract contract) : base(contract) { }
+        /// <inheritdoc />
+        public ValueEmptyToken(VerifiableMemberContract contract) : this(contract, false, NAME, _mutuallyExclusiveFlags) { }
 
-        public override string TokenName => NAME;
+        protected ValueEmptyToken(VerifiableMemberContract contract, bool not, string tokenName, int[] mutuallyExclusiveFlags)
+            : base(contract, not, tokenName, mutuallyExclusiveFlags) { }
 
-        public override bool MutuallyExclusive => true;
-
-        public override int[] MutuallyExclusiveFlags => _mutuallyExclusiveFlags;
-
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
-        {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (!IsValidImpl(value))
-            {
-                UpdateVal(verifyVal, value);
-            }
-
-            return verifyVal;
-        }
-
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
-        {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (!IsValidImpl(value))
-            {
-                UpdateVal(verifyVal, value);
-            }
-
-            return verifyVal;
-        }
-
-        private bool IsValidImpl(object value)
+        protected override bool IsValidImpl(object value)
         {
             switch (value)
             {
@@ -58,19 +33,29 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 case ICollection {Count: 0}:
                 case Array {Length: 0}:
                 case IEnumerable e when !e.Cast<object>().Any():
-                    return true;
+                    return ConclusionReversal(true);
             }
 
-            return Equals(value, VerifiableMember.GetDefaultValue());
+            return ConclusionReversal(Equals(value, VerifiableMember.GetDefaultValue()));
         }
 
-        private void UpdateVal(CorrectVerifyVal val, object obj)
-        {
-            val.IsSuccess = false;
-            val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage("The value is must be empty.");
-        }
+        protected override string GetDefaultMessageSinceToken(object obj) => "The value is must be empty.";
+    }
 
-        public override string ToString() => NAME;
+    /// <summary>
+    /// Not empty token
+    /// </summary>
+    internal class ValueNotEmptyToken : ValueEmptyToken
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string NAME = "ValueNotEmptyToken";
+
+        // ReSharper disable once InconsistentNaming
+        public static int[] _mutuallyExclusiveFlags = {90118};
+
+        /// <inheritdoc />
+        public ValueNotEmptyToken(VerifiableMemberContract contract) : base(contract, true, NAME, _mutuallyExclusiveFlags) { }
+
+        protected override string GetDefaultMessageSinceToken(object obj) => "The value is must be not empty.";
     }
 }

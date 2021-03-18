@@ -1,57 +1,45 @@
-﻿using Cosmos.Validation.Objects;
+﻿using Cosmos.Validation.Internals.Tokens.ValueTokens.Basic;
+using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
-    internal class ValueNullToken : ValueToken
+    /// <summary>
+    /// Null token
+    /// </summary>
+    internal class ValueNullToken : ValueRequiredBasicToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "NullValueToken";
 
         public static int[] _mutuallyExclusiveFlags = {90114};
 
-        public ValueNullToken(VerifiableMemberContract contract) : base(contract) { }
+        /// <inheritdoc />
+        public ValueNullToken(VerifiableMemberContract contract) : this(contract, false, NAME, _mutuallyExclusiveFlags) { }
 
-        public override string TokenName => NAME;
+        protected ValueNullToken(VerifiableMemberContract contract, bool not, string tokenName, int[] mutuallyExclusiveFlags)
+            : base(contract, not, tokenName, mutuallyExclusiveFlags) { }
 
-        public override bool MutuallyExclusive => true;
-
-        public override int[] MutuallyExclusiveFlags => _mutuallyExclusiveFlags;
-        
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        protected override bool IsValidImpl(object value)
         {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (value is not null)
-            {
-                UpdateVal(verifyVal, null);
-            }
-
-            return verifyVal;
+            return ConclusionReversal(value is null);
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
-        {
-            var verifyVal = CreateVerifyVal();
+        protected override string GetDefaultMessageSinceToken(object obj) => "The value is must be null.";
+    }
 
-            var value = GetValueFrom(context);
+    /// <summary>
+    /// Not-Null token
+    /// </summary>
+    internal class ValueNotNullToken : ValueNullToken
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string NAME = "NotNullValueToken";
 
-            if (value is not null)
-            {
-                UpdateVal(verifyVal, null);
-            }
+        public static int[] _mutuallyExclusiveFlags = {90111, 90112, 90113, 90114};
 
-            return verifyVal;
-        }
+        /// <inheritdoc />
+        public ValueNotNullToken(VerifiableMemberContract contract) : base(contract, true, NAME, _mutuallyExclusiveFlags) { }
 
-        private void UpdateVal(CorrectVerifyVal val, object obj)
-        {
-            val.IsSuccess = false;
-            val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage("The value is must be null.");
-        }
-
-        public override string ToString() => NAME;
+        protected override string GetDefaultMessageSinceToken(object obj) => "The value is must be not null.";
     }
 }

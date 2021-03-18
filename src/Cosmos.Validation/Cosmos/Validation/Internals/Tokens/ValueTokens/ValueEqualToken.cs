@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using Cosmos.Validation.Internals.Extensions;
+using Cosmos.Validation.Internals.Tokens.ValueTokens.Basic;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
-    internal class ValueEqualToken : ValueToken
+    /// <summary>
+    /// Equal token
+    /// </summary>
+    internal class ValueEqualToken : ValueRequiredBasicToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueEqualToken";
@@ -13,70 +19,101 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly Type _typeOfValueToCompare;
         private readonly IEqualityComparer _comparer;
 
-        public ValueEqualToken(VerifiableMemberContract contract, object valueToCompare, IEqualityComparer comparer) : base(contract)
+        /// <inheritdoc />
+        public ValueEqualToken(VerifiableMemberContract contract, object valueToCompare, IEqualityComparer comparer)
+            : this(contract, valueToCompare, comparer, false, NAME) { }
+
+        protected ValueEqualToken(VerifiableMemberContract contract, object valueToCompare, IEqualityComparer comparer, bool not, string tokenName)
+            : base(contract, not, tokenName)
         {
             _valueToCompare = valueToCompare;
             _typeOfValueToCompare = _valueToCompare.GetType();
             _comparer = comparer;
         }
 
-        public override string TokenName => NAME;
-
-        public override bool MutuallyExclusive => false;
-
-        public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
-
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
-        {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (!IsValidImpl(value))
-            {
-                UpdateVal(verifyVal, value);
-            }
-
-            return verifyVal;
-        }
-
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
-        {
-            var verifyVal = CreateVerifyVal();
-
-            var value = GetValueFrom(context);
-
-            if (!IsValidImpl(value))
-            {
-                UpdateVal(verifyVal, value);
-            }
-
-            return verifyVal;
-        }
-
-        private bool IsValidImpl(object value)
+        protected override bool IsValidImpl(object value)
         {
             if (_comparer != null)
             {
-                return _comparer.Equals(_valueToCompare, value);
+                return ConclusionReversal(_comparer.Equals(_valueToCompare, value));
             }
 
             if (VerifiableMember.MemberType.IsValueType && _typeOfValueToCompare.IsValueType)
             {
                 if (ValueTypeEqualCalculator.Valid(VerifiableMember.MemberType, value, _typeOfValueToCompare, _valueToCompare))
-                    return true;
+                    return ConclusionReversal(true);
             }
 
-            return Equals(_valueToCompare, value);
+            return ConclusionReversal(Equals(_valueToCompare, value));
         }
 
-        private void UpdateVal(CorrectVerifyVal val, object obj)
+        protected override string GetDefaultMessageSinceToken(object obj) => $"The two values given must be equal. The current value is: {obj} and the value being compared is {_valueToCompare}.";
+    }
+
+    /// <summary>
+    /// Equal token, a generic version.
+    /// </summary>
+    /// <typeparam name="TVal"></typeparam>
+    internal class ValueEqualToken<TVal> : ValueRequiredBasicToken<TVal>
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string NAME = "GenericValueEqualToken";
+
+        private readonly TVal _valueToCompare;
+        private readonly IEqualityComparer<TVal> _comparer;
+
+        /// <inheritdoc />
+        public ValueEqualToken(VerifiableMemberContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer)
+            : this(contract, valueToCompare, comparer, false, NAME) { }
+
+        protected ValueEqualToken(VerifiableMemberContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer, bool not, string tokenName)
+            : base(contract, not, tokenName)
         {
-            val.IsSuccess = false;
-            val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage($"The two values given must be equal. The current value is: {obj} and the value being compared is {_valueToCompare}.");
+            _valueToCompare = valueToCompare;
+            _comparer = comparer;
         }
 
-        public override string ToString() => NAME;
+        protected override bool IsValidImpl(TVal value)
+        {
+            if (_comparer != null)
+            {
+                return ConclusionReversal(_comparer.Equals(_valueToCompare, value));
+            }
+
+            return ConclusionReversal(Equals(_valueToCompare, value));
+        }
+
+        protected override string GetDefaultMessageSinceToken(TVal obj) => $"The two values given must be equal. The current value is: {obj} and the value being compared is {_valueToCompare}.";
+    }
+
+    /// <summary>
+    /// Not equal token
+    /// </summary>
+    internal class ValueNotEqualToken : ValueEqualToken
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string NAME = "ValueNotEqualToken";
+
+        /// <inheritdoc />
+        public ValueNotEqualToken(VerifiableMemberContract contract, object valueToCompare, IEqualityComparer comparer)
+            : base(contract, valueToCompare, comparer, true, NAME) { }
+
+        protected override string GetDefaultMessageSinceToken(object obj) => $"The values must not be equal. The current value type is: {VerifiableMember.MemberType.GetFriendlyName()}.";
+    }
+
+    /// <summary>
+    /// Not equal token, a generic version.
+    /// </summary>
+    /// <typeparam name="TVal"></typeparam>
+    internal class ValueNotEqualToken<TVal> : ValueEqualToken<TVal>
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string NAME = "GenericValueNotEqualToken";
+
+        /// <inheritdoc />
+        public ValueNotEqualToken(VerifiableMemberContract contract, TVal valueToCompare, IEqualityComparer<TVal> comparer)
+            : base(contract, valueToCompare, comparer, true, NAME) { }
+
+        protected override string GetDefaultMessageSinceToken(TVal obj) => $"The values must not be equal. The current value type is: {VerifiableMember.MemberType.GetFriendlyName()}.";
     }
 }
