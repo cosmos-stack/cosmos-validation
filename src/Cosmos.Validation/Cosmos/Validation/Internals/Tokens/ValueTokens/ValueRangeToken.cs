@@ -3,6 +3,9 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Range token
+    /// </summary>
     internal class ValueRangeToken : ValueToken
     {
         // ReSharper disable once InconsistentNaming
@@ -12,7 +15,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         private readonly RangeOptions _options;
 
         private bool _returnFalseDirectly;
-        
+
+        /// <inheritdoc />
         public ValueRangeToken(VerifiableMemberContract contract, object from, object to, RangeOptions options) : base(contract)
         {
             if (from is null || to is null)
@@ -50,13 +54,27 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _options = options;
         }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName => NAME;
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => false;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -70,7 +88,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -211,7 +234,5 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage(message ?? $"The given value is not in the valid range. The current value is: {obj}, and the valid range is from {_from} to {_to}.");
         }
-
-        public override string ToString() => NAME;
     }
 }

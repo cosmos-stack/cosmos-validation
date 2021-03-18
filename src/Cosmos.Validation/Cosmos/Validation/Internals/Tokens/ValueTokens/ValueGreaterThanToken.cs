@@ -4,13 +4,25 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Greater than token
+    /// </summary>
     internal class ValueGreaterThanToken : ValueCompareBasicToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueGreaterThanToken";
 
+        /// <inheritdoc />
         public ValueGreaterThanToken(VerifiableMemberContract contract, object valueToCompare) : base(contract, valueToCompare, NAME) { }
 
+        /// <summary>
+        /// Impl of valid ops.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="valueToCompare"></param>
+        /// <param name="typeOfValueToCompare"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         protected override bool IsValidImpl(object value, object valueToCompare, Type typeOfValueToCompare, out string message)
         {
             message = null;
@@ -35,6 +47,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return false;
         }
 
+        /// <inheritdoc />
         protected override void UpdateVal(CorrectVerifyVal val, object obj, object valueToCompare, string message = null)
         {
             val.IsSuccess = false;

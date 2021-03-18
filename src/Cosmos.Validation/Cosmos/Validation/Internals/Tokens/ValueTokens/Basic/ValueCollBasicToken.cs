@@ -5,10 +5,14 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
 {
+    /// <summary>
+    /// Abstract basic token for collection type.
+    /// </summary>
     internal abstract class ValueCollBasicToken : ValueToken
     {
         private readonly Func<object, bool> _func;
 
+        /// <inheritdoc />
         protected ValueCollBasicToken(VerifiableMemberContract contract, Func<object, bool> func, string tokenName) : base(contract)
         {
             _func = func;
@@ -16,13 +20,27 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
             TokenName = tokenName;
         }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName { get; }
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => false;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -43,7 +61,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -64,6 +87,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
             return verifyVal;
         }
 
+        /// <summary>
+        /// Impl of valid ops.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         protected abstract bool IsValidImpl(ICollection collection, Func<object, bool> func);
 
         private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)
@@ -72,7 +101,5 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage(message ?? "There are no members that meet the conditions in the array or collection.");
         }
-
-        public override string ToString() => TokenName;
     }
 }

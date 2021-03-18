@@ -6,6 +6,9 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Not-In token
+    /// </summary>
     internal class ValueNotInToken : ValueToken
     {
         // ReSharper disable once InconsistentNaming
@@ -13,18 +16,33 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private readonly ICollection<object> _objects;
 
+        /// <inheritdoc />
         public ValueNotInToken(VerifiableMemberContract contract, ICollection<object> objects) : base(contract)
         {
             _objects = objects ?? Arrays.Empty<object>();
         }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName => NAME;
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => false;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -38,7 +56,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -71,7 +94,5 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage("The value is contained in the given value array or collection.");
         }
-
-        public override string ToString() => NAME;
     }
 }

@@ -4,6 +4,9 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Max length limited token
+    /// </summary>
     internal class ValueMaxLengthLimitedToken : ValueToken
     {
         // ReSharper disable once InconsistentNaming
@@ -12,6 +15,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private readonly int _maxLength;
 
+        /// <inheritdoc />
         public ValueMaxLengthLimitedToken(VerifiableMemberContract contract, int max) : base(contract)
         {
             if (max < 0)
@@ -19,13 +23,27 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             _maxLength = max;
         }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName => NAME;
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => true;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => _mutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
            
@@ -39,7 +57,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
            
@@ -78,11 +101,6 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             val.IsSuccess = false;
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage($"The array length should be less than {_maxLength}, and the current length is {currentLength}.");
-        }
-
-        public override string ToString()
-        {
-            return $"{NAME}: The maximum length is {_maxLength}.";
         }
     }
 }

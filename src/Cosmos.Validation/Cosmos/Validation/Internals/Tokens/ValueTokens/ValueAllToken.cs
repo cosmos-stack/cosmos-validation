@@ -7,27 +7,49 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// All token
+    /// </summary>
     internal class ValueAllToken : ValueCollBasicToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueAllToken";
 
+        /// <inheritdoc />
         public ValueAllToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract, func, NAME) { }
 
+        /// <summary>
+        /// Impl of valid ops.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         protected override bool IsValidImpl(ICollection collection, Func<object, bool> func)
         {
             return collection.Cast<object>().All(one => func!.Invoke(one));
         }
     }
 
+    /// <summary>
+    /// All token, a generic version.
+    /// </summary>
+    /// <typeparam name="TVal"></typeparam>
+    /// <typeparam name="TItem"></typeparam>
     internal class ValueAllToken<TVal, TItem> : ValueCollBasicToken<TVal, TItem>
         where TVal : IEnumerable<TItem>
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "GenericValueAllToken";
 
+        /// <inheritdoc />
         public ValueAllToken(VerifiableMemberContract contract, Func<TItem, bool> func) : base(contract, func, NAME) { }
 
+        /// <summary>
+        /// Impl of valid ops
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         protected override bool IsValidImpl(ICollection collection, Func<TItem, bool> func)
         {
             return collection.Cast<TItem>().All(one => func!.Invoke(one));

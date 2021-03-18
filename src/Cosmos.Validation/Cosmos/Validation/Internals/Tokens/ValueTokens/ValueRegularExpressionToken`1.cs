@@ -5,49 +5,73 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Regular expression token, a generic version
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class ValueRegularExpressionToken<T> : ValueToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "GenericValueRegularExpressionToken";
         readonly Func<T, Regex> _regexFunc;
 
+        /// <inheritdoc />
         public ValueRegularExpressionToken(VerifiableMemberContract contract, string expression) : base(contract)
         {
             _regexFunc = x => CreateRegex(expression);
         }
 
+        /// <inheritdoc />
         public ValueRegularExpressionToken(VerifiableMemberContract contract, Regex regex) : base(contract)
         {
             _regexFunc = x => regex;
         }
 
+        /// <inheritdoc />
         public ValueRegularExpressionToken(VerifiableMemberContract contract, string expression, RegexOptions options) : base(contract)
         {
             _regexFunc = x => CreateRegex(expression, options);
         }
 
+        /// <inheritdoc />
         public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<T, string> expressionFunc) : base(contract)
         {
             _regexFunc = x => CreateRegex(expressionFunc(x));
         }
 
+        /// <inheritdoc />
         public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<T, Regex> regexFunc) : base(contract)
         {
             _regexFunc = regexFunc;
         }
 
+        /// <inheritdoc />
         public ValueRegularExpressionToken(VerifiableMemberContract contract, Func<T, string> expressionFunc, RegexOptions options) : base(contract)
         {
             _regexFunc = x => CreateRegex(expressionFunc(x), options);
         }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName => NAME;
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => false;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -70,7 +94,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -108,7 +137,5 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             return new(expression, options, TimeSpan.FromSeconds(2.0));
         }
-
-        public override string ToString() => NAME;
     }
 }

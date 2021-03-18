@@ -8,11 +8,15 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Scale precision token
+    /// </summary>
     internal class ValueScalePrecisionToken : ValueToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueScalePrecisionToken";
 
+        /// <inheritdoc />
         public ValueScalePrecisionToken(VerifiableMemberContract contract, int scale, int precision, bool ignoreTrailingZeros = false) : base(contract)
         {
             Init(scale, precision);
@@ -36,19 +40,42 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                     $"Scale must be less than precision. Current scale is {Scale} and precision is {Precision}.");
         }
 
+        /// <summary>
+        /// Scale
+        /// </summary>
         public int Scale { get; set; }
 
+        /// <summary>
+        /// Precision
+        /// </summary>
         public int Precision { get; set; }
 
+        /// <summary>
+        /// Ignore trailing zeros
+        /// </summary>
         public bool IgnoreTrailingZeros { get; set; }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName => NAME;
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => true;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -62,7 +89,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -162,7 +194,5 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage($"The given value must not be more than {Precision} digits in total, with allowance for {Scale} decimals. {actualIntegerDigits} digits and {actualScale} decimals were found.");
         }
-
-        public override string ToString() => NAME;
     }
 }

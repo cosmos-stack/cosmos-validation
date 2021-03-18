@@ -4,24 +4,42 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
+    /// <summary>
+    /// Enum token
+    /// </summary>
     internal class ValueEnumToken : ValueToken
     {
         // ReSharper disable once InconsistentNaming
         public const string NAME = "ValueEnumToken";
         private readonly Type _enumType;
 
+        /// <inheritdoc />
         public ValueEnumToken(VerifiableMemberContract contract, Type enumType) : base(contract)
         {
             _enumType = enumType ?? throw new ArgumentNullException(nameof(enumType));
         }
 
+        /// <summary>
+        /// Name of verifiable token
+        /// </summary>
         public override string TokenName => NAME;
 
+        /// <summary>
+        /// To mark this Verifiable token as a mutually exclusive token.
+        /// </summary>
         public override bool MutuallyExclusive => false;
 
+        /// <summary>
+        /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
+        /// </summary>
         public override int[] MutuallyExclusiveFlags => NoMutuallyExclusiveFlags;
 
-        public override CorrectVerifyVal Valid(VerifiableObjectContext context)
+        /// <summary>
+        /// Verification for VerifiableObjectContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -33,7 +51,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             return verifyVal;
         }
 
-        public override CorrectVerifyVal Valid(VerifiableMemberContext context)
+        /// <summary>
+        /// Verification for VerifiableMemberContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
             var verifyVal = CreateVerifyVal();
 
@@ -129,12 +152,15 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage(message ?? $"'{VerifiableMember.MemberName}' has a range of values which does not include '{obj}'.");
         }
-
-        public override string ToString() => NAME;
     }
 
+    /// <summary>
+    /// Enum token, a generic version.
+    /// </summary>
+    /// <typeparam name="TEnum"></typeparam>
     internal class ValueEnumToken<TEnum> : ValueEnumToken
     {
+        /// <inheritdoc />
         public ValueEnumToken(VerifiableMemberContract contract) : base(contract, typeof(TEnum)) { }
     }
 }
