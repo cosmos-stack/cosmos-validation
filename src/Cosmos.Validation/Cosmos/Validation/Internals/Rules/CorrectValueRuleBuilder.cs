@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Cosmos.Reflection;
-using Cosmos.Validation.Internals.Tokens;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 using Cosmos.Validation.Objects;
 
@@ -18,19 +16,21 @@ namespace Cosmos.Validation.Internals.Rules
         public CorrectValueRuleBuilder(VerifiableMemberContract contract)
         {
             _contract = contract;
-            State = new CorrectValueRuleState();
+            State = new CorrectValueRuleState(contract);
         }
 
         public CorrectValueRuleBuilder(VerifiableMemberContract contract, ValueRuleMode mode)
         {
             _contract = contract;
+            State = new CorrectValueRuleState(contract);
             Mode = mode.X();
-            State = new CorrectValueRuleState();
         }
 
         public string MemberName => _contract.MemberName;
 
         public CorrectValueRuleMode Mode { get; set; } = CorrectValueRuleMode.Append;
+
+        #region Update Mode of ValueRule
 
         public IValueRuleBuilder AppendRule()
         {
@@ -43,6 +43,26 @@ namespace Cosmos.Validation.Internals.Rules
             Mode = CorrectValueRuleMode.Overwrite;
             return this;
         }
+
+        #endregion
+
+        #region Condition
+
+        public IValueRuleBuilder And()
+        {
+            State.GroupWithAndOps();
+            return this;
+        }
+
+        public IValueRuleBuilder Or()
+        {
+            State.GroupWithOrOps();
+            return this;
+        }
+
+        #endregion
+
+        #region Rules
 
         public IValueRuleBuilder Empty()
         {
@@ -636,23 +656,11 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
+        #endregion
+
         public CorrectValueRule Build()
         {
-            return BuildImpl();
-        }
-
-        private IGroupedValueToken Group()
-        {
-            var tokenName = $"GroupedValueToken_[{MemberName}]${HashCodeUtil.GetHashCode(new object[] {_contract, State.ExposeValueTokens(), DateTime.Now.Ticks, Mode.ToString()})}";
-
-            return new GroupedValueToken(tokenName, BuildImpl());
-        }
-
-        private CorrectValueRule BuildImpl()
-        {
-            State.ClearCurrentToken();
-
-            return new CorrectValueRule
+            return new()
             {
                 MemberName = MemberName,
                 Contract = _contract,

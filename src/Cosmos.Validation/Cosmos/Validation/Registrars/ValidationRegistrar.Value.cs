@@ -56,6 +56,22 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region Condition
+
+        public IValueFluentValidationRegistrar And()
+        {
+            ValueRuleBuilder.And();
+            return this;
+        }
+        
+        public IValueFluentValidationRegistrar Or()
+        {
+            ValueRuleBuilder.Or();
+            return this;
+        }
+
+        #endregion
+
         #region ValueRules
 
         public IValueFluentValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval)

@@ -15,6 +15,8 @@ namespace Cosmos.Validation.Registrars
         Type DeclaringType { get; }
         Type MemberType { get; }
         IValueFluentValidationRegistrar WithConfig(Func<IValueRuleBuilder, IValueRuleBuilder> func);
+        IValueFluentValidationRegistrar And();
+        IValueFluentValidationRegistrar Or();
         IValueFluentValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
         IValueFluentValidationRegistrar RangeWithOpenInterval(object from, object to);
         IValueFluentValidationRegistrar RangeWithCloseInterval(object from, object to);
@@ -286,6 +288,10 @@ namespace Cosmos.Validation.Registrars
         Type DeclaringType { get; }
         Type MemberType { get; }
         IValueFluentValidationRegistrar<T> WithConfig(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
+
+        IValueFluentValidationRegistrar<T> And();
+
+        IValueFluentValidationRegistrar<T> Or();
 
         IValueFluentValidationRegistrar<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
 
@@ -561,9 +567,14 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
+
+        new IValueFluentValidationRegistrar<T, TVal> And();
+
+        new IValueFluentValidationRegistrar<T, TVal> Or();
 
         IValueFluentValidationRegistrar<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval);
 

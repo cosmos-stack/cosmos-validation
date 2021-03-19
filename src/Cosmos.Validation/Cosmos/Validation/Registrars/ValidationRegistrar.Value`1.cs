@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -52,6 +51,22 @@ namespace Cosmos.Validation.Registrars
             if (builder is not null)
                 ValueRuleBuilder = (CorrectValueRuleBuilder<T>) builder;
 
+            return this;
+        }
+
+        #endregion
+        
+        #region Condition
+
+        public IValueFluentValidationRegistrar<T> And()
+        {
+            ValueRuleBuilder.And();
+            return this;
+        }
+        
+        public IValueFluentValidationRegistrar<T> Or()
+        {
+            ValueRuleBuilder.Or();
             return this;
         }
 

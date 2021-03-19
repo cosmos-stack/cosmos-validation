@@ -40,6 +40,22 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region Condition
+
+        public new IValueFluentValidationRegistrar<T, TVal> And()
+        {
+            ValueRuleBuilder.And();
+            return this;
+        }
+
+        public new IValueFluentValidationRegistrar<T, TVal> Or()
+        {
+            ValueRuleBuilder.Or();
+            return this;
+        }
+
+        #endregion
+
         #region ValueRules`2
 
         public IValueFluentValidationRegistrar<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval)

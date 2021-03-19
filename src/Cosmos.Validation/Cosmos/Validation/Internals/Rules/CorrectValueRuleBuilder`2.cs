@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Cosmos.Reflection;
-using Cosmos.Validation.Internals.Tokens;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 using Cosmos.Validation.Objects;
 
@@ -13,6 +11,8 @@ namespace Cosmos.Validation.Internals.Rules
         public CorrectValueRuleBuilder(VerifiableMemberContract contract) : base(contract) { }
 
         public CorrectValueRuleBuilder(VerifiableMemberContract contract, ValueRuleMode mode) : base(contract, mode) { }
+
+        #region Update Mode of ValueRule
 
         public new IValueRuleBuilder<T, TVal> AppendRule()
         {
@@ -25,6 +25,26 @@ namespace Cosmos.Validation.Internals.Rules
             Mode = CorrectValueRuleMode.Overwrite;
             return this;
         }
+
+        #endregion
+
+        #region Condition
+
+        public new IValueRuleBuilder<T, TVal> And()
+        {
+            State.GroupWithAndOps();
+            return this;
+        }
+
+        public new IValueRuleBuilder<T, TVal> Or()
+        {
+            State.GroupWithOrOps();
+            return this;
+        }
+
+        #endregion
+
+        #region Rules
 
         public new IValueRuleBuilder<T, TVal> Empty()
         {
@@ -124,25 +144,25 @@ namespace Cosmos.Validation.Internals.Rules
 
         public IValueRuleBuilder<T, TVal> LessThan(TVal value)
         {
-            State.CurrentToken = new ValueLessThanToken<TVal>(_contract, value);
+            State.CurrentToken = new ValueLessThanToken(_contract, value);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value)
         {
-            State.CurrentToken = new ValueLessThanOrEqualToken<TVal>(_contract, value);
+            State.CurrentToken = new ValueLessThanOrEqualToken(_contract, value);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> GreaterThan(TVal value)
         {
-            State.CurrentToken = new ValueGreaterThanToken<TVal>(_contract, value);
+            State.CurrentToken = new ValueGreaterThanToken(_contract, value);
             return this;
         }
 
         public IValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value)
         {
-            State.CurrentToken = new ValueGreaterThanOrEqualToken<TVal>(_contract, value);
+            State.CurrentToken = new ValueGreaterThanOrEqualToken(_contract, value);
             return this;
         }
 
@@ -588,28 +608,6 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
-        public new CorrectValueRule<TVal> Build()
-        {
-            return BuildImpl();
-        }
-
-        private IGroupedValueToken<TVal> Group()
-        {
-            var tokenName = $"GroupedValueToken_[{MemberName}]${HashCodeUtil.GetHashCode(new object[] {_contract, State.ExposeValueTokens(), DateTime.Now.Ticks, Mode.ToString()})}";
-
-            return new GroupedValueToken<TVal>(tokenName, BuildImpl());
-        }
-
-        private CorrectValueRule<TVal> BuildImpl()
-        {
-            State.ClearCurrentToken();
-
-            return new CorrectValueRule<TVal>
-            {
-                MemberName = MemberName,
-                Mode = Mode,
-                Tokens = State.ExposeValueTokens(),
-            };
-        }
+        #endregion
     }
 }

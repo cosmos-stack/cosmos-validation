@@ -5,7 +5,7 @@ namespace Cosmos.Validation.Internals
 {
     internal static class CorrectVerifyValExtensions
     {
-        public static List<VerifyFailure> ConvertToFailures(this Dictionary<string, List<CorrectVerifyVal>> verifyValDictionary)
+        public static List<VerifyFailure> ConvertToFailures(this Dictionary<string, CorrectVerifyValState> verifyValDictionary)
         {
             var failures = new List<VerifyFailure>();
 
@@ -13,8 +13,12 @@ namespace Cosmos.Validation.Internals
 
             foreach (var pair in verifyValDictionary)
             {
+                if (!pair.Value.IncludeFailures)
+                    continue;
+
                 var memberName = pair.Key;
-                var verifyValSet = pair.Value.Where(x => x.IsSuccess == false).ToList();
+
+                var verifyValSet = pair.Value.GetCorrectVerifyValSet().ToList();
 
                 if (!verifyValSet.Any())
                     continue;
