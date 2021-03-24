@@ -1,4 +1,5 @@
 ﻿using System;
+using Cosmos.Reflection;
 
 namespace Cosmos.Validation.Registrars
 {
@@ -61,6 +62,78 @@ namespace Cosmos.Validation.Registrars
         public static IValueFluentValidationRegistrar<T, TVal> Required<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().Required();
+            return registrar;
+        }
+        
+        public static IValueFluentValidationRegistrar RequiredString(this IValueFluentValidationRegistrar registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredString();
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T> RequiredString<T>(this IValueFluentValidationRegistrar<T> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredString();
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T, TVal> RequiredString<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().RequiredString();
+            return registrar;
+        }
+        
+        public static IValueFluentValidationRegistrar RequiredNumeric(this IValueFluentValidationRegistrar registrar,TypeIsOptions isOptions=TypeIsOptions.Default)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredNumeric(isOptions);
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T> RequiredNumeric<T>(this IValueFluentValidationRegistrar<T> registrar,TypeIsOptions isOptions=TypeIsOptions.Default)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredNumeric(isOptions);
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T, TVal> RequiredNumeric<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar,TypeIsOptions isOptions=TypeIsOptions.Default)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().RequiredNumeric(isOptions);
+            return registrar;
+        }
+        
+        public static IValueFluentValidationRegistrar RequiredBoolean(this IValueFluentValidationRegistrar registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredBoolean();
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T> RequiredBoolean<T>(this IValueFluentValidationRegistrar<T> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredBoolean();
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T, TVal> RequiredBoolean<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().RequiredBoolean();
+            return registrar;
+        }
+        
+        public static IValueFluentValidationRegistrar RequiredGuid(this IValueFluentValidationRegistrar registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredGuid();
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T> RequiredGuid<T>(this IValueFluentValidationRegistrar<T> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredGuid();
+            return registrar;
+        }
+
+        public static IValueFluentValidationRegistrar<T, TVal> RequiredGuid<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().RequiredGuid();
             return registrar;
         }
 
