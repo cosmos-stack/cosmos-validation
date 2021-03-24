@@ -4,11 +4,16 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
 {
     internal abstract class ValueRequiredBasicToken : ValueToken
     {
-        protected ValueRequiredBasicToken(VerifiableMemberContract contract, bool not, string tokenName, int[] mutuallyExclusiveFlags = null) : base(contract)
+        protected ValueRequiredBasicToken(
+            VerifiableMemberContract contract,
+            bool not,
+            string tokenName,
+            int[] mutuallyExclusiveFlags = null,
+            bool? mutuallyExclusive = null) : base(contract)
         {
             Not = not;
             TokenName = tokenName;
-            MutuallyExclusive = mutuallyExclusiveFlags is not null;
+            MutuallyExclusive = mutuallyExclusive ?? mutuallyExclusiveFlags is not null;
             MutuallyExclusiveFlags = mutuallyExclusiveFlags ?? NoMutuallyExclusiveFlags;
         }
 
