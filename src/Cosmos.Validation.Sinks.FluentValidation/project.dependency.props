@@ -7,7 +7,7 @@
     <ItemGroup>
         <PackageReference Include="FluentValidation">
             <Version Condition=" '$(TargetFramework)' == 'net452' ">8.6.3</Version>
-            <Version Condition=" '$(TargetFramework)' != 'net452' ">9.5.1</Version>
+            <Version Condition=" '$(TargetFramework)' != 'net452' ">9.5.3</Version>
         </PackageReference>
     </ItemGroup>
 
