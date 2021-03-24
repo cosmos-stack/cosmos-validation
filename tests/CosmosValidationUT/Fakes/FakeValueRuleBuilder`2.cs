@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using Cosmos.Validation;
 using Cosmos.Validation.Objects;
+
 #pragma warning disable 108,114
 
 namespace CosmosValidationUT.Fakes
@@ -11,12 +12,23 @@ namespace CosmosValidationUT.Fakes
     public class FakeValueRuleBuilder<T, TVal> : FakeValueRuleBuilder<T>, IValueRuleBuilder<T, TVal>
     {
         public FakeValueRuleBuilder(VerifiableMemberContract contract) : base(contract) { }
+
         public IValueRuleBuilder<T, TVal> AppendRule()
         {
             throw new NotImplementedException();
         }
 
         public IValueRuleBuilder<T, TVal> OverwriteRule()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> And()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> Or()
         {
             throw new NotImplementedException();
         }

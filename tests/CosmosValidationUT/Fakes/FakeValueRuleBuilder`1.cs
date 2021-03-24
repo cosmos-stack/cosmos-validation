@@ -27,6 +27,16 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IValueRuleBuilder<T> And()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Or()
+        {
+            throw new NotImplementedException();
+        }
+
         public IValueRuleBuilder<T> Empty()
         {
             throw new NotImplementedException();

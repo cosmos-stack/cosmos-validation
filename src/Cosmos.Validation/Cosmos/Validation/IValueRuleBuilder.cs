@@ -14,6 +14,10 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder OverwriteRule();
 
+        IValueRuleBuilder And();
+
+        IValueRuleBuilder Or();
+
         IValueRuleBuilder Empty();
 
         IValueRuleBuilder NotEmpty();
@@ -367,6 +371,10 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder<T> OverwriteRule();
 
+        IValueRuleBuilder<T> And();
+
+        IValueRuleBuilder<T> Or();
+
         IValueRuleBuilder<T> Empty();
 
         IValueRuleBuilder<T> NotEmpty();
@@ -719,6 +727,10 @@ namespace Cosmos.Validation
         new IValueRuleBuilder<T, TVal> AppendRule();
 
         new IValueRuleBuilder<T, TVal> OverwriteRule();
+
+        new IValueRuleBuilder<T, TVal> And();
+
+        new IValueRuleBuilder<T, TVal> Or();
 
         new IValueRuleBuilder<T, TVal> Empty();
 
