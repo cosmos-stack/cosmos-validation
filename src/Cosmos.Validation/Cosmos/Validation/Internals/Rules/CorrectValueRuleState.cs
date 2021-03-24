@@ -24,11 +24,15 @@ namespace Cosmos.Validation.Internals.Rules
             get => _currentTokenPtr;
             set
             {
-                if (value is not null)
-                {
-                    _currentTokenPtr = value;
+                if (value is null)
+                    return;
+
+                if (NodeState is null)
                     ValueTokens.Add(value);
-                }
+                else
+                    NodeState.CurrentToken = value;
+
+                _currentTokenPtr = value;
             }
         }
 
@@ -37,32 +41,83 @@ namespace Cosmos.Validation.Internals.Rules
             _currentTokenPtr = null;
         }
 
-        private CorrectValueRuleNodeState NodeState { get; set; }
-
-        public void GroupWithBreakOps() => Group(ConditionOps.Break, true);
-
-        public void GroupWithAndOps() => Group(ConditionOps.And);
-
-        public void GroupWithOrOps() => Group(ConditionOps.Or);
-
-        private void Group(ConditionOps nextOps, bool ignoreFixBreakOps = false)
+        private void ClearValueTokens()
         {
-            if (NodeState is null)
-                NodeState = new CorrectValueRuleNodeState(_contract, ValueTokens, nextOps);
-            else
-                NodeState.ArchiveCurrentTokenAsGroup(ValueTokens, nextOps, ignoreFixBreakOps);
-
-            ClearCurrentToken();
+            ValueTokens.Clear();
         }
 
-        public List<IValueToken> ExposeValueTokens()
+        private CorrectValueRuleNodeState NodeState { get; set; }
+
+        public void MakeBreakOps() => MakeOps(ConditionOps.Break, true, true);
+
+        public void MakeAndOps() => MakeOps(ConditionOps.And);
+
+        public void MakeOrOps() => MakeOps(ConditionOps.Or);
+
+        private void MakeOps(ConditionOps thisOps, bool ignoreFixBreakOps = false, bool tailOps = false)
         {
+            if (NodeState is null)
+                Shift(thisOps);
+            NodeState.NextOps(thisOps, ignoreFixBreakOps, tailOps);
+        }
+
+        private void Shift(ConditionOps thisOps)
+        {
+            var group = new GroupedValueToken(_contract, ValueTokens);
+
+            // ValueTokens.Count > 1  <---- 隐式 AND
+            // ValueTokens.Count = 1  <---- 显式 Ops
+
+            ConditionOps implicitNextOps;
+
+            if (ValueTokens.Count == 1)
+            {
+                group.LogicFlag = thisOps != ConditionOps.Or;
+                group.Relationship = thisOps;
+                implicitNextOps = ConditionOps.Break;
+            }
+            else
+            {
+                implicitNextOps = ConditionOps.And;
+            }
+
+            NodeState = new(_contract, group, _currentTokenPtr, implicitNextOps);
+
+            ClearValueTokens();
+        }
+
+        private void BreakOfRelationship(List<IValueToken> independentTokens)
+        {
+            var node = (GroupedValueToken) NodeState.ExposeRootNode();
+
+            while (node is not null)
+            {
+                independentTokens.Add(node);
+                var next = (GroupedValueToken) node.NextNode;
+                node.NextNode = null;
+                node = next;
+            }
+        }
+
+        public List<IValueToken> ExposeValueTokens(out ConditionOps lastOps)
+        {
+            lastOps = ConditionOps.Break;
+
             if (NodeState is null)
                 return ValueTokens;
             if (_currentTokenPtr is not null)
-                GroupWithBreakOps();
-            
-            return new List<IValueToken> {NodeState.ExposeRootNode()};
+                MakeBreakOps();
+
+            ClearCurrentToken();
+            ClearValueTokens();
+
+            lastOps = NodeState.ExposeTopLevelOps();
+
+            var result = new List<IValueToken>();
+
+            BreakOfRelationship(result);
+
+            return result;
         }
     }
 }

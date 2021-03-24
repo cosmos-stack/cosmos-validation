@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cosmos.Collections;
 using Cosmos.Text;
 using Cosmos.Validation.Internals.Exceptions;
 
@@ -70,7 +71,7 @@ namespace Cosmos.Validation
         /// <summary>
         /// Return all error messages.
         /// </summary>
-        public IEnumerable<VerifyFailure> Errors
+        public IList<VerifyFailure> Errors
         {
             get
             {
@@ -83,7 +84,7 @@ namespace Cosmos.Validation
         /// <summary>
         /// Returns the names of all fields with errors.
         /// </summary>
-        public IEnumerable<string> MemberNames => Errors.Select(e => e.PropertyName);
+        public IList<string> MemberNames => Errors.Select(e => e.PropertyName).ToList();
 
         #region ToString
 

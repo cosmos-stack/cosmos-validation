@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Cosmos.Validation.Internals.Conditions;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 using Cosmos.Validation.Objects;
 
@@ -50,13 +51,13 @@ namespace Cosmos.Validation.Internals.Rules
 
         public IValueRuleBuilder And()
         {
-            State.GroupWithAndOps();
+            State.MakeAndOps();
             return this;
         }
 
         public IValueRuleBuilder Or()
         {
-            State.GroupWithOrOps();
+            State.MakeOrOps();
             return this;
         }
 
@@ -660,13 +661,16 @@ namespace Cosmos.Validation.Internals.Rules
 
         public CorrectValueRule Build()
         {
-            return new()
+            CorrectValueRule result = new()
             {
                 MemberName = MemberName,
                 Contract = _contract,
                 Mode = Mode,
-                Tokens = State.ExposeValueTokens(),
+                Tokens = State.ExposeValueTokens(out var lastOps),
+                InternalLogic = lastOps != ConditionOps.Or
             };
+
+            return result;
         }
     }
 }

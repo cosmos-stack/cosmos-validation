@@ -15,11 +15,11 @@ namespace Cosmos.Validation
         /// <summary>
         /// Return all error messages.
         /// </summary>
-        public IEnumerable<VerifyFailure> Errors { get; }
+        public IList<VerifyFailure> Errors { get; }
 
         /// <summary>
         /// Returns the names of all fields with errors.
         /// </summary>
-        public IEnumerable<string> MemberNames { get; }
+        public IList<string> MemberNames { get; }
     }
 }

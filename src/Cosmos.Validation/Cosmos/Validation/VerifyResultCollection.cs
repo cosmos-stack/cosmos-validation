@@ -36,12 +36,12 @@ namespace Cosmos.Validation
         /// <summary>
         /// A collection of errors
         /// </summary>
-        public IEnumerable<VerifyFailure> Errors => _results.SelectMany(result => result.Errors);
+        public IList<VerifyFailure> Errors => _results.SelectMany(result => result.Errors).ToList();
 
         /// <summary>
         /// Returns the names of all fields with errors.
         /// </summary>
-        public IEnumerable<string> MemberNames => Errors.Select(e => e.PropertyName).Distinct();
+        public IList<string> MemberNames => Errors.Select(e => e.PropertyName).Distinct().ToList();
 
         /// <summary>Returns an enumerator that iterates through the collection.</summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>

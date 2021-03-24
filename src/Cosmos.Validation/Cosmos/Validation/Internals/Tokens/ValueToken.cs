@@ -42,7 +42,7 @@ namespace Cosmos.Validation.Internals.Tokens
         /// Verification.
         /// </summary>
         /// <param name="context"></param>
-        public void Verify(VerifiableOpsContext context)
+        public bool Verify(VerifiableOpsContext context)
         {
             var val = context.OpsMode switch
             {
@@ -51,11 +51,16 @@ namespace Cosmos.Validation.Internals.Tokens
                 _ => null
             };
 
-            if (val is not null && val.IsSuccess == false)
+            if (val is not null)
             {
+                // 无论成功或失败， 都将 CorrectVerifyVal 写入 context 内
                 context.AppendVerifyVal(VerifiableMember.MemberName, val);
-                context.AppendNameOfExecutedRule(val.NameOfExecutedRule);
+
+                // 过滤 CorrectVerifyVal 结果为 Success 的规则名
+                val.IsSuccess.IfFalse(v => context.AppendNameOfExecutedRule(v.NameOfExecutedRule), val);
             }
+
+            return val?.IsSuccess ?? true;
         }
 
         /// <summary>
@@ -149,7 +154,7 @@ namespace Cosmos.Validation.Internals.Tokens
         /// <returns></returns>
         protected CorrectVerifyVal CreateVerifyVal()
         {
-            return new CorrectVerifyVal {NameOfExecutedRule = TokenName};
+            return new() {NameOfExecutedRule = TokenName};
         }
 
         /// <summary>Returns a string that represents the current object.</summary>

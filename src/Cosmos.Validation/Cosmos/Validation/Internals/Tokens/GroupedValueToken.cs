@@ -15,12 +15,27 @@ namespace Cosmos.Validation.Internals.Tokens
         private readonly VerifiableMemberContract _contract;
         private readonly CorrectValueRule _correctValueRule;
 
-        public GroupedValueToken(VerifiableMemberContract contract, List<IValueToken> tokens)
+        private List<IValueToken> WorkingList { get; set; }
+
+        public GroupedValueToken(VerifiableMemberContract contract, bool internalLogic = true)
         {
             _contract = contract;
-            _correctValueRule = new CorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = tokens};
+            WorkingList = new List<IValueToken>();
+            _correctValueRule = new CorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = WorkingList};
             TokenName = CreateName(_contract);
-            OpsForNext = ConditionOps.Break;
+            Relationship = ConditionOps.Break;
+            LogicFlag = internalLogic;
+        }
+
+        public GroupedValueToken(VerifiableMemberContract contract, List<IValueToken> tokens, bool internalLogic = true)
+        {
+            _contract = contract;
+            WorkingList = new List<IValueToken>();
+            WorkingList.AddRange(tokens);
+            _correctValueRule = new CorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = WorkingList};
+            TokenName = CreateName(_contract);
+            Relationship = ConditionOps.Break;
+            LogicFlag = internalLogic;
         }
 
         public string TokenName { get; }
@@ -33,48 +48,72 @@ namespace Cosmos.Validation.Internals.Tokens
 
         public string MemberName => _contract.MemberName;
 
-        public ConditionOps OpsForNext { get; set; }
+        private ConditionOps _relationship;
+
+        public ConditionOps Relationship
+        {
+            get => NextNode is null ? ConditionOps.Break : _relationship;
+            set => _relationship = value;
+        }
+
+        public bool LogicFlag
+        {
+            get => _correctValueRule.InternalLogic;
+            set => _correctValueRule.InternalLogic = value;
+        }
 
         public IGroupedValueToken NextNode { get; set; }
 
-        public void Next(VerifiableOpsContext context)
+        public void Next(VerifiableOpsContext context, out bool valid)
         {
             // Avoid getting stuck in an infinite loop.
             if (context.RouteGroupNames.Contains(TokenName))
+            {
+                valid = Relationship != ConditionOps.Or; // 返回一个无关最终结果的值
                 return;
+            }
 
             _correctValueRule.Verify(context);
 
             context.RouteGroupNames.Add(TokenName);
 
-            var valid = !context.IncludeFailures;
+            valid = !context.IncludeFailures;
 
-            if (OpsForNext == ConditionOps.Break)
+            if (Relationship == ConditionOps.Break)
                 return;
 
             //false && ... -> false
-            if (!valid && OpsForNext == ConditionOps.And)
+            if (!valid && Relationship == ConditionOps.And)
                 return;
 
             //true || ... -> true
-            if (valid && OpsForNext == ConditionOps.Or)
+            if (valid && Relationship == ConditionOps.Or)
                 return;
 
             //current node is the tail of the validation chain
             if (NextNode is null)
                 return;
 
-            if (ConditionOpsHelper.IsHigherPriority(context.ConditionMode, OpsForNext))
-                context.RaiseScope(MemberName, OpsForNext);
+            if (ConditionOpsHelper.IsHigherPriority(context.ConditionMode, Relationship))
+                context.RaiseScope(MemberName, Relationship);
 
-            context.ConditionMode = OpsForNext;
+            context.ConditionMode = Relationship == ConditionOps.Or ? ConditionOps.Or : ConditionOps.And;
 
-            NextNode.Verify(context);
+            valid = NextNode.Verify(context);
         }
 
-        public void Verify(VerifiableOpsContext context)
+        public bool Verify(VerifiableOpsContext context)
         {
-            Next(context);
+            Next(context, out var valid);
+            return valid;
+        }
+
+        public void AppendToken(IValueToken token)
+        {
+            if (token is not null)
+            {
+                WorkingList.Add(token);
+            }
         }
 
         public string CustomMessage { get; set; }

@@ -32,13 +32,13 @@ namespace Cosmos.Validation.Internals.Rules
 
         public new IValueRuleBuilder<T, TVal> And()
         {
-            State.GroupWithAndOps();
+            State.MakeAndOps();
             return this;
         }
 
         public new IValueRuleBuilder<T, TVal> Or()
         {
-            State.GroupWithOrOps();
+            State.MakeOrOps();
             return this;
         }
 

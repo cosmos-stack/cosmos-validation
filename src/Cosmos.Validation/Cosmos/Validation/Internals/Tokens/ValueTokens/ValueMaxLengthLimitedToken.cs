@@ -100,7 +100,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             val.IsSuccess = false;
             val.VerifiedValue = obj;
-            val.ErrorMessage = MergeMessage($"The array length should be less than {_maxLength}, and the current length is {currentLength}.");
+            val.ErrorMessage = MergeMessage($"The array length should be greater than {_maxLength}, and the current length is {currentLength}.");
         }
     }
 }

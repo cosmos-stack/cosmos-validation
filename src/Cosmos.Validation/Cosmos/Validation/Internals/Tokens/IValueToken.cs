@@ -19,7 +19,7 @@
         /// Verification.
         /// </summary>
         /// <param name="context"></param>
-        void Verify(VerifiableOpsContext context);
+        bool Verify(VerifiableOpsContext context);
 
         /// <summary>
         /// Custom message.

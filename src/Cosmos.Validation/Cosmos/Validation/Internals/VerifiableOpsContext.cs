@@ -25,7 +25,7 @@ namespace Cosmos.Validation.Internals
         public void AppendVerifyVal(string memberName, CorrectVerifyVal val)
         {
             if (string.IsNullOrWhiteSpace(memberName) || val is null) return;
-            
+
             if (VerifyValDictionary.TryGetValue(memberName, out var state))
             {
                 state.Append(val);

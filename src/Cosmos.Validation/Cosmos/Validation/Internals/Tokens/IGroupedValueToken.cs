@@ -8,13 +8,11 @@ namespace Cosmos.Validation.Internals.Tokens
     internal interface IGroupedValueToken : IValueToken
     {
         string MemberName { get; }
-        
-        ConditionOps OpsForNext { get; set; }
-        
-        void Next(VerifiableOpsContext context);
 
-        // CorrectValueRuleMode Mode { get; }
-        //
-        // bool Verify(VerifiableOpsContext context, out List<CorrectVerifyVal> correctVerifyValSet);
+        ConditionOps Relationship { get; set; }
+
+        void Next(VerifiableOpsContext context, out bool valid);
+
+        void AppendToken(IValueToken token);
     }
 }
