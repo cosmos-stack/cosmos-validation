@@ -661,14 +661,31 @@ namespace Cosmos.Validation.Internals.Rules
 
         public CorrectValueRule Build()
         {
-            CorrectValueRule result = new()
+            var tokens = State.ExposeValueTokens(out var topOps);
+
+            CorrectValueRule result;
+
+            if (topOps == ConditionOps.Break)
             {
-                MemberName = MemberName,
-                Contract = _contract,
-                Mode = Mode,
-                Tokens = State.ExposeValueTokens(out var lastOps),
-                InternalLogic = lastOps != ConditionOps.Or
-            };
+                result = new CorrectValueRule()
+                {
+                    MemberName = MemberName,
+                    Contract = _contract,
+                    Mode = Mode,
+                    Tokens = tokens
+                };
+            }
+            else
+            {
+                result = new LogicCorrectValueRule()
+                {
+                    MemberName = MemberName,
+                    Contract = _contract,
+                    Mode = Mode,
+                    Tokens = tokens,
+                    InternalLogic = topOps != ConditionOps.Or
+                };
+            }
 
             return result;
         }

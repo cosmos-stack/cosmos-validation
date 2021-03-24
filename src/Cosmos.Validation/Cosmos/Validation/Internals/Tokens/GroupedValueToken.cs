@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens
     internal class GroupedValueToken : IGroupedValueToken
     {
         private readonly VerifiableMemberContract _contract;
-        private readonly CorrectValueRule _correctValueRule;
+        private readonly LogicCorrectValueRule _correctValueRule;
 
         private List<IValueToken> WorkingList { get; set; }
 
@@ -21,7 +21,7 @@ namespace Cosmos.Validation.Internals.Tokens
         {
             _contract = contract;
             WorkingList = new List<IValueToken>();
-            _correctValueRule = new CorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = WorkingList};
+            _correctValueRule = new LogicCorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = WorkingList};
             TokenName = CreateName(_contract);
             Relationship = ConditionOps.Break;
             LogicFlag = internalLogic;
@@ -32,7 +32,7 @@ namespace Cosmos.Validation.Internals.Tokens
             _contract = contract;
             WorkingList = new List<IValueToken>();
             WorkingList.AddRange(tokens);
-            _correctValueRule = new CorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = WorkingList};
+            _correctValueRule = new LogicCorrectValueRule {Contract = contract, MemberName = MemberName, Mode = CorrectValueRuleMode.Append, Tokens = WorkingList};
             TokenName = CreateName(_contract);
             Relationship = ConditionOps.Break;
             LogicFlag = internalLogic;
