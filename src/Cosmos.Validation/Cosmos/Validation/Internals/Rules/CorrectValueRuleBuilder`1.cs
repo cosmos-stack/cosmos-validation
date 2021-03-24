@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Cosmos.Reflection;
 using Cosmos.Validation.Internals.Conditions;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
 using Cosmos.Validation.Objects;
@@ -246,6 +247,16 @@ namespace Cosmos.Validation.Internals.Rules
         public IWaitForMessageValueRuleBuilder<T> Must(Func<object, bool> func)
         {
             return new CorrectWaitForMessageValueRuleBuilder<T>(this, func);
+        }
+
+        public IWaitForMessageValueRuleBuilder<T> Satisfies(Func<object, bool> func)
+        {
+            return new CorrectWaitForMessageValueRuleBuilder<T>(this, func);
+        }
+
+        public IValueRuleBuilder<T> Satisfies(Func<object, bool> func, string message)
+        {
+            return Satisfies(func).WithMessage(message);
         }
 
         // public IValueRuleBuilder<T> Any(Func<object, bool> func)
@@ -648,6 +659,46 @@ namespace Cosmos.Validation.Internals.Rules
         public IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
             State.CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(_contract);
+            return this;
+        }
+
+        /// <summary>
+        /// The constraint type must be of string type.
+        /// </summary>
+        /// <returns></returns>
+        public IValueRuleBuilder<T> RequiredString()
+        {
+            State.CurrentToken = new ValueRequiredStringToken(_contract);
+            return this;
+        }
+
+        /// <summary>
+        /// The constraint type must be of numeric type.
+        /// </summary>
+        /// <returns></returns>
+        public IValueRuleBuilder<T> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default)
+        {
+            State.CurrentToken = new ValueRequiredNumericToken(_contract, isOptions);
+            return this;
+        }
+
+        /// <summary>
+        /// The constraint type must be of boolean type.
+        /// </summary>
+        /// <returns></returns>
+        public IValueRuleBuilder<T> RequiredBoolean()
+        {
+            State.CurrentToken = new ValueRequiredBooleanToken(_contract);
+            return this;
+        }
+
+        /// <summary>
+        /// The constraint type must be of Guid type.
+        /// </summary>
+        /// <returns></returns>
+        public IValueRuleBuilder<T> RequiredGuid()
+        {
+            State.CurrentToken = new ValueRequiredGuidToken(_contract);
             return this;
         }
 

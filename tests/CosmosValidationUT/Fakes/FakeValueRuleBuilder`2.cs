@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using Cosmos.Reflection;
 using Cosmos.Validation;
 using Cosmos.Validation.Objects;
 
@@ -218,6 +219,16 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IWaitForMessageValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message)
+        {
+            throw new NotImplementedException();
+        }
+
         public IValueRuleBuilder<T, TVal> In(ICollection<TVal> collection)
         {
             throw new NotImplementedException();
@@ -349,6 +360,26 @@ namespace CosmosValidationUT.Fakes
         }
 
         public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> RequiredString()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> RequiredBoolean()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T, TVal> RequiredGuid()
         {
             throw new NotImplementedException();
         }

@@ -17,5 +17,13 @@ namespace CosmosValidationUT.TokenUT.Models
         public string AunnRegexExpression { get; set; }
         public decimal Discount { get; set; }
         public decimal? NullableDiscount { get; set; }
+
+        public bool IsThisOk { get; set; }
+
+        public bool? IsThatOk { get; set; }
+
+        public Guid ThisGuid { get; set; }
+
+        public Guid? ThatGuid { get; set; }
     }
 }

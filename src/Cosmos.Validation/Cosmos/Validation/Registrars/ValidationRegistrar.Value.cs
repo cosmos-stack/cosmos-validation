@@ -143,6 +143,16 @@ namespace Cosmos.Validation.Registrars
             return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
         }
 
+        public IWaitForMessageValidationRegistrar Satisfies(Func<object, bool> func)
+        {
+            return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
+        }
+
+        public IValueFluentValidationRegistrar Satisfies(Func<object, bool> func,string message)
+        {
+            return Satisfies(func).WithMessage(message);
+        }
+
         public IValueFluentValidationRegistrar InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);

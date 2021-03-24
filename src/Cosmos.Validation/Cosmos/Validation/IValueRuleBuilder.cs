@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Cosmos.Reflection;
 
 namespace Cosmos.Validation
 {
@@ -79,6 +80,10 @@ namespace Cosmos.Validation
         IValueRuleBuilder Must(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder Must(Func<object, bool> func);
+
+        IWaitForMessageValueRuleBuilder Satisfies(Func<object, bool> func);
+
+        IValueRuleBuilder Satisfies(Func<object, bool> func, string message);
 
         IValueRuleBuilder Any(Func<object, bool> func);
 
@@ -359,6 +364,30 @@ namespace Cosmos.Validation
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
         IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+
+        /// <summary>
+        /// The constraint type must be of string type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder RequiredString();
+
+        /// <summary>
+        /// The constraint type must be of numeric type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
+
+        /// <summary>
+        /// The constraint type must be of boolean type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder RequiredBoolean();
+
+        /// <summary>
+        /// The constraint type must be of Guid type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder RequiredGuid();
     }
 
     /// <summary>
@@ -436,6 +465,10 @@ namespace Cosmos.Validation
         IValueRuleBuilder<T> Must(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder<T> Must(Func<object, bool> func);
+        
+        IWaitForMessageValueRuleBuilder<T> Satisfies(Func<object, bool> func);
+
+        IValueRuleBuilder<T> Satisfies(Func<object, bool> func, string message);
 
         // IValueRuleBuilder<T> Any(Func<object, bool> func);
         //
@@ -715,6 +748,30 @@ namespace Cosmos.Validation
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
         IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+
+        /// <summary>
+        /// The constraint type must be of string type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder<T> RequiredString();
+
+        /// <summary>
+        /// The constraint type must be of numeric type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder<T> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
+
+        /// <summary>
+        /// The constraint type must be of boolean type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder<T> RequiredBoolean();
+
+        /// <summary>
+        /// The constraint type must be of Guid type.
+        /// </summary>
+        /// <returns></returns>
+        IValueRuleBuilder<T> RequiredGuid();
     }
 
     /// <summary>
@@ -793,6 +850,10 @@ namespace Cosmos.Validation
         IValueRuleBuilder<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder<T, TVal> Must(Func<TVal, bool> func);
+        
+        IWaitForMessageValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func);
+
+        IValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
         IValueRuleBuilder<T, TVal> In(ICollection<TVal> collection);
 
@@ -1064,5 +1125,29 @@ namespace Cosmos.Validation
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
         new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+
+        /// <summary>
+        /// The constraint type must be of string type.
+        /// </summary>
+        /// <returns></returns>
+        new IValueRuleBuilder<T, TVal> RequiredString();
+
+        /// <summary>
+        /// The constraint type must be of numeric type.
+        /// </summary>
+        /// <returns></returns>
+        new IValueRuleBuilder<T, TVal> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
+
+        /// <summary>
+        /// The constraint type must be of boolean type.
+        /// </summary>
+        /// <returns></returns>
+        new IValueRuleBuilder<T, TVal> RequiredBoolean();
+
+        /// <summary>
+        /// The constraint type must be of Guid type.
+        /// </summary>
+        /// <returns></returns>
+        new IValueRuleBuilder<T, TVal> RequiredGuid();
     }
 }

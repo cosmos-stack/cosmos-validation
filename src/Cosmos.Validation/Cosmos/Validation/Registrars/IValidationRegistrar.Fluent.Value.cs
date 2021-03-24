@@ -29,6 +29,8 @@ namespace Cosmos.Validation.Registrars
         IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate);
         IValueFluentValidationRegistrar Must(Func<object, CustomVerifyResult> func);
         IWaitForMessageValidationRegistrar Must(Func<object, bool> func);
+        IWaitForMessageValidationRegistrar Satisfies(Func<object, bool> func);
+        IValueFluentValidationRegistrar Satisfies(Func<object, bool> func, string message);
         IValueFluentValidationRegistrar InEnum(Type enumType);
         IValueFluentValidationRegistrar InEnum<TEnum>();
         IValueFluentValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
@@ -317,6 +319,10 @@ namespace Cosmos.Validation.Registrars
 
         IWaitForMessageValidationRegistrar<T> Must(Func<object, bool> func);
 
+        IWaitForMessageValidationRegistrar<T> Satisfies(Func<object, bool> func);
+
+        IValueFluentValidationRegistrar<T> Satisfies(Func<object, bool> func, string message);
+
         IValueFluentValidationRegistrar<T> InEnum(Type enumType);
 
         IValueFluentValidationRegistrar<T> InEnum<TEnum>();
@@ -599,6 +605,10 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T, TVal> Must(Func<TVal, bool> func);
+        
+        IWaitForMessageValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func);
+        
+        IValueFluentValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
         new IValueFluentValidationRegistrar<T, TVal> InEnum(Type enumType);
 
