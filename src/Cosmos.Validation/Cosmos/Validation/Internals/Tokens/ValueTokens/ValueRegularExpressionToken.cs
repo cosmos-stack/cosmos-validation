@@ -74,7 +74,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         {
             var value = GetValueFrom(context);
             
-            if(!IsActivate(value))
+            if (!IsActivate(context.Instance, value))
                 return CorrectVerifyVal.Ignore;
 
             var verifyVal = CreateVerifyVal();

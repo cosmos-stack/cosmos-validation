@@ -9,7 +9,6 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember,
         IMayUseRuleConditions,
-        IMayUseActivationConditions,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -17,8 +16,6 @@ namespace Cosmos.Validation.Registrars
         Type DeclaringType { get; }
         Type MemberType { get; }
         IValueFluentValidationRegistrar WithConfig(Func<IValueRuleBuilder, IValueRuleBuilder> func);
-        IValueFluentValidationRegistrar And();
-        IValueFluentValidationRegistrar Or();
         IPredicateValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
         IPredicateValidationRegistrar RangeWithOpenInterval(object from, object to);
         IPredicateValidationRegistrar RangeWithCloseInterval(object from, object to);
@@ -286,7 +283,6 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember<T>,
         IMayUseRuleConditions<T>,
-        IMayUseActivationConditions<T>,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -294,10 +290,6 @@ namespace Cosmos.Validation.Registrars
         Type DeclaringType { get; }
         Type MemberType { get; }
         IValueFluentValidationRegistrar<T> WithConfig(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
-
-        IValueFluentValidationRegistrar<T> And();
-
-        IValueFluentValidationRegistrar<T> Or();
 
         IPredicateValidationRegistrar<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
 
@@ -579,8 +571,7 @@ namespace Cosmos.Validation.Registrars
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>,
-        IMayUseRuleConditions<T, TVal>,
-        IMayUseActivationConditions<T, TVal>
+        IMayUseRuleConditions<T, TVal> 
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
 

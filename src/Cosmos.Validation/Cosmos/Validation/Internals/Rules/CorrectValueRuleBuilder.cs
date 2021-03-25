@@ -9,8 +9,8 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Rules
 {
-    internal class CorrectValueRuleBuilder : 
-        IValueRuleBuilder, 
+    internal class CorrectValueRuleBuilder :
+        IValueRuleBuilder,
         IPredicateValueRuleBuilder
     {
         internal readonly VerifiableMemberContract _contract;
@@ -72,10 +72,21 @@ namespace Cosmos.Validation.Internals.Rules
         {
             if (condition is not null)
             {
-                State.CurrentToken.NormalActivationConditions = condition;
+                State.CurrentToken.ActivationConditions2 = condition;
                 State.CurrentToken.WithActivationConditions = true;
             }
-            
+
+            return this;
+        }
+
+        public IValueRuleBuilder When(Func<object, object, bool> condition)
+        {
+            if (condition is not null)
+            {
+                State.CurrentToken.ActivationConditions3 = condition;
+                State.CurrentToken.WithActivationConditions = true;
+            }
+
             return this;
         }
 
@@ -83,10 +94,21 @@ namespace Cosmos.Validation.Internals.Rules
         {
             if (condition is not null)
             {
-                State.CurrentToken.NormalActivationConditions = condition;
+                State.CurrentToken.ActivationConditions2 = condition;
                 State.CurrentToken.WithActivationConditions = true;
             }
-            
+
+            return this;
+        }
+
+        public IValueRuleBuilder Unless(Func<object, object, bool> condition)
+        {
+            if (condition is not null)
+            {
+                State.CurrentToken.ActivationConditions3 = condition;
+                State.CurrentToken.WithActivationConditions = true;
+            }
+
             return this;
         }
 

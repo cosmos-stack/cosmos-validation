@@ -5,7 +5,7 @@ using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Registrars
 {
-    internal class ValueValidationRegistrar<T, TVal> : ValueValidationRegistrar<T>, IValueFluentValidationRegistrar<T, TVal>, IPredicateValidationRegistrar<T,TVal>
+    internal class ValueValidationRegistrar<T, TVal> : ValueValidationRegistrar<T>, IValueFluentValidationRegistrar<T, TVal>, IPredicateValidationRegistrar<T, TVal>
     {
         public ValueValidationRegistrar(
             VerifiableMemberContract verifiableMemberContract,
@@ -55,21 +55,33 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
+
         #region Activation Conditions
-        
+
         public IValueFluentValidationRegistrar<T, TVal> When(Func<TVal, bool> condition)
         {
             ValueRuleBuilderPtr.When(condition);
             return this;
         }
-        
+
+        public IValueFluentValidationRegistrar<T, TVal> When(Func<T, TVal, bool> condition)
+        {
+            ValueRuleBuilderPtr.When(condition);
+            return this;
+        }
+
         public IValueFluentValidationRegistrar<T, TVal> Unless(Func<TVal, bool> condition)
         {
             ValueRuleBuilderPtr.Unless(condition);
             return this;
         }
-        
+
+        public IValueFluentValidationRegistrar<T, TVal> Unless(Func<T, TVal, bool> condition)
+        {
+            ValueRuleBuilderPtr.Unless(condition);
+            return this;
+        }
+
         #endregion
 
         #region ValueRules`2

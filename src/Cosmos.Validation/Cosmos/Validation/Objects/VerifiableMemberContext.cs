@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Conversions;
 using Cosmos.Validation.Annotations;
 
 namespace Cosmos.Validation.Objects
@@ -71,6 +70,8 @@ namespace Cosmos.Validation.Objects
         #endregion
 
         #region ParentInstance
+
+        internal bool HasParentContext() => _parentContext is not null;
 
         public object GetParentInstance() => _parentContext?.Instance;
 

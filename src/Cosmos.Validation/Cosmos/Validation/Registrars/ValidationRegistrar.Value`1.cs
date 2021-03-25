@@ -55,7 +55,7 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
+
         #region Condition
 
         public IValueFluentValidationRegistrar<T> And()
@@ -63,7 +63,7 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder.And();
             return this;
         }
-        
+
         public IValueFluentValidationRegistrar<T> Or()
         {
             ValueRuleBuilder.Or();
@@ -71,21 +71,33 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
+
         #region Activation Conditions
-        
+
         public IValueFluentValidationRegistrar<T> When(Func<object, bool> condition)
         {
             ValueRuleBuilder.When(condition);
             return this;
         }
-        
+
+        public IValueFluentValidationRegistrar<T> When(Func<T, object, bool> condition)
+        {
+            ValueRuleBuilder.When(condition);
+            return this;
+        }
+
         public IValueFluentValidationRegistrar<T> Unless(Func<object, bool> condition)
         {
             ValueRuleBuilder.Unless(condition);
             return this;
         }
-        
+
+        public IValueFluentValidationRegistrar<T> Unless(Func<T, object, bool> condition)
+        {
+            ValueRuleBuilder.Unless(condition);
+            return this;
+        }
+
         #endregion
 
         #region ValueRules
@@ -164,7 +176,7 @@ namespace Cosmos.Validation.Registrars
             return new ValidationRegistrarWithMessage<T>(this, _rootRegistrar, func);
         }
 
-        public IPredicateValidationRegistrar<T> Satisfies(Func<object, bool> func,string message)
+        public IPredicateValidationRegistrar<T> Satisfies(Func<object, bool> func, string message)
         {
             return Satisfies(func).WithMessage(message);
         }

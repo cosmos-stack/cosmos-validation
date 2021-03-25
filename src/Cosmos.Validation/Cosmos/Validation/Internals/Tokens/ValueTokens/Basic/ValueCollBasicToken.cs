@@ -43,8 +43,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
         internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
             var value = GetValueFrom(context);
-            
-            if(!IsActivate(value))
+
+            if (!IsActivate(context.Instance, value))
                 return CorrectVerifyVal.Ignore;
 
             var verifyVal = CreateVerifyVal();
@@ -73,7 +73,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
         {
             var value = GetValueFrom(context);
             
-            if(!IsActivate(value))
+            if (!IsActivate(value))
                 return CorrectVerifyVal.Ignore;
 
             var verifyVal = CreateVerifyVal();

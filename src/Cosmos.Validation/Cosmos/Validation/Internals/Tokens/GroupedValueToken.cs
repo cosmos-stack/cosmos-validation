@@ -117,9 +117,26 @@ namespace Cosmos.Validation.Internals.Tokens
         }
 
         public string CustomMessage { get; set; }
+
         public bool WithMessageMode { get; set; }
-        public Func<object, bool> NormalActivationConditions { get; set; }
+
+        /// <summary>
+        /// Activation condition <br />
+        /// 1st param: Instance <br />
+        /// 2nd param: result of activation condition
+        /// </summary>
+        public Func<object, bool> ActivationConditions2 { get; set; }
+
+        /// <summary>
+        /// Activation condition <br />
+        /// 1st param: Instance <br />
+        /// 2nd param: Member's Value <br />
+        /// 3rd param: result of activation condition
+        /// </summary>
+        public Func<object, object, bool> ActivationConditions3 { get; set; }
+
         public bool WithActivationConditions { get; set; }
+
         public bool AppendOrOverwrite { get; set; }
 
         private static string CreateName(VerifiableMemberContract contract)

@@ -28,7 +28,20 @@ namespace Cosmos.Validation.Internals.Tokens
         /// </summary>
         string CustomMessage { get; set; }
 
-        Func<object, bool> NormalActivationConditions { get; set; }
+        /// <summary>
+        /// Activation condition <br />
+        /// 1st param: Instance <br />
+        /// 2nd param: result of activation condition
+        /// </summary>
+        Func<object, bool> ActivationConditions2 { get; set; }
+
+        /// <summary>
+        /// Activation condition <br />
+        /// 1st param: Instance <br />
+        /// 2nd param: Member's Value <br />
+        /// 3rd param: result of activation condition
+        /// </summary>
+        Func<object, object, bool> ActivationConditions3 { get; set; }
 
         /// <summary>
         /// Mark whether to use activation conditions.

@@ -53,7 +53,18 @@ namespace Cosmos.Validation.Internals.Rules
         {
             if (condition is not null)
             {
-                State.CurrentToken.NormalActivationConditions = o => condition.Invoke((TVal) o);
+                State.CurrentToken.ActivationConditions2 = o => condition.Invoke((TVal) o);
+                State.CurrentToken.WithActivationConditions = true;
+            }
+
+            return this;
+        }
+
+        public IValueRuleBuilder<T, TVal> When(Func<T, TVal, bool> condition)
+        {
+            if (condition is not null)
+            {
+                State.CurrentToken.ActivationConditions3 = (o, v) => condition.Invoke((T) o, (TVal) v);
                 State.CurrentToken.WithActivationConditions = true;
             }
 
@@ -64,7 +75,18 @@ namespace Cosmos.Validation.Internals.Rules
         {
             if (condition is not null)
             {
-                State.CurrentToken.NormalActivationConditions = o => condition.Invoke((TVal) o);
+                State.CurrentToken.ActivationConditions2 = o => condition.Invoke((TVal) o);
+                State.CurrentToken.WithActivationConditions = true;
+            }
+
+            return this;
+        }
+
+        public IValueRuleBuilder<T, TVal> Unless(Func<T, TVal, bool> condition)
+        {
+            if (condition is not null)
+            {
+                State.CurrentToken.ActivationConditions3 = (o, v) => condition.Invoke((T) o, (TVal) v);
                 State.CurrentToken.WithActivationConditions = true;
             }
 

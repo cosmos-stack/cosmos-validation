@@ -10,7 +10,7 @@ using Cosmos.Validation.Objects;
 namespace Cosmos.Validation.Internals.Rules
 {
     internal class CorrectValueRuleBuilder<T> :
-        IValueRuleBuilder<T>, 
+        IValueRuleBuilder<T>,
         IPredicateValueRuleBuilder<T>
     {
         internal readonly VerifiableMemberContract _contract;
@@ -65,17 +65,28 @@ namespace Cosmos.Validation.Internals.Rules
         }
 
         #endregion
-        
+
         #region Activation Conditions
 
         public IValueRuleBuilder<T> When(Func<object, bool> condition)
         {
             if (condition is not null)
             {
-                State.CurrentToken.NormalActivationConditions = condition;
+                State.CurrentToken.ActivationConditions2 = condition;
                 State.CurrentToken.WithActivationConditions = true;
             }
-            
+
+            return this;
+        }
+
+        public IValueRuleBuilder<T> When(Func<T, object, bool> condition)
+        {
+            if (condition is not null)
+            {
+                State.CurrentToken.ActivationConditions3 = (o, v) => condition.Invoke((T) o, v);
+                State.CurrentToken.WithActivationConditions = true;
+            }
+
             return this;
         }
 
@@ -83,10 +94,21 @@ namespace Cosmos.Validation.Internals.Rules
         {
             if (condition is not null)
             {
-                State.CurrentToken.NormalActivationConditions = condition;
+                State.CurrentToken.ActivationConditions2 = condition;
                 State.CurrentToken.WithActivationConditions = true;
             }
-            
+
+            return this;
+        }
+
+        public IValueRuleBuilder<T> Unless(Func<T, object, bool> condition)
+        {
+            if (condition is not null)
+            {
+                State.CurrentToken.ActivationConditions3 = (o, v) => condition.Invoke((T) o, v);
+                State.CurrentToken.WithActivationConditions = true;
+            }
+
             return this;
         }
 

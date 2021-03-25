@@ -80,7 +80,19 @@ namespace Cosmos.Validation.Registrars
             return this;
         }
 
+        public IValueFluentValidationRegistrar When(Func<object, object, bool> condition)
+        {
+            ValueRuleBuilder.When(condition);
+            return this;
+        }
+
         public IValueFluentValidationRegistrar Unless(Func<object, bool> condition)
+        {
+            ValueRuleBuilder.Unless(condition);
+            return this;
+        }
+
+        public IValueFluentValidationRegistrar Unless(Func<object, object, bool> condition)
         {
             ValueRuleBuilder.Unless(condition);
             return this;

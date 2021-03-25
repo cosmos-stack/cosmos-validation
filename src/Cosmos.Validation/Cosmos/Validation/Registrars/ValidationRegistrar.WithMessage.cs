@@ -81,7 +81,17 @@ namespace Cosmos.Validation.Registrars
             return WithMessage(string.Empty).When(condition);
         }
 
+        public IValueFluentValidationRegistrar When(Func<object, object, bool> condition)
+        {
+            return WithMessage(string.Empty).When(condition);
+        }
+
         public IValueFluentValidationRegistrar Unless(Func<object, bool> condition)
+        {
+            return WithMessage(string.Empty).Unless(condition);
+        }
+
+        public IValueFluentValidationRegistrar Unless(Func<object, object, bool> condition)
         {
             return WithMessage(string.Empty).Unless(condition);
         }
@@ -328,7 +338,17 @@ namespace Cosmos.Validation.Registrars
             return WithMessage(string.Empty).When(condition);
         }
 
+        public IValueFluentValidationRegistrar<T> When(Func<T, object, bool> condition)
+        {
+            return WithMessage(string.Empty).When(condition);
+        }
+
         public IValueFluentValidationRegistrar<T> Unless(Func<object, bool> condition)
+        {
+            return WithMessage(string.Empty).Unless(condition);
+        }
+
+        public IValueFluentValidationRegistrar<T> Unless(Func<T, object, bool> condition)
         {
             return WithMessage(string.Empty).Unless(condition);
         }
@@ -581,7 +601,17 @@ namespace Cosmos.Validation.Registrars
             return WithMessage(string.Empty).When(condition);
         }
 
+        public IValueFluentValidationRegistrar<T, TVal> When(Func<T, TVal, bool> condition)
+        {
+            return WithMessage(string.Empty).When(condition);
+        }
+
         public IValueFluentValidationRegistrar<T, TVal> Unless(Func<TVal, bool> condition)
+        {
+            return WithMessage(string.Empty).Unless(condition);
+        }
+
+        public IValueFluentValidationRegistrar<T, TVal> Unless(Func<T, TVal, bool> condition)
         {
             return WithMessage(string.Empty).Unless(condition);
         }

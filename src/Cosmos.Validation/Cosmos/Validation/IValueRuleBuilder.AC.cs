@@ -10,7 +10,9 @@ namespace Cosmos.Validation
     public interface IPredicateValueRuleBuilder : IValueRuleBuilder
     {
         IValueRuleBuilder When(Func<object, bool> condition);
+        IValueRuleBuilder When(Func<object, object, bool> condition);
         IValueRuleBuilder Unless(Func<object, bool> condition);
+        IValueRuleBuilder Unless(Func<object, object, bool> condition);
     }
 
     /// <summary>
@@ -20,7 +22,9 @@ namespace Cosmos.Validation
     public interface IPredicateValueRuleBuilder<T> : IValueRuleBuilder<T>
     {
         IValueRuleBuilder<T> When(Func<object, bool> condition);
+        IValueRuleBuilder<T> When(Func<T, object, bool> condition);
         IValueRuleBuilder<T> Unless(Func<object, bool> condition);
+        IValueRuleBuilder<T> Unless(Func<T, object, bool> condition);
     }
 
     /// <summary>
@@ -31,6 +35,8 @@ namespace Cosmos.Validation
     public interface IPredicateValueRuleBuilder<T, TVal> : IValueRuleBuilder<T, TVal>
     {
         IValueRuleBuilder<T, TVal> When(Func<TVal, bool> condition);
+        IValueRuleBuilder<T, TVal> When(Func<T, TVal, bool> condition);
         IValueRuleBuilder<T, TVal> Unless(Func<TVal, bool> condition);
+        IValueRuleBuilder<T, TVal> Unless(Func<T, TVal, bool> condition);
     }
 }

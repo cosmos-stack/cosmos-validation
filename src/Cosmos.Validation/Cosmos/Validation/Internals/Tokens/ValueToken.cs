@@ -125,17 +125,50 @@ namespace Cosmos.Validation.Internals.Tokens
 
         #region Activation Conditions
 
-        public Func<object, bool> NormalActivationConditions { get; set; }
+        /// <summary>
+        /// Activation condition <br />
+        /// 1st param: Instance <br />
+        /// 2nd param: result of activation condition
+        /// </summary>
+        public Func<object, bool> ActivationConditions2 { get; set; }
+
+        /// <summary>
+        /// Activation condition <br />
+        /// 1st param: Instance <br />
+        /// 2nd param: Member's Value <br />
+        /// 3rd param: result of activation condition
+        /// </summary>
+        public Func<object, object, bool> ActivationConditions3 { get; set; }
 
         /// <summary>
         /// Mark whether to use activation conditions.
         /// </summary>
         public bool WithActivationConditions { get; set; }
 
+        /// <summary>
+        /// Is activate, This method is applicable to 'Verify' and 'VerifyOne'.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         protected virtual bool IsActivate(object value)
         {
-            if (WithActivationConditions && NormalActivationConditions is not null)
-                return NormalActivationConditions.Invoke(value);
+            if (WithActivationConditions && ActivationConditions2 is not null)
+                return ActivationConditions2.Invoke(value);
+            return true;
+        }
+
+        /// <summary>
+        /// Is activate, This method is only applicable to 'Verify'.
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected virtual bool IsActivate(object instance, object value)
+        {
+            if (WithActivationConditions && ActivationConditions2 is not null)
+                return ActivationConditions2.Invoke(value);
+            if (WithActivationConditions && ActivationConditions3 is not null)
+                return ActivationConditions3.Invoke(instance, value);
             return true;
         }
 
@@ -214,11 +247,31 @@ namespace Cosmos.Validation.Internals.Tokens
         protected ValueToken(VerifiableMemberContract contract) : base(contract) { }
 
         #region Activation Conditions
-        
+
+        /// <summary>
+        /// Is activate, This method is applicable to 'Verify' and 'VerifyOne'.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         protected virtual bool IsActivate(TVal value)
         {
-            if (WithActivationConditions && NormalActivationConditions is not null)
-                return NormalActivationConditions.Invoke(value);
+            if (WithActivationConditions && ActivationConditions2 is not null)
+                return ActivationConditions2.Invoke(value);
+            return true;
+        }
+
+        /// <summary>
+        /// Is activate, This method is only applicable to 'Verify'.
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected virtual bool IsActivate(object instance, TVal value)
+        {
+            if (WithActivationConditions && ActivationConditions2 is not null)
+                return ActivationConditions2.Invoke(value);
+            if (WithActivationConditions && ActivationConditions3 is not null)
+                return ActivationConditions3.Invoke(instance, value);
             return true;
         }
 
