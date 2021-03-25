@@ -8,6 +8,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForCustomValidator,
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember,
+        IMayUseRuleConditions,
+        IMayUseActivationConditions,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -17,24 +19,24 @@ namespace Cosmos.Validation.Registrars
         IValueFluentValidationRegistrar WithConfig(Func<IValueRuleBuilder, IValueRuleBuilder> func);
         IValueFluentValidationRegistrar And();
         IValueFluentValidationRegistrar Or();
-        IValueFluentValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
-        IValueFluentValidationRegistrar RangeWithOpenInterval(object from, object to);
-        IValueFluentValidationRegistrar RangeWithCloseInterval(object from, object to);
-        IValueFluentValidationRegistrar Length(int min, int max);
-        IValueFluentValidationRegistrar MinLength(int min);
-        IValueFluentValidationRegistrar MaxLength(int max);
-        IValueFluentValidationRegistrar AtLeast(int count);
-        IValueFluentValidationRegistrar Func(Func<object, CustomVerifyResult> func);
+        IPredicateValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
+        IPredicateValidationRegistrar RangeWithOpenInterval(object from, object to);
+        IPredicateValidationRegistrar RangeWithCloseInterval(object from, object to);
+        IPredicateValidationRegistrar Length(int min, int max);
+        IPredicateValidationRegistrar MinLength(int min);
+        IPredicateValidationRegistrar MaxLength(int max);
+        IPredicateValidationRegistrar AtLeast(int count);
+        IPredicateValidationRegistrar Func(Func<object, CustomVerifyResult> func);
         IWaitForMessageValidationRegistrar Func(Func<object, bool> func);
         IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate);
-        IValueFluentValidationRegistrar Must(Func<object, CustomVerifyResult> func);
+        IPredicateValidationRegistrar Must(Func<object, CustomVerifyResult> func);
         IWaitForMessageValidationRegistrar Must(Func<object, bool> func);
         IWaitForMessageValidationRegistrar Satisfies(Func<object, bool> func);
-        IValueFluentValidationRegistrar Satisfies(Func<object, bool> func, string message);
-        IValueFluentValidationRegistrar InEnum(Type enumType);
-        IValueFluentValidationRegistrar InEnum<TEnum>();
-        IValueFluentValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
-        IValueFluentValidationRegistrar IsEnumName<TEnum>(bool caseSensitive);
+        IPredicateValidationRegistrar Satisfies(Func<object, bool> func, string message);
+        IPredicateValidationRegistrar InEnum(Type enumType);
+        IPredicateValidationRegistrar InEnum<TEnum>();
+        IPredicateValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
+        IPredicateValidationRegistrar IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
         /// Limit the scale and precision of the value.
@@ -43,14 +45,14 @@ namespace Cosmos.Validation.Registrars
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        IValueFluentValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+        IPredicateValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1>();
+        IPredicateValidationRegistrar RequiredTypes<T1>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -58,7 +60,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -67,7 +69,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -77,7 +79,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -88,7 +90,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -100,7 +102,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -113,7 +115,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -127,7 +129,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -142,7 +144,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -158,7 +160,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -175,7 +177,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -193,7 +195,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -212,7 +214,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -232,7 +234,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -253,7 +255,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -275,7 +277,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+        IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
     public interface IValueFluentValidationRegistrar<T> :
@@ -283,6 +285,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForCustomValidator,
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember<T>,
+        IMayUseRuleConditions<T>,
+        IMayUseActivationConditions<T>,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -295,41 +299,41 @@ namespace Cosmos.Validation.Registrars
 
         IValueFluentValidationRegistrar<T> Or();
 
-        IValueFluentValidationRegistrar<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
+        IPredicateValidationRegistrar<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
 
-        IValueFluentValidationRegistrar<T> RangeWithOpenInterval(object from, object to);
+        IPredicateValidationRegistrar<T> RangeWithOpenInterval(object from, object to);
 
-        IValueFluentValidationRegistrar<T> RangeWithCloseInterval(object from, object to);
+        IPredicateValidationRegistrar<T> RangeWithCloseInterval(object from, object to);
 
-        IValueFluentValidationRegistrar<T> Length(int min, int max);
+        IPredicateValidationRegistrar<T> Length(int min, int max);
 
-        IValueFluentValidationRegistrar<T> MinLength(int min);
+        IPredicateValidationRegistrar<T> MinLength(int min);
 
-        IValueFluentValidationRegistrar<T> MaxLength(int max);
+        IPredicateValidationRegistrar<T> MaxLength(int max);
 
-        IValueFluentValidationRegistrar<T> AtLeast(int count);
+        IPredicateValidationRegistrar<T> AtLeast(int count);
 
-        IValueFluentValidationRegistrar<T> Func(Func<object, CustomVerifyResult> func);
+        IPredicateValidationRegistrar<T> Func(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T> Func(Func<object, bool> func);
 
         IWaitForMessageValidationRegistrar<T> Predicate(Predicate<object> predicate);
 
-        IValueFluentValidationRegistrar<T> Must(Func<object, CustomVerifyResult> func);
+        IPredicateValidationRegistrar<T> Must(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T> Must(Func<object, bool> func);
 
         IWaitForMessageValidationRegistrar<T> Satisfies(Func<object, bool> func);
 
-        IValueFluentValidationRegistrar<T> Satisfies(Func<object, bool> func, string message);
+        IPredicateValidationRegistrar<T> Satisfies(Func<object, bool> func, string message);
 
-        IValueFluentValidationRegistrar<T> InEnum(Type enumType);
+        IPredicateValidationRegistrar<T> InEnum(Type enumType);
 
-        IValueFluentValidationRegistrar<T> InEnum<TEnum>();
+        IPredicateValidationRegistrar<T> InEnum<TEnum>();
 
-        IValueFluentValidationRegistrar<T> IsEnumName(Type enumType, bool caseSensitive);
+        IPredicateValidationRegistrar<T> IsEnumName(Type enumType, bool caseSensitive);
 
-        IValueFluentValidationRegistrar<T> IsEnumName<TEnum>(bool caseSensitive);
+        IPredicateValidationRegistrar<T> IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
         /// Limit the scale and precision of the value.
@@ -338,14 +342,14 @@ namespace Cosmos.Validation.Registrars
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+        IPredicateValidationRegistrar<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -353,7 +357,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -362,7 +366,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -372,7 +376,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -383,7 +387,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -395,7 +399,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -408,7 +412,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -422,7 +426,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -437,7 +441,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -453,7 +457,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -470,7 +474,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -488,7 +492,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -507,7 +511,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -527,7 +531,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -548,7 +552,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -570,11 +574,13 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+        IPredicateValidationRegistrar<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>
+    public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>,
+        IMayUseRuleConditions<T, TVal>,
+        IMayUseActivationConditions<T, TVal>
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
 
@@ -582,41 +588,41 @@ namespace Cosmos.Validation.Registrars
 
         new IValueFluentValidationRegistrar<T, TVal> Or();
 
-        IValueFluentValidationRegistrar<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval);
+        IPredicateValidationRegistrar<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval);
 
-        IValueFluentValidationRegistrar<T, TVal> RangeWithOpenInterval(TVal from, TVal to);
+        IPredicateValidationRegistrar<T, TVal> RangeWithOpenInterval(TVal from, TVal to);
 
-        IValueFluentValidationRegistrar<T, TVal> RangeWithCloseInterval(TVal from, TVal to);
+        IPredicateValidationRegistrar<T, TVal> RangeWithCloseInterval(TVal from, TVal to);
 
-        new IValueFluentValidationRegistrar<T, TVal> Length(int min, int max);
+        new IPredicateValidationRegistrar<T, TVal> Length(int min, int max);
 
-        new IValueFluentValidationRegistrar<T, TVal> MinLength(int min);
+        new IPredicateValidationRegistrar<T, TVal> MinLength(int min);
 
-        new IValueFluentValidationRegistrar<T, TVal> MaxLength(int max);
+        new IPredicateValidationRegistrar<T, TVal> MaxLength(int max);
 
-        new IValueFluentValidationRegistrar<T, TVal> AtLeast(int count);
+        new IPredicateValidationRegistrar<T, TVal> AtLeast(int count);
 
-        IValueFluentValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
+        IPredicateValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T, TVal> Func(Func<TVal, bool> func);
 
         IWaitForMessageValidationRegistrar<T, TVal> Predicate(Predicate<TVal> predicate);
 
-        IValueFluentValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
+        IPredicateValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValidationRegistrar<T, TVal> Must(Func<TVal, bool> func);
-        
+
         IWaitForMessageValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func);
-        
-        IValueFluentValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
-        new IValueFluentValidationRegistrar<T, TVal> InEnum(Type enumType);
+        IPredicateValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
-        new IValueFluentValidationRegistrar<T, TVal> InEnum<TEnum>();
+        new IPredicateValidationRegistrar<T, TVal> InEnum(Type enumType);
 
-        new IValueFluentValidationRegistrar<T, TVal> IsEnumName(Type enumType, bool caseSensitive);
+        new IPredicateValidationRegistrar<T, TVal> InEnum<TEnum>();
 
-        new IValueFluentValidationRegistrar<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
+        new IPredicateValidationRegistrar<T, TVal> IsEnumName(Type enumType, bool caseSensitive);
+
+        new IPredicateValidationRegistrar<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
         /// Limit the scale and precision of the value.
@@ -625,14 +631,14 @@ namespace Cosmos.Validation.Registrars
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+        new IPredicateValidationRegistrar<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -640,7 +646,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -649,7 +655,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -659,7 +665,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -670,7 +676,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -682,7 +688,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -695,7 +701,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -709,7 +715,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -724,7 +730,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -740,7 +746,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -757,7 +763,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -775,7 +781,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -794,7 +800,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -814,7 +820,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -835,7 +841,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -857,6 +863,6 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        new IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+        new IPredicateValidationRegistrar<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
     }
 }

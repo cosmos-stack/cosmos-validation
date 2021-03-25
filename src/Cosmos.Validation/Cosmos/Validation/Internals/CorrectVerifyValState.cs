@@ -112,7 +112,7 @@ namespace Cosmos.Validation.Internals
             get
             {
                 if (Blocks is null && ValSet is null) return false;
-                if (Blocks is null) return ValSet.Any(x => x.IsSuccess == false);
+                if (Blocks is null) return ValSet.Where(x => x.IsIgnore == false).Any(x => x.IsSuccess == false);
                 return AndOrFlag
                     ? Blocks.Any(x => x.IncludeFailures)
                     : Blocks.Any(x => !x.IncludeFailures);
@@ -186,7 +186,7 @@ namespace Cosmos.Validation.Internals
                 return Enumerable.Empty<CorrectVerifyVal>();
 
             if (Blocks is null)
-                return ValSet.Where(x => x.IsSuccess == false);
+                return ValSet.Where(x => x.IsIgnore == false && x.IsSuccess == false);
 
             var list = new List<CorrectVerifyVal>();
 

@@ -2,40 +2,40 @@
 {
     public static class MessageRegistrarExtensions
     {
-        public static IValueFluentValidationRegistrar WithMessage(this IValueFluentValidationRegistrar registrar, string message)
+        public static IPredicateValidationRegistrar WithMessage(this IValueFluentValidationRegistrar registrar, string message)
         {
             registrar._impl().ExposeValueRuleBuilder().WithMessage(message);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar WithMessage(this IValueFluentValidationRegistrar registrar, string message, bool appendOrOverwrite)
+        public static IPredicateValidationRegistrar WithMessage(this IValueFluentValidationRegistrar registrar, string message, bool appendOrOverwrite)
         {
             registrar._impl().ExposeValueRuleBuilder().WithMessage(message, appendOrOverwrite);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> WithMessage<T>(this IValueFluentValidationRegistrar<T> registrar, string message)
+        public static IPredicateValidationRegistrar<T> WithMessage<T>(this IValueFluentValidationRegistrar<T> registrar, string message)
         {
             registrar._impl().ExposeValueRuleBuilder().WithMessage(message);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> WithMessage<T>(this IValueFluentValidationRegistrar<T> registrar, string message, bool appendOrOverwrite)
+        public static IPredicateValidationRegistrar<T> WithMessage<T>(this IValueFluentValidationRegistrar<T> registrar, string message, bool appendOrOverwrite)
         {
             registrar._impl().ExposeValueRuleBuilder().WithMessage(message, appendOrOverwrite);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> WithMessage<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string message)
+        public static IPredicateValidationRegistrar<T, TVal> WithMessage<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string message)
         {
             registrar._impl().ExposeValueRuleBuilder2().WithMessage(message);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> WithMessage<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string message, bool appendOrOverwrite)
+        public static IPredicateValidationRegistrar<T, TVal> WithMessage<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string message, bool appendOrOverwrite)
         {
             registrar._impl().ExposeValueRuleBuilder2().WithMessage(message, appendOrOverwrite);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
     }
 }

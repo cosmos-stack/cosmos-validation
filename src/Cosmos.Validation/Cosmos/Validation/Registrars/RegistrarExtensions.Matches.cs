@@ -5,112 +5,112 @@ namespace Cosmos.Validation.Registrars
 {
     public static class MatchesRegistrarExtensions
     {
-        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Regex regex)
+        public static IPredicateValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Regex regex)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(regex);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, string regexExpression)
+        public static IPredicateValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, string regexExpression)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(regexExpression);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, string regexExpression, RegexOptions options)
+        public static IPredicateValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, string regexExpression, RegexOptions options)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(regexExpression, options);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Func<object, string> func)
+        public static IPredicateValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Func<object, string> func)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(func);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Func<object, Regex> func)
+        public static IPredicateValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Func<object, Regex> func)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(func);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Func<object, string> func, RegexOptions options)
+        public static IPredicateValidationRegistrar Matches(this IValueFluentValidationRegistrar registrar, Func<object, string> func, RegexOptions options)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(func, options);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Regex regex)
+        public static IPredicateValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Regex regex)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(regex);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, string regexExpression)
+        public static IPredicateValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, string regexExpression)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(regexExpression);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, string regexExpression, RegexOptions options)
+        public static IPredicateValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, string regexExpression, RegexOptions options)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(regexExpression, options);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Func<T, string> func)
+        public static IPredicateValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Func<T, string> func)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(func);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Func<T, Regex> func)
+        public static IPredicateValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Func<T, Regex> func)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(func);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Func<T, string> func, RegexOptions options)
+        public static IPredicateValidationRegistrar<T> Matches<T>(this IValueFluentValidationRegistrar<T> registrar, Func<T, string> func, RegexOptions options)
         {
             registrar._impl().ExposeValueRuleBuilder().Matches(func, options);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Regex regex)
+        public static IPredicateValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Regex regex)
         {
             registrar._impl().ExposeValueRuleBuilder2().Matches(regex);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string regexExpression)
+        public static IPredicateValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string regexExpression)
         {
             registrar._impl().ExposeValueRuleBuilder2().Matches(regexExpression);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string regexExpression, RegexOptions options)
+        public static IPredicateValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, string regexExpression, RegexOptions options)
         {
             registrar._impl().ExposeValueRuleBuilder2().Matches(regexExpression, options);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<T, string> func)
+        public static IPredicateValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<T, string> func)
         {
             registrar._impl().ExposeValueRuleBuilder2().Matches(func);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<T, Regex> func)
+        public static IPredicateValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<T, Regex> func)
         {
             registrar._impl().ExposeValueRuleBuilder2().Matches(func);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<T, string> func, RegexOptions options)
+        public static IPredicateValidationRegistrar<T, TVal> Matches<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<T, string> func, RegexOptions options)
         {
             registrar._impl().ExposeValueRuleBuilder2().Matches(func, options);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
     }
 }

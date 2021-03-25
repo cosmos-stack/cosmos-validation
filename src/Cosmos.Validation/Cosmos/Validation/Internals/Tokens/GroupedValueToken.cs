@@ -118,6 +118,8 @@ namespace Cosmos.Validation.Internals.Tokens
 
         public string CustomMessage { get; set; }
         public bool WithMessageMode { get; set; }
+        public Func<object, bool> NormalActivationConditions { get; set; }
+        public bool WithActivationConditions { get; set; }
         public bool AppendOrOverwrite { get; set; }
 
         private static string CreateName(VerifiableMemberContract contract)

@@ -38,7 +38,7 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar WithMessage(string message)
+        public IPredicateValidationRegistrar WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
 
@@ -59,6 +59,34 @@ namespace Cosmos.Validation.Registrars
 
             return _registrar;
         }
+
+        #region Condition
+
+        public new IValueFluentValidationRegistrar And()
+        {
+            return WithMessage(string.Empty).And();
+        }
+
+        public new IValueFluentValidationRegistrar Or()
+        {
+            return WithMessage(string.Empty).Or();
+        }
+
+        #endregion
+
+        #region Activation Conditions
+
+        public IValueFluentValidationRegistrar When(Func<object, bool> condition)
+        {
+            return WithMessage(string.Empty).When(condition);
+        }
+
+        public IValueFluentValidationRegistrar Unless(Func<object, bool> condition)
+        {
+            return WithMessage(string.Empty).Unless(condition);
+        }
+
+        #endregion
 
         #region AndForMember
 
@@ -257,7 +285,7 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar<T> WithMessage(string message)
+        public IPredicateValidationRegistrar<T> WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
 
@@ -278,6 +306,34 @@ namespace Cosmos.Validation.Registrars
 
             return _registrar;
         }
+
+        #region Condition
+
+        public new IValueFluentValidationRegistrar<T> And()
+        {
+            return WithMessage(string.Empty).And();
+        }
+
+        public new IValueFluentValidationRegistrar<T> Or()
+        {
+            return WithMessage(string.Empty).Or();
+        }
+
+        #endregion
+
+        #region Activation Conditions
+
+        public IValueFluentValidationRegistrar<T> When(Func<object, bool> condition)
+        {
+            return WithMessage(string.Empty).When(condition);
+        }
+
+        public IValueFluentValidationRegistrar<T> Unless(Func<object, bool> condition)
+        {
+            return WithMessage(string.Empty).Unless(condition);
+        }
+
+        #endregion
 
         #region AndForMember
 
@@ -482,7 +538,7 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar<T, TVal> WithMessage(string message)
+        public IPredicateValidationRegistrar<T, TVal> WithMessage(string message)
         {
             Func<TVal, CustomVerifyResult> realFunc;
 
@@ -503,6 +559,34 @@ namespace Cosmos.Validation.Registrars
 
             return _registrar;
         }
+
+        #region Condition
+
+        public new IValueFluentValidationRegistrar<T, TVal> And()
+        {
+            return WithMessage(string.Empty).And();
+        }
+
+        public new IValueFluentValidationRegistrar<T, TVal> Or()
+        {
+            return WithMessage(string.Empty).Or();
+        }
+
+        #endregion
+
+        #region Activation Conditions
+
+        public IValueFluentValidationRegistrar<T, TVal> When(Func<TVal, bool> condition)
+        {
+            return WithMessage(string.Empty).When(condition);
+        }
+
+        public IValueFluentValidationRegistrar<T, TVal> Unless(Func<TVal, bool> condition)
+        {
+            return WithMessage(string.Empty).Unless(condition);
+        }
+
+        #endregion
 
         #region AndForMember
 

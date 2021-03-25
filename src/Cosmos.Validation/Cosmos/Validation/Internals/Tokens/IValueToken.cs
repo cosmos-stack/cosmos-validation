@@ -1,4 +1,6 @@
-﻿namespace Cosmos.Validation.Internals.Tokens
+﻿using System;
+
+namespace Cosmos.Validation.Internals.Tokens
 {
     /// <summary>
     /// Interface of value token
@@ -26,6 +28,13 @@
         /// </summary>
         string CustomMessage { get; set; }
 
+        Func<object, bool> NormalActivationConditions { get; set; }
+
+        /// <summary>
+        /// Mark whether to use activation conditions.
+        /// </summary>
+        bool WithActivationConditions { get; set; }
+
         /// <summary>
         /// Mark whether to use custom message.
         /// </summary>
@@ -43,5 +52,5 @@
     /// Interface of value token, a generic version.
     /// </summary>
     /// <typeparam name="TVal"></typeparam>
-    internal interface IValueToken<in TVal> : IValueToken { }
+    internal interface IValueToken<TVal> : IValueToken { }
 }

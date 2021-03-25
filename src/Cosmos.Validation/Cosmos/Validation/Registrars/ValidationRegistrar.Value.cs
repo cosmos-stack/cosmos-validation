@@ -9,7 +9,7 @@ using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation.Registrars
 {
-    internal class ValueValidationRegistrar : IValueFluentValidationRegistrar
+    internal class ValueValidationRegistrar : IValueFluentValidationRegistrar, IPredicateValidationRegistrar
     {
         private readonly IValidationRegistrar _rootRegistrar;
         private readonly IFluentValidationRegistrar _parentRegistrar;
@@ -63,7 +63,7 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder.And();
             return this;
         }
-        
+
         public IValueFluentValidationRegistrar Or()
         {
             ValueRuleBuilder.Or();
@@ -72,51 +72,67 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region Activation Conditions
+
+        public IValueFluentValidationRegistrar When(Func<object, bool> condition)
+        {
+            ValueRuleBuilder.When(condition);
+            return this;
+        }
+
+        public IValueFluentValidationRegistrar Unless(Func<object, bool> condition)
+        {
+            ValueRuleBuilder.Unless(condition);
+            return this;
+        }
+
+        #endregion
+
         #region ValueRules
 
-        public IValueFluentValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval)
+        public IPredicateValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval)
         {
             ValueRuleBuilder.Range(from, to, options);
             return this;
         }
 
-        public IValueFluentValidationRegistrar RangeWithOpenInterval(object from, object to)
+        public IPredicateValidationRegistrar RangeWithOpenInterval(object from, object to)
         {
             ValueRuleBuilder.RangeWithOpenInterval(from, to);
             return this;
         }
 
-        public IValueFluentValidationRegistrar RangeWithCloseInterval(object from, object to)
+        public IPredicateValidationRegistrar RangeWithCloseInterval(object from, object to)
         {
             ValueRuleBuilder.RangeWithCloseInterval(from, to);
             return this;
         }
 
-        public IValueFluentValidationRegistrar Length(int min, int max)
+        public IPredicateValidationRegistrar Length(int min, int max)
         {
             ValueRuleBuilder.Length(min, max);
             return this;
         }
 
-        public IValueFluentValidationRegistrar MinLength(int min)
+        public IPredicateValidationRegistrar MinLength(int min)
         {
             ValueRuleBuilder.MinLength(min);
             return this;
         }
 
-        public IValueFluentValidationRegistrar MaxLength(int max)
+        public IPredicateValidationRegistrar MaxLength(int max)
         {
             ValueRuleBuilder.MaxLength(max);
             return this;
         }
 
-        public IValueFluentValidationRegistrar AtLeast(int count)
+        public IPredicateValidationRegistrar AtLeast(int count)
         {
             ValueRuleBuilder.AtLeast(count);
             return this;
         }
 
-        public IValueFluentValidationRegistrar Func(Func<object, CustomVerifyResult> func)
+        public IPredicateValidationRegistrar Func(Func<object, CustomVerifyResult> func)
         {
             ValueRuleBuilder.Func(func);
             return this;
@@ -132,7 +148,7 @@ namespace Cosmos.Validation.Registrars
             return new ValidationRegistrarWithMessage(this, _rootRegistrar, predicate);
         }
 
-        public IValueFluentValidationRegistrar Must(Func<object, CustomVerifyResult> func)
+        public IPredicateValidationRegistrar Must(Func<object, CustomVerifyResult> func)
         {
             ValueRuleBuilder.Must(func);
             return this;
@@ -148,30 +164,30 @@ namespace Cosmos.Validation.Registrars
             return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
         }
 
-        public IValueFluentValidationRegistrar Satisfies(Func<object, bool> func,string message)
+        public IPredicateValidationRegistrar Satisfies(Func<object, bool> func, string message)
         {
             return Satisfies(func).WithMessage(message);
         }
 
-        public IValueFluentValidationRegistrar InEnum(Type enumType)
+        public IPredicateValidationRegistrar InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);
             return this;
         }
 
-        public IValueFluentValidationRegistrar InEnum<TEnum>()
+        public IPredicateValidationRegistrar InEnum<TEnum>()
         {
             ValueRuleBuilder.InEnum<TEnum>();
             return this;
         }
 
-        public IValueFluentValidationRegistrar IsEnumName(Type enumType, bool caseSensitive)
+        public IPredicateValidationRegistrar IsEnumName(Type enumType, bool caseSensitive)
         {
             ValueRuleBuilder.IsEnumName(enumType, caseSensitive);
             return this;
         }
 
-        public IValueFluentValidationRegistrar IsEnumName<TEnum>(bool caseSensitive)
+        public IPredicateValidationRegistrar IsEnumName<TEnum>(bool caseSensitive)
         {
             ValueRuleBuilder.IsEnumName<TEnum>(caseSensitive);
             return this;
@@ -184,7 +200,7 @@ namespace Cosmos.Validation.Registrars
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
+        public IPredicateValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
         {
             ValueRuleBuilder.ScalePrecision(scale, precision, ignoreTrailingZeros);
             return this;
@@ -195,7 +211,7 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1>()
+        public IPredicateValidationRegistrar RequiredTypes<T1>()
         {
             ValueRuleBuilder.RequiredTypes<T1>();
             return this;
@@ -207,7 +223,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2>();
             return this;
@@ -220,7 +236,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3>();
             return this;
@@ -234,7 +250,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4>();
             return this;
@@ -249,7 +265,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5>();
             return this;
@@ -265,7 +281,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6>();
             return this;
@@ -282,7 +298,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
             return this;
@@ -300,7 +316,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
             return this;
@@ -319,7 +335,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
             return this;
@@ -339,7 +355,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
             return this;
@@ -360,7 +376,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
             return this;
@@ -382,7 +398,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
             return this;
@@ -405,7 +421,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
             return this;
@@ -429,7 +445,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
             return this;
@@ -454,7 +470,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
             return this;
@@ -480,7 +496,7 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        public IValueFluentValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
+        public IPredicateValidationRegistrar RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
             ValueRuleBuilder.RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
             return this;

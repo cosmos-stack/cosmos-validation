@@ -7,174 +7,174 @@ namespace Cosmos.Validation.Registrars
     {
         #region Empty/NotEmpty
 
-        public static IValueFluentValidationRegistrar Empty(this IValueFluentValidationRegistrar registrar)
+        public static IPredicateValidationRegistrar Empty(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().Empty();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar NotEmpty(this IValueFluentValidationRegistrar registrar)
+        public static IPredicateValidationRegistrar NotEmpty(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().NotEmpty();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Empty<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar<T> Empty<T>(this IValueFluentValidationRegistrar<T> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().Empty();
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> NotEmpty<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar<T> NotEmpty<T>(this IValueFluentValidationRegistrar<T> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().NotEmpty();
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Empty<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T, TVal> Empty<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().Empty();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> NotEmpty<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T, TVal> NotEmpty<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().NotEmpty();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
         #endregion
 
         #region Required
 
-        public static IValueFluentValidationRegistrar Required(this IValueFluentValidationRegistrar registrar)
+        public static IPredicateValidationRegistrar Required(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().Required();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Required<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar<T> Required<T>(this IValueFluentValidationRegistrar<T> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().Required();
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Required<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T, TVal> Required<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().Required();
-            return registrar;
-        }
-        
-        public static IValueFluentValidationRegistrar RequiredString(this IValueFluentValidationRegistrar registrar)
-        {
-            registrar._impl().ExposeValueRuleBuilder().RequiredString();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> RequiredString<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar RequiredString(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredString();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> RequiredString<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T> RequiredString<T>(this IValueFluentValidationRegistrar<T> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredString();
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> RequiredString<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredString();
-            return registrar;
-        }
-        
-        public static IValueFluentValidationRegistrar RequiredNumeric(this IValueFluentValidationRegistrar registrar,TypeIsOptions isOptions=TypeIsOptions.Default)
-        {
-            registrar._impl().ExposeValueRuleBuilder().RequiredNumeric(isOptions);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> RequiredNumeric<T>(this IValueFluentValidationRegistrar<T> registrar,TypeIsOptions isOptions=TypeIsOptions.Default)
+        public static IPredicateValidationRegistrar RequiredNumeric(this IValueFluentValidationRegistrar registrar, TypeIsOptions isOptions = TypeIsOptions.Default)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredNumeric(isOptions);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> RequiredNumeric<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar,TypeIsOptions isOptions=TypeIsOptions.Default)
+        public static IPredicateValidationRegistrar<T> RequiredNumeric<T>(this IValueFluentValidationRegistrar<T> registrar, TypeIsOptions isOptions = TypeIsOptions.Default)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredNumeric(isOptions);
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> RequiredNumeric<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, TypeIsOptions isOptions = TypeIsOptions.Default)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredNumeric(isOptions);
-            return registrar;
-        }
-        
-        public static IValueFluentValidationRegistrar RequiredBoolean(this IValueFluentValidationRegistrar registrar)
-        {
-            registrar._impl().ExposeValueRuleBuilder().RequiredBoolean();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> RequiredBoolean<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar RequiredBoolean(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredBoolean();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> RequiredBoolean<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T> RequiredBoolean<T>(this IValueFluentValidationRegistrar<T> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredBoolean();
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> RequiredBoolean<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredBoolean();
-            return registrar;
-        }
-        
-        public static IValueFluentValidationRegistrar RequiredGuid(this IValueFluentValidationRegistrar registrar)
-        {
-            registrar._impl().ExposeValueRuleBuilder().RequiredGuid();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> RequiredGuid<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar RequiredGuid(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredGuid();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> RequiredGuid<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T> RequiredGuid<T>(this IValueFluentValidationRegistrar<T> registrar)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredGuid();
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> RequiredGuid<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredGuid();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
         #endregion
 
         #region Null/NotNull
 
-        public static IValueFluentValidationRegistrar Null(this IValueFluentValidationRegistrar registrar)
+        public static IPredicateValidationRegistrar Null(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().Null();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar NotNull(this IValueFluentValidationRegistrar registrar)
+        public static IPredicateValidationRegistrar NotNull(this IValueFluentValidationRegistrar registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().NotNull();
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> Null<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar<T> Null<T>(this IValueFluentValidationRegistrar<T> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().Null();
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T> NotNull<T>(this IValueFluentValidationRegistrar<T> registrar)
+        public static IPredicateValidationRegistrar<T> NotNull<T>(this IValueFluentValidationRegistrar<T> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder().NotNull();
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> Null<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T, TVal> Null<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().Null();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> NotNull<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
+        public static IPredicateValidationRegistrar<T, TVal> NotNull<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().NotNull();
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
         #endregion
@@ -187,10 +187,10 @@ namespace Cosmos.Validation.Registrars
         /// <param name="registrar"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static IValueFluentValidationRegistrar RequiredType(this IValueFluentValidationRegistrar registrar, Type type)
+        public static IPredicateValidationRegistrar RequiredType(this IValueFluentValidationRegistrar registrar, Type type)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredType(type);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
         /// <summary>
@@ -199,10 +199,10 @@ namespace Cosmos.Validation.Registrars
         /// <param name="registrar"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        public static IValueFluentValidationRegistrar RequiredTypes(this IValueFluentValidationRegistrar registrar, params Type[] types)
+        public static IPredicateValidationRegistrar RequiredTypes(this IValueFluentValidationRegistrar registrar, params Type[] types)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredTypes(types);
-            return registrar;
+            return (IPredicateValidationRegistrar) registrar;
         }
 
         /// <summary>
@@ -212,10 +212,10 @@ namespace Cosmos.Validation.Registrars
         /// <param name="type"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IValueFluentValidationRegistrar<T> RequiredType<T>(this IValueFluentValidationRegistrar<T> registrar, Type type)
+        public static IPredicateValidationRegistrar<T> RequiredType<T>(this IValueFluentValidationRegistrar<T> registrar, Type type)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredType(type);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
         /// <summary>
@@ -225,16 +225,16 @@ namespace Cosmos.Validation.Registrars
         /// <param name="types"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IValueFluentValidationRegistrar<T> RequiredTypes<T>(this IValueFluentValidationRegistrar<T> registrar, params Type[] types)
+        public static IPredicateValidationRegistrar<T> RequiredTypes<T>(this IValueFluentValidationRegistrar<T> registrar, params Type[] types)
         {
             registrar._impl().ExposeValueRuleBuilder().RequiredTypes(types);
-            return registrar;
+            return (IPredicateValidationRegistrar<T>) registrar;
         }
 
-        public static IValueFluentValidationRegistrar<T, TVal> RequiredType<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Type type)
+        public static IPredicateValidationRegistrar<T, TVal> RequiredType<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Type type)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredType(type);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
         /// <summary>
@@ -245,10 +245,10 @@ namespace Cosmos.Validation.Registrars
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TVal"></typeparam>
         /// <returns></returns>
-        public static IValueFluentValidationRegistrar<T, TVal> RequiredTypes<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, params Type[] types)
+        public static IPredicateValidationRegistrar<T, TVal> RequiredTypes<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, params Type[] types)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredTypes(types);
-            return registrar;
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
         #endregion

@@ -30,7 +30,7 @@ namespace Cosmos.Validation.Internals.Rules
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IValueRuleBuilder WithMessage(string message)
+        public IPredicateValueRuleBuilder WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
 
@@ -82,7 +82,7 @@ namespace Cosmos.Validation.Internals.Rules
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IValueRuleBuilder<T> WithMessage(string message)
+        public IPredicateValueRuleBuilder<T> WithMessage(string message)
         {
             Func<object, CustomVerifyResult> realFunc;
 
@@ -135,7 +135,7 @@ namespace Cosmos.Validation.Internals.Rules
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IValueRuleBuilder<T, TVal> WithMessage(string message)
+        public IPredicateValueRuleBuilder<T, TVal> WithMessage(string message)
         {
             Func<TVal, CustomVerifyResult> realFunc;
 

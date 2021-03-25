@@ -1,20 +1,20 @@
 ﻿namespace Cosmos.Validation.Registrars.Interfaces
 {
-    public interface IMayUseConditions
+    public interface IMayUseRuleConditions
     {
         IValueFluentValidationRegistrar And();
 
         IValueFluentValidationRegistrar Or();
     }
 
-    public interface IMayUseConditions<T>
+    public interface IMayUseRuleConditions<T>
     {
         IValueFluentValidationRegistrar<T> And();
 
         IValueFluentValidationRegistrar<T> Or();
     }
 
-    public interface IMayUseConditions<T, TVal>
+    public interface IMayUseRuleConditions<T, TVal>
     {
         IValueFluentValidationRegistrar<T, TVal> And();
 

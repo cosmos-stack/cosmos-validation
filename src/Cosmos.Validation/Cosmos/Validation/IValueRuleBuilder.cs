@@ -19,96 +19,96 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder Or();
 
-        IValueRuleBuilder Empty();
+        IPredicateValueRuleBuilder Empty();
 
-        IValueRuleBuilder NotEmpty();
+        IPredicateValueRuleBuilder NotEmpty();
 
-        IValueRuleBuilder Required();
+        IPredicateValueRuleBuilder Required();
 
-        IValueRuleBuilder Null();
+        IPredicateValueRuleBuilder Null();
 
-        IValueRuleBuilder NotNull();
+        IPredicateValueRuleBuilder NotNull();
 
-        IValueRuleBuilder Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
+        IPredicateValueRuleBuilder Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
 
-        IValueRuleBuilder RangeWithOpenInterval(object from, object to);
+        IPredicateValueRuleBuilder RangeWithOpenInterval(object from, object to);
 
-        IValueRuleBuilder RangeWithCloseInterval(object from, object to);
+        IPredicateValueRuleBuilder RangeWithCloseInterval(object from, object to);
 
-        IValueRuleBuilder Length(int min, int max);
+        IPredicateValueRuleBuilder Length(int min, int max);
 
-        IValueRuleBuilder MinLength(int min);
+        IPredicateValueRuleBuilder MinLength(int min);
 
-        IValueRuleBuilder MaxLength(int max);
+        IPredicateValueRuleBuilder MaxLength(int max);
 
-        IValueRuleBuilder AtLeast(int count);
+        IPredicateValueRuleBuilder AtLeast(int count);
 
-        IValueRuleBuilder Equal(object value);
+        IPredicateValueRuleBuilder Equal(object value);
 
-        IValueRuleBuilder Equal(object value, IEqualityComparer comparer);
+        IPredicateValueRuleBuilder Equal(object value, IEqualityComparer comparer);
 
-        IValueRuleBuilder NotEqual(object value);
+        IPredicateValueRuleBuilder NotEqual(object value);
 
-        IValueRuleBuilder NotEqual(object value, IEqualityComparer comparer);
+        IPredicateValueRuleBuilder NotEqual(object value, IEqualityComparer comparer);
 
-        IValueRuleBuilder LessThan(object value);
+        IPredicateValueRuleBuilder LessThan(object value);
 
-        IValueRuleBuilder LessThanOrEqual(object value);
+        IPredicateValueRuleBuilder LessThanOrEqual(object value);
 
-        IValueRuleBuilder GreaterThan(object value);
+        IPredicateValueRuleBuilder GreaterThan(object value);
 
-        IValueRuleBuilder GreaterThanOrEqual(object value);
+        IPredicateValueRuleBuilder GreaterThanOrEqual(object value);
 
-        IValueRuleBuilder Matches(Regex regex);
+        IPredicateValueRuleBuilder Matches(Regex regex);
 
-        IValueRuleBuilder Matches(string regexExpression);
+        IPredicateValueRuleBuilder Matches(string regexExpression);
 
-        IValueRuleBuilder Matches(string regexExpression, RegexOptions options);
+        IPredicateValueRuleBuilder Matches(string regexExpression, RegexOptions options);
 
-        IValueRuleBuilder Matches(Func<object, Regex> regexFunc);
+        IPredicateValueRuleBuilder Matches(Func<object, Regex> regexFunc);
 
-        IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc);
+        IPredicateValueRuleBuilder Matches(Func<object, string> regexExpressionFunc);
 
-        IValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
+        IPredicateValueRuleBuilder Matches(Func<object, string> regexExpressionFunc, RegexOptions options);
 
-        IValueRuleBuilder Func(Func<object, CustomVerifyResult> func);
+        IPredicateValueRuleBuilder Func(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder Func(Func<object, bool> func);
 
         IWaitForMessageValueRuleBuilder Predicate(Predicate<object> predicate);
 
-        IValueRuleBuilder Must(Func<object, CustomVerifyResult> func);
+        IPredicateValueRuleBuilder Must(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder Must(Func<object, bool> func);
 
         IWaitForMessageValueRuleBuilder Satisfies(Func<object, bool> func);
 
-        IValueRuleBuilder Satisfies(Func<object, bool> func, string message);
+        IPredicateValueRuleBuilder Satisfies(Func<object, bool> func, string message);
 
-        IValueRuleBuilder Any(Func<object, bool> func);
+        IPredicateValueRuleBuilder Any(Func<object, bool> func);
 
-        IValueRuleBuilder All(Func<object, bool> func);
+        IPredicateValueRuleBuilder All(Func<object, bool> func);
 
-        IValueRuleBuilder NotAny(Func<object, bool> func);
+        IPredicateValueRuleBuilder NotAny(Func<object, bool> func);
 
-        IValueRuleBuilder NotAll(Func<object, bool> func);
-        IValueRuleBuilder None(Func<object, bool> func);
+        IPredicateValueRuleBuilder NotAll(Func<object, bool> func);
+        IPredicateValueRuleBuilder None(Func<object, bool> func);
 
-        IValueRuleBuilder In(ICollection<object> collection);
+        IPredicateValueRuleBuilder In(ICollection<object> collection);
 
-        IValueRuleBuilder In(params object[] objects);
+        IPredicateValueRuleBuilder In(params object[] objects);
 
-        IValueRuleBuilder NotIn(ICollection<object> collection);
+        IPredicateValueRuleBuilder NotIn(ICollection<object> collection);
 
-        IValueRuleBuilder NotIn(params object[] objects);
+        IPredicateValueRuleBuilder NotIn(params object[] objects);
 
-        IValueRuleBuilder InEnum(Type enumType);
+        IPredicateValueRuleBuilder InEnum(Type enumType);
 
-        IValueRuleBuilder InEnum<TEnum>();
+        IPredicateValueRuleBuilder InEnum<TEnum>();
 
-        IValueRuleBuilder IsEnumName(Type enumType, bool caseSensitive);
+        IPredicateValueRuleBuilder IsEnumName(Type enumType, bool caseSensitive);
 
-        IValueRuleBuilder IsEnumName<TEnum>(bool caseSensitive);
+        IPredicateValueRuleBuilder IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
         /// Limit the scale and precision of the value.
@@ -117,28 +117,28 @@ namespace Cosmos.Validation
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        IValueRuleBuilder ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+        IPredicateValueRuleBuilder ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        IValueRuleBuilder RequiredType(Type type);
+        IPredicateValueRuleBuilder RequiredType(Type type);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes(params Type[] types);
+        IPredicateValueRuleBuilder RequiredTypes(params Type[] types);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1>();
+        IPredicateValueRuleBuilder RequiredTypes<T1>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -146,7 +146,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -155,7 +155,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -165,7 +165,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -176,7 +176,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -188,7 +188,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -201,7 +201,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -215,7 +215,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -230,7 +230,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -246,7 +246,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -263,7 +263,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -281,7 +281,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -300,7 +300,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -320,7 +320,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -341,7 +341,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -363,31 +363,31 @@ namespace Cosmos.Validation
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+        IPredicateValueRuleBuilder RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
 
         /// <summary>
         /// The constraint type must be of string type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder RequiredString();
+        IPredicateValueRuleBuilder RequiredString();
 
         /// <summary>
         /// The constraint type must be of numeric type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
+        IPredicateValueRuleBuilder RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
 
         /// <summary>
         /// The constraint type must be of boolean type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder RequiredBoolean();
+        IPredicateValueRuleBuilder RequiredBoolean();
 
         /// <summary>
         /// The constraint type must be of Guid type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder RequiredGuid();
+        IPredicateValueRuleBuilder RequiredGuid();
     }
 
     /// <summary>
@@ -404,95 +404,95 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder<T> Or();
 
-        IValueRuleBuilder<T> Empty();
+        IPredicateValueRuleBuilder<T> Empty();
 
-        IValueRuleBuilder<T> NotEmpty();
+        IPredicateValueRuleBuilder<T> NotEmpty();
 
-        IValueRuleBuilder<T> Required();
+        IPredicateValueRuleBuilder<T> Required();
 
-        IValueRuleBuilder<T> Null();
+        IPredicateValueRuleBuilder<T> Null();
 
-        IValueRuleBuilder<T> NotNull();
+        IPredicateValueRuleBuilder<T> NotNull();
 
-        IValueRuleBuilder<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
+        IPredicateValueRuleBuilder<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
 
-        IValueRuleBuilder<T> RangeWithOpenInterval(object from, object to);
+        IPredicateValueRuleBuilder<T> RangeWithOpenInterval(object from, object to);
 
-        IValueRuleBuilder<T> RangeWithCloseInterval(object from, object to);
+        IPredicateValueRuleBuilder<T> RangeWithCloseInterval(object from, object to);
 
-        IValueRuleBuilder<T> Length(int min, int max);
+        IPredicateValueRuleBuilder<T> Length(int min, int max);
 
-        IValueRuleBuilder<T> MinLength(int min);
+        IPredicateValueRuleBuilder<T> MinLength(int min);
 
-        IValueRuleBuilder<T> MaxLength(int max);
+        IPredicateValueRuleBuilder<T> MaxLength(int max);
 
-        IValueRuleBuilder<T> AtLeast(int count);
+        IPredicateValueRuleBuilder<T> AtLeast(int count);
 
-        IValueRuleBuilder<T> Equal(object value);
+        IPredicateValueRuleBuilder<T> Equal(object value);
 
-        IValueRuleBuilder<T> Equal(object value, IEqualityComparer comparer);
+        IPredicateValueRuleBuilder<T> Equal(object value, IEqualityComparer comparer);
 
-        IValueRuleBuilder<T> NotEqual(object value);
+        IPredicateValueRuleBuilder<T> NotEqual(object value);
 
-        IValueRuleBuilder<T> NotEqual(object value, IEqualityComparer comparer);
+        IPredicateValueRuleBuilder<T> NotEqual(object value, IEqualityComparer comparer);
 
-        IValueRuleBuilder<T> LessThan(object value);
+        IPredicateValueRuleBuilder<T> LessThan(object value);
 
-        IValueRuleBuilder<T> LessThanOrEqual(object value);
+        IPredicateValueRuleBuilder<T> LessThanOrEqual(object value);
 
-        IValueRuleBuilder<T> GreaterThan(object value);
+        IPredicateValueRuleBuilder<T> GreaterThan(object value);
 
-        IValueRuleBuilder<T> GreaterThanOrEqual(object value);
+        IPredicateValueRuleBuilder<T> GreaterThanOrEqual(object value);
 
-        IValueRuleBuilder<T> Matches(Regex regex);
+        IPredicateValueRuleBuilder<T> Matches(Regex regex);
 
-        IValueRuleBuilder<T> Matches(string regexExpression);
+        IPredicateValueRuleBuilder<T> Matches(string regexExpression);
 
-        IValueRuleBuilder<T> Matches(string regexExpression, RegexOptions options);
+        IPredicateValueRuleBuilder<T> Matches(string regexExpression, RegexOptions options);
 
-        IValueRuleBuilder<T> Matches(Func<T, Regex> regexFunc);
+        IPredicateValueRuleBuilder<T> Matches(Func<T, Regex> regexFunc);
 
-        IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc);
+        IPredicateValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc);
 
-        IValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
+        IPredicateValueRuleBuilder<T> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
 
-        IValueRuleBuilder<T> Func(Func<object, CustomVerifyResult> func);
+        IPredicateValueRuleBuilder<T> Func(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder<T> Func(Func<object, bool> func);
 
         IWaitForMessageValueRuleBuilder<T> Predicate(Predicate<object> predicate);
 
-        IValueRuleBuilder<T> Must(Func<object, CustomVerifyResult> func);
+        IPredicateValueRuleBuilder<T> Must(Func<object, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder<T> Must(Func<object, bool> func);
-        
+
         IWaitForMessageValueRuleBuilder<T> Satisfies(Func<object, bool> func);
 
-        IValueRuleBuilder<T> Satisfies(Func<object, bool> func, string message);
+        IPredicateValueRuleBuilder<T> Satisfies(Func<object, bool> func, string message);
 
-        // IValueRuleBuilder<T> Any(Func<object, bool> func);
+        // IWaitForActivationConditionsValueRuleBuilder<T> Any(Func<object, bool> func);
         //
-        // IValueRuleBuilder<T> All(Func<object, bool> func);
+        // IWaitForActivationConditionsValueRuleBuilder<T> All(Func<object, bool> func);
         //
-        // IValueRuleBuilder<T> NotAny(Func<object, bool> func);
+        // IWaitForActivationConditionsValueRuleBuilder<T> NotAny(Func<object, bool> func);
         //
-        // IValueRuleBuilder<T> NotAll(Func<object, bool> func);
+        // IWaitForActivationConditionsValueRuleBuilder<T> NotAll(Func<object, bool> func);
 
-        IValueRuleBuilder<T> In(ICollection<object> collection);
+        IPredicateValueRuleBuilder<T> In(ICollection<object> collection);
 
-        IValueRuleBuilder<T> In(params object[] objects);
+        IPredicateValueRuleBuilder<T> In(params object[] objects);
 
-        IValueRuleBuilder<T> NotIn(ICollection<object> collection);
+        IPredicateValueRuleBuilder<T> NotIn(ICollection<object> collection);
 
-        IValueRuleBuilder<T> NotIn(params object[] objects);
+        IPredicateValueRuleBuilder<T> NotIn(params object[] objects);
 
-        IValueRuleBuilder<T> InEnum(Type enumType);
+        IPredicateValueRuleBuilder<T> InEnum(Type enumType);
 
-        IValueRuleBuilder<T> InEnum<TEnum>();
+        IPredicateValueRuleBuilder<T> InEnum<TEnum>();
 
-        IValueRuleBuilder<T> IsEnumName(Type enumType, bool caseSensitive);
+        IPredicateValueRuleBuilder<T> IsEnumName(Type enumType, bool caseSensitive);
 
-        IValueRuleBuilder<T> IsEnumName<TEnum>(bool caseSensitive);
+        IPredicateValueRuleBuilder<T> IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
         /// Limit the scale and precision of the value.
@@ -501,28 +501,28 @@ namespace Cosmos.Validation
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        IValueRuleBuilder<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+        IPredicateValueRuleBuilder<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredType(Type type);
+        IPredicateValueRuleBuilder<T> RequiredType(Type type);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes(params Type[] types);
+        IPredicateValueRuleBuilder<T> RequiredTypes(params Type[] types);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -530,7 +530,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -539,7 +539,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -549,7 +549,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -560,7 +560,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -572,7 +572,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -585,7 +585,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -599,7 +599,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -614,7 +614,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -630,7 +630,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -647,7 +647,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -665,7 +665,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -684,7 +684,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -704,7 +704,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -725,7 +725,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -747,31 +747,31 @@ namespace Cosmos.Validation
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+        IPredicateValueRuleBuilder<T> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
 
         /// <summary>
         /// The constraint type must be of string type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredString();
+        IPredicateValueRuleBuilder<T> RequiredString();
 
         /// <summary>
         /// The constraint type must be of numeric type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
+        IPredicateValueRuleBuilder<T> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
 
         /// <summary>
         /// The constraint type must be of boolean type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredBoolean();
+        IPredicateValueRuleBuilder<T> RequiredBoolean();
 
         /// <summary>
         /// The constraint type must be of Guid type.
         /// </summary>
         /// <returns></returns>
-        IValueRuleBuilder<T> RequiredGuid();
+        IPredicateValueRuleBuilder<T> RequiredGuid();
     }
 
     /// <summary>
@@ -789,87 +789,87 @@ namespace Cosmos.Validation
 
         new IValueRuleBuilder<T, TVal> Or();
 
-        new IValueRuleBuilder<T, TVal> Empty();
+        new IPredicateValueRuleBuilder<T, TVal> Empty();
 
-        new IValueRuleBuilder<T, TVal> NotEmpty();
+        new IPredicateValueRuleBuilder<T, TVal> NotEmpty();
 
-        new IValueRuleBuilder<T, TVal> Required();
+        new IPredicateValueRuleBuilder<T, TVal> Required();
 
-        new IValueRuleBuilder<T, TVal> Null();
+        new IPredicateValueRuleBuilder<T, TVal> Null();
 
-        new IValueRuleBuilder<T, TVal> NotNull();
+        new IPredicateValueRuleBuilder<T, TVal> NotNull();
 
-        IValueRuleBuilder<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval);
+        IPredicateValueRuleBuilder<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval);
 
-        IValueRuleBuilder<T, TVal> RangeWithOpenInterval(TVal from, TVal to);
+        IPredicateValueRuleBuilder<T, TVal> RangeWithOpenInterval(TVal from, TVal to);
 
-        IValueRuleBuilder<T, TVal> RangeWithCloseInterval(TVal from, TVal to);
+        IPredicateValueRuleBuilder<T, TVal> RangeWithCloseInterval(TVal from, TVal to);
 
-        new IValueRuleBuilder<T, TVal> Length(int min, int max);
+        new IPredicateValueRuleBuilder<T, TVal> Length(int min, int max);
 
-        new IValueRuleBuilder<T, TVal> MinLength(int min);
+        new IPredicateValueRuleBuilder<T, TVal> MinLength(int min);
 
-        new IValueRuleBuilder<T, TVal> MaxLength(int max);
+        new IPredicateValueRuleBuilder<T, TVal> MaxLength(int max);
 
-        new IValueRuleBuilder<T, TVal> AtLeast(int count);
+        new IPredicateValueRuleBuilder<T, TVal> AtLeast(int count);
 
-        IValueRuleBuilder<T, TVal> Equal(TVal value);
+        IPredicateValueRuleBuilder<T, TVal> Equal(TVal value);
 
-        IValueRuleBuilder<T, TVal> Equal(TVal value, IEqualityComparer<TVal> comparer);
+        IPredicateValueRuleBuilder<T, TVal> Equal(TVal value, IEqualityComparer<TVal> comparer);
 
-        IValueRuleBuilder<T, TVal> NotEqual(TVal value);
+        IPredicateValueRuleBuilder<T, TVal> NotEqual(TVal value);
 
-        IValueRuleBuilder<T, TVal> NotEqual(TVal value, IEqualityComparer<TVal> comparer);
+        IPredicateValueRuleBuilder<T, TVal> NotEqual(TVal value, IEqualityComparer<TVal> comparer);
 
-        IValueRuleBuilder<T, TVal> LessThan(TVal value);
+        IPredicateValueRuleBuilder<T, TVal> LessThan(TVal value);
 
-        IValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value);
+        IPredicateValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value);
 
-        IValueRuleBuilder<T, TVal> GreaterThan(TVal value);
+        IPredicateValueRuleBuilder<T, TVal> GreaterThan(TVal value);
 
-        IValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value);
+        IPredicateValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value);
 
-        new IValueRuleBuilder<T, TVal> Matches(Regex regex);
+        new IPredicateValueRuleBuilder<T, TVal> Matches(Regex regex);
 
-        new IValueRuleBuilder<T, TVal> Matches(string regexExpression);
+        new IPredicateValueRuleBuilder<T, TVal> Matches(string regexExpression);
 
-        new IValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options);
+        new IPredicateValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options);
 
-        new IValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc);
+        new IPredicateValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc);
 
-        new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc);
+        new IPredicateValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc);
 
-        new IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
+        new IPredicateValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options);
 
-        IValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
+        IPredicateValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder<T, TVal> Func(Func<TVal, bool> func);
 
         IWaitForMessageValueRuleBuilder<T, TVal> Predicate(Predicate<TVal> predicate);
 
-        IValueRuleBuilder<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
+        IPredicateValueRuleBuilder<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
 
         IWaitForMessageValueRuleBuilder<T, TVal> Must(Func<TVal, bool> func);
-        
+
         IWaitForMessageValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func);
 
-        IValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message);
+        IPredicateValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
-        IValueRuleBuilder<T, TVal> In(ICollection<TVal> collection);
+        IPredicateValueRuleBuilder<T, TVal> In(ICollection<TVal> collection);
 
-        IValueRuleBuilder<T, TVal> In(params TVal[] objects);
+        IPredicateValueRuleBuilder<T, TVal> In(params TVal[] objects);
 
-        IValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection);
+        IPredicateValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection);
 
-        IValueRuleBuilder<T, TVal> NotIn(params TVal[] objects);
+        IPredicateValueRuleBuilder<T, TVal> NotIn(params TVal[] objects);
 
-        new IValueRuleBuilder<T, TVal> InEnum(Type enumType);
+        new IPredicateValueRuleBuilder<T, TVal> InEnum(Type enumType);
 
-        new IValueRuleBuilder<T, TVal> InEnum<TEnum>();
+        new IPredicateValueRuleBuilder<T, TVal> InEnum<TEnum>();
 
-        new IValueRuleBuilder<T, TVal> IsEnumName(Type enumType, bool caseSensitive);
+        new IPredicateValueRuleBuilder<T, TVal> IsEnumName(Type enumType, bool caseSensitive);
 
-        new IValueRuleBuilder<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
+        new IPredicateValueRuleBuilder<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
         /// Limit the scale and precision of the value.
@@ -878,28 +878,28 @@ namespace Cosmos.Validation
         /// <param name="precision"></param>
         /// <param name="ignoreTrailingZeros"></param>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
+        new IPredicateValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredType(Type type);
+        new IPredicateValueRuleBuilder<T, TVal> RequiredType(Type type);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types);
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -907,7 +907,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -916,7 +916,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T2"></typeparam>
         /// <typeparam name="T3"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -926,7 +926,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T3"></typeparam>
         /// <typeparam name="T4"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -937,7 +937,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T4"></typeparam>
         /// <typeparam name="T5"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -949,7 +949,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T5"></typeparam>
         /// <typeparam name="T6"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -962,7 +962,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T6"></typeparam>
         /// <typeparam name="T7"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -976,7 +976,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T7"></typeparam>
         /// <typeparam name="T8"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -991,7 +991,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T8"></typeparam>
         /// <typeparam name="T9"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1007,7 +1007,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T9"></typeparam>
         /// <typeparam name="T10"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1024,7 +1024,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T10"></typeparam>
         /// <typeparam name="T11"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1042,7 +1042,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T11"></typeparam>
         /// <typeparam name="T12"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1061,7 +1061,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T12"></typeparam>
         /// <typeparam name="T13"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1081,7 +1081,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T13"></typeparam>
         /// <typeparam name="T14"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1102,7 +1102,7 @@ namespace Cosmos.Validation
         /// <typeparam name="T14"></typeparam>
         /// <typeparam name="T15"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>();
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -1124,30 +1124,30 @@ namespace Cosmos.Validation
         /// <typeparam name="T15"></typeparam>
         /// <typeparam name="T16"></typeparam>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>();
 
         /// <summary>
         /// The constraint type must be of string type.
         /// </summary>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredString();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredString();
 
         /// <summary>
         /// The constraint type must be of numeric type.
         /// </summary>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
+        new IPredicateValueRuleBuilder<T, TVal> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default);
 
         /// <summary>
         /// The constraint type must be of boolean type.
         /// </summary>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredBoolean();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredBoolean();
 
         /// <summary>
         /// The constraint type must be of Guid type.
         /// </summary>
         /// <returns></returns>
-        new IValueRuleBuilder<T, TVal> RequiredGuid();
+        new IPredicateValueRuleBuilder<T, TVal> RequiredGuid();
     }
 }

@@ -46,9 +46,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
         /// <returns></returns>
         internal override CorrectVerifyVal Valid(VerifiableObjectContext context)
         {
-            var verifyVal = CreateVerifyVal();
-
             var value = GetValueFrom(context);
+            
+            if(!IsActivate(value))
+                return CorrectVerifyVal.Ignore;
+
+            var verifyVal = CreateVerifyVal();
 
             if (ContainsMember(context) && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
             {
@@ -72,9 +75,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
         /// <returns></returns>
         internal override CorrectVerifyVal Valid(VerifiableMemberContext context)
         {
-            var verifyVal = CreateVerifyVal();
-
             var value = GetValueFrom(context);
+            
+            if(!IsActivate(value))
+                return CorrectVerifyVal.Ignore;
+
+            var verifyVal = CreateVerifyVal();
 
             if (context is not null && Types.IsCollectionType(VerifiableMember.MemberType) && value is ICollection collection)
             {

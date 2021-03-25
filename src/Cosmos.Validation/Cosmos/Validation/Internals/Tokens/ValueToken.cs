@@ -8,11 +8,6 @@ namespace Cosmos.Validation.Internals.Tokens
     /// </summary>
     internal abstract class ValueToken : IValueToken
     {
-        /// <summary>
-        /// Empty Mutually Exclusive Flags.
-        /// </summary>
-        public static readonly int[] NoMutuallyExclusiveFlags = { };
-
         protected ValueToken(VerifiableMemberContract contract)
         {
             VerifiableMember = contract ?? throw new ArgumentNullException(nameof(contract));
@@ -29,6 +24,20 @@ namespace Cosmos.Validation.Internals.Tokens
         public virtual TokenClass TokenClass => TokenClass.ValueToken;
 
         /// <summary>
+        /// If WithMessage is true, this AppendOrOverwrite takes effect. <br />
+        /// true - Append <br />
+        /// false - Overwrite
+        /// </summary>
+        public bool AppendOrOverwrite { get; set; }
+
+        #region MutuallyExclusive
+
+        /// <summary>
+        /// Empty Mutually Exclusive Flags.
+        /// </summary>
+        public static readonly int[] NoMutuallyExclusiveFlags = { };
+
+        /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
         /// </summary>
         public abstract bool MutuallyExclusive { get; }
@@ -37,6 +46,10 @@ namespace Cosmos.Validation.Internals.Tokens
         /// If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
         /// </summary>
         public abstract int[] MutuallyExclusiveFlags { get; }
+
+        #endregion
+
+        #region Verify
 
         /// <summary>
         /// Verification.
@@ -57,7 +70,7 @@ namespace Cosmos.Validation.Internals.Tokens
                 context.AppendVerifyVal(VerifiableMember.MemberName, val);
 
                 // 过滤 CorrectVerifyVal 结果为 Success 的规则名
-                val.IsSuccess.IfFalse(v => context.AppendNameOfExecutedRule(v.NameOfExecutedRule), val);
+                (!val.IsIgnore && !val.IsSuccess).IfFalse(v => context.AppendNameOfExecutedRule(v.NameOfExecutedRule), val);
             }
 
             return val?.IsSuccess ?? true;
@@ -77,10 +90,9 @@ namespace Cosmos.Validation.Internals.Tokens
         /// <returns></returns>
         internal abstract CorrectVerifyVal Valid(VerifiableMemberContext context);
 
-        /// <summary>
-        /// Verifiable Member
-        /// </summary>
-        protected VerifiableMemberContract VerifiableMember { get; }
+        #endregion
+
+        #region Custom Message
 
         /// <summary>
         /// Custom message.
@@ -91,13 +103,6 @@ namespace Cosmos.Validation.Internals.Tokens
         /// Mark whether to use custom message.
         /// </summary>
         public bool WithMessageMode { get; set; }
-
-        /// <summary>
-        /// If WithMessage is true, this AppendOrOverwrite takes effect. <br />
-        /// true - Append <br />
-        /// false - Overwrite
-        /// </summary>
-        public bool AppendOrOverwrite { get; set; }
 
         /// <summary>
         /// Merge message
@@ -115,6 +120,28 @@ namespace Cosmos.Validation.Internals.Tokens
 
             return messageSinceToken;
         }
+
+        #endregion
+
+        #region Activation Conditions
+
+        public Func<object, bool> NormalActivationConditions { get; set; }
+
+        /// <summary>
+        /// Mark whether to use activation conditions.
+        /// </summary>
+        public bool WithActivationConditions { get; set; }
+
+        protected virtual bool IsActivate(object value)
+        {
+            if (WithActivationConditions && NormalActivationConditions is not null)
+                return NormalActivationConditions.Invoke(value);
+            return true;
+        }
+
+        #endregion
+
+        #region GetValue
 
         /// <summary>
         /// Get value from VerifiableObjectContext
@@ -137,6 +164,15 @@ namespace Cosmos.Validation.Internals.Tokens
             return context?.GetValue();
         }
 
+        #endregion
+
+        #region Member
+
+        /// <summary>
+        /// Verifiable Member
+        /// </summary>
+        protected VerifiableMemberContract VerifiableMember { get; }
+
         /// <summary>
         /// Determine whether this verifiable token can be verified against the given VerifiableObjectContext.
         /// </summary>
@@ -148,6 +184,10 @@ namespace Cosmos.Validation.Internals.Tokens
             return context.ContainsMember(VerifiableMember.MemberName);
         }
 
+        #endregion
+
+        #region CorrectVerifyVal
+
         /// <summary>
         /// Create a new instance of VerifyVal
         /// </summary>
@@ -156,6 +196,8 @@ namespace Cosmos.Validation.Internals.Tokens
         {
             return new() {NameOfExecutedRule = TokenName};
         }
+
+        #endregion
 
         /// <summary>Returns a string that represents the current object.</summary>
         /// <returns>A string that represents the current object.</returns>
@@ -170,6 +212,19 @@ namespace Cosmos.Validation.Internals.Tokens
     {
         /// <inheritdoc />
         protected ValueToken(VerifiableMemberContract contract) : base(contract) { }
+
+        #region Activation Conditions
+        
+        protected virtual bool IsActivate(TVal value)
+        {
+            if (WithActivationConditions && NormalActivationConditions is not null)
+                return NormalActivationConditions.Invoke(value);
+            return true;
+        }
+
+        #endregion
+
+        #region GetValue
 
         /// <summary>
         /// Verification for VerifiableObjectContext, a generic version.
@@ -195,5 +250,7 @@ namespace Cosmos.Validation.Internals.Tokens
                 return default;
             return context.GetValue<TVal>();
         }
+
+        #endregion
     }
 }

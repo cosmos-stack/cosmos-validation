@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        IValueRuleBuilder WithMessage(string message);
+        IPredicateValueRuleBuilder WithMessage(string message);
     }
 
     /// <summary>
@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        IValueRuleBuilder<T> WithMessage(string message);
+        IPredicateValueRuleBuilder<T> WithMessage(string message);
     }
 
     /// <summary>
@@ -39,6 +39,6 @@
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        IValueRuleBuilder<T, TVal> WithMessage(string message);
+        IPredicateValueRuleBuilder<T, TVal> WithMessage(string message);
     }
 }

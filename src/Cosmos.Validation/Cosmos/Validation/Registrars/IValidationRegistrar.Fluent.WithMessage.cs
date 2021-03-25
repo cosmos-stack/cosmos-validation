@@ -10,6 +10,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForCustomValidator,
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember,
+        IMayUseRuleConditions,
+        IMayUseActivationConditions,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -19,7 +21,7 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        IValueFluentValidationRegistrar WithMessage(string message);
+        IPredicateValidationRegistrar WithMessage(string message);
     }
 
     /// <summary>
@@ -31,6 +33,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForCustomValidator,
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember<T>,
+        IMayUseRuleConditions<T>,
+        IMayUseActivationConditions<T>,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -40,7 +44,7 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T> WithMessage(string message);
+        IPredicateValidationRegistrar<T> WithMessage(string message);
     }
 
     /// <summary>
@@ -53,6 +57,8 @@ namespace Cosmos.Validation.Registrars
         IMayContinueRegisterForCustomValidator,
         IMayContinueRegisterForType,
         IMayContinueRegisterForMember<T>,
+        IMayUseRuleConditions<T, TVal>,
+        IMayUseActivationConditions<T, TVal>,
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect
@@ -62,6 +68,6 @@ namespace Cosmos.Validation.Registrars
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        IValueFluentValidationRegistrar<T, TVal> WithMessage(string message);
+        IPredicateValidationRegistrar<T, TVal> WithMessage(string message);
     }
 }

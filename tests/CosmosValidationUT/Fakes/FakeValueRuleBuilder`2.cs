@@ -34,167 +34,167 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Empty()
+        public IPredicateValueRuleBuilder<T, TVal> Empty()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> NotEmpty()
+        public IPredicateValueRuleBuilder<T, TVal> NotEmpty()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Required()
+        public IPredicateValueRuleBuilder<T, TVal> Required()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Null()
+        public IPredicateValueRuleBuilder<T, TVal> Null()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> NotNull()
+        public IPredicateValueRuleBuilder<T, TVal> NotNull()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Range(TVal @from, TVal to, RangeOptions options = RangeOptions.OpenInterval)
+        public IPredicateValueRuleBuilder<T, TVal> Range(TVal @from, TVal to, RangeOptions options = RangeOptions.OpenInterval)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RangeWithOpenInterval(TVal @from, TVal to)
+        public IPredicateValueRuleBuilder<T, TVal> RangeWithOpenInterval(TVal @from, TVal to)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RangeWithCloseInterval(TVal @from, TVal to)
+        public IPredicateValueRuleBuilder<T, TVal> RangeWithCloseInterval(TVal @from, TVal to)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Length(int min, int max)
+        public IPredicateValueRuleBuilder<T, TVal> Length(int min, int max)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> MinLength(int min)
+        public IPredicateValueRuleBuilder<T, TVal> MinLength(int min)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> MaxLength(int max)
+        public IPredicateValueRuleBuilder<T, TVal> MaxLength(int max)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> AtLeast(int count)
+        public IPredicateValueRuleBuilder<T, TVal> AtLeast(int count)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Equal(TVal value)
+        public IPredicateValueRuleBuilder<T, TVal> Equal(TVal value)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Equal(TVal value, IEqualityComparer<TVal> comparer)
+        public IPredicateValueRuleBuilder<T, TVal> Equal(TVal value, IEqualityComparer<TVal> comparer)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> NotEqual(TVal value)
+        public IPredicateValueRuleBuilder<T, TVal> NotEqual(TVal value)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> NotEqual(TVal value, IEqualityComparer<TVal> comparer)
+        public IPredicateValueRuleBuilder<T, TVal> NotEqual(TVal value, IEqualityComparer<TVal> comparer)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> LessThan(TVal value)
+        public IPredicateValueRuleBuilder<T, TVal> LessThan(TVal value)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value)
+        public IPredicateValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> GreaterThan(TVal value)
+        public IPredicateValueRuleBuilder<T, TVal> GreaterThan(TVal value)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value)
+        public IPredicateValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Regex regex)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Regex regex)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(string regexExpression)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(string regexExpression)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(string regexExpression, RegexOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Func<T, Regex> regexFunc)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Func<T, string> regexExpressionFunc, RegexOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, Regex>> expression)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Expression<Func<T, Regex>> expression)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression, RegexOptions options)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Expression<Func<T, string>> expression, RegexOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Func<object, Regex> regexFunc)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Func<object, Regex> regexFunc)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Func<object, string> regexExpressionFunc)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Func<object, string> regexExpressionFunc)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
+        public IPredicateValueRuleBuilder<T, TVal> Matches(Func<object, string> regexExpressionFunc, RegexOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func)
+        public IPredicateValueRuleBuilder<T, TVal> Func(Func<TVal, CustomVerifyResult> func)
         {
             throw new NotImplementedException();
         }
@@ -209,7 +209,7 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Must(Func<TVal, CustomVerifyResult> func)
+        public IPredicateValueRuleBuilder<T, TVal> Must(Func<TVal, CustomVerifyResult> func)
         {
             throw new NotImplementedException();
         }
@@ -224,162 +224,162 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message)
+        public IPredicateValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> In(ICollection<TVal> collection)
+        public IPredicateValueRuleBuilder<T, TVal> In(ICollection<TVal> collection)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> In(params TVal[] objects)
+        public IPredicateValueRuleBuilder<T, TVal> In(params TVal[] objects)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection)
+        public IPredicateValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> NotIn(params TVal[] objects)
+        public IPredicateValueRuleBuilder<T, TVal> NotIn(params TVal[] objects)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> InEnum(Type enumType)
+        public IPredicateValueRuleBuilder<T, TVal> InEnum(Type enumType)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> InEnum<TEnum>()
+        public IPredicateValueRuleBuilder<T, TVal> InEnum<TEnum>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> IsEnumName(Type enumType, bool caseSensitive)
+        public IPredicateValueRuleBuilder<T, TVal> IsEnumName(Type enumType, bool caseSensitive)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> IsEnumName<TEnum>(bool caseSensitive)
+        public IPredicateValueRuleBuilder<T, TVal> IsEnumName<TEnum>(bool caseSensitive)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
+        public IPredicateValueRuleBuilder<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredType(Type type)
+        public IPredicateValueRuleBuilder<T, TVal> RequiredType(Type type)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types)
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes(params Type[] types)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredString()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredString()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default)
+        public IPredicateValueRuleBuilder<T, TVal> RequiredNumeric(TypeIsOptions isOptions = TypeIsOptions.Default)
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredBoolean()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredBoolean()
         {
             throw new NotImplementedException();
         }
 
-        public IValueRuleBuilder<T, TVal> RequiredGuid()
+        public IPredicateValueRuleBuilder<T, TVal> RequiredGuid()
         {
             throw new NotImplementedException();
         }
