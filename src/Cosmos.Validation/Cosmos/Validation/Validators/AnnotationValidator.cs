@@ -27,25 +27,51 @@ namespace Cosmos.Validation.Validators
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
+        /// <summary>
+        /// Name of validation
+        /// </summary>
         public string Name => "Annotation Validator";
 
+        /// <summary>
+        /// Mark whether the validator is anonymous.
+        /// </summary>
         public bool IsAnonymous => false;
 
+        /// <inheritdoc />
         bool ICorrectValidator.IsTypeBinding => false;
 
+        /// <inheritdoc />
         Type ICorrectValidator.SourceType => TypeClass.ObjectClazz;
 
         #region GetInstance
 
+        /// <summary>
+        /// Create a new instance of Annotation Validator
+        /// </summary>
         public static AnnotationValidator Instance { get; } = new();
 
+        /// <summary>
+        /// Create a new instance of Annotation Validator
+        /// </summary>
+        /// <returns></returns>
         public static AnnotationValidator GetInstance() => Instance;
 
+        /// <summary>
+        /// Create a new instance of Annotation Validator with given options
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public static AnnotationValidator GetInstance(ValidationOptions options)
         {
             return new(new DefaultVerifiableObjectResolver(), options);
         }
 
+        /// <summary>
+        /// Create a new instance of Annotation Validator with given options and Object Resolver
+        /// </summary>
+        /// <param name="objectResolver"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public static AnnotationValidator GetInstance(IVerifiableObjectResolver objectResolver, ValidationOptions options)
         {
             return new(objectResolver, options);
@@ -55,6 +81,12 @@ namespace Cosmos.Validation.Validators
 
         #region Verify
 
+        /// <summary>
+        /// Verify the entire entity
+        /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
         public VerifyResult Verify(Type declaringType, object instance)
         {
             if (declaringType is null)
@@ -70,6 +102,12 @@ namespace Cosmos.Validation.Validators
             return Verify(_objectResolver.Resolve(declaringType, instance));
         }
 
+        /// <summary>
+        /// Verify the entire entity
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public VerifyResult Verify<T>(T instance)
         {
             if (instance is null)
@@ -83,6 +121,11 @@ namespace Cosmos.Validation.Validators
             return Verify(_objectResolver.Resolve(instance));
         }
 
+        /// <summary>
+        /// Verify the entire entity
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public VerifyResult Verify(VerifiableObjectContext context)
         {
             if (context is null)
@@ -106,6 +149,13 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyOne
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <returns></returns>
         public VerifyResult VerifyOne(Type declaringType, object memberValue, string memberName)
         {
             if (declaringType is null)
@@ -124,6 +174,14 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public VerifyResult VerifyOne<T, TVal>(TVal memberValue, string memberName)
         {
             if (memberValue is null)
@@ -140,6 +198,14 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="memberValue"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public VerifyResult VerifyOne<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue)
         {
             if (memberValue is null)
@@ -157,6 +223,14 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
         public VerifyResult VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance)
         {
             if (declaringType is null)
@@ -176,6 +250,15 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
         }
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instance"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public VerifyResult VerifyOneWithInstance<T, TVal>(TVal memberValue, string memberName, T instance)
         {
             if (memberValue is null)
@@ -193,6 +276,15 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
         }
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="instance"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
         public VerifyResult VerifyOneWithInstance<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, T instance)
         {
             if (memberValue is null)
@@ -211,6 +303,91 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
         }
 
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="keyValueCollection"></param>
+        /// <returns></returns>
+        public VerifyResult VerifyOneWithDictionary(Type declaringType, object memberValue, string memberName, IDictionary<string, object> keyValueCollection)
+        {
+            if (declaringType is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollections)
+                return VerifyMany(declaringType, keyValueCollections);
+            var parentContract = VerifiableObjectContractManager.Resolve(declaringType);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithDictionary(keyValueCollection)));
+        }
+
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="keyValueCollection"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
+        public VerifyResult VerifyOneWithDictionary<T, TVal>(TVal memberValue, string memberName, IDictionary<string, object> keyValueCollection)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollections)
+                return VerifyMany<T>(keyValueCollections);
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithDictionary(keyValueCollection)));
+        }
+
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="keyValueCollection"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
+        public VerifyResult VerifyOneWithDictionary<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, IDictionary<string, object> keyValueCollection)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollections)
+                return VerifyMany<T>(keyValueCollections);
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithDictionary(keyValueCollection)));
+        }
+
+        /// <summary>
+        /// Verify a member of the entity.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public VerifyResult VerifyOne(VerifiableMemberContext context)
         {
             if (context is null)
@@ -231,6 +408,12 @@ namespace Cosmos.Validation.Validators
 
         #region VerifyMany
 
+        /// <summary>
+        /// Verify each member in the non-strongly typed dictionary.
+        /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="keyValueCollections"></param>
+        /// <returns></returns>
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)
         {
             if (declaringType is null)
@@ -240,6 +423,12 @@ namespace Cosmos.Validation.Validators
             return VerifyMany(_objectResolver.Resolve(declaringType, keyValueCollections));
         }
 
+        /// <summary>
+        /// Verify each member in the non-strongly typed dictionary.
+        /// </summary>
+        /// <param name="keyValueCollections"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public VerifyResult VerifyMany<T>(IDictionary<string, object> keyValueCollections)
         {
             if (keyValueCollections is null)
@@ -247,6 +436,11 @@ namespace Cosmos.Validation.Validators
             return VerifyMany(_objectResolver.Resolve<T>(keyValueCollections));
         }
 
+        /// <summary>
+        /// Verify each member in the non-strongly typed dictionary.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public VerifyResult VerifyMany(VerifiableObjectContext context)
         {
             if (context is null)
