@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Cosmos.Reflection;
 using Cosmos.Validation.Internals.Tokens.ValueTokens;
@@ -706,6 +707,26 @@ namespace Cosmos.Validation.Internals.Rules
         public new IPredicateValueRuleBuilder<T, TVal> RequiredGuid()
         {
             State.CurrentToken = new ValueRequiredGuidToken(_contract);
+            return this;
+        }
+
+        /// <summary>
+        /// The constraint type must be of DateTime type.
+        /// </summary>
+        /// <returns></returns>
+        public new IPredicateValueRuleBuilder<T, TVal> RequiredDateTime(DateTimeStyles style = DateTimeStyles.None)
+        {
+            State.CurrentToken = new ValueRequiredDateTimeToken(_contract, style);
+            return this;
+        }
+
+        /// <summary>
+        /// The constraint type must be of DateInfo type.
+        /// </summary>
+        /// <returns></returns>
+        public new IPredicateValueRuleBuilder<T, TVal> RequiredDateInfo(DateTimeStyles style = DateTimeStyles.None)
+        {
+            State.CurrentToken = new ValueRequiredDateInfoToken(_contract, style);
             return this;
         }
 

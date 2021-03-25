@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Cosmos.Reflection;
 
@@ -388,6 +389,18 @@ namespace Cosmos.Validation
         /// </summary>
         /// <returns></returns>
         IPredicateValueRuleBuilder RequiredGuid();
+
+        /// <summary>
+        /// The constraint type must be of DateTime type.
+        /// </summary>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder RequiredDateTime(DateTimeStyles style = DateTimeStyles.None);
+
+        /// <summary>
+        /// The constraint type must be of DateInfo type.
+        /// </summary>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder RequiredDateInfo(DateTimeStyles style = DateTimeStyles.None);
     }
 
     /// <summary>
@@ -772,6 +785,18 @@ namespace Cosmos.Validation
         /// </summary>
         /// <returns></returns>
         IPredicateValueRuleBuilder<T> RequiredGuid();
+
+        /// <summary>
+        /// The constraint type must be of DateTime type.
+        /// </summary>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> RequiredDateTime(DateTimeStyles style = DateTimeStyles.None);
+
+        /// <summary>
+        /// The constraint type must be of DateInfo type.
+        /// </summary>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> RequiredDateInfo(DateTimeStyles style = DateTimeStyles.None);
     }
 
     /// <summary>
@@ -1149,5 +1174,17 @@ namespace Cosmos.Validation
         /// </summary>
         /// <returns></returns>
         new IPredicateValueRuleBuilder<T, TVal> RequiredGuid();
+
+        /// <summary>
+        /// The constraint type must be of DateTime type.
+        /// </summary>
+        /// <returns></returns>
+        new IPredicateValueRuleBuilder<T, TVal> RequiredDateTime(DateTimeStyles style = DateTimeStyles.None);
+
+        /// <summary>
+        /// The constraint type must be of DateInfo type.
+        /// </summary>
+        /// <returns></returns>
+        new IPredicateValueRuleBuilder<T, TVal> RequiredDateInfo(DateTimeStyles style = DateTimeStyles.None);
     }
 }

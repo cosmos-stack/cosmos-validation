@@ -14,7 +14,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         /// <inheritdoc />
         public ValueRequiredGuidToken(VerifiableMemberContract contract, TypeIsOptions isOptions = TypeIsOptions.Default)
-            : base(contract, TypeClass.BooleanClazz, false, NAME, null, true)
+            : base(contract, TypeClass.GuidClazz, false, NAME, null, true)
         {
             _isOptions = isOptions;
         }

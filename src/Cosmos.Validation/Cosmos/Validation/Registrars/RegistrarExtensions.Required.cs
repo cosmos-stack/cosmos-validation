@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Cosmos.Reflection;
 
 namespace Cosmos.Validation.Registrars
@@ -134,6 +135,42 @@ namespace Cosmos.Validation.Registrars
         public static IPredicateValidationRegistrar<T, TVal> RequiredGuid<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar)
         {
             registrar._impl().ExposeValueRuleBuilder2().RequiredGuid();
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar RequiredDateTime(this IValueFluentValidationRegistrar registrar, DateTimeStyles style = DateTimeStyles.None)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredDateTime(style);
+            return (IPredicateValidationRegistrar) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T> RequiredDateTime<T>(this IValueFluentValidationRegistrar<T> registrar, DateTimeStyles style = DateTimeStyles.None)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredDateTime(style);
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> RequiredDateTime<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, DateTimeStyles style = DateTimeStyles.None)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().RequiredDateTime(style);
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar RequiredDateInfo(this IValueFluentValidationRegistrar registrar, DateTimeStyles style = DateTimeStyles.None)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredDateInfo(style);
+            return (IPredicateValidationRegistrar) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T> RequiredDateInfo<T>(this IValueFluentValidationRegistrar<T> registrar, DateTimeStyles style = DateTimeStyles.None)
+        {
+            registrar._impl().ExposeValueRuleBuilder().RequiredDateInfo(style);
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> RequiredDateInfo<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, DateTimeStyles style = DateTimeStyles.None)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().RequiredDateInfo(style);
             return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
