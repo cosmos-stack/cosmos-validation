@@ -2,6 +2,9 @@
 
 namespace Cosmos.Validation.Validators
 {
+    /// <summary>
+    /// A validator that only returns success information, and cannot be inherited.
+    /// </summary>
     internal sealed class SealedValidator : CustomValidator
     {
         public SealedValidator() : base("SealedValidator") { }
@@ -19,6 +22,10 @@ namespace Cosmos.Validation.Validators
         public static SealedValidator Instance { get; } = new();
     }
 
+    /// <summary>
+    /// A validator that only returns success information, and cannot be inherited.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal sealed class SealedValidator<T> : CustomValidator<T>
     {
         public SealedValidator() : base("SealedValidator`1") { }
@@ -29,7 +36,7 @@ namespace Cosmos.Validation.Validators
         }
 
         protected override VerifyResult VerifyOneImpl(VerifiableMemberContext context)
-        {            
+        {
             return VerifyResult.Success;
         }
 
