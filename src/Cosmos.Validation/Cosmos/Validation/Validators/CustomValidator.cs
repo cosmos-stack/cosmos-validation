@@ -61,6 +61,16 @@ namespace Cosmos.Validation.Validators
             return VerifyOneImpl(memberContext);
         }
 
+        public virtual VerifyResult VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance)
+        {
+            var parentContract = VerifiableObjectContractManager.Resolve(declaringType);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance));
+            return VerifyOneImpl(memberContext);
+        }
+
         public virtual VerifyResult VerifyOneViaContext(VerifiableMemberContext context)
         {
             if (context is null)

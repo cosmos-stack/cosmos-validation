@@ -82,8 +82,8 @@ namespace Cosmos.Validation.Validators
             if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
                 : VerifyResult.Merge(result1, result2, result3);
         }
 
@@ -97,7 +97,7 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.Verify(context);
-            
+
             if (_options.CustomValidatorEnabled)
                 result2 = CorrectEngine.ValidViaCustomValidators(context, _customValidatorManager.ResolveAll());
 
@@ -107,8 +107,8 @@ namespace Cosmos.Validation.Validators
             if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
                 : VerifyResult.Merge(result1, result2, result3);
         }
 
@@ -120,91 +120,80 @@ namespace Cosmos.Validation.Validators
         {
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();
-
             var memberContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
-
             if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-
-            VerifyResult result1 = null, result2 = null, result3 = null;
-            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
-
-            if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.VerifyOne(memberContext);
-            
-            if (_options.CustomValidatorEnabled)
-                result2 = CorrectEngine.ValidViaCustomValidators(memberContext, _customValidatorManager.ResolveAll());
-
-            if (_options.AnnotationEnabled)
-                result3 = _annotationValidator.VerifyOne(memberContext);
-
-            if (result1 is null && result2 is null && result3 is null)
-                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
-
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
-                : VerifyResult.Merge(result1, result2, result3);
+            return VerifyOneInternal(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
         public VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> expression, TVal memberValue)
         {
             if (expression is null)
                 return _options.ReturnNullReferenceOrSuccess();
-
             var memberName = PropertySelector.GetPropertyName(expression);
-
             var memberContract = VerifiableObjectContractManager.Resolve<T>()?.GetMemberContract(memberName);
-
             if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-
-            VerifyResult result1 = null, result2 = null, result3 = null;
-            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
-
-            if (_projectManager.TryResolve(_type, _name, out var project))
-                result1 = project.VerifyOne(memberContext);
-            
-            if (_options.CustomValidatorEnabled)
-                result2 = CorrectEngine.ValidViaCustomValidators(memberContext, _customValidatorManager.ResolveAll());
-
-            if (_options.AnnotationEnabled)
-                result3 = _annotationValidator.VerifyOne(memberContext);
-
-            if (result1 is null && result2 is null && result3 is null)
-                return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
-
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
-                : VerifyResult.Merge(result1, result2, result3);
+            return VerifyOneInternal(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
         VerifyResult IValidator.VerifyOne(Type declaringType, object memberValue, string memberName)
         {
             if (memberValue is null)
                 return _options.ReturnNullReferenceOrSuccess();
-
             var memberContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
-
             if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOneInternal(VerifiableMemberContext.Create(memberValue, memberContract));
+        }
 
+        public VerifyResult VerifyOneWithInstance(object memberValue, string memberName, T instance)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOneInternal(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
+        }
+
+        public VerifyResult VerifyOneWithInstance<TVal>(Expression<Func<T, TVal>> expression, TVal memberValue, T instance)
+        {
+            if (expression is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberName = PropertySelector.GetPropertyName(expression);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOneInternal(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
+        }
+
+        VerifyResult IValidator.VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            var parentContract = VerifiableObjectContractManager.Resolve(declaringType);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOneInternal(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
+        }
+
+        private VerifyResult VerifyOneInternal(VerifiableMemberContext memberContext)
+        {
             VerifyResult result1 = null, result2 = null, result3 = null;
-            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
-
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyOne(memberContext);
-            
             if (_options.CustomValidatorEnabled)
                 result2 = CorrectEngine.ValidViaCustomValidators(memberContext, _customValidatorManager.ResolveAll());
-
             if (_options.AnnotationEnabled)
                 result3 = _annotationValidator.VerifyOne(memberContext);
-
             if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
-
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
                 : VerifyResult.Merge(result1, result2, result3);
         }
 
@@ -222,7 +211,7 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyMany(context.GetValueMap());
-            
+
             if (_options.CustomValidatorEnabled)
                 result2 = CorrectEngine.ValidViaCustomValidators(context.GetValueMap(), _customValidatorManager.ResolveAll());
 
@@ -232,8 +221,8 @@ namespace Cosmos.Validation.Validators
             if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
                 : VerifyResult.Merge(result1, result2, result3);
         }
 
@@ -250,18 +239,18 @@ namespace Cosmos.Validation.Validators
 
             if (_projectManager.TryResolve(_type, _name, out var project))
                 result1 = project.VerifyMany(context.GetValueMap());
-            
+
             if (_options.CustomValidatorEnabled)
-                result2= CorrectEngine.ValidViaCustomValidators(context.GetValueMap(), _customValidatorManager.ResolveAll());
+                result2 = CorrectEngine.ValidViaCustomValidators(context.GetValueMap(), _customValidatorManager.ResolveAll());
 
             if (_options.AnnotationEnabled)
-                result3= _annotationValidator.Verify(context);
+                result3 = _annotationValidator.Verify(context);
 
             if (result1 is null && result2 is null && result3 is null)
                 return _options.ReturnUnregisterProjectForSuchTypeOrSuccess();
 
-            return result1 is null 
-                ? VerifyResult.MakeTogether(result2, result3) 
+            return result1 is null
+                ? VerifyResult.MakeTogether(result2, result3)
                 : VerifyResult.Merge(result1, result2, result3);
         }
 

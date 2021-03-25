@@ -170,12 +170,12 @@ namespace Cosmos.Validation
             if (declaringType is null)
                 throw new ArgumentNullException(nameof(declaringType));
 
-            var valueContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
-            if (valueContract is null)
+            var memberContract = VerifiableObjectContractManager.Resolve(declaringType)?.GetMemberContract(memberName);
+            if (memberContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
-            var valueContext = VerifiableMemberContext.Create(memberValue, valueContract);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract);
 
-            return VerifyOne(valueContext, declaringType, "");
+            return VerifyOne(memberContext, declaringType, "");
         }
 
         /// <summary>
@@ -203,6 +203,53 @@ namespace Cosmos.Validation
         /// <summary>
         /// Verify a member of the object.
         /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public VerifyResult VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance)
+        {
+            if (declaringType is null)
+                throw new ArgumentNullException(nameof(declaringType));
+
+            var parentContract = VerifiableObjectContractManager.Resolve(declaringType);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance));
+
+            return VerifyOne(memberContext, declaringType, "");
+        }
+
+        /// <summary>
+        /// Verify a member of the object.
+        /// </summary>
+        /// <param name="declaringType"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instance"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public VerifyResult VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance, string projectName)
+        {
+            if (declaringType is null)
+                throw new ArgumentNullException(nameof(declaringType));
+
+            var parentContract = VerifiableObjectContractManager.Resolve(declaringType);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance));
+
+            return VerifyOne(memberContext, declaringType, projectName);
+        }
+
+        /// <summary>
+        /// Verify a member of the object.
+        /// </summary>
         /// <param name="memberValue"></param>
         /// <param name="memberName"></param>
         /// <typeparam name="T"></typeparam>
@@ -218,6 +265,27 @@ namespace Cosmos.Validation
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public VerifyResult VerifyOne<T>(object memberValue, string memberName, string projectName) => VerifyOne(typeof(T), memberValue, memberName, projectName);
+
+        /// <summary>
+        /// Verify a member of the object.
+        /// </summary>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instance"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public VerifyResult VerifyOneWithInstance<T>(object memberValue, string memberName, T instance) => VerifyOneWithInstance(typeof(T), memberValue, memberName, instance);
+        
+        /// <summary>
+        /// Verify a member of the object.
+        /// </summary>
+        /// <param name="memberValue"></param>
+        /// <param name="memberName"></param>
+        /// <param name="instance"></param>
+        /// <param name="projectName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public VerifyResult VerifyOneWithInstance<T>(object memberValue, string memberName, T instance, string projectName) => VerifyOneWithInstance(typeof(T), memberValue, memberName, instance, projectName);
 
         /// <summary>
         /// Verify a member of the object.
@@ -262,6 +330,57 @@ namespace Cosmos.Validation
             if (valueContract is null)
                 return VerifyResult.MemberIsNotExists(memberName);
             var valueContext = VerifiableMemberContext.Create(memberValue, valueContract);
+
+            return VerifyOne(valueContext, typeof(T), projectName);
+        }
+
+        /// <summary>
+        /// Verify a member of the object.
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="instance"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public VerifyResult VerifyOneWithInstance<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, T instance)
+        {
+            if (propertySelector is null)
+                throw new ArgumentNullException(nameof(propertySelector));
+
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var memberContext = VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance));
+
+            return VerifyOne(memberContext, typeof(T), "");
+        }
+
+        /// <summary>
+        /// Verify a member of the object.
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="memberValue"></param>
+        /// <param name="instance"></param>
+        /// <param name="projectName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public VerifyResult VerifyOneWithInstance<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, T instance, string projectName)
+        {
+            if (propertySelector is null)
+                throw new ArgumentNullException(nameof(propertySelector));
+
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            var valueContext = VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance));
 
             return VerifyOne(valueContext, typeof(T), projectName);
         }

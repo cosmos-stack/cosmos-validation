@@ -146,12 +146,15 @@ namespace Cosmos.Validation.Internals.Tokens
         public bool WithActivationConditions { get; set; }
 
         /// <summary>
-        /// Is activate, This method is applicable to 'Verify' and 'VerifyOne'.
+        /// Is activate, This method is only applicable to 'Verify'.
         /// </summary>
+        /// <param name="context"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        protected virtual bool IsActivate(object value)
+        protected bool IsActivate(VerifiableMemberContext context, object value)
         {
+            if (WithActivationConditions && ActivationConditions3 is not null && context.HasParentContext())
+                return ActivationConditions3.Invoke(context.GetParentInstance(), value);
             if (WithActivationConditions && ActivationConditions2 is not null)
                 return ActivationConditions2.Invoke(value);
             return true;
@@ -160,15 +163,15 @@ namespace Cosmos.Validation.Internals.Tokens
         /// <summary>
         /// Is activate, This method is only applicable to 'Verify'.
         /// </summary>
-        /// <param name="instance"></param>
+        /// <param name="context"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        protected virtual bool IsActivate(object instance, object value)
+        protected bool IsActivate(VerifiableObjectContext context, object value)
         {
+            if (WithActivationConditions && ActivationConditions3 is not null)
+                return ActivationConditions3.Invoke(context.Instance, value);
             if (WithActivationConditions && ActivationConditions2 is not null)
                 return ActivationConditions2.Invoke(value);
-            if (WithActivationConditions && ActivationConditions3 is not null)
-                return ActivationConditions3.Invoke(instance, value);
             return true;
         }
 
@@ -249,12 +252,15 @@ namespace Cosmos.Validation.Internals.Tokens
         #region Activation Conditions
 
         /// <summary>
-        /// Is activate, This method is applicable to 'Verify' and 'VerifyOne'.
+        /// Is activate, This method is only applicable to 'Verify'.
         /// </summary>
+        /// <param name="context"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        protected virtual bool IsActivate(TVal value)
+        protected bool IsActivate(VerifiableMemberContext context, TVal value)
         {
+            if (WithActivationConditions && ActivationConditions3 is not null && context.HasParentContext())
+                return ActivationConditions3.Invoke(context.GetParentInstance(), value);
             if (WithActivationConditions && ActivationConditions2 is not null)
                 return ActivationConditions2.Invoke(value);
             return true;
@@ -263,15 +269,15 @@ namespace Cosmos.Validation.Internals.Tokens
         /// <summary>
         /// Is activate, This method is only applicable to 'Verify'.
         /// </summary>
-        /// <param name="instance"></param>
+        /// <param name="context"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        protected virtual bool IsActivate(object instance, TVal value)
+        protected bool IsActivate(VerifiableObjectContext context, TVal value)
         {
+            if (WithActivationConditions && ActivationConditions3 is not null)
+                return ActivationConditions3.Invoke(context.Instance, value);
             if (WithActivationConditions && ActivationConditions2 is not null)
                 return ActivationConditions2.Invoke(value);
-            if (WithActivationConditions && ActivationConditions3 is not null)
-                return ActivationConditions3.Invoke(instance, value);
             return true;
         }
 

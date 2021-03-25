@@ -13,7 +13,7 @@ namespace Cosmos.Validation.Validators
         {
             Handler = ValidationHandler.CreateByStrategy<TStrategy, T>();
         }
-        
+
         public StrategyValidator(ValidationOptions options)
         {
             if (options is null) throw new ArgumentNullException(nameof(options));
@@ -49,6 +49,21 @@ namespace Cosmos.Validation.Validators
         public VerifyResult VerifyOne<TVal>(Expression<Func<T, TVal>> expression, TVal memberValue)
         {
             return Handler.VerifyOne(expression, memberValue);
+        }
+
+        public VerifyResult VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance)
+        {
+            return Handler.VerifyOneWithInstance(declaringType, memberValue, memberName, instance);
+        }
+
+        public VerifyResult VerifyOneWithInstance(object memberValue, string memberName, T instance)
+        {
+            return Handler.VerifyOneWithInstance(typeof(T), memberValue, memberName, instance);
+        }
+
+        public VerifyResult VerifyOneWithInstance<TVal>(Expression<Func<T, TVal>> expression, TVal memberValue, T instance)
+        {
+            return Handler.VerifyOneWithInstance(expression, memberValue, instance);
         }
 
         public VerifyResult VerifyMany(Type declaringType, IDictionary<string, object> keyValueCollections)

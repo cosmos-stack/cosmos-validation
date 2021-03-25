@@ -157,6 +157,60 @@ namespace Cosmos.Validation.Validators
             return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract));
         }
 
+        public VerifyResult VerifyOneWithInstance(Type declaringType, object memberValue, string memberName, object instance)
+        {
+            if (declaringType is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollection)
+                return VerifyMany(declaringType, keyValueCollection);
+            var parentContract = VerifiableObjectContractManager.Resolve(declaringType);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
+        }
+
+        public VerifyResult VerifyOneWithInstance<T, TVal>(TVal memberValue, string memberName, T instance)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollection)
+                return VerifyMany<T>(keyValueCollection);
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
+        }
+
+        public VerifyResult VerifyOneWithInstance<T, TVal>(Expression<Func<T, TVal>> propertySelector, TVal memberValue, T instance)
+        {
+            if (memberValue is null)
+                return _options.ReturnNullReferenceOrSuccess();
+            if (memberValue is VerifiableObjectContext objectContext)
+                return Verify(objectContext);
+            if (memberValue is VerifiableMemberContext memberContext)
+                return VerifyOne(memberContext);
+            if (memberValue is IDictionary<string, object> keyValueCollection)
+                return VerifyMany<T>(keyValueCollection);
+            var parentContract = VerifiableObjectContractManager.Resolve<T>();
+            var memberName = PropertySelector.GetPropertyName(propertySelector);
+            var memberContract = parentContract?.GetMemberContract(memberName);
+            if (memberContract is null)
+                return VerifyResult.MemberIsNotExists(memberName);
+            return VerifyOne(VerifiableMemberContext.Create(memberValue, memberContract, parentContract.WithInstance(instance)));
+        }
+
         public VerifyResult VerifyOne(VerifiableMemberContext context)
         {
             if (context is null)
