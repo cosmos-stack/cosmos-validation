@@ -76,7 +76,7 @@ namespace CosmosValidationUT.ObjectUT
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations()
+        public IEnumerable<VerifiableParamsAttribute> GetParameterAnnotations()
         {
             throw new NotImplementedException();
         }

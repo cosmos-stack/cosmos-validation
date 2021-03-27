@@ -278,7 +278,7 @@ namespace Cosmos.Validation.Objects
 
         public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
 
-        public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations() => _contract.GetParameterAnnotations();
+        public IEnumerable<VerifiableParamsAttribute> GetParameterAnnotations() => _contract.GetParameterAnnotations();
 
         public IEnumerable<IQuietVerifiableAnnotation> GetQuietVerifiableAnnotations() => _contract.GetQuietVerifiableAnnotations();
 

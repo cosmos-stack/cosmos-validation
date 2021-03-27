@@ -204,12 +204,12 @@ namespace Cosmos.Validation.Objects
             }
         }
 
-        public IEnumerable<ValidationParameterAttribute> GetParameterAnnotations()
+        public IEnumerable<VerifiableParamsAttribute> GetParameterAnnotations()
         {
             if (_verifiableObjectContractImpl is null)
             {
                 foreach (var attribute in _attributes)
-                    if (attribute is ValidationParameterAttribute annotation)
+                    if (attribute is VerifiableParamsAttribute annotation)
                         yield return annotation;
             }
             else
@@ -253,7 +253,7 @@ namespace Cosmos.Validation.Objects
         {
             foreach (var attribute in attributes)
             {
-                if (attribute is ValidationParameterAttribute)
+                if (attribute is VerifiableParamsAttribute)
                     return true;
                 if (Types.IsInterfaceDefined<Attribute, IFlagAnnotation>(attribute))
                     return true;

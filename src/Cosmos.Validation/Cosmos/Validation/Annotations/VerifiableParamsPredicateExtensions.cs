@@ -1,12 +1,11 @@
 ﻿using System;
 using AspectCore.DynamicProxy.Parameters;
 using Cosmos.Exceptions;
-using Cosmos.Reflection;
 using Cosmos.Validation.Objects;
 
-namespace Cosmos.Validation.Annotations.Core
+namespace Cosmos.Validation.Annotations
 {
-    internal static partial class ParamsPredicateExtensions
+    internal static class VerifiableParamsPredicateExtensions
     {
         #region Is/IsNot
 
@@ -96,6 +95,18 @@ namespace Cosmos.Validation.Annotations.Core
             }
         }
 
+        public static TValue TryTo<TValue>(this double numericValue, TValue defaultValue)
+        {
+            try
+            {
+                return numericValue.As<TValue>();
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
         #endregion
 
         #region Check
@@ -123,7 +134,42 @@ namespace Cosmos.Validation.Annotations.Core
             return (@try.Value, typeof(T), message);
         }
 
+        public static (bool Valid, Type ParameterType, string Message) Check<T, TObj>(this TObj originalValue, Action<T> checker, Func<TObj, T> convertor = null)
+        {
+            var value = convertor is null
+                ? originalValue._TryTo<T, TObj>()
+                : convertor(originalValue);
+
+            var @try = Try.Create(() =>
+            {
+                checker.Invoke(value);
+                return true;
+            });
+
+            var message = string.Empty;
+
+            @try = @try.Recover(ex =>
+            {
+                message = ex.Message;
+                return false;
+            });
+
+            return (@try.Value, typeof(T), message);
+        }
+
         internal static TValue _TryTo<TValue>(this object value, TValue defaultValue = default)
+        {
+            try
+            {
+                return value.As<TValue>();
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
+        internal static TValue _TryTo<TValue, TObj>(this TObj value, TValue defaultValue = default)
         {
             try
             {

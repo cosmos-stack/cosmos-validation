@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Annotations
     /// Validation Parameter attribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public abstract class ValidationParameterAttribute : ParameterInterceptorAttribute, IFlagAnnotation
+    public abstract class VerifiableParamsAttribute : ParameterInterceptorAttribute, IFlagAnnotation
     {
         /// <summary>
         /// Name of this Attribute/Annotation
@@ -32,7 +32,7 @@ namespace Cosmos.Validation.Annotations
         /// Unexpected type returns success.
         /// </summary>
         public bool IgnoreUnexpectedType { get; set; } = true;
-        
+
         /// <summary>
         /// Null object returns false.
         /// </summary>
@@ -48,18 +48,28 @@ namespace Cosmos.Validation.Annotations
         public override Task Invoke(ParameterAspectContext context, ParameterAspectDelegate next)
         {
             var valid = IsValid(context.Parameter);
-            ValidationExceptionHelper.WrapAndRaise<ArgumentInvalidException>(valid, ErrorMessage, context.Parameter.Name);
+            ValidationExceptionHelper.WrapAndRaise<ArgumentInvalidException>(valid, ErrorMessage, GetParamName(context.Parameter));
             return next(context);
         }
 
+        /// <summary>
+        /// IsValid
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         protected virtual bool IsValid(Parameter parameter)
         {
-            return IsValidImpl(TypeConv.GetNonNullableType(parameter.Type), parameter.Name, () => parameter.Value);
+            return IsValidImpl(TypeConv.GetNonNullableType(parameter.Type), GetParamName(parameter), () => parameter.Value);
         }
 
+        /// <summary>
+        /// IsValid
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         internal virtual bool IsValid(VerifiableMemberContext context)
         {
-            return IsValidImpl(context.MemberType, context.MemberName, context.GetValue);
+            return IsValidImpl(context.MemberType, GetParamName(context), context.GetValue);
         }
 
         /// <summary>
@@ -74,5 +84,19 @@ namespace Cosmos.Validation.Annotations
         protected (bool Valid, Type ParameterType, string Message) Success(Type parameterType) => (true, parameterType, string.Empty);
 
         protected (bool Valid, Type ParameterType, string Message) Failure(Type parameterType, string message) => (false, parameterType, message);
+
+        private string GetParamName(Parameter parameter)
+        {
+            if (string.IsNullOrWhiteSpace(ParamName))
+                return parameter.Name;
+            return ParamName;
+        }
+
+        private string GetParamName(VerifiableMemberContext context)
+        {
+            if (string.IsNullOrWhiteSpace(ParamName))
+                return context.MemberName;
+            return ParamName;
+        }
     }
 }

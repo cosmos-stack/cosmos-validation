@@ -16,7 +16,7 @@ namespace Cosmos.Validation.Objects
         public bool IncludeAnnotations { get; }
         IReadOnlyCollection<Attribute> Attributes { get; }
         IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute;
-        IEnumerable<ValidationParameterAttribute> GetParameterAnnotations();
+        IEnumerable<VerifiableParamsAttribute> GetParameterAnnotations();
         IEnumerable<IQuietVerifiableAnnotation> GetQuietVerifiableAnnotations(
             bool excludeFlagAnnotation = false,
             bool excludeObjectContextVerifiableAnnotation = false,

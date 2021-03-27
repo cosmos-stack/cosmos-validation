@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Validation.Objects;
 
-namespace Cosmos.Validation.Annotations.Core
+namespace Cosmos.Validation.Annotations
 {
-    internal static partial class AnnotationVerificationEngine
+    internal static class AnnotationVerificationEngine
     {
         public static bool Verify(VerifiableMemberContext context, IEnumerable<IFlagAnnotation> annotations, out VerifyFailure failure)
         {
@@ -36,24 +36,17 @@ namespace Cosmos.Validation.Annotations.Core
         {
             switch (annotation)
             {
-                // #region Custom annotations for specific purposes
-                //
-                // case ValidEmailValueAttribute attr:
-                //     VerifyImpls.ValidEmailValue(context, attr, errors);
-                //     break;
-                //
-                // #endregion
 
-                #region General annotations
+                #region General Annotations
 
-                case ValidationParameterAttribute attr:
+                case VerifiableParamsAttribute attr:
                     attr.IsValid(context)
                         .IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
                     break;
 
                 #endregion
 
-                #region CustomAnnotations
+                #region Custom Annotations
 
                 // 对自定义（或第三方）验证注解的检查
                 case CustomAnnotationAttribute attr:

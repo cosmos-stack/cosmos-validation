@@ -23,7 +23,7 @@ namespace Cosmos.Validation.Objects
         bool IncludeAnnotations { get; }
         IReadOnlyCollection<Attribute> Attributes { get; }
         IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute;
-        IEnumerable<ValidationParameterAttribute> GetParameterAnnotations();
+        IEnumerable<VerifiableParamsAttribute> GetParameterAnnotations();
         IEnumerable<IQuietVerifiableAnnotation> GetQuietVerifiableAnnotations();
         IEnumerable<IStrongVerifiableAnnotation> GetStrongVerifiableAnnotations();
     }
