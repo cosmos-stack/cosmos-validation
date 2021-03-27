@@ -22,6 +22,8 @@ echo.
 
 ::start to package all projects
 dotnet pack src/Cosmos.Validation/Cosmos.Validation.csproj -c Release -o nuget_packages --no-restore
+dotnet pack src/Cosmos.Validation.Annotations/Cosmos.Validation.Annotations.csproj -c Release -o nuget_packages --no-restore
+dotnet pack src/Cosmos.Validation.Extensions.Email/Cosmos.Validation.Extensions.Email.csproj -c Release -o nuget_packages --no-restore
 dotnet pack src/Cosmos.Validation.Sinks.DataAnnotations/Cosmos.Validation.Sinks.DataAnnotations.csproj -c Release -o nuget_packages --no-restore
 dotnet pack src/Cosmos.Validation.Sinks.FluentValidation/Cosmos.Validation.Sinks.FluentValidation.csproj -c Release -o nuget_packages --no-restore
 

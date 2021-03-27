@@ -38,6 +38,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\Cosmos.Validation.Annotations\Cosmos.Validation.Annotations.csproj" />
+        <ProjectReference Include="..\..\src\Cosmos.Validation.Extensions.Email\Cosmos.Validation.Extensions.Email.csproj" />
         <ProjectReference Include="..\..\src\Cosmos.Validation.Sinks.DataAnnotations\Cosmos.Validation.Sinks.DataAnnotations.csproj" />
         <ProjectReference Include="..\..\src\Cosmos.Validation.Sinks.FluentValidation\Cosmos.Validation.Sinks.FluentValidation.csproj" />
         <ProjectReference Include="..\..\src\Cosmos.Validation\Cosmos.Validation.csproj" />

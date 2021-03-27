@@ -4,42 +4,6 @@
         <name>Cosmos.Validation</name>
     </assembly>
     <members>
-        <member name="T:Cosmos.Validation.Annotations.Core.ObjectValueContextExtensions">
-            <summary>
-            Annotation verification engine extensions
-            </summary>
-        </member>
-        <member name="T:Cosmos.Validation.Annotations.Core.ParameterTypeValidation">
-            <summary>
-            Parameter type validation<br />
-            参数类型验证
-            </summary>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.#ctor(System.Boolean,System.Type)">
-            <summary>
-            Create a new instance of <see cref="T:Cosmos.Validation.Annotations.Core.ParameterTypeValidation"/><br />
-            创建一个参数类型验证实例
-            </summary>
-            <param name="result"></param>
-            <param name="parameterType"></param>
-        </member>
-        <member name="P:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.Result">
-            <inheritdoc />
-        </member>
-        <member name="P:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.ParameterType">
-            <summary>
-            Gets parameter type<br />
-            获取参数类型
-            </summary>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.Core.ParameterTypeValidation.op_Implicit(Cosmos.Validation.Annotations.Core.ParameterTypeValidation)~System.Boolean">
-            <summary>
-            Convert instance of <see cref="T:Cosmos.Validation.Annotations.Core.ParameterTypeValidation"/> to <see cref="T:System.Boolean"/>.<br />
-            隐式转换为布尔值
-            </summary>
-            <param name="result">被转换的参数类型验证对象</param>
-            <returns>返回布尔值结果</returns>
-        </member>
         <member name="P:Cosmos.Validation.Annotations.CustomAnnotationAttribute.Name">
             <summary>
             Name of this Attribute/Annotation
@@ -96,62 +60,53 @@
             <param name="instance"></param>
             <returns></returns>
         </member>
-        <member name="T:Cosmos.Validation.Annotations.ValidEmailValueAttribute">
+        <member name="T:Cosmos.Validation.Annotations.VerifiableParamsAttribute">
             <summary>
-            Valid date
+            Validation Parameter attribute
             </summary>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.Invoke(AspectCore.DynamicProxy.Parameters.ParameterAspectContext,AspectCore.DynamicProxy.Parameters.ParameterAspectDelegate)">
+        <member name="P:Cosmos.Validation.Annotations.VerifiableParamsAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.VerifiableParamsAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.VerifiableParamsAttribute.ParamName">
+            <summary>
+            Gets or sets name of parameter
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.VerifiableParamsAttribute.IgnoreUnexpectedType">
+            <summary>
+            Unexpected type returns success.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.VerifiableParamsAttribute.IgnoreNullObject">
+            <summary>
+            Null object returns false.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.VerifiableParamsAttribute.Invoke(AspectCore.DynamicProxy.Parameters.ParameterAspectContext,AspectCore.DynamicProxy.Parameters.ParameterAspectDelegate)">
             <summary>
             Invoke
             </summary>
             <param name="context"></param>
             <param name="next"></param>
             <returns></returns>
+            <exception cref="T:System.ArgumentInvalidException"></exception>
         </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(System.String)">
+        <member name="M:Cosmos.Validation.Annotations.VerifiableParamsAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
             <summary>
-            Strong Verify
+            Invoke internal impl
             </summary>
-            <param name="instance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify``1(``0)">
-            <summary>
-            Strong Verify
-            </summary>
-            <param name="instance"></param>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(System.Type,System.Object)">
-            <summary>
-            Strong Verify
-            </summary>
-            <param name="type"></param>
-            <param name="instance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.StrongVerify(Cosmos.Validation.Objects.VerifiableObjectContext)">
-            <summary>
-            ObjectContext Verify
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.QuietVerify``1(``0)">
-            <summary>
-            Quiet Verify
-            </summary>
-            <param name="instance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.QuietVerify(System.Type,System.Object)">
-            <summary>
-            Quiet Verify
-            </summary>
-            <param name="type"></param>
-            <param name="instance"></param>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
             <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.CustomVerifyResult">
@@ -445,6 +400,42 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredString">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredBoolean">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredGuid">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredDateTime(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredDateInfo(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder">
@@ -741,6 +732,42 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredString">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredBoolean">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredGuid">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredDateTime(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredDateInfo(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
             <summary>
             Limit the scale and precision of the value.
@@ -996,9 +1023,60 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredString">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredBoolean">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredGuid">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredDateTime(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredDateInfo(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.GroupedValueToken">
             <summary>
             Grouped value token.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.GroupedValueToken.ActivationConditions2">
+            <summary>
+            Activation condition <br />
+            1st param: Instance <br />
+            2nd param: result of activation condition
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.GroupedValueToken.ActivationConditions3">
+            <summary>
+            Activation condition <br />
+            1st param: Instance <br />
+            2nd param: Member's Value <br />
+            3rd param: result of activation condition
             </summary>
         </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.IGroupedValueToken">
@@ -1045,6 +1123,26 @@
         <member name="P:Cosmos.Validation.Internals.Tokens.IValueToken.CustomMessage">
             <summary>
             Custom message.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.IValueToken.ActivationConditions2">
+            <summary>
+            Activation condition <br />
+            1st param: Instance <br />
+            2nd param: result of activation condition
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.IValueToken.ActivationConditions3">
+            <summary>
+            Activation condition <br />
+            1st param: Instance <br />
+            2nd param: Member's Value <br />
+            3rd param: result of activation condition
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.IValueToken.WithActivationConditions">
+            <summary>
+            Mark whether to use activation conditions.
             </summary>
         </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.IValueToken.WithMessageMode">
@@ -1099,11 +1197,6 @@
             Value token
             </summary>
         </member>
-        <member name="F:Cosmos.Validation.Internals.Tokens.ValueToken.NoMutuallyExclusiveFlags">
-            <summary>
-            Empty Mutually Exclusive Flags.
-            </summary>
-        </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.TokenName">
             <summary>
             Name of verifiable token
@@ -1112,6 +1205,18 @@
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.TokenClass">
             <summary>
             Class of verifiable token
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.AppendOrOverwrite">
+            <summary>
+            If WithMessage is true, this AppendOrOverwrite takes effect. <br />
+            true - Append <br />
+            false - Overwrite
+            </summary>
+        </member>
+        <member name="F:Cosmos.Validation.Internals.Tokens.ValueToken.NoMutuallyExclusiveFlags">
+            <summary>
+            Empty Mutually Exclusive Flags.
             </summary>
         </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.MutuallyExclusive">
@@ -1144,11 +1249,6 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.VerifiableMember">
-            <summary>
-            Verifiable Member
-            </summary>
-        </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.CustomMessage">
             <summary>
             Custom message.
@@ -1159,18 +1259,47 @@
             Mark whether to use custom message.
             </summary>
         </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.AppendOrOverwrite">
-            <summary>
-            If WithMessage is true, this AppendOrOverwrite takes effect. <br />
-            true - Append <br />
-            false - Overwrite
-            </summary>
-        </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken.MergeMessage(System.String)">
             <summary>
             Merge message
             </summary>
             <param name="messageSinceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.ActivationConditions2">
+            <summary>
+            Activation condition <br />
+            1st param: Instance <br />
+            2nd param: result of activation condition
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.ActivationConditions3">
+            <summary>
+            Activation condition <br />
+            1st param: Instance <br />
+            2nd param: Member's Value <br />
+            3rd param: result of activation condition
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.WithActivationConditions">
+            <summary>
+            Mark whether to use activation conditions.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken.IsActivate(Cosmos.Validation.Objects.VerifiableMemberContext,System.Object)">
+            <summary>
+            Is activate, This method is only applicable to 'Verify'.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken.IsActivate(Cosmos.Validation.Objects.VerifiableObjectContext,System.Object)">
+            <summary>
+            Is activate, This method is only applicable to 'Verify'.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken.GetValueFrom(Cosmos.Validation.Objects.VerifiableObjectContext)">
@@ -1186,6 +1315,11 @@
             </summary>
             <param name="context"></param>
             <returns></returns>
+        </member>
+        <member name="P:Cosmos.Validation.Internals.Tokens.ValueToken.VerifiableMember">
+            <summary>
+            Verifiable Member
+            </summary>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken.ContainsMember(Cosmos.Validation.Objects.VerifiableObjectContext)">
             <summary>
@@ -1212,6 +1346,22 @@
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract)">
             <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken`1.IsActivate(Cosmos.Validation.Objects.VerifiableMemberContext,`0)">
+            <summary>
+            Is activate, This method is only applicable to 'Verify'.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken`1.IsActivate(Cosmos.Validation.Objects.VerifiableObjectContext,`0)">
+            <summary>
+            Is activate, This method is only applicable to 'Verify'.
+            </summary>
+            <param name="context"></param>
+            <param name="value"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueToken`1.GetValueFrom(Cosmos.Validation.Objects.VerifiableObjectContext)">
             <summary>
@@ -2326,6 +2476,24 @@
             <param name="context"></param>
             <returns></returns>
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredBooleanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,Cosmos.Reflection.TypeIsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredDateInfoToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Globalization.DateTimeStyles)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredDateTimeToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Globalization.DateTimeStyles)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredGuidToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,Cosmos.Reflection.TypeIsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredNumericToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,Cosmos.Reflection.TypeIsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredStringToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract)">
+            <inheritdoc />
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken">
             <summary>
             Required types token
@@ -2334,35 +2502,6 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Type[])">
             <inheritdoc />
         </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken.TokenName">
-            <summary>
-            Name of verifiable token
-            </summary>
-        </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken.MutuallyExclusive">
-            <summary>
-            To mark this Verifiable token as a mutually exclusive token.
-            </summary>
-        </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken.MutuallyExclusiveFlags">
-            <summary>
-            If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
-            </summary>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken.Valid(Cosmos.Validation.Objects.VerifiableObjectContext)">
-            <summary>
-            Verification for VerifiableObjectContext
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypesToken.Valid(Cosmos.Validation.Objects.VerifiableMemberContext)">
-            <summary>
-            Verification for VerifiableMemberContext
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken">
             <summary>
             Required type token
@@ -2370,35 +2509,6 @@
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Type)">
             <inheritdoc />
-        </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken.TokenName">
-            <summary>
-            Name of verifiable token
-            </summary>
-        </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken.MutuallyExclusive">
-            <summary>
-            To mark this Verifiable token as a mutually exclusive token.
-            </summary>
-        </member>
-        <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken.MutuallyExclusiveFlags">
-            <summary>
-            If this verifiable token is mutually exclusive, then mark which tokens are mutually exclusive.
-            </summary>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken.Valid(Cosmos.Validation.Objects.VerifiableObjectContext)">
-            <summary>
-            Verification for VerifiableObjectContext
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredTypeToken.Valid(Cosmos.Validation.Objects.VerifiableMemberContext)">
-            <summary>
-            Verification for VerifiableMemberContext
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueScalePrecisionToken">
             <summary>
@@ -2612,6 +2722,24 @@
             Update the configuration of the validator.
             </summary>
             <param name="optionAct"></param>
+        </member>
+        <member name="T:Cosmos.Validation.IPredicateValueRuleBuilder">
+            <summary>
+            An interface for ValueRueBuilder to wait for activation conditions.
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.IPredicateValueRuleBuilder`1">
+            <summary>
+            An interface for ValueRueBuilder to wait for activation conditions.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Cosmos.Validation.IPredicateValueRuleBuilder`2">
+            <summary>
+            An interface for ValueRueBuilder to wait for activation conditions.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
         </member>
         <member name="T:Cosmos.Validation.IValueRuleBuilder">
             <summary>
@@ -2871,6 +2999,42 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredString">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredBoolean">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredGuid">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredDateTime(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredDateInfo(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.IValueRuleBuilder`1">
@@ -3134,6 +3298,42 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredString">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredBoolean">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredGuid">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredDateTime(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredDateInfo(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Cosmos.Validation.IValueRuleBuilder`2">
             <summary>
             Interface of ValueRuleBuilder
@@ -3394,6 +3594,42 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredString">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredBoolean">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredGuid">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredDateTime(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredDateInfo(System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.ValueRuleBuilderExtensions">
@@ -5394,6 +5630,144 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object,System.String)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <param name="projectName"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithInstance``1(System.Object,System.String,``0)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithInstance``1(System.Object,System.String,``0,System.String)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <param name="projectName"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithInstance``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,``0)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithInstance``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,``0,System.String)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <param name="projectName"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <param name="projectName"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithDictionary``1(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithDictionary``1(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <param name="projectName"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithDictionary``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.ValidationHandler.VerifyOneWithDictionary``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Verify a member of the object.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <param name="projectName"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
         <member name="M:Cosmos.Validation.ValidationHandler.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Verify the dictionary type object. <br />
@@ -5712,25 +6086,983 @@
             </summary>
             <param name="optionAct"></param>
         </member>
+        <member name="T:Cosmos.Validation.Validators.AggregationValidator`1">
+            <summary>
+            Aggregate validator. <br />
+            The default built-in validator of Cosmos Validation is a collection of project validators based on types and rules, 
+            annotation validators based on annotations, general custom validators based on registered custom validators, etc.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AggregationValidator`1.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AggregationValidator`1.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#ICorrectValidator#IsTypeBinding">
+            <inheritdoc />
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#ICorrectValidator#SourceType">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.Verify(`0)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#IValidator#Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyOne(System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyOne``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#IValidator#VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyOneWithInstance(System.Object,System.String,`0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyOneWithInstance``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0,`0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#IValidator#VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyOneWithDictionary(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyOneWithDictionary``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#IValidator#VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.VerifyMany(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AggregationValidator`1.Cosmos#Validation#Validators#IValidator#VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cosmos.Validation.Validators.AnnotationValidator">
             <summary>
             Annotation Validator
             </summary>
         </member>
-        <member name="T:Cosmos.Validation.Validators.EmailValidator.SubDomainType">
+        <member name="P:Cosmos.Validation.Validators.AnnotationValidator.Name">
             <summary>
-            Sub domain type
+            Name of validation
             </summary>
         </member>
-        <member name="T:Cosmos.Validation.Validators.EmailValidator.Helpers">
+        <member name="P:Cosmos.Validation.Validators.AnnotationValidator.IsAnonymous">
             <summary>
-            Internal helpers
+            Mark whether the validator is anonymous.
             </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AnnotationValidator.Cosmos#Validation#Validators#ICorrectValidator#IsTypeBinding">
+            <inheritdoc />
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AnnotationValidator.Cosmos#Validation#Validators#ICorrectValidator#SourceType">
+            <inheritdoc />
+        </member>
+        <member name="P:Cosmos.Validation.Validators.AnnotationValidator.Instance">
+            <summary>
+            Create a new instance of Annotation Validator
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.GetInstance">
+            <summary>
+            Create a new instance of Annotation Validator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.GetInstance(Cosmos.Validation.ValidationOptions)">
+            <summary>
+            Create a new instance of Annotation Validator with given options
+            </summary>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.GetInstance(Cosmos.Validation.Objects.IVerifiableObjectResolver,Cosmos.Validation.ValidationOptions)">
+            <summary>
+            Create a new instance of Annotation Validator with given options and Object Resolver
+            </summary>
+            <param name="objectResolver"></param>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.Verify``1(``0)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.Verify(Cosmos.Validation.Objects.VerifiableObjectContext)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOne``2(``1,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOne``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOneWithInstance``2(``1,System.String,``0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOneWithInstance``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,``0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOneWithDictionary``2(``1,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOneWithDictionary``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="propertySelector"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyOne(Cosmos.Validation.Objects.VerifiableMemberContext)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyMany``1(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="keyValueCollections"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.AnnotationValidator.VerifyMany(Cosmos.Validation.Objects.VerifiableObjectContext)">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.CustomValidator">
+            <summary>
+            Custom validator.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.CustomValidator.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.CustomValidator.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.CustomValidator.Cosmos#Validation#Validators#ICorrectValidator#IsTypeBinding">
+            <inheritdoc />
+        </member>
+        <member name="P:Cosmos.Validation.Validators.CustomValidator.Cosmos#Validation#Validators#ICorrectValidator#SourceType">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.VerifyViaContext(Cosmos.Validation.Objects.VerifiableObjectContext)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.VerifyOneViaContext(Cosmos.Validation.Objects.VerifiableMemberContext)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.CustomValidator`1">
+            <summary>
+            Custom validator.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.Verify(`0)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.Cosmos#Validation#Validators#IValidator#Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyOne(System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyOne``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.Cosmos#Validation#Validators#IValidator#VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyOneWithInstance(System.Object,System.String,`0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyOneWithInstance``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0,`0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.Cosmos#Validation#Validators#IValidator#VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyOneWithDictionary(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyOneWithDictionary``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.Cosmos#Validation#Validators#IValidator#VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.VerifyMany(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.CustomValidator`1.Cosmos#Validation#Validators#IValidator#VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.Validators.IValidator">
             <summary>
             Interface of Cosmos Validator
             </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.IValidator.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.IValidator.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.IValidator`1">
+            <summary>
+            Interface of Cosmos Validator, a generic version.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.Verify(`0)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyOne(System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyOne``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyOneWithInstance(System.Object,System.String,`0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyOneWithInstance``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0,`0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyOneWithDictionary(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyOneWithDictionary``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.IValidator`1.VerifyMany(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.SealedValidator">
+            <summary>
+            A validator that only returns success information, and cannot be inherited.
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.SealedValidator`1">
+            <summary>
+            A validator that only returns success information, and cannot be inherited.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.StrategyValidator">
+            <summary>
+            Strategy-based validator, used to quickly build the packaging of the strategy validator.
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.StrategyValidator.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.StrategyValidator.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.By(Cosmos.Validation.Strategies.IValidationStrategy)">
+            <summary>
+            Create a strategy validator based on the specified Strategy.
+            </summary>
+            <param name="strategy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.By(Cosmos.Validation.Strategies.IValidationStrategy,Cosmos.Validation.ValidationOptions)">
+            <summary>
+            Create a strategy validator based on the specified Strategy.
+            </summary>
+            <param name="strategy"></param>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.By``1">
+            <summary>
+            Create a strategy validator based on the specified Strategy.
+            </summary>
+            <typeparam name="TStrategy"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.By``2">
+            <summary>
+            Create a strategy validator based on the specified Strategy.
+            </summary>
+            <typeparam name="TStrategy"></typeparam>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.By``1(Cosmos.Validation.ValidationOptions)">
+            <summary>
+            Create a strategy validator based on the specified Strategy.
+            </summary>
+            <param name="options"></param>
+            <typeparam name="TStrategy"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator.By``2(Cosmos.Validation.ValidationOptions)">
+            <summary>
+            Create a strategy validator based on the specified Strategy.
+            </summary>
+            <param name="options"></param>
+            <typeparam name="TStrategy"></typeparam>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.StrategyValidator`1">
+            <summary>
+            Strategy-based validator, used to quickly build the packaging of the strategy validator.
+            </summary>
+            <typeparam name="TStrategy"></typeparam>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.StrategyValidator`1.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.StrategyValidator`1.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`1.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`1.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`1.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`1.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`1.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Validators.StrategyValidator`2">
+            <summary>
+            Strategy-based validator, used to quickly build the packaging of the strategy validator.
+            </summary>
+            <typeparam name="TStrategy"></typeparam>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.StrategyValidator`2.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.StrategyValidator`2.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.Verify(`1)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOne(System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOne``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},``0)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOneWithInstance(System.Object,System.String,`1)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOneWithInstance``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},``0,`1)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="instance"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOneWithDictionary(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyOneWithDictionary``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},``0,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="expression"></param>
+            <param name="memberValue"></param>
+            <param name="keyValueCollection"></param>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.StrategyValidator`2.VerifyMany(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.ValidatorType">
             <summary>
