@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
-using AspectCore.DynamicProxy.Parameters;
 using Cosmos.Reflection;
+using Cosmos.Validation.Annotations.Core;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Validators;
 
@@ -19,23 +18,21 @@ namespace Cosmos.Validation.Annotations
         public bool AllowInternational { get; set; }
 
         /// <summary>
-        /// Invoke
+        /// Invoke internal impl
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="next"></param>
+        /// <param name="memberType"></param>
+        /// <param name="memberName"></param>
+        /// <param name="memberValueGetter"></param>
         /// <returns></returns>
-        public override Task Invoke(ParameterAspectContext context, ParameterAspectDelegate next)
+        protected override bool IsValidImpl(Type memberType, string memberName, Func<object> memberValueGetter)
         {
             var validator = EmailValidator.Instance;
-            var parameter = context.Parameter;
-            var result = parameter.Type == TypeClass.StringClazz
-                ? validator.Verify((string) parameter.Value, ParamName, AllowTopLevelDomains, AllowInternational) // valid for field or property
-                : validator.Verify(parameter.Type, parameter.Value); // valid for class
 
-            if (!result.IsValid)
-                result.Raise(ErrorMessage);
+            var valid = memberType.Is(TypeClass.StringClazz).Valid && memberValueGetter() is string emailStr
+                ? validator.Verify(emailStr, ParamName, AllowTopLevelDomains, AllowInternational) // valid for field or property
+                : validator.Verify(memberType, memberValueGetter()); // valid for class
 
-            return next(context);
+            return valid.IsValid;
         }
 
         #region StrongVerify
@@ -46,9 +43,7 @@ namespace Cosmos.Validation.Annotations
         /// <param name="instance"></param>
         /// <returns></returns>
         public VerifyResult StrongVerify(string instance)
-        {
-            return EmailValidator.Instance.Verify(instance, ParamName, AllowTopLevelDomains, AllowInternational);
-        }
+            => EmailValidator.Instance.Verify(instance, ParamName, AllowTopLevelDomains, AllowInternational);
 
         /// <summary>
         /// Strong Verify
@@ -57,21 +52,7 @@ namespace Cosmos.Validation.Annotations
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public VerifyResult StrongVerify<T>(T instance)
-        {
-            if (instance is null)
-                return VerifyResult.NullReference;
-
-            if (instance is string str)
-                return StrongVerify(str);
-
-            if (instance is VerifiableObjectContext ctx1)
-                return EmailValidator.Instance.VerifyViaContext(ctx1);
-
-            if (instance is VerifiableMemberContext ctx2)
-                return EmailValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
-
-            return EmailValidator.Instance.Verify(typeof(T), instance);
-        }
+            => StrongVerify(typeof(T), instance);
 
         /// <summary>
         /// Strong Verify
@@ -102,9 +83,7 @@ namespace Cosmos.Validation.Annotations
         /// <param name="context"></param>
         /// <returns></returns>
         public VerifyResult StrongVerify(VerifiableObjectContext context)
-        {
-            return EmailValidator.Instance.VerifyViaContext(context);
-        }
+            => EmailValidator.Instance.VerifyViaContext(context);
 
         #endregion
 
@@ -115,10 +94,7 @@ namespace Cosmos.Validation.Annotations
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public bool QuietVerify<T>(T instance)
-        {
-            return StrongVerify(instance).IsValid;
-        }
+        public bool QuietVerify<T>(T instance) => StrongVerify(instance).IsValid;
 
         /// <summary>
         /// Quiet Verify
@@ -126,10 +102,7 @@ namespace Cosmos.Validation.Annotations
         /// <param name="type"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public bool QuietVerify(Type type, object instance)
-        {
-            return StrongVerify(type, instance).IsValid;
-        }
+        public bool QuietVerify(Type type, object instance) => StrongVerify(type, instance).IsValid;
 
         #endregion
 

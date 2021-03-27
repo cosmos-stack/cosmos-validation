@@ -23,123 +23,32 @@ namespace Cosmos.Validation.Annotations.Core
             {
                 failure = new VerifyFailure(context.MemberName, $"There are multiple errors in this Member '{context.MemberName}'.", context.Value);
                 failure.Details.AddRange(errors);
-                return false;
             }
             else
             {
                 failure = null;
-                return true;
             }
+
+            return failure is null;
         }
 
         private static void VerifyAnnotation(VerifiableMemberContext context, IFlagAnnotation annotation, List<VerifyError> errors)
         {
             switch (annotation)
             {
-                #region TypeJudge condition
+                // #region Custom annotations for specific purposes
+                //
+                // case ValidEmailValueAttribute attr:
+                //     VerifyImpls.ValidEmailValue(context, attr, errors);
+                //     break;
+                //
+                // #endregion
 
-                case MustNumericTypeAttribute attr:
-                    VerifyImpls.MustNumericType(context, attr, errors);
-                    break;
+                #region General annotations
 
-                case MustIntTypeAttribute attr:
-                    VerifyImpls.MustIntType(context, attr, errors);
-                    break;
-
-                case MustLongTypeAttribute attr:
-                    VerifyImpls.MustLongType(context, attr, errors);
-                    break;
-
-                case MustStringTypeAttribute attr:
-                    VerifyImpls.MustStringType(context, attr, errors);
-                    break;
-
-                #endregion
-
-                #region Date/Time conditions
-
-                case ValidDateValueAttribute attr:
-                    VerifyImpls.ValidDateValue(context, attr, errors);
-                    break;
-
-                case NotInTheFutureAttribute attr:
-                    VerifyImpls.NotInTheFuture(context, attr, errors);
-                    break;
-
-                case NotInThePastAttribute attr:
-                    VerifyImpls.NotInThePast(context, attr, errors);
-                    break;
-
-                #endregion
-
-                #region Positive/Negative conditions
-
-                case MustPositiveOrZeroAttribute attr:
-                    VerifyImpls.NotNegative(context, attr, errors);
-                    break;
-
-                case MustPositiveAttribute attr:
-                    VerifyImpls.NotNegativeOrZero(context, attr, errors);
-                    break;
-
-                case MustNegativeOrZeroAttribute attr:
-                    VerifyImpls.NotPositive(context, attr, errors);
-                    break;
-
-                case MustNegativeAttribute attr:
-                    VerifyImpls.NotPositiveOrZero(context, attr, errors);
-                    break;
-
-                case NotNegativeAttribute attr:
-                    VerifyImpls.NotNegative(context, attr, errors);
-                    break;
-
-                case NotNegativeOrZeroAttribute attr:
-                    VerifyImpls.NotNegativeOrZero(context, attr, errors);
-                    break;
-
-                case NotPositiveAttribute attr:
-                    VerifyImpls.NotPositive(context, attr, errors);
-                    break;
-
-                case NotPositiveOrZeroAttribute attr:
-                    VerifyImpls.NotPositiveOrZero(context, attr, errors);
-                    break;
-
-                #endregion
-
-                #region Null/Space/Length cindition
-
-                case NotNullAttribute attr:
-                    VerifyImpls.NotNull(context, attr, errors);
-                    break;
-
-                case NotOutOfLengthAttribute attr:
-                    VerifyImpls.NotOutOfLength(context, attr, errors);
-                    break;
-
-                case BetweenAttribute attr:
-                    VerifyImpls.NotOutOfRange(context, attr, errors);
-                    break;
-
-                case NotOutOfRangeAttribute attr:
-                    VerifyImpls.NotOutOfRange(context, attr, errors);
-                    break;
-
-                case NotBlankAttribute attr:
-                    VerifyImpls.NotWhiteSpace(context, attr, errors);
-                    break;
-
-                case NotWhiteSpaceAttribute attr:
-                    VerifyImpls.NotWhiteSpace(context, attr, errors);
-                    break;
-
-                #endregion
-
-                #region Email annotation
-
-                case ValidEmailValueAttribute attr:
-                    VerifyImpls.ValidEmailValue(context, attr, errors);
+                case ValidationParameterAttribute attr:
+                    attr.IsValid(context)
+                        .IfFalseThenInvoke(() => CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors));
                     break;
 
                 #endregion
@@ -148,8 +57,8 @@ namespace Cosmos.Validation.Annotations.Core
 
                 // 对自定义（或第三方）验证注解的检查
                 case CustomAnnotationAttribute attr:
-                    var condition = attr.IsValidInternal(context);
-                    if (!condition)
+                    var valid = attr.IsValidInternal(context);
+                    if (!valid)
                         CreateAndUpdateErrors(attr.ErrorMessage, attr.Name, errors, ValidatorType.Custom);
                     break;
 

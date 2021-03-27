@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using Cosmos.Reflection;
@@ -380,6 +381,16 @@ namespace CosmosValidationUT.Fakes
         }
 
         public IPredicateValueRuleBuilder<T, TVal> RequiredGuid()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T, TVal> RequiredDateTime(DateTimeStyles style = DateTimeStyles.None)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T, TVal> RequiredDateInfo(DateTimeStyles style = DateTimeStyles.None)
         {
             throw new NotImplementedException();
         }
