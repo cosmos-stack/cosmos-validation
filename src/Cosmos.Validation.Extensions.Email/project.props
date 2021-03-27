@@ -1,0 +1,9 @@
+﻿<Project>
+
+    <PropertyGroup>
+        <AssemblyName>Cosmos.Validation.Extensions.Email</AssemblyName>
+        <PackageId>Cosmos.Validation.Extensions.Email</PackageId>
+        <Description>Email address extensions for Cosmos validation library</Description>
+    </PropertyGroup>
+
+</Project>

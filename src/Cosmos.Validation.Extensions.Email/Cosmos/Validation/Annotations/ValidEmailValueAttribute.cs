@@ -1,6 +1,5 @@
 ﻿using System;
 using Cosmos.Reflection;
-using Cosmos.Validation.Annotations.Core;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Validators;
 
@@ -10,7 +9,7 @@ namespace Cosmos.Validation.Annotations
     /// Valid date
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Class)]
-    public class ValidEmailValueAttribute : ValidationParameterAttribute,
+    public class ValidEmailValueAttribute : VerifiableParamsAttribute,
         IQuietVerifiableAnnotation, IStrongVerifiableAnnotation<string>, IObjectContextVerifiableAnnotation
     {
         public bool AllowTopLevelDomains { get; set; }
