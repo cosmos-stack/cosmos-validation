@@ -1,32 +1,27 @@
 using System;
+using Cosmos.Conversions.Determiners;
+using Cosmos.Date;
 using Cosmos.Reflection;
-using Cosmos.Text;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Not out of length
+    /// Not in future
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NotOutOfLengthAttribute : ValidationParameterAttribute
+    public class NotInTheFutureAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Not-Out-Of-Length Annotation";
+        public override string Name => "Not-In-The-Future Annotation";
 
         /// <summary>
         /// Gets or sets message<br />
         /// 消息
         /// </summary>
-        public override string ErrorMessage { get; set; } = "The current value exceeds the length limit.";
-
-        /// <summary>
-        /// Length
-        /// </summary>
-        public int Length { get; set; }
-
+        public override string ErrorMessage { get; set; } = "The current value cannot exist in the future.";
+        
         /// <summary>
         /// Invoke internal impl
         /// </summary>
@@ -40,12 +35,14 @@ namespace Cosmos.Validation.Annotations
 
             if (memberValueGetter() is null && !IgnoreNullObject)
                 valid = Failure(memberType, ErrorMessage);
+            else if (memberType.Is(TypeClass.DateTimeClazz).Valid)
+                valid = memberValueGetter().Check<DateTime?>(v => DateGuard.ShouldBeInThePast(v, memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.StringClazz).Valid)
-                valid = memberValueGetter().Check<string>(v => v.RequireMaxLength(Length, memberName, ErrorMessage));
+                valid = memberValueGetter().Check<DateTime?>(v => DateGuard.ShouldBeInThePast(v, memberName, ErrorMessage), o => StringDateTimeDeterminer.To(o.ToString()));
             else
                 valid = IgnoreUnexpectedType
                     ? Success(memberType)
-                    : memberValueGetter().ToString().Check<string>(v => v.RequireMaxLength(Length, memberName, ErrorMessage));
+                    : memberValueGetter().ToString().Check<DateTime?>(v => DateGuard.ShouldBeInThePast(v, memberName, ErrorMessage));
 
             return valid.Valid;
         }

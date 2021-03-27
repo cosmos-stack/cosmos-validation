@@ -1,0 +1,7 @@
+<Project>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cosmos.Validation\Cosmos.Validation.csproj" />
+    </ItemGroup>
+
+</Project>

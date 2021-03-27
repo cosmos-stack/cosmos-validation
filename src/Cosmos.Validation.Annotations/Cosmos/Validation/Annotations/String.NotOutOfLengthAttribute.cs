@@ -1,26 +1,30 @@
 using System;
 using Cosmos.Reflection;
 using Cosmos.Text;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Not whitespace
+    /// Not out of length
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NotWhiteSpaceAttribute : ValidationParameterAttribute
+    public class NotOutOfLengthAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Not-WhiteSpace Annotation";
+        public override string Name => "Not-Out-Of-Length Annotation";
 
         /// <summary>
         /// Gets or sets message<br />
         /// 消息
         /// </summary>
-        public override string ErrorMessage { get; set; } = "The current value cannot be empty.";
+        public override string ErrorMessage { get; set; } = "The current value exceeds the length limit.";
+
+        /// <summary>
+        /// Length
+        /// </summary>
+        public int Length { get; set; }
 
         /// <summary>
         /// Invoke internal impl
@@ -36,11 +40,11 @@ namespace Cosmos.Validation.Annotations
             if (memberValueGetter() is null && !IgnoreNullObject)
                 valid = Failure(memberType, ErrorMessage);
             else if (memberType.Is(TypeClass.StringClazz).Valid)
-                valid = memberValueGetter().Check<string>(v => v.CheckBlank(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<string>(v => v.RequireMaxLength(Length, memberName, ErrorMessage));
             else
                 valid = IgnoreUnexpectedType
                     ? Success(memberType)
-                    : memberValueGetter().ToString().Check<string>(v => v.CheckBlank(memberName, ErrorMessage));
+                    : memberValueGetter().ToString().Check<string>(v => v.RequireMaxLength(Length, memberName, ErrorMessage));
 
             return valid.Valid;
         }

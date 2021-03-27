@@ -1,31 +1,28 @@
-﻿using System;
-using System.Threading.Tasks;
-using AspectCore.DynamicProxy.Parameters;
+using System;
 using Cosmos.Date;
 using Cosmos.Numeric;
 using Cosmos.Reflection;
 using Cosmos.Text;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Not positive
+    /// Not negative or zero
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NotPositiveAttribute: ValidationParameterAttribute
+    public class NotNegativeOrZeroAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Not-Positive Annotation";
-        
+        public override string Name => "Not-Negative-Or-Zero Annotation";
+
         /// <summary>
         /// Gets or sets message<br />
         /// 消息
         /// </summary>
-        public override string ErrorMessage { get; set; } = "The current value cannot be positive.";
-        
+        public override string ErrorMessage { get; set; } = "The current value cannot be negative or zero.";
+
         /// <summary>
         /// Invoke internal impl
         /// </summary>
@@ -40,23 +37,23 @@ namespace Cosmos.Validation.Annotations
             if (memberValueGetter() is null && !IgnoreNullObject)
                 valid = Failure(memberType, ErrorMessage);
             else  if (memberType.Is(TypeClass.IntClazz).Valid)
-                valid = memberValueGetter().Check<int?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<int?>(v => v.RequirePositive(memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.LongClazz).Valid)
-                valid = memberValueGetter().Check<long?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<long?>(v => v.RequirePositive(memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.FloatClazz).Valid)
-                valid = memberValueGetter().Check<float?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<float?>(v => v.RequirePositive(memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.DoubleClazz).Valid)
-                valid = memberValueGetter().Check<double?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<double?>(v => v.RequirePositive(memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.DecimalClazz).Valid)
-                valid = memberValueGetter().Check<decimal?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<decimal?>(v => v.RequirePositive(memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.TimeSpanClazz).Valid)
-                valid = memberValueGetter().Check<TimeSpan?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                valid = memberValueGetter().Check<TimeSpan?>(v => v.RequirePositive(memberName, ErrorMessage));
             else if (memberType.Is(TypeClass.StringClazz).Valid)
             {
                 if (memberValueGetter()._TryTo<string>().IsNumeric())
-                    valid = memberValueGetter().Check<decimal?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                    valid = memberValueGetter().Check<decimal?>(v => v.RequirePositive(memberName, ErrorMessage));
                 else if (memberValueGetter()._TryTo<string>().IsTimeSpan())
-                    valid = memberValueGetter().Check<TimeSpan?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                    valid = memberValueGetter().Check<TimeSpan?>(v => v.RequirePositive(memberName, ErrorMessage));
                 else
                     valid = IgnoreUnexpectedType ? Success(memberType) : Failure(memberType, ErrorMessage);
             }
@@ -64,9 +61,9 @@ namespace Cosmos.Validation.Annotations
             {
                 valid = IgnoreUnexpectedType
                     ? Success(memberType)
-                    : memberValueGetter().ToString().Check<decimal?>(v => v.RequireNegativeOrZero(memberName, ErrorMessage));
+                    : memberValueGetter().ToString().Check<decimal?>(v => v.RequirePositive(memberName, ErrorMessage));
             }
-            
+
             return valid.Valid;
         }
     }

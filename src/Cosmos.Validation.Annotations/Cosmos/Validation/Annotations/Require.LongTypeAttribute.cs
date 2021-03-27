@@ -1,6 +1,5 @@
 using System;
 using Cosmos.Reflection;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
@@ -8,7 +7,7 @@ namespace Cosmos.Validation.Annotations
     /// Must long
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class RequiredLongTypeAttribute : ValidationParameterAttribute
+    public class RequireLongTypeAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation

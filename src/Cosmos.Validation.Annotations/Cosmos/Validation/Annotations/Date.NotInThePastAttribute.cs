@@ -2,7 +2,6 @@ using System;
 using Cosmos.Conversions.Determiners;
 using Cosmos.Date;
 using Cosmos.Reflection;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
@@ -10,7 +9,7 @@ namespace Cosmos.Validation.Annotations
     /// /Not in past
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NotInThePastAttribute : ValidationParameterAttribute
+    public class NotInThePastAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation

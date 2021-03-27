@@ -1,25 +1,24 @@
 using System;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Must string type
+    /// Not null
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class RequiredStringTypeAttribute : ValidationParameterAttribute
+    public class NotNullAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Must-String Annotation";
+        public override string Name => "Not-Null Annotation";
 
         /// <summary>
         /// Gets or sets message<br />
         /// 消息
         /// </summary>
-        public override string ErrorMessage { get; set; } = "The type of the current value must be a string.";
-        
+        public override string ErrorMessage { get; set; } = "The current value cannot be null.";
+
         /// <summary>
         /// Invoke internal impl
         /// </summary>
@@ -29,7 +28,12 @@ namespace Cosmos.Validation.Annotations
         /// <returns></returns>
         protected override bool IsValidImpl(Type memberType, string memberName, Func<object> memberValueGetter)
         {
-            var valid = memberType.Is<string>();
+            (bool Valid, Type ParameterType, string Message) valid;
+
+            if (memberType.Is<string>().Valid)
+                valid = memberValueGetter().Check<string>(v => v.CheckNull(memberName, ErrorMessage));
+            else
+                valid = (memberValueGetter() is not null, memberType, string.Empty);
 
             return valid.Valid;
         }

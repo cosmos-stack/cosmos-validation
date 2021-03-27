@@ -1,0 +1,498 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cosmos.Validation.Annotations</name>
+    </assembly>
+    <members>
+        <member name="T:Cosmos.Validation.Annotations.BetweenAttribute">
+            <summary>
+            Between, alias of <see cref="T:Cosmos.Validation.Annotations.NotOutOfRangeAttribute"/>
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.BetweenAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NegativeAttribute">
+            <summary>
+            Must negative, alias of <see cref="T:Cosmos.Validation.Annotations.NotPositiveOrZeroAttribute"/>
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NegativeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NegativeOrZeroAttribute">
+            <summary>
+            Must negative or zero, alias of <see cref="T:Cosmos.Validation.Annotations.NotPositiveAttribute"/>
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NegativeOrZeroAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotBlankAttribute">
+            <summary>
+            Not blank
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotBlankAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotInTheFutureAttribute">
+            <summary>
+            Not in future
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotInTheFutureAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotInTheFutureAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotInTheFutureAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotInThePastAttribute">
+            <summary>
+            /Not in past
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotInThePastAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotInThePastAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotInThePastAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotNegativeAttribute">
+            <summary>
+            Not negative
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotNegativeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotNegativeAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotNegativeAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotNegativeOrZeroAttribute">
+            <summary>
+            Not negative or zero
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotNegativeOrZeroAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotNegativeOrZeroAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotNegativeOrZeroAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotNullAttribute">
+            <summary>
+            Not null
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotNullAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotNullAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotNullAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotOutOfLengthAttribute">
+            <summary>
+            Not out of length
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfLengthAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfLengthAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfLengthAttribute.Length">
+            <summary>
+            Length
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotOutOfLengthAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotOutOfRangeAttribute">
+            <summary>
+            Not out of range
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfRangeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfRangeAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfRangeAttribute.Min">
+            <summary>
+            Min
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotOutOfRangeAttribute.Max">
+            <summary>
+            Max
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotOutOfRangeAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotPositiveAttribute">
+            <summary>
+            Not positive
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotPositiveAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotPositiveAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotPositiveAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotPositiveOrZeroAttribute">
+            <summary>
+            Not positive or zero
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotPositiveOrZeroAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotPositiveOrZeroAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotPositiveOrZeroAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NotWhiteSpaceAttribute">
+            <summary>
+            Not whitespace
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotWhiteSpaceAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NotWhiteSpaceAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.NotWhiteSpaceAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.NumberOnlyAttribute">
+            <summary>
+            Number only
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.NumberOnlyAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.PositiveAttribute">
+            <summary>
+            Must positive, alias of <see cref="T:Cosmos.Validation.Annotations.NotNegativeOrZeroAttribute"/>
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.PositiveAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.PositiveOrZeroAttribute">
+            <summary>
+            Must positive or zero, alias of <see cref="T:Cosmos.Validation.Annotations.NotNegativeAttribute"/>
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.PositiveOrZeroAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.RequiredIntTypeAttribute">
+            <summary>
+            Must in type...
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredIntTypeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredIntTypeAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredIntTypeAttribute.MayBeNullable">
+            <summary>
+            My be nullable
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.RequiredIntTypeAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.RequiredLongTypeAttribute">
+            <summary>
+            Must long
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredLongTypeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredLongTypeAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredLongTypeAttribute.MayBeNullable">
+            <summary>
+            My be nullable
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.RequiredLongTypeAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.RequiredNumericTypeAttribute">
+            <summary>
+            Music numeric type
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredNumericTypeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredNumericTypeAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredNumericTypeAttribute.MayBeNullable">
+            <summary>
+            My be nullable
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.RequiredNumericTypeAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.RequiredStringTypeAttribute">
+            <summary>
+            Must string type
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredStringTypeAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.RequiredStringTypeAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.RequiredStringTypeAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.Annotations.ValidDateValueAttribute">
+            <summary>
+            Valid date
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.ValidDateValueAttribute.Name">
+            <summary>
+            Name of this Attribute/Annotation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Annotations.ValidDateValueAttribute.ErrorMessage">
+            <summary>
+            Gets or sets message<br />
+            消息
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidDateValueAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
+            <summary>
+            Invoke internal impl
+            </summary>
+            <param name="memberType"></param>
+            <param name="memberName"></param>
+            <param name="memberValueGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidDateValueAttribute.QuietVerify``1(``0)">
+            <summary>
+            Quiet Verify
+            </summary>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.ValidDateValueAttribute.QuietVerify(System.Type,System.Object)">
+            <summary>
+            Quiet Verify
+            </summary>
+            <param name="type"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,16 +1,16 @@
-using System;
+﻿using System;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Number only
+    /// Require
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NumberOnlyAttribute : RequiredNumericTypeAttribute
+    public class RequireAttribute : NotNullAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Number-Only Annotation";
+        public override string Name => "Require Annotation";
     }
 }

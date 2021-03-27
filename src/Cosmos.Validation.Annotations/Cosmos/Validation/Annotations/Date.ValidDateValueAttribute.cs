@@ -2,7 +2,6 @@
 using Cosmos.Date;
 using Cosmos.Reflection;
 using Cosmos.Text;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
@@ -10,7 +9,7 @@ namespace Cosmos.Validation.Annotations
     /// Valid date
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class ValidDateValueAttribute : ValidationParameterAttribute, IQuietVerifiableAnnotation
+    public class ValidDateValueAttribute : VerifiableParamsAttribute, IQuietVerifiableAnnotation
     {
         /// <summary>
         /// Name of this Attribute/Annotation

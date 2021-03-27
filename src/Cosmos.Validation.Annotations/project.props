@@ -1,0 +1,9 @@
+﻿<Project>
+
+    <PropertyGroup>
+        <AssemblyName>Cosmos.Validation.Annotations</AssemblyName>
+        <PackageId>Cosmos.Validation.Annotations</PackageId>
+        <Description>Cosmos validation annotaions library</Description>
+    </PropertyGroup>
+
+</Project>

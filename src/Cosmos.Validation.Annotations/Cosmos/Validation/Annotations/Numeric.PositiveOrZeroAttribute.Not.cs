@@ -3,7 +3,6 @@ using Cosmos.Date;
 using Cosmos.Numeric;
 using Cosmos.Reflection;
 using Cosmos.Text;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
@@ -11,7 +10,7 @@ namespace Cosmos.Validation.Annotations
     /// Not positive or zero
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NotPositiveOrZeroAttribute : ValidationParameterAttribute
+    public class NotPositiveOrZeroAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation

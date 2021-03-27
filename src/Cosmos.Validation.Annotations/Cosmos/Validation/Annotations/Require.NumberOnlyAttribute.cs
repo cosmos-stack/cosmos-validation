@@ -3,14 +3,14 @@ using System;
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Between, alias of <see cref="NotOutOfRangeAttribute"/>
+    /// Number only
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class BetweenAttribute : NotOutOfRangeAttribute
+    public class NumberOnlyAttribute : RequireNumericTypeAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Between Annotation";
+        public override string Name => "Number-Only Annotation";
     }
 }

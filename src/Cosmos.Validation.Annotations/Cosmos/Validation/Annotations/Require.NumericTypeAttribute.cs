@@ -1,25 +1,23 @@
 using System;
 using Cosmos.Reflection;
-using Cosmos.Validation.Annotations.Core;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Must in type...
+    /// Music numeric type
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class RequiredIntTypeAttribute : ValidationParameterAttribute
+    public class RequireNumericTypeAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Must-Int32 Annotation";
+        public override string Name => "Must-Numeric-Type Annotation";
 
         /// <summary>
         /// Gets or sets message<br />
         /// 消息
         /// </summary>
-        public override string ErrorMessage { get; set; } = "The type of the current value must be an integer.";
+        public override string ErrorMessage { get; set; } = "The type of the current value must be a numeric type.";
 
         /// <summary>
         /// My be nullable
@@ -36,10 +34,10 @@ namespace Cosmos.Validation.Annotations
         protected override bool IsValidImpl(Type memberType, string memberName, Func<object> memberValueGetter)
         {
             var valid = MayBeNullable
-                ? memberType.IsNot(TypeClass.IntClazz).OrNot(TypeClass.IntNullableClazz)
-                : memberType.IsNot(TypeClass.IntClazz);
+                ? Types.IsNumericType(memberType)
+                : Types.IsNumericType(memberType) && !Types.IsNullableType(memberType);
 
-            return valid.Valid;
+            return valid;
         }
     }
 }

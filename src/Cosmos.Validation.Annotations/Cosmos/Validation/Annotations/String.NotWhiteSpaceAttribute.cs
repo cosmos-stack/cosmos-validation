@@ -1,24 +1,25 @@
 using System;
-using Cosmos.Validation.Annotations.Core;
+using Cosmos.Reflection;
+using Cosmos.Text;
 
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Not null
+    /// Not whitespace
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class NotNullAttribute : ValidationParameterAttribute
+    public class NotWhiteSpaceAttribute : VerifiableParamsAttribute
     {
         /// <summary>
         /// Name of this Attribute/Annotation
         /// </summary>
-        public override string Name => "Not-Null Annotation";
+        public override string Name => "Not-WhiteSpace Annotation";
 
         /// <summary>
         /// Gets or sets message<br />
         /// 消息
         /// </summary>
-        public override string ErrorMessage { get; set; } = "The current value cannot be null.";
+        public override string ErrorMessage { get; set; } = "The current value cannot be empty.";
 
         /// <summary>
         /// Invoke internal impl
@@ -31,10 +32,14 @@ namespace Cosmos.Validation.Annotations
         {
             (bool Valid, Type ParameterType, string Message) valid;
 
-            if (memberType.Is<string>().Valid)
-                valid = memberValueGetter().Check<string>(v => v.CheckNull(memberName, ErrorMessage));
+            if (memberValueGetter() is null && !IgnoreNullObject)
+                valid = Failure(memberType, ErrorMessage);
+            else if (memberType.Is(TypeClass.StringClazz).Valid)
+                valid = memberValueGetter().Check<string>(v => v.CheckBlank(memberName, ErrorMessage));
             else
-                valid = (memberValueGetter() is not null, memberType, string.Empty);
+                valid = IgnoreUnexpectedType
+                    ? Success(memberType)
+                    : memberValueGetter().ToString().Check<string>(v => v.CheckBlank(memberName, ErrorMessage));
 
             return valid.Valid;
         }
