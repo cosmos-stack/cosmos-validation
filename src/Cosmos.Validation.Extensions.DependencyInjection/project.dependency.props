@@ -1,0 +1,11 @@
+<Project>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cosmos.Validation.Dependency\Cosmos.Validation.Dependency.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Cosmos.Extensions.DependencyInjection" Version="$(Dependency-PkgVersion)"/>
+    </ItemGroup>
+
+</Project>
