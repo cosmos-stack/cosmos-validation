@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Collections;
@@ -11,21 +12,29 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueNotInToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueNotInToken";
+        private const string Name = "ValueNotInToken";
 
         private readonly ICollection<object> _objects;
+        private readonly Func<ICollection<object>> _objectsFunc;
 
         /// <inheritdoc />
         public ValueNotInToken(VerifiableMemberContract contract, ICollection<object> objects) : base(contract)
         {
             _objects = objects ?? Arrays.Empty<object>();
+            _objectsFunc = null;
+        }
+
+        /// <inheritdoc />
+        public ValueNotInToken(VerifiableMemberContract contract, Func<ICollection<object>> objectsFunc) : base(contract)
+        {
+            _objects = default;
+            _objectsFunc = objectsFunc;
         }
 
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
@@ -83,15 +92,17 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private bool IsValidImpl(object value)
         {
+            var coll = _objectsFunc is null ? _objects : _objectsFunc.Invoke();
+
             if (value is ICollection collection)
             {
-                if (collection.Cast<object>().Any(item => _objects.Contains(item)))
+                if (collection.Cast<object>().Any(item => coll.Contains(item)))
                 {
                     return false;
                 }
             }
 
-            return !_objects.Contains(value);
+            return !coll.Contains(value);
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)

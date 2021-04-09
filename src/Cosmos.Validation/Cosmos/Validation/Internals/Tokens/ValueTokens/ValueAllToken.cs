@@ -12,11 +12,10 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueAllToken : ValueCollBasicToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueAllToken";
+        private const string Name = "ValueAllToken";
 
         /// <inheritdoc />
-        public ValueAllToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract, func, NAME) { }
+        public ValueAllToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract, func, Name) { }
 
         /// <summary>
         /// Impl of valid ops.
@@ -38,11 +37,10 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     internal class ValueAllToken<TVal, TItem> : ValueCollBasicToken<TVal, TItem>
         where TVal : IEnumerable<TItem>
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "GenericValueAllToken";
+        private const string Name = "GenericValueAllToken";
 
         /// <inheritdoc />
-        public ValueAllToken(VerifiableMemberContract contract, Func<TItem, bool> func) : base(contract, func, NAME) { }
+        public ValueAllToken(VerifiableMemberContract contract, Func<TItem, bool> func) : base(contract, func, Name) { }
 
         /// <summary>
         /// Impl of valid ops

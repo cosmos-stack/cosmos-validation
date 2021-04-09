@@ -10,8 +10,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueRegularExpressionToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRegularExpressionToken";
+        private const string Name = "ValueRegularExpressionToken";
+        
         readonly Func<object, Regex> _regexFunc;
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.

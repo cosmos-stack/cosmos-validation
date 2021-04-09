@@ -186,7 +186,7 @@ namespace Cosmos.Validation
         #region In/NotIn
 
         /// <summary>
-        /// In
+        /// Determine whether the value is included in the given set.
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="collection"></param>
@@ -203,7 +203,24 @@ namespace Cosmos.Validation
         }
 
         /// <summary>
-        /// In
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="collectionFunc"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
+        public static IValueRuleBuilder<T, TVal> In<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<ICollection<TItem>> collectionFunc)
+            where TVal : IEnumerable<TItem>
+        {
+            var current = builder._impl();
+            current.State.CurrentToken = new ValueInToken<TVal, TItem>(current._contract, collectionFunc);
+            return builder;
+        }
+
+        /// <summary>
+        /// Determine whether the value is included in the given set.
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="objects"></param>
@@ -220,7 +237,24 @@ namespace Cosmos.Validation
         }
 
         /// <summary>
-        /// Not in
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="collectionFunc"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TVal"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <returns></returns>
+        public static IValueRuleBuilder<T, TVal> NotIn<T, TVal, TItem>(this IValueRuleBuilder<T, TVal> builder, Func<ICollection<TItem>> collectionFunc)
+            where TVal : IEnumerable<TItem>
+        {
+            var current = builder._impl();
+            current.State.CurrentToken = new ValueNotInToken<TVal, TItem>(current._contract, collectionFunc);
+            return builder;
+        }
+
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="collection"></param>
@@ -237,7 +271,7 @@ namespace Cosmos.Validation
         }
 
         /// <summary>
-        /// Not in
+        /// Determine whether the value is not included in the given set.
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="objects"></param>

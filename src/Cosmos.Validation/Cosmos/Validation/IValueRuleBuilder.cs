@@ -44,21 +44,129 @@ namespace Cosmos.Validation
 
         IPredicateValueRuleBuilder AtLeast(int count);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder Equal(object value);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder Equal(object value, IEqualityComparer comparer);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder Equal(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder Equal(Func<object> valueFunc, Type valueType, IEqualityComparer comparer);
+
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder NotEqual(object value);
 
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder NotEqual(object value, IEqualityComparer comparer);
 
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder NotEqual(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder NotEqual(Func<object> valueFunc, Type valueType, IEqualityComparer comparer);
+
+        /// <summary>
+        /// Determine whether one value is less than another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder LessThan(object value);
 
+        /// <summary>
+        /// Determine whether one value is less than another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder LessThan(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether one value is less than or equal to another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder LessThanOrEqual(object value);
 
+        /// <summary>
+        /// Determine whether one value is less than or equal to another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder LessThanOrEqual(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether one value is greater than another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder GreaterThan(object value);
 
+        /// <summary>
+        /// Determine whether one value is greater than another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder GreaterThan(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether one value is greater than or equal to another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder GreaterThanOrEqual(object value);
+
+        /// <summary>
+        /// Determine whether one value is greater than or equal to another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder GreaterThanOrEqual(Func<object> valueFunc, Type valueType);
 
         IPredicateValueRuleBuilder Matches(Regex regex);
 
@@ -95,12 +203,46 @@ namespace Cosmos.Validation
         IPredicateValueRuleBuilder NotAll(Func<object, bool> func);
         IPredicateValueRuleBuilder None(Func<object, bool> func);
 
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder In(ICollection<object> collection);
 
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="collectionFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder In(Func<ICollection<object>> collectionFunc);
+
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder In(params object[] objects);
 
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder NotIn(ICollection<object> collection);
 
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="collectionFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder NotIn(Func<ICollection<object>> collectionFunc);
+
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder NotIn(params object[] objects);
 
         IPredicateValueRuleBuilder InEnum(Type enumType);
@@ -441,21 +583,129 @@ namespace Cosmos.Validation
 
         IPredicateValueRuleBuilder<T> AtLeast(int count);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> Equal(object value);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> Equal(object value, IEqualityComparer comparer);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> Equal(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> Equal(Func<object> valueFunc, Type valueType, IEqualityComparer comparer);
+
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> NotEqual(object value);
 
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> NotEqual(object value, IEqualityComparer comparer);
 
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> NotEqual(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> NotEqual(Func<object> valueFunc, Type valueType, IEqualityComparer comparer);
+
+        /// <summary>
+        /// Determine whether one value is less than another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> LessThan(object value);
 
+        /// <summary>
+        /// Determine whether one value is less than another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> LessThan(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether one value is less than or equal to another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> LessThanOrEqual(object value);
 
+        /// <summary>
+        /// Determine whether one value is less than or equal to another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> LessThanOrEqual(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether one value is greater than another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> GreaterThan(object value);
 
+        /// <summary>
+        /// Determine whether one value is greater than another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> GreaterThan(Func<object> valueFunc, Type valueType);
+
+        /// <summary>
+        /// Determine whether one value is greater than or equal to another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> GreaterThanOrEqual(object value);
+
+        /// <summary>
+        /// Determine whether one value is greater than or equal to another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> GreaterThanOrEqual(Func<object> valueFunc, Type valueType);
 
         IPredicateValueRuleBuilder<T> Matches(Regex regex);
 
@@ -491,12 +741,46 @@ namespace Cosmos.Validation
         //
         // IWaitForActivationConditionsValueRuleBuilder<T> NotAll(Func<object, bool> func);
 
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> In(ICollection<object> collection);
 
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="collectionFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> In(Func<ICollection<object>> collectionFunc);
+
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> In(params object[] objects);
 
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> NotIn(ICollection<object> collection);
 
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="collectionFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T> NotIn(Func<ICollection<object>> collectionFunc);
+
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T> NotIn(params object[] objects);
 
         IPredicateValueRuleBuilder<T> InEnum(Type enumType);
@@ -838,21 +1122,121 @@ namespace Cosmos.Validation
 
         new IPredicateValueRuleBuilder<T, TVal> AtLeast(int count);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> Equal(TVal value);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> Equal(TVal value, IEqualityComparer<TVal> comparer);
 
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> Equal(Func<TVal> valueFunc);
+
+        /// <summary>
+        /// Determine whether the two values are equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> Equal(Func<TVal> valueFunc, IEqualityComparer<TVal> comparer);
+
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> NotEqual(TVal value);
 
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> NotEqual(TVal value, IEqualityComparer<TVal> comparer);
 
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> NotEqual(Func<TVal> valueFunc);
+
+        /// <summary>
+        /// Determine whether the two values are not equal.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> NotEqual(Func<TVal> valueFunc, IEqualityComparer<TVal> comparer);
+
+        /// <summary>
+        /// Determine whether one value is less than another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> LessThan(TVal value);
 
+        /// <summary>
+        /// Determine whether one value is less than another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> LessThan(Func<TVal> valueFunc);
+
+        /// <summary>
+        /// Determine whether one value is less than or equal to another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> LessThanOrEqual(TVal value);
 
+        /// <summary>
+        /// Determine whether one value is less than or equal to another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> LessThanOrEqual(Func<TVal> valueFunc);
+
+        /// <summary>
+        /// Determine whether one value is greater than another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> GreaterThan(TVal value);
 
+        /// <summary>
+        /// Determine whether one value is greater than another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> GreaterThan(Func<TVal> valueFunc);
+
+        /// <summary>
+        /// Determine whether one value is greater than or equal to another value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> GreaterThanOrEqual(TVal value);
+
+        /// <summary>
+        /// Determine whether one value is greater than or equal to another value.
+        /// </summary>
+        /// <param name="valueFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> GreaterThanOrEqual(Func<TVal> valueFunc);
 
         new IPredicateValueRuleBuilder<T, TVal> Matches(Regex regex);
 
@@ -880,12 +1264,46 @@ namespace Cosmos.Validation
 
         IPredicateValueRuleBuilder<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> In(ICollection<TVal> collection);
 
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="collectionFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> In(Func<ICollection<TVal>> collectionFunc);
+
+        /// <summary>
+        /// Determine whether the value is included in the given set.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> In(params TVal[] objects);
 
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="collectionFunc"></param>
+        /// <returns></returns>
+        IPredicateValueRuleBuilder<T, TVal> NotIn(Func<ICollection<TVal>> collectionFunc);
+
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> NotIn(ICollection<TVal> collection);
 
+        /// <summary>
+        /// Determine whether the value is not included in the given set.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         IPredicateValueRuleBuilder<T, TVal> NotIn(params TVal[] objects);
 
         new IPredicateValueRuleBuilder<T, TVal> InEnum(Type enumType);

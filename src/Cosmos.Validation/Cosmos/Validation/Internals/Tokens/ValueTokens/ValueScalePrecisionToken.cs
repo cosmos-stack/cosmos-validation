@@ -13,8 +13,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueScalePrecisionToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueScalePrecisionToken";
+        private const string Name = "ValueScalePrecisionToken";
 
         /// <inheritdoc />
         public ValueScalePrecisionToken(VerifiableMemberContract contract, int scale, int precision, bool ignoreTrailingZeros = false) : base(contract)
@@ -58,7 +57,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.

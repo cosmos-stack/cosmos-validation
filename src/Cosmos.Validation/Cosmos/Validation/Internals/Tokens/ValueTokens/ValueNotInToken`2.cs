@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Collections;
 using Cosmos.Validation.Objects;
@@ -13,21 +14,29 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     internal class ValueNotInToken<TVal, TItem> : ValueToken<TVal>
         where TVal : IEnumerable<TItem>
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "GenericValueInToken2";
+        private const string Name = "GenericValueInToken2";
 
         private readonly ICollection<TItem> _objects;
+        private readonly Func<ICollection<TItem>> _objectsFunc;
 
         /// <inheritdoc />
         public ValueNotInToken(VerifiableMemberContract contract, ICollection<TItem> objects) : base(contract)
         {
             _objects = objects ?? Arrays.Empty<TItem>();
+            _objectsFunc = null;
+        }
+
+        /// <inheritdoc />
+        public ValueNotInToken(VerifiableMemberContract contract, Func<ICollection<TItem>> objectsFunc) : base(contract)
+        {
+            _objects = default;
+            _objectsFunc = objectsFunc;
         }
 
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
@@ -85,7 +94,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private bool IsValidImpl(IEnumerable<TItem> items)
         {
-            return items.All(item => !_objects.Contains(item));
+            var coll = _objectsFunc is null ? _objects : _objectsFunc.Invoke();
+
+            return items.All(item => !coll.Contains(item));
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)

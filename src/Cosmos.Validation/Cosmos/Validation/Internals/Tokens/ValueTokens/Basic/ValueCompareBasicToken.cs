@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cosmos.Validation.Objects;
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
@@ -9,13 +10,24 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
     internal abstract class ValueCompareBasicToken : ValueToken
     {
         private readonly object _valueToCompare;
+        private readonly Func<object> _valueToCompareFunc;
         private readonly Type _typeOfValueToCompare;
 
         /// <inheritdoc />
         protected ValueCompareBasicToken(VerifiableMemberContract contract, object valueToCompare, string tokenName) : base(contract)
         {
             _valueToCompare = valueToCompare;
+            _valueToCompareFunc = null;
             _typeOfValueToCompare = _valueToCompare.GetType();
+            TokenName = tokenName;
+        }
+
+        /// <inheritdoc />
+        protected ValueCompareBasicToken(VerifiableMemberContract contract, Func<object> valueToCompareFunc, Type valueType, string tokenName) : base(contract)
+        {
+            _valueToCompare = default;
+            _valueToCompareFunc = valueToCompareFunc;
+            _typeOfValueToCompare = valueType;
             TokenName = tokenName;
         }
 
@@ -48,7 +60,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
 
             var verifyVal = CreateVerifyVal();
 
-            if (!IsValidImpl(value, _valueToCompare, _typeOfValueToCompare, out var message))
+            var valueToCompare = _valueToCompareFunc is null ? _valueToCompare : _valueToCompareFunc.Invoke();
+
+            if (!IsValidImpl(value, valueToCompare, _typeOfValueToCompare, out var message))
             {
                 UpdateVal(verifyVal, value, message);
             }
@@ -70,7 +84,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens.Basic
 
             var verifyVal = CreateVerifyVal();
 
-            if (!IsValidImpl(value, _valueToCompare, _typeOfValueToCompare, out var message))
+            var valueToCompare = _valueToCompareFunc is null ? _valueToCompare : _valueToCompareFunc.Invoke();
+
+            if (!IsValidImpl(value, valueToCompare, _typeOfValueToCompare, out var message))
             {
                 UpdateVal(verifyVal, value, message);
             }

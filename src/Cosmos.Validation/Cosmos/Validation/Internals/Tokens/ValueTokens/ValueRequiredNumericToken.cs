@@ -6,14 +6,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
     internal class ValueRequiredNumericToken : ValueRequiredTypeToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRequiredNumericTypeToken";
+        private const string Name = "ValueRequiredNumericTypeToken";
 
         private readonly TypeIsOptions _isOptions;
 
         /// <inheritdoc />
         public ValueRequiredNumericToken(VerifiableMemberContract contract, TypeIsOptions isOptions = TypeIsOptions.Default)
-            : base(contract, TypeClass.DecimalClazz, false, NAME, null, true)
+            : base(contract, TypeClass.DecimalClazz, false, Name, null, true)
         {
             _isOptions = isOptions;
         }

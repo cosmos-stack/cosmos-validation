@@ -9,8 +9,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// <typeparam name="TVal"></typeparam>
     internal class ValueRangeToken<TVal> : ValueToken<TVal>
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "GenericValueRangeToken";
+        private const string Name = "GenericValueRangeToken";
+        
         private readonly TVal _from;
         private readonly TVal _to;
         private readonly RangeOptions _options;
@@ -27,7 +27,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.

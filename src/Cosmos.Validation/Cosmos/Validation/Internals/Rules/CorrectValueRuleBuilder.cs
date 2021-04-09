@@ -189,51 +189,115 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder Equal(object value)
         {
             State.CurrentToken = new ValueEqualToken(_contract, value, null);
             return this;
         }
 
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder Equal(object value, IEqualityComparer comparer)
         {
             State.CurrentToken = new ValueEqualToken(_contract, value, comparer);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder Equal(Func<object> valueFunc, Type valueType)
+        {
+            State.CurrentToken = new ValueEqualToken(_contract, valueFunc, valueType, null);
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder Equal(Func<object> valueFunc, Type valueType, IEqualityComparer comparer)
+        {
+            State.CurrentToken = new ValueEqualToken(_contract, valueFunc, valueType, comparer);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder NotEqual(object value)
         {
             State.CurrentToken = new ValueNotEqualToken(_contract, value, null);
             return this;
         }
 
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder NotEqual(object value, IEqualityComparer comparer)
         {
             State.CurrentToken = new ValueNotEqualToken(_contract, value, comparer);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder NotEqual(Func<object> valueFunc, Type valueType)
+        {
+            State.CurrentToken = new ValueNotEqualToken(_contract, valueFunc, valueType, null);
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder NotEqual(Func<object> valueFunc, Type valueType, IEqualityComparer comparer)
+        {
+            State.CurrentToken = new ValueNotEqualToken(_contract, valueFunc, valueType, comparer);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder LessThan(object value)
         {
             State.CurrentToken = new ValueLessThanToken(_contract, value);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder LessThan(Func<object> valueFunc, Type valueType)
+        {
+            State.CurrentToken = new ValueLessThanToken(_contract, valueFunc, valueType);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder LessThanOrEqual(object value)
         {
             State.CurrentToken = new ValueLessThanOrEqualToken(_contract, value);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder LessThanOrEqual(Func<object> valueFunc, Type valueType)
+        {
+            State.CurrentToken = new ValueLessThanOrEqualToken(_contract, valueFunc, valueType);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder GreaterThan(object value)
         {
             State.CurrentToken = new ValueGreaterThanToken(_contract, value);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder GreaterThan(Func<object> valueFunc, Type valueType)
+        {
+            State.CurrentToken = new ValueGreaterThanToken(_contract, valueFunc, valueType);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder GreaterThanOrEqual(object value)
         {
             State.CurrentToken = new ValueGreaterThanOrEqualToken(_contract, value);
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder GreaterThanOrEqual(Func<object> valueFunc, Type valueType)
+        {
+            State.CurrentToken = new ValueGreaterThanOrEqualToken(_contract, valueFunc, valueType);
             return this;
         }
 
@@ -340,24 +404,42 @@ namespace Cosmos.Validation.Internals.Rules
             return this;
         }
 
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder In(ICollection<object> collection)
         {
             State.CurrentToken = new ValueInToken(_contract, collection);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder In(Func<ICollection<object>> collectionFunc)
+        {
+            State.CurrentToken = new ValueInToken(_contract, collectionFunc);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder In(params object[] objects)
         {
             State.CurrentToken = new ValueInToken(_contract, objects);
             return this;
         }
 
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder NotIn(ICollection<object> collection)
         {
             State.CurrentToken = new ValueNotInToken(_contract, collection);
             return this;
         }
 
+        /// <inheritdoc />
+        public IPredicateValueRuleBuilder NotIn(Func<ICollection<object>> collectionFunc)
+        {
+            State.CurrentToken = new ValueNotInToken(_contract, collectionFunc);
+            return this;
+        }
+
+        /// <inheritdoc />
         public IPredicateValueRuleBuilder NotIn(params object[] objects)
         {
             State.CurrentToken = new ValueNotInToken(_contract, objects);

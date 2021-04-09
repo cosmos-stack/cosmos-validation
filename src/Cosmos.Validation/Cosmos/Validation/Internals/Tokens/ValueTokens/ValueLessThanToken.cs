@@ -9,11 +9,17 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueLessThanToken : ValueCompareBasicToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueLessThanToken";
+        private const string Name = "ValueLessThanToken";
 
         /// <inheritdoc />
-        public ValueLessThanToken(VerifiableMemberContract contract, object valueToCompare) : base(contract, valueToCompare, NAME) { }
+        public ValueLessThanToken(VerifiableMemberContract contract, object valueToCompare) : base(contract, valueToCompare, Name) { }
+
+        /// <inheritdoc />
+        public ValueLessThanToken(VerifiableMemberContract contract, Func<object> valueToCompareFunc, Type valueType) : base(contract, valueToCompareFunc, valueType, Name) { }
+
+        protected ValueLessThanToken(VerifiableMemberContract contract, object valueToCompare, string tokenName) : base(contract, valueToCompare, tokenName) { }
+
+        protected ValueLessThanToken(VerifiableMemberContract contract, Func<object> valueToCompareFunc, Type valueType, string tokenName) : base(contract, valueToCompareFunc, valueType, tokenName) { }
 
         /// <summary>
         /// Impl of valid ops.
@@ -52,5 +58,16 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
             val.VerifiedValue = obj;
             val.ErrorMessage = MergeMessage(message ?? $"The given value must be less than {valueToCompare}.");
         }
+    }
+
+    internal class ValueLessThanToken<TVal> : ValueLessThanToken
+    {
+        private const string Name = "GenericValueLessThanToken";
+
+        /// <inheritdoc />
+        public ValueLessThanToken(VerifiableMemberContract contract, TVal valueToCompare) : base(contract, valueToCompare, Name) { }
+
+        /// <inheritdoc />
+        public ValueLessThanToken(VerifiableMemberContract contract, Func<TVal> valueToCompareFunc) : base(contract, () => valueToCompareFunc(), typeof(TVal), Name) { }
     }
 }

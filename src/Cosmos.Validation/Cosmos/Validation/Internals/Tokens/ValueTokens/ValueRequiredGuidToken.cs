@@ -7,17 +7,11 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
     internal class ValueRequiredGuidToken : ValueRequiredTypeToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRequiredGuidTypeToken";
-
-        private readonly TypeIsOptions _isOptions;
+        private const string Name = "ValueRequiredGuidTypeToken";
 
         /// <inheritdoc />
-        public ValueRequiredGuidToken(VerifiableMemberContract contract, TypeIsOptions isOptions = TypeIsOptions.Default)
-            : base(contract, TypeClass.GuidClazz, false, NAME, null, true)
-        {
-            _isOptions = isOptions;
-        }
+        public ValueRequiredGuidToken(VerifiableMemberContract contract)
+            : base(contract, TypeClass.GuidClazz, false, Name, null, true) { }
 
         protected override bool IsValidImpl(object value)
         {
@@ -29,7 +23,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             if (value is string strValue)
                 return StringGuidDeterminer.Is(strValue);
-            
+
             return StringGuidDeterminer.Is(value.ToString());
         }
 

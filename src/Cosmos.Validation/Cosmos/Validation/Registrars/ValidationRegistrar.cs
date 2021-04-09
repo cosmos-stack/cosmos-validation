@@ -49,6 +49,9 @@ namespace Cosmos.Validation.Registrars
             if (string.IsNullOrWhiteSpace(name))
                 return Continue();
 
+            if (ValidationProvider.IsDefault(name))
+                return DefaultRegistrar;
+
             var provider = ValidationMe.ExposeValidationProvider(name);
 
             if (provider is null)
@@ -63,6 +66,9 @@ namespace Cosmos.Validation.Registrars
         {
             if (string.IsNullOrWhiteSpace(name))
                 return Continue();
+
+            if (ValidationProvider.IsDefault(name))
+                return DefaultRegistrar;
 
             var provider = ValidationMe.ExposeValidationProvider(name);
 

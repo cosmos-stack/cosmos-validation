@@ -9,8 +9,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueStringEnumToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueStringEnumToken";
+        private const string Name = "ValueStringEnumToken";
 
         private readonly Type _enumType;
         private readonly bool _caseSensitive;
@@ -30,7 +29,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.

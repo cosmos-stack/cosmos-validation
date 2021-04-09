@@ -8,13 +8,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueRangeToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRangeToken";
+        private const string Name = "ValueRangeToken";
+        
         private readonly IComparable _from;
         private readonly IComparable _to;
         private readonly RangeOptions _options;
 
-        private bool _returnFalseDirectly;
+        private readonly bool _returnFalseDirectly;
 
         /// <inheritdoc />
         public ValueRangeToken(VerifiableMemberContract contract, object from, object to, RangeOptions options) : base(contract)
@@ -57,7 +57,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.

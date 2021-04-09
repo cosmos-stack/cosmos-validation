@@ -8,8 +8,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueFuncToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "Value Func condition rule";
+        private const string Name = "Value Func condition rule";
+
         private readonly Func<object, CustomVerifyResult> _func;
 
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
@@ -49,9 +49,10 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             if (!IsValidImpl(value, out var result))
             {
+                verifyVal.NameOfExecutedRule = result?.OperationName ?? Name;
                 UpdateVal(verifyVal, value, result?.ErrorMessage);
             }
-            
+
             return verifyVal;
         }
 
@@ -71,6 +72,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             if (!IsValidImpl(value, out var result))
             {
+                verifyVal.NameOfExecutedRule = result?.OperationName ?? Name;
                 UpdateVal(verifyVal, value, result?.ErrorMessage);
             }
 

@@ -6,17 +6,11 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
     internal class ValueRequiredBooleanToken : ValueRequiredTypeToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRequiredBooleanTypeToken";
-
-        private readonly TypeIsOptions _isOptions;
+        private const string Name = "ValueRequiredBooleanTypeToken";
 
         /// <inheritdoc />
-        public ValueRequiredBooleanToken(VerifiableMemberContract contract, TypeIsOptions isOptions = TypeIsOptions.Default)
-            : base(contract, TypeClass.BooleanClazz, false, NAME, null, true)
-        {
-            _isOptions = isOptions;
-        }
+        public ValueRequiredBooleanToken(VerifiableMemberContract contract)
+            : base(contract, TypeClass.BooleanClazz, false, Name, null, true) { }
 
         protected override bool IsValidImpl(object value)
         {
@@ -28,7 +22,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             if (value is string strValue)
                 return StringBooleanDeterminer.Is(strValue);
-            
+
             return StringBooleanDeterminer.Is(value.ToString());
         }
 

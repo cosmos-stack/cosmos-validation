@@ -12,12 +12,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueRequiredTypesToken : ValueRequiredBasicToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRequiredTypesToken";
+        private const string Name = "ValueRequiredTypesToken";
+        
         private readonly Type[] _types;
 
         /// <inheritdoc />
-        public ValueRequiredTypesToken(VerifiableMemberContract contract, params Type[] types)  : base(contract, false, NAME)
+        public ValueRequiredTypesToken(VerifiableMemberContract contract, params Type[] types)  : base(contract, false, Name)
         {
             _types = types;
         }

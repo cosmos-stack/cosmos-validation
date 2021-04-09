@@ -97,6 +97,12 @@ namespace Cosmos.Validation.Registrars
             return (IPredicateValidationRegistrar) registrar;
         }
 
+        public static IPredicateValidationRegistrar In(this IValueFluentValidationRegistrar registrar, Func<ICollection<object>> collectionFunc)
+        {
+            registrar._impl().ExposeValueRuleBuilder().In(collectionFunc);
+            return (IPredicateValidationRegistrar) registrar;
+        }
+
         public static IPredicateValidationRegistrar In(this IValueFluentValidationRegistrar registrar, params object[] objects)
         {
             registrar._impl().ExposeValueRuleBuilder().In(objects);
@@ -106,6 +112,12 @@ namespace Cosmos.Validation.Registrars
         public static IPredicateValidationRegistrar NotIn(this IValueFluentValidationRegistrar registrar, ICollection<object> collection)
         {
             registrar._impl().ExposeValueRuleBuilder().NotIn(collection);
+            return (IPredicateValidationRegistrar) registrar;
+        }
+
+        public static IPredicateValidationRegistrar NotIn(this IValueFluentValidationRegistrar registrar, Func<ICollection<object>> collectionFunc)
+        {
+            registrar._impl().ExposeValueRuleBuilder().NotIn(collectionFunc);
             return (IPredicateValidationRegistrar) registrar;
         }
 
@@ -121,6 +133,12 @@ namespace Cosmos.Validation.Registrars
             return (IPredicateValidationRegistrar<T>) registrar;
         }
 
+        public static IPredicateValidationRegistrar<T> In<T>(this IValueFluentValidationRegistrar<T> registrar, Func<ICollection<object>> collectionFunc)
+        {
+            registrar._impl().ExposeValueRuleBuilder().In(collectionFunc);
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
         public static IPredicateValidationRegistrar<T> In<T>(this IValueFluentValidationRegistrar<T> registrar, params object[] objects)
         {
             registrar._impl().ExposeValueRuleBuilder().In(objects);
@@ -130,6 +148,12 @@ namespace Cosmos.Validation.Registrars
         public static IPredicateValidationRegistrar<T> NotIn<T>(this IValueFluentValidationRegistrar<T> registrar, ICollection<object> collection)
         {
             registrar._impl().ExposeValueRuleBuilder().NotIn(collection);
+            return (IPredicateValidationRegistrar<T>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T> NotIn<T>(this IValueFluentValidationRegistrar<T> registrar, Func<ICollection<object>> collectionFunc)
+        {
+            registrar._impl().ExposeValueRuleBuilder().NotIn(collectionFunc);
             return (IPredicateValidationRegistrar<T>) registrar;
         }
 
@@ -145,6 +169,12 @@ namespace Cosmos.Validation.Registrars
             return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 
+        public static IPredicateValidationRegistrar<T, TVal> In<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<ICollection<object>> collectionFunc)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().In(collectionFunc);
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
+        }
+
         public static IPredicateValidationRegistrar<T, TVal> In<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, params TVal[] objects)
         {
             registrar._impl().ExposeValueRuleBuilder2().In(objects);
@@ -154,6 +184,12 @@ namespace Cosmos.Validation.Registrars
         public static IPredicateValidationRegistrar<T, TVal> NotIn<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, ICollection<TVal> collection)
         {
             registrar._impl().ExposeValueRuleBuilder2().NotIn(collection);
+            return (IPredicateValidationRegistrar<T, TVal>) registrar;
+        }
+
+        public static IPredicateValidationRegistrar<T, TVal> NotIn<T, TVal>(this IValueFluentValidationRegistrar<T, TVal> registrar, Func<ICollection<object>> collectionFunc)
+        {
+            registrar._impl().ExposeValueRuleBuilder2().NotIn(collectionFunc);
             return (IPredicateValidationRegistrar<T, TVal>) registrar;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Cosmos.Validation.Internals.Tokens.ValueTokens.Basic;
 using Cosmos.Validation.Objects;
+// ReSharper disable InconsistentNaming
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
@@ -8,13 +9,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueNullToken : ValueRequiredBasicToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "NullValueToken";
+        private const string Name = "NullValueToken";
 
-        public static int[] _mutuallyExclusiveFlags = {90114};
+        private static readonly int[] _mutuallyExclusiveFlags = {90114};
 
         /// <inheritdoc />
-        public ValueNullToken(VerifiableMemberContract contract) : this(contract, false, NAME, _mutuallyExclusiveFlags) { }
+        public ValueNullToken(VerifiableMemberContract contract) : this(contract, false, Name, _mutuallyExclusiveFlags) { }
 
         protected ValueNullToken(VerifiableMemberContract contract, bool not, string tokenName, int[] mutuallyExclusiveFlags)
             : base(contract, not, tokenName, mutuallyExclusiveFlags) { }
@@ -32,13 +32,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueNotNullToken : ValueNullToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "NotNullValueToken";
+        private const string Name = "NotNullValueToken";
 
-        public static int[] _mutuallyExclusiveFlags = {90111, 90112, 90113, 90114};
+        private static readonly int[] _mutuallyExclusiveFlags = {90111, 90112, 90113, 90114};
 
         /// <inheritdoc />
-        public ValueNotNullToken(VerifiableMemberContract contract) : base(contract, true, NAME, _mutuallyExclusiveFlags) { }
+        public ValueNotNullToken(VerifiableMemberContract contract) : base(contract, true, Name, _mutuallyExclusiveFlags) { }
 
         protected override string GetDefaultMessageSinceToken(object obj) => "The value is must be not null.";
     }

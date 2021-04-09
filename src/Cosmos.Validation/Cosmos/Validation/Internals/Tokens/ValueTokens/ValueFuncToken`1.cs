@@ -9,8 +9,8 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// <typeparam name="TVal"></typeparam>
     internal class ValueFuncToken<TVal> : ValueToken<TVal>
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "Generic Value Func condition rule";
+        private const string Name = "Generic Value Func condition rule";
+
         private readonly Func<TVal, CustomVerifyResult> _func;
 
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
@@ -48,11 +48,10 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             var verifyVal = CreateVerifyVal();
 
-            var result = _func.Invoke(value);
-
-            if (result is not null && !result.VerifyResult)
+            if (!IsValidImpl(value, out var result))
             {
-                UpdateVal(verifyVal, value, result.ErrorMessage);
+                verifyVal.NameOfExecutedRule = result?.OperationName ?? Name;
+                UpdateVal(verifyVal, value, result?.ErrorMessage);
             }
 
             return verifyVal;
@@ -71,17 +70,22 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 return CorrectVerifyVal.Ignore;
 
             var verifyVal = CreateVerifyVal();
-
-            var result = _func.Invoke(value);
-
-            if (result is not null && !result.VerifyResult)
+            
+            if (!IsValidImpl(value, out var result))
             {
-                UpdateVal(verifyVal, value, result.ErrorMessage);
+                verifyVal.NameOfExecutedRule = result?.OperationName ?? Name;
+                UpdateVal(verifyVal, value, result?.ErrorMessage);
             }
 
             return verifyVal;
         }
 
+        private bool IsValidImpl(TVal value, out CustomVerifyResult result)
+        {
+            result = _func.Invoke(value);
+            return result?.VerifyResult ?? false;
+        }
+        
         private void UpdateVal(CorrectVerifyVal val, TVal obj, string message)
         {
             if (string.IsNullOrWhiteSpace(message))

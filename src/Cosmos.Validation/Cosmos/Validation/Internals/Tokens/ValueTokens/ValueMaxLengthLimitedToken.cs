@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Cosmos.Validation.Objects;
+// ReSharper disable InconsistentNaming
 
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
@@ -9,9 +10,9 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueMaxLengthLimitedToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ArrayMaxLengthToken";
-        public static int[] _mutuallyExclusiveFlags = {90112, 90116, 90120};
+        private const string Name = "ArrayMaxLengthToken";
+        
+        private static readonly int[] _mutuallyExclusiveFlags = {90112, 90116, 90120};
 
         private readonly int _maxLength;
 
@@ -26,7 +27,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.

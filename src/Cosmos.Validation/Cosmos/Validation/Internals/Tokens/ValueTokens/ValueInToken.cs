@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cosmos.Collections;
@@ -11,21 +12,29 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueInToken : ValueToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueInToken";
+        private const string Name = "ValueInToken";
 
         private readonly ICollection<object> _objects;
+        private readonly Func<ICollection<object>> _objectsFunc;
 
         /// <inheritdoc />
         public ValueInToken(VerifiableMemberContract contract, ICollection<object> objects) : base(contract)
         {
             _objects = objects ?? Arrays.Empty<object>();
+            _objectsFunc = null;
+        }
+
+        /// <inheritdoc />
+        public ValueInToken(VerifiableMemberContract contract, Func<ICollection<object>> objectsFunc) : base(contract)
+        {
+            _objects = default;
+            _objectsFunc = objectsFunc;
         }
 
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
@@ -50,7 +59,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
                 return CorrectVerifyVal.Ignore;
 
             var verifyVal = CreateVerifyVal();
-            
+
             if (!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
@@ -83,15 +92,17 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
         private bool IsValidImpl(object value)
         {
+            var coll = _objectsFunc is null ? _objects : _objectsFunc.Invoke();
+            
             if (value is ICollection collection)
             {
-                if (collection.Cast<object>().Any(item => _objects.Contains(item)))
+                if (collection.Cast<object>().Any(item => coll.Contains(item)))
                 {
                     return true;
                 }
             }
 
-            return _objects.Contains(value);
+            return coll.Contains(value);
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj, string message = null)

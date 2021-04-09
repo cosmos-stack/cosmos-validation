@@ -12,11 +12,10 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueNoneToken : ValueCollBasicToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueNoneToken";
+        private const string Name = "ValueNoneToken";
 
         /// <inheritdoc />
-        public ValueNoneToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract, func, NAME) { }
+        public ValueNoneToken(VerifiableMemberContract contract, Func<object, bool> func) : base(contract, func, Name) { }
 
         /// <summary>
         /// Impl of valid ops.

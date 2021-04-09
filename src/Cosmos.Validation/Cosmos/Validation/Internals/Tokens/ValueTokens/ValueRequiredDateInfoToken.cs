@@ -7,14 +7,13 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
     internal class ValueRequiredDateInfoToken : ValueRequiredTypeToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueRequiredDateInfoTypeToken";
+        private const string Name = "ValueRequiredDateInfoTypeToken";
 
         private readonly DateTimeStyles _style;
 
         /// <inheritdoc />
         public ValueRequiredDateInfoToken(VerifiableMemberContract contract, DateTimeStyles style = DateTimeStyles.None)
-            : base(contract, typeof(DateInfo), false, NAME, null, true)
+            : base(contract, typeof(DateInfo), false, Name, null, true)
         {
             _style = style;
         }

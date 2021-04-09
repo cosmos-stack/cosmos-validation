@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cosmos.Collections;
 using Cosmos.Validation.Objects;
 
@@ -10,21 +11,29 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// <typeparam name="TVal"></typeparam>
     internal class ValueNotInToken<TVal> : ValueToken<TVal>
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "GenericValueInToken";
+        private const string Name = "GenericValueInToken";
 
         private readonly ICollection<TVal> _objects;
+        private readonly Func<ICollection<TVal>> _objectsFunc;
 
         /// <inheritdoc />
         public ValueNotInToken(VerifiableMemberContract contract, ICollection<TVal> objects) : base(contract)
         {
             _objects = objects ?? Arrays.Empty<TVal>();
+            _objectsFunc = null;
+        }
+
+        /// <inheritdoc />
+        public ValueNotInToken(VerifiableMemberContract contract, Func<ICollection<TVal>> objectsFunc) : base(contract)
+        {
+            _objects = default;
+            _objectsFunc = objectsFunc;
         }
 
         /// <summary>
         /// Name of verifiable token
         /// </summary>
-        public override string TokenName => NAME;
+        public override string TokenName => Name;
 
         /// <summary>
         /// To mark this Verifiable token as a mutually exclusive token.
@@ -50,7 +59,7 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             var verifyVal = CreateVerifyVal();
 
-            if (_objects.Contains(value))
+            if (!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
             }
@@ -72,12 +81,19 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 
             var verifyVal = CreateVerifyVal();
 
-            if (_objects.Contains(value))
+            if (!IsValidImpl(value))
             {
                 UpdateVal(verifyVal, value);
             }
 
             return verifyVal;
+        }
+
+        private bool IsValidImpl(TVal value)
+        {
+            var coll = _objectsFunc is null ? _objects : _objectsFunc.Invoke();
+
+            return !coll.Contains(value);
         }
 
         private void UpdateVal(CorrectVerifyVal val, object obj)

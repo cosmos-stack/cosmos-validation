@@ -109,6 +109,16 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IPredicateValueRuleBuilder<T> Equal(Func<object> valueFunc, Type valueType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T> Equal(Func<object> valueFunc, Type valueType, IEqualityComparer comparer)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPredicateValueRuleBuilder<T> NotEqual(object value)
         {
             throw new NotImplementedException();
@@ -119,7 +129,22 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IPredicateValueRuleBuilder<T> NotEqual(Func<object> valueFunc, Type valueType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T> NotEqual(Func<object> valueFunc, Type valueType, IEqualityComparer comparer)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPredicateValueRuleBuilder<T> LessThan(object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T> LessThan(Func<object> valueFunc, Type valueType)
         {
             throw new NotImplementedException();
         }
@@ -129,12 +154,27 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IPredicateValueRuleBuilder<T> LessThanOrEqual(Func<object> valueFunc, Type valueType)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPredicateValueRuleBuilder<T> GreaterThan(object value)
         {
             throw new NotImplementedException();
         }
 
+        public IPredicateValueRuleBuilder<T> GreaterThan(Func<object> valueFunc, Type valueType)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPredicateValueRuleBuilder<T> GreaterThanOrEqual(object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T> GreaterThanOrEqual(Func<object> valueFunc, Type valueType)
         {
             throw new NotImplementedException();
         }
@@ -239,12 +279,22 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IPredicateValueRuleBuilder<T> In(Func<ICollection<object>> collectionFunc)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPredicateValueRuleBuilder<T> In(params object[] objects)
         {
             throw new NotImplementedException();
         }
 
         public IPredicateValueRuleBuilder<T> NotIn(ICollection<object> collection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPredicateValueRuleBuilder<T> NotIn(Func<ICollection<object>> collectionFunc)
         {
             throw new NotImplementedException();
         }

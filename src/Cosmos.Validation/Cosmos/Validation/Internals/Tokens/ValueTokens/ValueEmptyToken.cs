@@ -5,6 +5,8 @@ using Cosmos.Validation.Internals.Extensions;
 using Cosmos.Validation.Internals.Tokens.ValueTokens.Basic;
 using Cosmos.Validation.Objects;
 
+// ReSharper disable InconsistentNaming
+
 namespace Cosmos.Validation.Internals.Tokens.ValueTokens
 {
     /// <summary>
@@ -12,14 +14,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueEmptyToken : ValueRequiredBasicToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "EmptyValueToken";
+        private const string Name = "EmptyValueToken";
 
-        // ReSharper disable once InconsistentNaming
-        public static readonly int[] _mutuallyExclusiveFlags = {90115, 90116, 90117, 90118};
+        private static readonly int[] _mutuallyExclusiveFlags = {90115, 90116, 90117, 90118};
 
         /// <inheritdoc />
-        public ValueEmptyToken(VerifiableMemberContract contract) : this(contract, false, NAME, _mutuallyExclusiveFlags) { }
+        public ValueEmptyToken(VerifiableMemberContract contract) : this(contract, false, Name, _mutuallyExclusiveFlags) { }
 
         protected ValueEmptyToken(VerifiableMemberContract contract, bool not, string tokenName, int[] mutuallyExclusiveFlags)
             : base(contract, not, tokenName, mutuallyExclusiveFlags) { }
@@ -47,14 +47,12 @@ namespace Cosmos.Validation.Internals.Tokens.ValueTokens
     /// </summary>
     internal class ValueNotEmptyToken : ValueEmptyToken
     {
-        // ReSharper disable once InconsistentNaming
-        public const string NAME = "ValueNotEmptyToken";
+        private const string Name = "ValueNotEmptyToken";
 
-        // ReSharper disable once InconsistentNaming
-        public static int[] _mutuallyExclusiveFlags = {90118};
+        private static readonly int[] _mutuallyExclusiveFlags = {90118};
 
         /// <inheritdoc />
-        public ValueNotEmptyToken(VerifiableMemberContract contract) : base(contract, true, NAME, _mutuallyExclusiveFlags) { }
+        public ValueNotEmptyToken(VerifiableMemberContract contract) : base(contract, true, Name, _mutuallyExclusiveFlags) { }
 
         protected override string GetDefaultMessageSinceToken(object obj) => "The value is must be not empty.";
     }
