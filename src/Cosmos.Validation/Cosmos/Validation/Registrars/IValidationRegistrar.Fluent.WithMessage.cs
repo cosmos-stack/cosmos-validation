@@ -17,6 +17,13 @@ namespace Cosmos.Validation.Registrars
         IMayTakeEffect
     {
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        IWaitForMessageValidationRegistrar WithName(string operationName);
+        
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -39,6 +46,13 @@ namespace Cosmos.Validation.Registrars
         IMayTempBuild,
         IMayTakeEffect
     {
+        /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        IWaitForMessageValidationRegistrar<T> WithName(string operationName);
+
         /// <summary>
         /// Fill in the message.
         /// </summary>
@@ -63,6 +77,13 @@ namespace Cosmos.Validation.Registrars
         IMayTempBuild,
         IMayTakeEffect
     {
+        /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        IWaitForMessageValidationRegistrar<T, TVal> WithName(string operationName);
+
         /// <summary>
         /// Fill in the message.
         /// </summary>

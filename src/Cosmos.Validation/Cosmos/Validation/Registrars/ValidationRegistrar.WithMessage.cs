@@ -16,6 +16,7 @@ namespace Cosmos.Validation.Registrars
         private readonly ValueValidationRegistrar _registrar;
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
+        private string _name;
 
         public ValidationRegistrarWithMessage(ValueValidationRegistrar registrar, IValidationRegistrar rootRegistrar, Func<object, bool> func)
         {
@@ -34,6 +35,17 @@ namespace Cosmos.Validation.Registrars
         }
 
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public IWaitForMessageValidationRegistrar WithName(string operationName)
+        {
+            _name = operationName;
+            return this;
+        }
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -45,14 +57,14 @@ namespace Cosmos.Validation.Registrars
             if (_predicate is null)
             {
                 realFunc = o => _func.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
             else
             {
                 realFunc = o => _predicate.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
 
             _registrar.Must(realFunc);
@@ -62,12 +74,12 @@ namespace Cosmos.Validation.Registrars
 
         #region Condition
 
-        public new IValueFluentValidationRegistrar And()
+        public IValueFluentValidationRegistrar And()
         {
             return WithMessage(string.Empty).And();
         }
 
-        public new IValueFluentValidationRegistrar Or()
+        public IValueFluentValidationRegistrar Or()
         {
             return WithMessage(string.Empty).Or();
         }
@@ -273,6 +285,7 @@ namespace Cosmos.Validation.Registrars
         private readonly ValueValidationRegistrar<T> _registrar;
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
+        private string _name;
 
         public ValidationRegistrarWithMessage(ValueValidationRegistrar<T> registrar, IValidationRegistrar rootRegistrar, Func<object, bool> func)
         {
@@ -291,6 +304,17 @@ namespace Cosmos.Validation.Registrars
         }
 
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public IWaitForMessageValidationRegistrar<T> WithName(string operationName)
+        {
+            _name = operationName;
+            return this;
+        }
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -302,14 +326,14 @@ namespace Cosmos.Validation.Registrars
             if (_predicate is null)
             {
                 realFunc = o => _func.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
             else
             {
                 realFunc = o => _predicate.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
 
             _registrar.Must(realFunc);
@@ -319,12 +343,12 @@ namespace Cosmos.Validation.Registrars
 
         #region Condition
 
-        public new IValueFluentValidationRegistrar<T> And()
+        public IValueFluentValidationRegistrar<T> And()
         {
             return WithMessage(string.Empty).And();
         }
 
-        public new IValueFluentValidationRegistrar<T> Or()
+        public IValueFluentValidationRegistrar<T> Or()
         {
             return WithMessage(string.Empty).Or();
         }
@@ -536,6 +560,7 @@ namespace Cosmos.Validation.Registrars
         private readonly ValueValidationRegistrar<T, TVal> _registrar;
         private readonly Func<TVal, bool> _func;
         private readonly Predicate<TVal> _predicate;
+        private string _name;
 
         public ValidationRegistrarWithMessage(ValueValidationRegistrar<T, TVal> registrar, IValidationRegistrar rootRegistrar, Func<TVal, bool> func)
         {
@@ -554,6 +579,17 @@ namespace Cosmos.Validation.Registrars
         }
 
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public IWaitForMessageValidationRegistrar<T, TVal> WithName(string operationName)
+        {
+            _name = operationName;
+            return this;
+        }
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -565,14 +601,14 @@ namespace Cosmos.Validation.Registrars
             if (_predicate is null)
             {
                 realFunc = o => _func.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
             else
             {
                 realFunc = o => _predicate.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
 
             _registrar.Must(realFunc);
@@ -582,12 +618,12 @@ namespace Cosmos.Validation.Registrars
 
         #region Condition
 
-        public new IValueFluentValidationRegistrar<T, TVal> And()
+        public IValueFluentValidationRegistrar<T, TVal> And()
         {
             return WithMessage(string.Empty).And();
         }
 
-        public new IValueFluentValidationRegistrar<T, TVal> Or()
+        public IValueFluentValidationRegistrar<T, TVal> Or()
         {
             return WithMessage(string.Empty).Or();
         }

@@ -6,6 +6,13 @@
     public interface IWaitForMessageValueRuleBuilder
     {
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        IWaitForMessageValueRuleBuilder WithName(string operationName);
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -19,6 +26,13 @@
     /// <typeparam name="T"></typeparam>
     public interface IWaitForMessageValueRuleBuilder<T>
     {
+        /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        IWaitForMessageValueRuleBuilder<T> WithName(string operationName);
+
         /// <summary>
         /// Fill in the message.
         /// </summary>
@@ -34,6 +48,13 @@
     /// <typeparam name="TVal"></typeparam>
     public interface IWaitForMessageValueRuleBuilder<T, TVal>
     {
+        /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        IWaitForMessageValueRuleBuilder<T, TVal> WithName(string operationName);
+
         /// <summary>
         /// Fill in the message.
         /// </summary>

@@ -10,6 +10,7 @@ namespace Cosmos.Validation.Internals.Rules
         private readonly CorrectValueRuleBuilder _builder;
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
+        private string _name;
 
         public CorrectWaitForMessageValueRuleBuilder(CorrectValueRuleBuilder builder, Func<object, bool> func)
         {
@@ -26,6 +27,17 @@ namespace Cosmos.Validation.Internals.Rules
         }
 
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public IWaitForMessageValueRuleBuilder WithName(string operationName)
+        {
+            _name = operationName;
+            return this;
+        }
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -37,14 +49,14 @@ namespace Cosmos.Validation.Internals.Rules
             if (_predicate is null)
             {
                 realFunc = o => _func.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
             else
             {
                 realFunc = o => _predicate.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
 
             _builder.Must(realFunc);
@@ -62,6 +74,7 @@ namespace Cosmos.Validation.Internals.Rules
         private readonly CorrectValueRuleBuilder<T> _builder;
         private readonly Func<object, bool> _func;
         private readonly Predicate<object> _predicate;
+        private string _name;
 
         public CorrectWaitForMessageValueRuleBuilder(CorrectValueRuleBuilder<T> builder, Func<object, bool> func)
         {
@@ -78,6 +91,17 @@ namespace Cosmos.Validation.Internals.Rules
         }
 
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public IWaitForMessageValueRuleBuilder<T> WithName(string operationName)
+        {
+            _name = operationName;
+            return this;
+        }
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -89,14 +113,14 @@ namespace Cosmos.Validation.Internals.Rules
             if (_predicate is null)
             {
                 realFunc = o => _func.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
             else
             {
                 realFunc = o => _predicate.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
 
             _builder.Must(realFunc);
@@ -115,6 +139,7 @@ namespace Cosmos.Validation.Internals.Rules
         private readonly CorrectValueRuleBuilder<T, TVal> _builder;
         private readonly Func<TVal, bool> _func;
         private readonly Predicate<TVal> _predicate;
+        private string _name;
 
         public CorrectWaitForMessageValueRuleBuilder(CorrectValueRuleBuilder<T, TVal> builder, Func<TVal, bool> func)
         {
@@ -131,6 +156,17 @@ namespace Cosmos.Validation.Internals.Rules
         }
 
         /// <summary>
+        /// Fill in the operation name.
+        /// </summary>
+        /// <param name="operationName"></param>
+        /// <returns></returns>
+        public IWaitForMessageValueRuleBuilder<T, TVal> WithName(string operationName)
+        {
+            _name = operationName;
+            return this;
+        }
+
+        /// <summary>
         /// Fill in the message.
         /// </summary>
         /// <param name="message"></param>
@@ -142,14 +178,14 @@ namespace Cosmos.Validation.Internals.Rules
             if (_predicate is null)
             {
                 realFunc = o => _func.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
             else
             {
                 realFunc = o => _predicate.Invoke(o)
-                    ? new CustomVerifyResult {VerifyResult = true}
-                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message};
+                    ? new CustomVerifyResult {VerifyResult = true, OperationName = _name}
+                    : new CustomVerifyResult {VerifyResult = false, ErrorMessage = message, OperationName = _name};
             }
 
             _builder.Must(realFunc);

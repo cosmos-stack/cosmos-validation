@@ -14,5 +14,10 @@
         /// Error message
         /// </summary>
         public string ErrorMessage { get; set; }
+        
+        /// <summary>
+        /// Operation name
+        /// </summary>
+        public string OperationName { get; set; }
     }
 }
