@@ -100,6 +100,20 @@
             <returns></returns>
             <exception cref="T:System.ArgumentInvalidException"></exception>
         </member>
+        <member name="M:Cosmos.Validation.Annotations.VerifiableParamsAttribute.IsValid(AspectCore.DynamicProxy.Parameters.Parameter)">
+            <summary>
+            IsValid
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Annotations.VerifiableParamsAttribute.IsValid(Cosmos.Validation.Objects.VerifiableMemberContext)">
+            <summary>
+            IsValid
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.Annotations.VerifiableParamsAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
             <summary>
             Invoke internal impl
@@ -2476,7 +2490,7 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredBooleanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,Cosmos.Reflection.TypeIsOptions)">
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredBooleanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract)">
             <inheritdoc />
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredDateInfoToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Globalization.DateTimeStyles)">
@@ -2485,7 +2499,7 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredDateTimeToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Globalization.DateTimeStyles)">
             <inheritdoc />
         </member>
-        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredGuidToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,Cosmos.Reflection.TypeIsOptions)">
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredGuidToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract)">
             <inheritdoc />
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueRequiredNumericToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,Cosmos.Reflection.TypeIsOptions)">
