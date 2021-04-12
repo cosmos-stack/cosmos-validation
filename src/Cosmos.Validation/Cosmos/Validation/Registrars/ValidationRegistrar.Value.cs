@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Cosmos.Validation.Internals.Rules;
@@ -39,6 +38,8 @@ namespace Cosmos.Validation.Registrars
         private CorrectValueRuleBuilder ValueRuleBuilder { get; set; }
 
         internal CorrectValueRuleBuilder ExposeValueRuleBuilder() => ValueRuleBuilder;
+
+        internal IValidationRegistrar ExposeRoot() => _rootRegistrar;
 
         #endregion
 
@@ -101,86 +102,7 @@ namespace Cosmos.Validation.Registrars
         #endregion
 
         #region ValueRules
-
-        public IPredicateValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval)
-        {
-            ValueRuleBuilder.Range(from, to, options);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar RangeWithOpenInterval(object from, object to)
-        {
-            ValueRuleBuilder.RangeWithOpenInterval(from, to);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar RangeWithCloseInterval(object from, object to)
-        {
-            ValueRuleBuilder.RangeWithCloseInterval(from, to);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar Length(int min, int max)
-        {
-            ValueRuleBuilder.Length(min, max);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar MinLength(int min)
-        {
-            ValueRuleBuilder.MinLength(min);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar MaxLength(int max)
-        {
-            ValueRuleBuilder.MaxLength(max);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar AtLeast(int count)
-        {
-            ValueRuleBuilder.AtLeast(count);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar Func(Func<object, CustomVerifyResult> func)
-        {
-            ValueRuleBuilder.Func(func);
-            return this;
-        }
-
-        public IWaitForMessageValidationRegistrar Func(Func<object, bool> func)
-        {
-            return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
-        }
-
-        public IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate)
-        {
-            return new ValidationRegistrarWithMessage(this, _rootRegistrar, predicate);
-        }
-
-        public IPredicateValidationRegistrar Must(Func<object, CustomVerifyResult> func)
-        {
-            ValueRuleBuilder.Must(func);
-            return this;
-        }
-
-        public IWaitForMessageValidationRegistrar Must(Func<object, bool> func)
-        {
-            return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
-        }
-
-        public IWaitForMessageValidationRegistrar Satisfies(Func<object, bool> func)
-        {
-            return new ValidationRegistrarWithMessage(this, _rootRegistrar, func);
-        }
-
-        public IPredicateValidationRegistrar Satisfies(Func<object, bool> func, string message)
-        {
-            return Satisfies(func).WithMessage(message);
-        }
-
+        
         public IPredicateValidationRegistrar InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);
@@ -204,20 +126,7 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder.IsEnumName<TEnum>(caseSensitive);
             return this;
         }
-
-        /// <summary>
-        /// Limit the scale and precision of the value.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="precision"></param>
-        /// <param name="ignoreTrailingZeros"></param>
-        /// <returns></returns>
-        public IPredicateValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
-        {
-            ValueRuleBuilder.ScalePrecision(scale, precision, ignoreTrailingZeros);
-            return this;
-        }
-
+        
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>

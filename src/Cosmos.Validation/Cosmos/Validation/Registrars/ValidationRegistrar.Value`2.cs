@@ -85,86 +85,7 @@ namespace Cosmos.Validation.Registrars
         #endregion
 
         #region ValueRules`2
-
-        public IPredicateValidationRegistrar<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval)
-        {
-            ValueRuleBuilder.Range(from, to, options);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar<T, TVal> RangeWithOpenInterval(TVal from, TVal to)
-        {
-            ValueRuleBuilder.RangeWithOpenInterval(from, to);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar<T, TVal> RangeWithCloseInterval(TVal from, TVal to)
-        {
-            ValueRuleBuilder.RangeWithCloseInterval(from, to);
-            return this;
-        }
-
-        public new IPredicateValidationRegistrar<T, TVal> Length(int min, int max)
-        {
-            ValueRuleBuilder.Length(min, max);
-            return this;
-        }
-
-        public new IPredicateValidationRegistrar<T, TVal> MinLength(int min)
-        {
-            ValueRuleBuilder.MinLength(min);
-            return this;
-        }
-
-        public new IPredicateValidationRegistrar<T, TVal> MaxLength(int max)
-        {
-            ValueRuleBuilder.MaxLength(max);
-            return this;
-        }
-
-        public new IPredicateValidationRegistrar<T, TVal> AtLeast(int count)
-        {
-            ValueRuleBuilder.AtLeast(count);
-            return this;
-        }
-
-        public IPredicateValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func)
-        {
-            ValueRuleBuilderPtr.Func(func);
-            return this;
-        }
-
-        public IWaitForMessageValidationRegistrar<T, TVal> Func(Func<TVal, bool> func)
-        {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
-        }
-
-        public IWaitForMessageValidationRegistrar<T, TVal> Predicate(Predicate<TVal> predicate)
-        {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, predicate);
-        }
-
-        public IPredicateValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func)
-        {
-            ValueRuleBuilderPtr.Must(func);
-            return this;
-        }
-
-        public IWaitForMessageValidationRegistrar<T, TVal> Must(Func<TVal, bool> func)
-        {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
-        }
-
-        public IWaitForMessageValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func)
-        {
-            return new ValidationRegistrarWithMessage<T, TVal>(this, _rootRegistrar, func);
-        }
-
-        public IPredicateValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func, string message)
-        {
-            return Satisfies(func).WithMessage(message);
-        }
-
+        
         public new IPredicateValidationRegistrar<T, TVal> InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);
@@ -186,19 +107,6 @@ namespace Cosmos.Validation.Registrars
         public new IPredicateValidationRegistrar<T, TVal> IsEnumName<TEnum>(bool caseSensitive)
         {
             ValueRuleBuilder.IsEnumName<TEnum>(caseSensitive);
-            return this;
-        }
-
-        /// <summary>
-        /// Limit the scale and precision of the value.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="precision"></param>
-        /// <param name="ignoreTrailingZeros"></param>
-        /// <returns></returns>
-        public new IPredicateValidationRegistrar<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false)
-        {
-            ValueRuleBuilder.ScalePrecision(scale, precision, ignoreTrailingZeros);
             return this;
         }
 

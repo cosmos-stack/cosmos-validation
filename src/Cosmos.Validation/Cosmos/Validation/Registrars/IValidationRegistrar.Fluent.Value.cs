@@ -16,33 +16,14 @@ namespace Cosmos.Validation.Registrars
         Type DeclaringType { get; }
         Type MemberType { get; }
         IValueFluentValidationRegistrar WithConfig(Func<IValueRuleBuilder, IValueRuleBuilder> func);
-        IPredicateValidationRegistrar Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
-        IPredicateValidationRegistrar RangeWithOpenInterval(object from, object to);
-        IPredicateValidationRegistrar RangeWithCloseInterval(object from, object to);
-        IPredicateValidationRegistrar Length(int min, int max);
-        IPredicateValidationRegistrar MinLength(int min);
-        IPredicateValidationRegistrar MaxLength(int max);
-        IPredicateValidationRegistrar AtLeast(int count);
-        IPredicateValidationRegistrar Func(Func<object, CustomVerifyResult> func);
-        IWaitForMessageValidationRegistrar Func(Func<object, bool> func);
-        IWaitForMessageValidationRegistrar Predicate(Predicate<object> predicate);
-        IPredicateValidationRegistrar Must(Func<object, CustomVerifyResult> func);
-        IWaitForMessageValidationRegistrar Must(Func<object, bool> func);
-        IWaitForMessageValidationRegistrar Satisfies(Func<object, bool> func);
-        IPredicateValidationRegistrar Satisfies(Func<object, bool> func, string message);
+        
         IPredicateValidationRegistrar InEnum(Type enumType);
+        
         IPredicateValidationRegistrar InEnum<TEnum>();
+        
         IPredicateValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
+        
         IPredicateValidationRegistrar IsEnumName<TEnum>(bool caseSensitive);
-
-        /// <summary>
-        /// Limit the scale and precision of the value.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="precision"></param>
-        /// <param name="ignoreTrailingZeros"></param>
-        /// <returns></returns>
-        IPredicateValidationRegistrar ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -291,34 +272,6 @@ namespace Cosmos.Validation.Registrars
         Type MemberType { get; }
         IValueFluentValidationRegistrar<T> WithConfig(Func<IValueRuleBuilder<T>, IValueRuleBuilder<T>> func);
 
-        IPredicateValidationRegistrar<T> Range(object from, object to, RangeOptions options = RangeOptions.OpenInterval);
-
-        IPredicateValidationRegistrar<T> RangeWithOpenInterval(object from, object to);
-
-        IPredicateValidationRegistrar<T> RangeWithCloseInterval(object from, object to);
-
-        IPredicateValidationRegistrar<T> Length(int min, int max);
-
-        IPredicateValidationRegistrar<T> MinLength(int min);
-
-        IPredicateValidationRegistrar<T> MaxLength(int max);
-
-        IPredicateValidationRegistrar<T> AtLeast(int count);
-
-        IPredicateValidationRegistrar<T> Func(Func<object, CustomVerifyResult> func);
-
-        IWaitForMessageValidationRegistrar<T> Func(Func<object, bool> func);
-
-        IWaitForMessageValidationRegistrar<T> Predicate(Predicate<object> predicate);
-
-        IPredicateValidationRegistrar<T> Must(Func<object, CustomVerifyResult> func);
-
-        IWaitForMessageValidationRegistrar<T> Must(Func<object, bool> func);
-
-        IWaitForMessageValidationRegistrar<T> Satisfies(Func<object, bool> func);
-
-        IPredicateValidationRegistrar<T> Satisfies(Func<object, bool> func, string message);
-
         IPredicateValidationRegistrar<T> InEnum(Type enumType);
 
         IPredicateValidationRegistrar<T> InEnum<TEnum>();
@@ -326,15 +279,6 @@ namespace Cosmos.Validation.Registrars
         IPredicateValidationRegistrar<T> IsEnumName(Type enumType, bool caseSensitive);
 
         IPredicateValidationRegistrar<T> IsEnumName<TEnum>(bool caseSensitive);
-
-        /// <summary>
-        /// Limit the scale and precision of the value.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="precision"></param>
-        /// <param name="ignoreTrailingZeros"></param>
-        /// <returns></returns>
-        IPredicateValidationRegistrar<T> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -571,41 +515,13 @@ namespace Cosmos.Validation.Registrars
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>,
-        IMayUseRuleConditions<T, TVal> 
+        IMayUseRuleConditions<T, TVal>
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
 
         new IValueFluentValidationRegistrar<T, TVal> And();
 
         new IValueFluentValidationRegistrar<T, TVal> Or();
-
-        IPredicateValidationRegistrar<T, TVal> Range(TVal from, TVal to, RangeOptions options = RangeOptions.OpenInterval);
-
-        IPredicateValidationRegistrar<T, TVal> RangeWithOpenInterval(TVal from, TVal to);
-
-        IPredicateValidationRegistrar<T, TVal> RangeWithCloseInterval(TVal from, TVal to);
-
-        new IPredicateValidationRegistrar<T, TVal> Length(int min, int max);
-
-        new IPredicateValidationRegistrar<T, TVal> MinLength(int min);
-
-        new IPredicateValidationRegistrar<T, TVal> MaxLength(int max);
-
-        new IPredicateValidationRegistrar<T, TVal> AtLeast(int count);
-
-        IPredicateValidationRegistrar<T, TVal> Func(Func<TVal, CustomVerifyResult> func);
-
-        IWaitForMessageValidationRegistrar<T, TVal> Func(Func<TVal, bool> func);
-
-        IWaitForMessageValidationRegistrar<T, TVal> Predicate(Predicate<TVal> predicate);
-
-        IPredicateValidationRegistrar<T, TVal> Must(Func<TVal, CustomVerifyResult> func);
-
-        IWaitForMessageValidationRegistrar<T, TVal> Must(Func<TVal, bool> func);
-
-        IWaitForMessageValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func);
-
-        IPredicateValidationRegistrar<T, TVal> Satisfies(Func<TVal, bool> func, string message);
 
         new IPredicateValidationRegistrar<T, TVal> InEnum(Type enumType);
 
@@ -614,15 +530,6 @@ namespace Cosmos.Validation.Registrars
         new IPredicateValidationRegistrar<T, TVal> IsEnumName(Type enumType, bool caseSensitive);
 
         new IPredicateValidationRegistrar<T, TVal> IsEnumName<TEnum>(bool caseSensitive);
-
-        /// <summary>
-        /// Limit the scale and precision of the value.
-        /// </summary>
-        /// <param name="scale"></param>
-        /// <param name="precision"></param>
-        /// <param name="ignoreTrailingZeros"></param>
-        /// <returns></returns>
-        new IPredicateValidationRegistrar<T, TVal> ScalePrecision(int scale, int precision, bool ignoreTrailingZeros = false);
 
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
