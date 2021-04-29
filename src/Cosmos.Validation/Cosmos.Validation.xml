@@ -138,6 +138,11 @@
             Error message
             </summary>
         </member>
+        <member name="P:Cosmos.Validation.CustomVerifyResult.OperationName">
+            <summary>
+            Operation name
+            </summary>
+        </member>
         <member name="M:Cosmos.Validation.Internals.Conditions.ConditionOpsHelper.IsHigherPriority(Cosmos.Validation.Internals.Conditions.ConditionOps,Cosmos.Validation.Internals.Conditions.ConditionOps)">
             <summary>
             如果 Right 的优先级高于 Left，
@@ -416,46 +421,17 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredString">
-            <summary>
-            The constraint type must be of string type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
-            <summary>
-            The constraint type must be of numeric type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredBoolean">
-            <summary>
-            The constraint type must be of boolean type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredGuid">
-            <summary>
-            The constraint type must be of Guid type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredDateTime(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateTime type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder.RequiredDateInfo(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateInfo type.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder">
             <summary>
             The lower-level interface of ValueRuleBuilder. Used to wait for verification information.
             </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder.WithMessage(System.String)">
             <summary>
@@ -470,6 +446,13 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder`1.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder`1.WithMessage(System.String)">
             <summary>
             Fill in the message.
@@ -483,6 +466,13 @@
             </summary>
             <typeparam name="T"></typeparam>
             <typeparam name="TVal"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder`2.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Internals.Rules.CorrectWaitForMessageValueRuleBuilder`2.WithMessage(System.String)">
             <summary>
@@ -746,42 +736,6 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredString">
-            <summary>
-            The constraint type must be of string type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
-            <summary>
-            The constraint type must be of numeric type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredBoolean">
-            <summary>
-            The constraint type must be of boolean type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredGuid">
-            <summary>
-            The constraint type must be of Guid type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredDateTime(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateTime type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`1.RequiredDateInfo(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateInfo type.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
             <summary>
             Limit the scale and precision of the value.
@@ -1035,42 +989,6 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredString">
-            <summary>
-            The constraint type must be of string type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
-            <summary>
-            The constraint type must be of numeric type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredBoolean">
-            <summary>
-            The constraint type must be of boolean type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredGuid">
-            <summary>
-            The constraint type must be of Guid type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredDateTime(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateTime type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Internals.Rules.CorrectValueRuleBuilder`2.RequiredDateInfo(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateInfo type.
-            </summary>
             <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.GroupedValueToken">
@@ -1491,6 +1409,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.Basic.ValueCompareBasicToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.Basic.ValueCompareBasicToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type,System.String)">
+            <inheritdoc />
+        </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.Basic.ValueCompareBasicToken.TokenName">
             <summary>
             Name of verifiable token
@@ -1736,6 +1657,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object,System.Collections.IEqualityComparer)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <inheritdoc />
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueEqualToken`1">
             <summary>
             Equal token, a generic version.
@@ -1743,6 +1667,9 @@
             <typeparam name="TVal"></typeparam>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,`0,System.Collections.Generic.IEqualityComparer{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{`0},System.Collections.Generic.IEqualityComparer{`0})">
             <inheritdoc />
         </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotEqualToken">
@@ -1753,6 +1680,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object,System.Collections.IEqualityComparer)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <inheritdoc />
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotEqualToken`1">
             <summary>
             Not equal token, a generic version.
@@ -1760,6 +1690,9 @@
             <typeparam name="TVal"></typeparam>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,`0,System.Collections.Generic.IEqualityComparer{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{`0},System.Collections.Generic.IEqualityComparer{`0})">
             <inheritdoc />
         </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueFuncToken">
@@ -1845,6 +1778,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanOrEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanOrEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type)">
+            <inheritdoc />
+        </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanOrEqualToken.IsValidImpl(System.Object,System.Object,System.Type,System.String@)">
             <summary>
             Impl of valid ops.
@@ -1858,12 +1794,21 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanOrEqualToken.UpdateVal(Cosmos.Validation.Internals.CorrectVerifyVal,System.Object,System.Object,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanOrEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanOrEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{`0})">
+            <inheritdoc />
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken">
             <summary>
             Greater than token
             </summary>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type)">
             <inheritdoc />
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken.IsValidImpl(System.Object,System.Object,System.Type,System.String@)">
@@ -1879,12 +1824,21 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken.UpdateVal(Cosmos.Validation.Internals.CorrectVerifyVal,System.Object,System.Object,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueGreaterThanToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{`0})">
+            <inheritdoc />
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken">
             <summary>
             In token
             </summary>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Collections.Generic.ICollection{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Collections.Generic.ICollection{System.Object}})">
             <inheritdoc />
         </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken.TokenName">
@@ -1925,6 +1879,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Collections.Generic.ICollection{`0})">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Collections.Generic.ICollection{`0}})">
+            <inheritdoc />
+        </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken`1.TokenName">
             <summary>
             Name of verifiable token
@@ -1962,6 +1919,9 @@
             <typeparam name="TItem"></typeparam>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken`2.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Collections.Generic.ICollection{`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken`2.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Collections.Generic.ICollection{`1}})">
             <inheritdoc />
         </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueInToken`2.TokenName">
@@ -2038,6 +1998,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanOrEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanOrEqualToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type)">
+            <inheritdoc />
+        </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanOrEqualToken.IsValidImpl(System.Object,System.Object,System.Type,System.String@)">
             <summary>
             Impl of valid ops.
@@ -2051,12 +2014,21 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanOrEqualToken.UpdateVal(Cosmos.Validation.Internals.CorrectVerifyVal,System.Object,System.Object,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanOrEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanOrEqualToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{`0})">
+            <inheritdoc />
+        </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken">
             <summary>
             Less than token
             </summary>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Object},System.Type)">
             <inheritdoc />
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken.IsValidImpl(System.Object,System.Object,System.Type,System.String@)">
@@ -2070,6 +2042,12 @@
             <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken.UpdateVal(Cosmos.Validation.Internals.CorrectVerifyVal,System.Object,System.Object,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueLessThanToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{`0})">
             <inheritdoc />
         </member>
         <member name="T:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueMaxLengthLimitedToken">
@@ -2188,6 +2166,9 @@
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Collections.Generic.ICollection{System.Object})">
             <inheritdoc />
         </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Collections.Generic.ICollection{System.Object}})">
+            <inheritdoc />
+        </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken.TokenName">
             <summary>
             Name of verifiable token
@@ -2224,6 +2205,9 @@
             <typeparam name="TVal"></typeparam>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Collections.Generic.ICollection{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken`1.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Collections.Generic.ICollection{`0}})">
             <inheritdoc />
         </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken`1.TokenName">
@@ -2263,6 +2247,9 @@
             <typeparam name="TItem"></typeparam>
         </member>
         <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken`2.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Collections.Generic.ICollection{`1})">
+            <inheritdoc />
+        </member>
+        <member name="M:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken`2.#ctor(Cosmos.Validation.Objects.VerifiableMemberContract,System.Func{System.Collections.Generic.ICollection{`1}})">
             <inheritdoc />
         </member>
         <member name="P:Cosmos.Validation.Internals.Tokens.ValueTokens.ValueNotInToken`2.TokenName">
@@ -2690,6 +2677,957 @@
             </summary>
             <param name="optionAct"></param>
         </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Any``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
+            <summary>
+            Any
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Any``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
+            <summary>
+            Any
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.All``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
+            <summary>
+            All
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.All``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
+            <summary>
+            All
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotAny``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
+            <summary>
+            Not any
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotAny``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
+            <summary>
+            Not any
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotAll``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
+            <summary>
+            Not all
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotAll``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
+            <summary>
+            Not all
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.None``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
+            <summary>
+            None
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.None``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
+            <summary>
+            None
+            </summary>
+            <param name="builder"></param>
+            <param name="func"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In(Cosmos.Validation.IValueRuleBuilder,System.Collections.Generic.ICollection{System.Object})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Collections.Generic.ICollection{System.Object}})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In(Cosmos.Validation.IValueRuleBuilder,System.Object[])">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Collections.Generic.ICollection{System.Object})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Collections.Generic.ICollection{System.Object}})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object[])">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Collections.Generic.ICollection{``1})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1[])">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Collections.Generic.ICollection{``2})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{System.Collections.Generic.ICollection{``2}})">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.In``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},``2[])">
+            <summary>
+            Determine whether the value is included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn(Cosmos.Validation.IValueRuleBuilder,System.Collections.Generic.ICollection{System.Object})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Collections.Generic.ICollection{System.Object}})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn(Cosmos.Validation.IValueRuleBuilder,System.Object[])">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Collections.Generic.ICollection{System.Object}})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Collections.Generic.ICollection{System.Object})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object[])">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Collections.Generic.ICollection{``1})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1[])">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{System.Collections.Generic.ICollection{``2}})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collectionFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Collections.Generic.ICollection{``2})">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="collection"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotIn``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},``2[])">
+            <summary>
+            Determine whether the value is not included in the given set.
+            </summary>
+            <param name="builder"></param>
+            <param name="objects"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TItem"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal(Cosmos.Validation.IValueRuleBuilder,System.Object)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal(Cosmos.Validation.IValueRuleBuilder,System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual(Cosmos.Validation.IValueRuleBuilder,System.Object)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual(Cosmos.Validation.IValueRuleBuilder,System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1,System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.Equal``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1},System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1,System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.NotEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1},System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThan(Cosmos.Validation.IValueRuleBuilder,System.Object)">
+            <summary>
+            Determine whether one value is less than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThan(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is less than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThanOrEqual(Cosmos.Validation.IValueRuleBuilder,System.Object)">
+            <summary>
+            Determine whether one value is less than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThanOrEqual(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is less than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThan(Cosmos.Validation.IValueRuleBuilder,System.Object)">
+            <summary>
+            Determine whether one value is greater than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThan(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is greater than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThanOrEqual(Cosmos.Validation.IValueRuleBuilder,System.Object)">
+            <summary>
+            Determine whether one value is greater than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThanOrEqual(Cosmos.Validation.IValueRuleBuilder,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is greater than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThan``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object)">
+            <summary>
+            Determine whether one value is less than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThan``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is less than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThanOrEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object)">
+            <summary>
+            Determine whether one value is less than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThanOrEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is less than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThan``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object)">
+            <summary>
+            Determine whether one value is greater than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThan``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is greater than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThanOrEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Object)">
+            <summary>
+            Determine whether one value is greater than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThanOrEqual``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether one value is greater than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThan``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1)">
+            <summary>
+            Determine whether one value is less than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThan``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether one value is less than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThanOrEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1)">
+            <summary>
+            Determine whether one value is less than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.LessThanOrEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether one value is less than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThan``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1)">
+            <summary>
+            Determine whether one value is greater than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThan``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether one value is greater than another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThanOrEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},``1)">
+            <summary>
+            Determine whether one value is greater than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.GreaterThanOrEqual``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether one value is greater than or equal to another value.
+            </summary>
+            <param name="builder"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredString(Cosmos.Validation.IValueRuleBuilder)">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredNumeric(Cosmos.Validation.IValueRuleBuilder,Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredBoolean(Cosmos.Validation.IValueRuleBuilder)">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredGuid(Cosmos.Validation.IValueRuleBuilder)">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredDateTime(Cosmos.Validation.IValueRuleBuilder,System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredDateInfo(Cosmos.Validation.IValueRuleBuilder,System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredString``1(Cosmos.Validation.IValueRuleBuilder{``0})">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredNumeric``1(Cosmos.Validation.IValueRuleBuilder{``0},Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredBoolean``1(Cosmos.Validation.IValueRuleBuilder{``0})">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredGuid``1(Cosmos.Validation.IValueRuleBuilder{``0})">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredDateTime``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredDateInfo``1(Cosmos.Validation.IValueRuleBuilder{``0},System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredString``2(Cosmos.Validation.IValueRuleBuilder{``0,``1})">
+            <summary>
+            The constraint type must be of string type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredNumeric``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},Cosmos.Reflection.TypeIsOptions)">
+            <summary>
+            The constraint type must be of numeric type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredBoolean``2(Cosmos.Validation.IValueRuleBuilder{``0,``1})">
+            <summary>
+            The constraint type must be of boolean type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredGuid``2(Cosmos.Validation.IValueRuleBuilder{``0,``1})">
+            <summary>
+            The constraint type must be of Guid type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredDateTime``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateTime type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.RequiredDateInfo``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Globalization.DateTimeStyles)">
+            <summary>
+            The constraint type must be of DateInfo type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.WithMessage(Cosmos.Validation.IValueRuleBuilder,System.String)">
+            <summary>
+            Fill in the message.
+            </summary>
+            <param name="builder"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.WithMessage(Cosmos.Validation.IValueRuleBuilder,System.String,System.Boolean)">
+            <summary>
+            Fill in the message.
+            </summary>
+            <param name="builder"></param>
+            <param name="message"></param>
+            <param name="appendOrOverwrite"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.WithMessage``1(Cosmos.Validation.IValueRuleBuilder{``0},System.String)">
+            <summary>
+            Fill in the message.
+            </summary>
+            <param name="builder"></param>
+            <param name="message"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.WithMessage``1(Cosmos.Validation.IValueRuleBuilder{``0},System.String,System.Boolean)">
+            <summary>
+            Fill in the message.
+            </summary>
+            <param name="builder"></param>
+            <param name="message"></param>
+            <param name="appendOrOverwrite"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.WithMessage``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.String)">
+            <summary>
+            Fill in the message.
+            </summary>
+            <param name="builder"></param>
+            <param name="message"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.CorrectValueRuleExtensions.WithMessage``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.String,System.Boolean)">
+            <summary>
+            Fill in the message.
+            </summary>
+            <param name="builder"></param>
+            <param name="message"></param>
+            <param name="appendOrOverwrite"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
         <member name="T:Cosmos.Validation.IValidationProvider">
             <summary>
             An interface of validation provider
@@ -3015,42 +3953,6 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredString">
-            <summary>
-            The constraint type must be of string type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
-            <summary>
-            The constraint type must be of numeric type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredBoolean">
-            <summary>
-            The constraint type must be of boolean type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredGuid">
-            <summary>
-            The constraint type must be of Guid type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredDateTime(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateTime type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder.RequiredDateInfo(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateInfo type.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:Cosmos.Validation.IValueRuleBuilder`1">
             <summary>
             Interface of ValueRuleBuilder
@@ -3310,42 +4212,6 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredString">
-            <summary>
-            The constraint type must be of string type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
-            <summary>
-            The constraint type must be of numeric type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredBoolean">
-            <summary>
-            The constraint type must be of boolean type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredGuid">
-            <summary>
-            The constraint type must be of Guid type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredDateTime(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateTime type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`1.RequiredDateInfo(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateInfo type.
-            </summary>
             <returns></returns>
         </member>
         <member name="T:Cosmos.Validation.IValueRuleBuilder`2">
@@ -3610,257 +4476,17 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredString">
-            <summary>
-            The constraint type must be of string type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredNumeric(Cosmos.Reflection.TypeIsOptions)">
-            <summary>
-            The constraint type must be of numeric type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredBoolean">
-            <summary>
-            The constraint type must be of boolean type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredGuid">
-            <summary>
-            The constraint type must be of Guid type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredDateTime(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateTime type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.IValueRuleBuilder`2.RequiredDateInfo(System.Globalization.DateTimeStyles)">
-            <summary>
-            The constraint type must be of DateInfo type.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Cosmos.Validation.ValueRuleBuilderExtensions">
-            <summary>
-            Extensions for ValueRuleBuilder
-            </summary>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.Any``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
-            <summary>
-            Any
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.Any``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
-            <summary>
-            Any
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.All``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
-            <summary>
-            All
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.All``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
-            <summary>
-            All
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.NotAny``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
-            <summary>
-            Not any
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.NotAny``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
-            <summary>
-            Not any
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.NotAll``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
-            <summary>
-            Not all
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.NotAll``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
-            <summary>
-            Not all
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.None``2(Cosmos.Validation.IValueRuleBuilder{``0,``1[]},System.Func{``1,System.Boolean})">
-            <summary>
-            None
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.None``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Func{``2,System.Boolean})">
-            <summary>
-            None
-            </summary>
-            <param name="builder"></param>
-            <param name="func"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.In``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Collections.Generic.ICollection{``2})">
-            <summary>
-            In
-            </summary>
-            <param name="builder"></param>
-            <param name="collection"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.In``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},``2[])">
-            <summary>
-            In
-            </summary>
-            <param name="builder"></param>
-            <param name="objects"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.NotIn``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.Collections.Generic.ICollection{``2})">
-            <summary>
-            Not in
-            </summary>
-            <param name="builder"></param>
-            <param name="collection"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.NotIn``3(Cosmos.Validation.IValueRuleBuilder{``0,``1},``2[])">
-            <summary>
-            Not in
-            </summary>
-            <param name="builder"></param>
-            <param name="objects"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <typeparam name="TItem"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.WithMessage(Cosmos.Validation.IValueRuleBuilder,System.String)">
-            <summary>
-            Fill in the message.
-            </summary>
-            <param name="builder"></param>
-            <param name="message"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.WithMessage(Cosmos.Validation.IValueRuleBuilder,System.String,System.Boolean)">
-            <summary>
-            Fill in the message.
-            </summary>
-            <param name="builder"></param>
-            <param name="message"></param>
-            <param name="appendOrOverwrite"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.WithMessage``1(Cosmos.Validation.IValueRuleBuilder{``0},System.String)">
-            <summary>
-            Fill in the message.
-            </summary>
-            <param name="builder"></param>
-            <param name="message"></param>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.WithMessage``1(Cosmos.Validation.IValueRuleBuilder{``0},System.String,System.Boolean)">
-            <summary>
-            Fill in the message.
-            </summary>
-            <param name="builder"></param>
-            <param name="message"></param>
-            <param name="appendOrOverwrite"></param>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.WithMessage``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.String)">
-            <summary>
-            Fill in the message.
-            </summary>
-            <param name="builder"></param>
-            <param name="message"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.ValueRuleBuilderExtensions.WithMessage``2(Cosmos.Validation.IValueRuleBuilder{``0,``1},System.String,System.Boolean)">
-            <summary>
-            Fill in the message.
-            </summary>
-            <param name="builder"></param>
-            <param name="message"></param>
-            <param name="appendOrOverwrite"></param>
-            <typeparam name="T"></typeparam>
-            <typeparam name="TVal"></typeparam>
-            <returns></returns>
-        </member>
         <member name="T:Cosmos.Validation.IWaitForMessageValueRuleBuilder">
             <summary>
             The lower-level interface of ValueRuleBuilder. Used to wait for verification information.
             </summary>
+        </member>
+        <member name="M:Cosmos.Validation.IWaitForMessageValueRuleBuilder.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.IWaitForMessageValueRuleBuilder.WithMessage(System.String)">
             <summary>
@@ -3875,6 +4501,13 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="M:Cosmos.Validation.IWaitForMessageValueRuleBuilder`1.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.IWaitForMessageValueRuleBuilder`1.WithMessage(System.String)">
             <summary>
             Fill in the message.
@@ -3888,6 +4521,13 @@
             </summary>
             <typeparam name="T"></typeparam>
             <typeparam name="TVal"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.IWaitForMessageValueRuleBuilder`2.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.IWaitForMessageValueRuleBuilder`2.WithMessage(System.String)">
             <summary>
@@ -3932,15 +4572,6 @@
             Close interval <br />
             闭区间
             </summary>
-        </member>
-        <member name="M:Cosmos.Validation.Registrars.IValueFluentValidationRegistrar.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Limit the scale and precision of the value.
-            </summary>
-            <param name="scale"></param>
-            <param name="precision"></param>
-            <param name="ignoreTrailingZeros"></param>
-            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.IValueFluentValidationRegistrar.RequiredTypes``1">
             <summary>
@@ -4174,15 +4805,6 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Registrars.IValueFluentValidationRegistrar`1.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Limit the scale and precision of the value.
-            </summary>
-            <param name="scale"></param>
-            <param name="precision"></param>
-            <param name="ignoreTrailingZeros"></param>
-            <returns></returns>
-        </member>
         <member name="M:Cosmos.Validation.Registrars.IValueFluentValidationRegistrar`1.RequiredTypes``1">
             <summary>
             To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -4413,15 +5035,6 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Registrars.IValueFluentValidationRegistrar`2.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Limit the scale and precision of the value.
-            </summary>
-            <param name="scale"></param>
-            <param name="precision"></param>
-            <param name="ignoreTrailingZeros"></param>
             <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.IValueFluentValidationRegistrar`2.RequiredTypes``1">
@@ -4661,6 +5274,13 @@
             The lower-level interface of ValidationRegistrar. Used to wait for verification information.
             </summary>
         </member>
+        <member name="M:Cosmos.Validation.Registrars.IWaitForMessageValidationRegistrar.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.Registrars.IWaitForMessageValidationRegistrar.WithMessage(System.String)">
             <summary>
             Fill in the message.
@@ -4673,6 +5293,13 @@
             The lower-level interface of ValidationRegistrar. Used to wait for verification information.
             </summary>
             <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.IWaitForMessageValidationRegistrar`1.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.IWaitForMessageValidationRegistrar`1.WithMessage(System.String)">
             <summary>
@@ -4688,11 +5315,254 @@
             <typeparam name="T"></typeparam>
             <typeparam name="TVal"></typeparam>
         </member>
+        <member name="M:Cosmos.Validation.Registrars.IWaitForMessageValidationRegistrar`2.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.Registrars.IWaitForMessageValidationRegistrar`2.WithMessage(System.String)">
             <summary>
             Fill in the message.
             </summary>
             <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Object)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Object)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Object)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Object)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Object,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Func{System.Object},System.Type)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Func{System.Object},System.Type,System.Collections.IEqualityComparer)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="valueType"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},``1)">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},``1,System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.Equal``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},System.Func{``1},System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},``1)">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},``1,System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="value"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},System.Func{``1})">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.CompareRegistrarExtensions.NotEqual``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},System.Func{``1},System.Collections.Generic.IEqualityComparer{``1})">
+            <summary>
+            Determine whether the two values are not equal.
+            </summary>
+            <param name="registrar"></param>
+            <param name="valueFunc"></param>
+            <param name="comparer"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
             <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.RequiredRegistrarExtensions.RequiredType(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Type)">
@@ -4739,10 +5609,31 @@
             <typeparam name="TVal"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Registrars.ValueValidationRegistrar.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
+        <member name="M:Cosmos.Validation.Registrars.ScaleRegistrarExtensions.ScalePrecision(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar,System.Int32,System.Int32,System.Boolean)">
             <summary>
             Limit the scale and precision of the value.
             </summary>
+            <param name="registrar"></param>
+            <param name="scale"></param>
+            <param name="precision"></param>
+            <param name="ignoreTrailingZeros"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.ScaleRegistrarExtensions.ScalePrecision``1(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Limit the scale and precision of the value.
+            </summary>
+            <param name="registrar"></param>
+            <param name="scale"></param>
+            <param name="precision"></param>
+            <param name="ignoreTrailingZeros"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.ScaleRegistrarExtensions.ScalePrecision``2(Cosmos.Validation.Registrars.IValueFluentValidationRegistrar{``0,``1},System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Limit the scale and precision of the value.
+            </summary>
+            <param name="registrar"></param>
             <param name="scale"></param>
             <param name="precision"></param>
             <param name="ignoreTrailingZeros"></param>
@@ -4980,15 +5871,6 @@
             <typeparam name="T16"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Cosmos.Validation.Registrars.ValueValidationRegistrar`1.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Limit the scale and precision of the value.
-            </summary>
-            <param name="scale"></param>
-            <param name="precision"></param>
-            <param name="ignoreTrailingZeros"></param>
-            <returns></returns>
-        </member>
         <member name="M:Cosmos.Validation.Registrars.ValueValidationRegistrar`1.RequiredTypes``1">
             <summary>
             To restrict the type, it must be one of the given types (equal, or a derived class).
@@ -5219,15 +6101,6 @@
             <typeparam name="T14"></typeparam>
             <typeparam name="T15"></typeparam>
             <typeparam name="T16"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:Cosmos.Validation.Registrars.ValueValidationRegistrar`2.ScalePrecision(System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Limit the scale and precision of the value.
-            </summary>
-            <param name="scale"></param>
-            <param name="precision"></param>
-            <param name="ignoreTrailingZeros"></param>
             <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.ValueValidationRegistrar`2.RequiredTypes``1">
@@ -5467,6 +6340,13 @@
             The lower-level interface of ValidationRegistrar. Used to wait for verification information.
             </summary>
         </member>
+        <member name="M:Cosmos.Validation.Registrars.ValidationRegistrarWithMessage.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cosmos.Validation.Registrars.ValidationRegistrarWithMessage.WithMessage(System.String)">
             <summary>
             Fill in the message.
@@ -5479,6 +6359,13 @@
             The lower-level interface of ValidationRegistrar. Used to wait for verification information.
             </summary>
             <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.ValidationRegistrarWithMessage`1.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.ValidationRegistrarWithMessage`1.WithMessage(System.String)">
             <summary>
@@ -5493,6 +6380,13 @@
             </summary>
             <typeparam name="T"></typeparam>
             <typeparam name="TVal"></typeparam>
+        </member>
+        <member name="M:Cosmos.Validation.Registrars.ValidationRegistrarWithMessage`2.WithName(System.String)">
+            <summary>
+            Fill in the operation name.
+            </summary>
+            <param name="operationName"></param>
+            <returns></returns>
         </member>
         <member name="M:Cosmos.Validation.Registrars.ValidationRegistrarWithMessage`2.WithMessage(System.String)">
             <summary>
