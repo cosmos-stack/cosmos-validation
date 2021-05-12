@@ -14,7 +14,6 @@ namespace Cosmos.Validation.Internals.Rules
 
         public List<IValueToken> Tokens { get; set; }
 
-
         public virtual void Merge(CorrectValueRule rule)
         {
             if (rule is null)
@@ -41,6 +40,17 @@ namespace Cosmos.Validation.Internals.Rules
         public virtual void Verify(VerifiableOpsContext context)
         {
             Tokens.ForEach(token => token.Verify(context));
+        }
+
+        public CorrectValueRule Clone()
+        {
+            return new()
+            {
+                MemberName = MemberName,
+                Contract = Contract,
+                Mode = Mode,
+                Tokens = Tokens
+            };
         }
     }
 }

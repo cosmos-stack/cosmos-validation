@@ -207,7 +207,7 @@ namespace Cosmos.Validation
         /// <param name="memberName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public VerifyResult VerifyOne<T>(object memberValue, string memberName) 
+        public VerifyResult VerifyOne<T>(object memberValue, string memberName)
             => VerifyOne(typeof(T), memberValue, memberName);
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace Cosmos.Validation
         /// <param name="instance"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public VerifyResult VerifyOneWithInstance<T>(object memberValue, string memberName, T instance) 
+        public VerifyResult VerifyOneWithInstance<T>(object memberValue, string memberName, T instance)
             => VerifyOneWithInstance(typeof(T), memberValue, memberName, instance);
 
         /// <summary>
@@ -723,6 +723,63 @@ namespace Cosmos.Validation
         internal static ValidationHandler CreateByStrategy<T>(IValidationStrategy<T> strategy, ValidationOptions options)
         {
             return ValidationRegistrar.DefaultRegistrar.ForStrategy(strategy).TempBuild(options);
+        }
+
+        #endregion
+
+        #region CreateByRulePackage
+
+        internal static ValidationHandler CreateByRulePackage(VerifyRulePackage package)
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForRulePackage(package).TempBuild();
+        }
+
+        internal static ValidationHandler CreateByRulePackage(VerifyRulePackage package, ValidationOptions options)
+        {
+            return ValidationRegistrar.DefaultRegistrar.ForRulePackage(package).TempBuild(options);
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage<T>(string projectName = "")
+        {
+            IProject project;
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                if (_typedProjects.TryGetValue(typeof(T).GetHashCode(), out project) && project is TypeProject p)
+                    return p.ExposeRules();
+            }
+            else
+            {
+                if (_namedTypeProjects.TryGetValue((typeof(T).GetHashCode(), projectName.GetHashCode()), out project) && project is NamedTypeProject p)
+                    return p.ExposeRules();
+            }
+
+            return VerifyRulePackage.Empty;
+        }
+
+        public VerifyRulePackage ExposeVerifyRulePackage(Type declaringType, string projectName = "")
+        {
+            if (declaringType is null)
+            {
+                return VerifyRulePackage.Empty;
+            }
+
+            IProject project;
+            if (string.IsNullOrWhiteSpace(projectName))
+            {
+                if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out project))
+                    return project.ExposeRules();
+            }
+            else
+            {
+                if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out project))
+                    return project.ExposeRules();
+            }
+
+            return VerifyRulePackage.Empty;
         }
 
         #endregion

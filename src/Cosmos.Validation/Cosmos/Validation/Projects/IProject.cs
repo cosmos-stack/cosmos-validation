@@ -17,5 +17,9 @@ namespace Cosmos.Validation.Projects
         VerifyResult VerifyOne(VerifiableMemberContext context);
         
         VerifyResult VerifyMany(IDictionary<string, VerifiableMemberContext> keyValueCollections);
+
+        VerifyRulePackage ExposeRules();
+
+        // VerifyMemberRulePackage ExposeMemberRules(string memberName);
     }
 }

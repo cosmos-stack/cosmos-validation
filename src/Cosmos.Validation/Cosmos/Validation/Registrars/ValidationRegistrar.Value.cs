@@ -18,7 +18,7 @@ namespace Cosmos.Validation.Registrars
         public ValueValidationRegistrar(
             VerifiableMemberContract verifiableMemberContract,
             List<CorrectValueRule> rules,
-            ValueRuleMode mode,
+            VerifyRuleMode mode,
             IFluentValidationRegistrar parentRegistrar,
             IValidationRegistrar rootRegistrar)
         {
@@ -102,7 +102,7 @@ namespace Cosmos.Validation.Registrars
         #endregion
 
         #region ValueRules
-        
+
         public IPredicateValidationRegistrar InEnum(Type enumType)
         {
             ValueRuleBuilder.InEnum(enumType);
@@ -126,7 +126,7 @@ namespace Cosmos.Validation.Registrars
             ValueRuleBuilder.IsEnumName<TEnum>(caseSensitive);
             return this;
         }
-        
+
         /// <summary>
         /// To restrict the type, it must be one of the given types (equal, or a derived class).
         /// </summary>
@@ -427,7 +427,7 @@ namespace Cosmos.Validation.Registrars
 
         #region AndForMember
 
-        public IValueFluentValidationRegistrar AndForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar AndForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             //step 1: build this register
             BuildMySelf();
@@ -436,7 +436,7 @@ namespace Cosmos.Validation.Registrars
             return _parentRegistrar.ForMember(memberName, mode);
         }
 
-        public IValueFluentValidationRegistrar AndForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar AndForMember(PropertyInfo propertyInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             //step 1: build this register
             BuildMySelf();
@@ -445,7 +445,7 @@ namespace Cosmos.Validation.Registrars
             return _parentRegistrar.ForMember(propertyInfo, mode);
         }
 
-        public IValueFluentValidationRegistrar AndForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar AndForMember(FieldInfo fieldInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             //step 1: build this register
             BuildMySelf();
@@ -575,6 +575,28 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
+        
+        #region AndForRulePackage
+        
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            return _parentRegistrar.AndForRulePackage(package, mode);
+        }
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            return _parentRegistrar.AndForRulePackage(package, name, mode);
+        }
+        
+        #endregion
 
         #region AndForCustomValidator
 
@@ -675,6 +697,20 @@ namespace Cosmos.Validation.Registrars
         {
             TakeEffect();
             return _rootRegistrar;
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage()
+        {
+            return _parentRegistrar.ExposeVerifyRulePackage();
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        {
+            return _parentRegistrar.ExposeUnregisteredVerifyRulePackage();
         }
 
         #endregion

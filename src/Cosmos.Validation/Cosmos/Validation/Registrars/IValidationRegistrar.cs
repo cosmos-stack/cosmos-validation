@@ -8,5 +8,8 @@ namespace Cosmos.Validation.Registrars
         IMayRegisterForType,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect { }
+        IMayTakeEffect,
+        IMayImposeRulePackage,
+        IMayExposeRulePackage,
+        IMayExposeUnregisteredRulePackage { }
 }

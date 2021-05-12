@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Internals.Rules
     {
         public CorrectValueRuleBuilder(VerifiableMemberContract contract) : base(contract) { }
 
-        public CorrectValueRuleBuilder(VerifiableMemberContract contract, ValueRuleMode mode) : base(contract, mode) { }
+        public CorrectValueRuleBuilder(VerifiableMemberContract contract, VerifyRuleMode mode) : base(contract, mode) { }
 
         #region Update Mode of ValueRule
 

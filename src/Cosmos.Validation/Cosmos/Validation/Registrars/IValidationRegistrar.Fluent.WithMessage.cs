@@ -14,7 +14,10 @@ namespace Cosmos.Validation.Registrars
         IMayUseActivationConditions,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect
+        IMayTakeEffect,
+        IMayContinueImposeRulePackage,
+        IMayExposeRulePackageForType,
+        IMayExposeUnregisteredRulePackageForType
     {
         /// <summary>
         /// Fill in the operation name.
@@ -22,7 +25,7 @@ namespace Cosmos.Validation.Registrars
         /// <param name="operationName"></param>
         /// <returns></returns>
         IWaitForMessageValidationRegistrar WithName(string operationName);
-        
+
         /// <summary>
         /// Fill in the message.
         /// </summary>
@@ -44,7 +47,10 @@ namespace Cosmos.Validation.Registrars
         IMayUseActivationConditions<T>,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect
+        IMayTakeEffect,
+        IMayContinueImposeRulePackage,
+        IMayExposeRulePackageForType,
+        IMayExposeUnregisteredRulePackageForType
     {
         /// <summary>
         /// Fill in the operation name.
@@ -75,7 +81,10 @@ namespace Cosmos.Validation.Registrars
         IMayUseActivationConditions<T, TVal>,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect
+        IMayTakeEffect,
+        IMayContinueImposeRulePackage,
+        IMayExposeRulePackageForType,
+        IMayExposeUnregisteredRulePackageForType
     {
         /// <summary>
         /// Fill in the operation name.

@@ -112,17 +112,17 @@ namespace Cosmos.Validation.Registrars
 
         #region AndForMember
 
-        public IValueFluentValidationRegistrar AndForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar AndForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(memberName, mode);
         }
 
-        public IValueFluentValidationRegistrar AndForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar AndForMember(PropertyInfo propertyInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(propertyInfo, mode);
         }
 
-        public IValueFluentValidationRegistrar AndForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar AndForMember(FieldInfo fieldInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(fieldInfo, mode);
         }
@@ -201,6 +201,20 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region AndForRulePackage
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            return WithMessage(string.Empty).AndForRulePackage(package, mode);
+        }
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            return WithMessage(string.Empty).AndForRulePackage(package, name, mode);
+        }
+
+        #endregion
+
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -270,6 +284,20 @@ namespace Cosmos.Validation.Registrars
         {
             TakeEffect();
             return _rootRegistrar;
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage()
+        {
+            return WithMessage(string.Empty).ExposeVerifyRulePackage();
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        {
+            return WithMessage(string.Empty).ExposeUnregisteredVerifyRulePackage();
         }
 
         #endregion
@@ -381,22 +409,22 @@ namespace Cosmos.Validation.Registrars
 
         #region AndForMember
 
-        public IValueFluentValidationRegistrar<T> AndForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> AndForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(memberName, mode);
         }
 
-        public IValueFluentValidationRegistrar<T> AndForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> AndForMember(PropertyInfo propertyInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(propertyInfo, mode);
         }
 
-        public IValueFluentValidationRegistrar<T> AndForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> AndForMember(FieldInfo fieldInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(fieldInfo, mode);
         }
 
-        public IValueFluentValidationRegistrar<T, TVal2> AndForMember<TVal2>(Expression<Func<T, TVal2>> expression, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T, TVal2> AndForMember<TVal2>(Expression<Func<T, TVal2>> expression, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(expression, mode);
         }
@@ -475,6 +503,20 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region AndForRulePackage
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            return WithMessage(string.Empty).AndForRulePackage(package, mode);
+        }
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            return WithMessage(string.Empty).AndForRulePackage(package, name, mode);
+        }
+
+        #endregion
+
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -544,6 +586,20 @@ namespace Cosmos.Validation.Registrars
         {
             TakeEffect();
             return _rootRegistrar;
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage()
+        {
+            return WithMessage(string.Empty).ExposeVerifyRulePackage();
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        {
+            return WithMessage(string.Empty).ExposeUnregisteredVerifyRulePackage();
         }
 
         #endregion
@@ -656,22 +712,22 @@ namespace Cosmos.Validation.Registrars
 
         #region AndForMember
 
-        public IValueFluentValidationRegistrar<T> AndForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> AndForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(memberName, mode);
         }
 
-        public IValueFluentValidationRegistrar<T> AndForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> AndForMember(PropertyInfo propertyInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(propertyInfo, mode);
         }
 
-        public IValueFluentValidationRegistrar<T> AndForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> AndForMember(FieldInfo fieldInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(fieldInfo, mode);
         }
 
-        public IValueFluentValidationRegistrar<T, TVal2> AndForMember<TVal2>(Expression<Func<T, TVal2>> expression, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T, TVal2> AndForMember<TVal2>(Expression<Func<T, TVal2>> expression, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             return WithMessage(string.Empty).AndForMember(expression, mode);
         }
@@ -750,6 +806,20 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region AndForRulePackage
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            return WithMessage(string.Empty).AndForRulePackage(package, mode);
+        }
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            return WithMessage(string.Empty).AndForRulePackage(package, name, mode);
+        }
+
+        #endregion
+
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -819,6 +889,20 @@ namespace Cosmos.Validation.Registrars
         {
             TakeEffect();
             return _rootRegistrar;
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage()
+        {
+            return WithMessage(string.Empty).ExposeVerifyRulePackage();
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        {
+            return WithMessage(string.Empty).ExposeUnregisteredVerifyRulePackage();
         }
 
         #endregion

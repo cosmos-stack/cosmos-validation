@@ -125,6 +125,40 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region ForRulePackage
+
+        public IValidationRegistrar ForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            if (package is null) throw new ArgumentNullException(nameof(package));
+
+            StrategyMode strategyMode = mode switch
+            {
+                VerifyRuleMode.Append => StrategyMode.Append,
+                VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite
+            };
+
+            AddOrUpdateValueRules(package.ExposeRules(), package.DeclaringType, strategyMode);
+
+            return this;
+        }
+
+        public IValidationRegistrar ForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            if (package is null) throw new ArgumentNullException(nameof(package));
+
+            StrategyMode strategyMode = mode switch
+            {
+                VerifyRuleMode.Append => StrategyMode.Append,
+                VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite
+            };
+
+            AddOrUpdateValueRules(package.ExposeRules(), package.DeclaringType, name, strategyMode);
+
+            return this;
+        }
+
+        #endregion
+
         #region ForCustomValidator
 
         public IValidationRegistrar ForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -670,6 +704,82 @@ namespace Cosmos.Validation.Registrars
         internal (Dictionary<Type, List<CorrectValueRule>>, Dictionary<(Type, string), List<CorrectValueRule>>) GetCorrectValueRulesForUnitTests()
         {
             return (_typedRulesDictionary, _namedRulesDictionary);
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage<T>(string projectName = "")
+        {
+            var manager = GetProjectManager();
+
+            if (manager is null)
+                return VerifyRulePackage.Empty;
+
+            if (manager.TryResolve(typeof(T), projectName, out var project))
+                return project.ExposeRules();
+
+            return VerifyRulePackage.Empty;
+        }
+
+        public VerifyRulePackage ExposeVerifyRulePackage(Type declaringType, string projectName = "")
+        {
+            if (declaringType is null)
+                return VerifyRulePackage.Empty;
+
+            var manager = GetProjectManager();
+
+            if (manager is null)
+                return VerifyRulePackage.Empty;
+
+            if (manager.TryResolve(declaringType, projectName, out var project))
+                return project.ExposeRules();
+
+            return VerifyRulePackage.Empty;
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage<T>(string projectName = "")
+        {
+            lock (_valueRuleLockObj)
+            {
+                if (string.IsNullOrWhiteSpace(projectName))
+                {
+                    if (_typedRulesDictionary.TryGetValue(typeof(T), out var rules))
+                        return new VerifyRulePackage(typeof(T), rules);
+                }
+                else
+                {
+                    if (_namedRulesDictionary.TryGetValue((typeof(T), projectName), out var rules))
+                        return new VerifyRulePackage(typeof(T), rules);
+                }
+
+                return VerifyRulePackage.Empty;
+            }
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage(Type declaringType, string projectName = "")
+        {
+            if (declaringType is null)
+            {
+                return VerifyRulePackage.Empty;
+            }
+
+            lock (_valueRuleLockObj)
+            {
+                if (string.IsNullOrWhiteSpace(projectName))
+                {
+                    if (_typedRulesDictionary.TryGetValue(declaringType, out var rules))
+                        return new VerifyRulePackage(declaringType, rules);
+                }
+                else
+                {
+                    if (_namedRulesDictionary.TryGetValue((declaringType, projectName), out var rules))
+                        return new VerifyRulePackage(declaringType, rules);
+                }
+
+                return VerifyRulePackage.Empty;
+            }
         }
 
         #endregion

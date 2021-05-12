@@ -3,7 +3,7 @@
     /// <summary>
     /// The effective mode of the value rule.
     /// </summary>
-    public enum ValueRuleMode
+    public enum VerifyRuleMode
     {
         /// <summary>
         /// Append

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Cosmos.Validation.Internals;
@@ -47,7 +48,7 @@ namespace Cosmos.Validation.Registrars
 
         #region ForMember
 
-        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(string memberName, ValueRuleMode mode)
+        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(string memberName, VerifyRuleMode mode)
         {
             var valueContract = _verifiableObjectContract.GetMemberContract(memberName);
 
@@ -57,7 +58,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
-        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(PropertyInfo propertyInfo, ValueRuleMode mode)
+        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(PropertyInfo propertyInfo, VerifyRuleMode mode)
         {
             var valueContract = _verifiableObjectContract.GetMemberContract(propertyInfo);
 
@@ -67,7 +68,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
-        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(FieldInfo fieldInfo, ValueRuleMode mode)
+        IValueFluentValidationRegistrar IMayRegisterForMember.ForMember(FieldInfo fieldInfo, VerifyRuleMode mode)
         {
             var valueContract = _verifiableObjectContract.GetMemberContract(fieldInfo);
 
@@ -77,7 +78,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
-        public IValueFluentValidationRegistrar<T> ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> ForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             var valueContract = _verifiableObjectContract.GetMemberContract(memberName);
 
@@ -87,7 +88,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar<T>(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
-        public IValueFluentValidationRegistrar<T> ForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> ForMember(PropertyInfo propertyInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             if (propertyInfo is null)
                 throw new ArgumentNullException(nameof(propertyInfo));
@@ -100,7 +101,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar<T>(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
-        public IValueFluentValidationRegistrar<T> ForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T> ForMember(FieldInfo fieldInfo, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             if (fieldInfo is null)
                 throw new ArgumentNullException(nameof(fieldInfo));
@@ -113,7 +114,7 @@ namespace Cosmos.Validation.Registrars
             return new ValueValidationRegistrar<T>(valueContract, Rules, mode, this, _parentRegistrar);
         }
 
-        public IValueFluentValidationRegistrar<T, TVal> ForMember<TVal>(Expression<Func<T, TVal>> expression, ValueRuleMode mode = ValueRuleMode.Append)
+        public IValueFluentValidationRegistrar<T, TVal> ForMember<TVal>(Expression<Func<T, TVal>> expression, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
             if (expression is null)
                 throw new ArgumentNullException(nameof(expression));
@@ -257,6 +258,30 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region AndForRulePackage
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForRulePackage(package, mode);
+            return this;
+        }
+
+        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            //step 1: build this register
+            BuildMySelf();
+
+            //step 2: create a new register
+            _parentRegistrar.ForRulePackage(package, name, mode);
+            return this;
+        }
+
+        #endregion
+
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -359,6 +384,25 @@ namespace Cosmos.Validation.Registrars
         {
             TakeEffect();
             return _parentRegistrar;
+        }
+
+        #endregion
+
+        #region ExposeVerifyRulePackage
+
+        public VerifyRulePackage ExposeVerifyRulePackage()
+        {
+            return _parentRegistrar.ExposeVerifyRulePackage(SourceType, _name);
+        }
+
+        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        {
+            return new(SourceType, _clone(Rules));
+
+            List<CorrectValueRule> _clone(List<CorrectValueRule> rules)
+            {
+                return rules.Select(rule => rule.Clone()).ToList();
+            }
         }
 
         #endregion

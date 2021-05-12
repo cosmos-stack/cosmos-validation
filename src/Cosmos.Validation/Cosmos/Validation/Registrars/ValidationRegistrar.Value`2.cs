@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Registrars
         public ValueValidationRegistrar(
             VerifiableMemberContract verifiableMemberContract,
             List<CorrectValueRule> rules,
-            ValueRuleMode mode,
+            VerifyRuleMode mode,
             IFluentValidationRegistrar<T> parentRegistrar,
             IValidationRegistrar rootRegistrar)
             : base(verifiableMemberContract, rules, mode, parentRegistrar, rootRegistrar)

@@ -11,18 +11,21 @@ namespace Cosmos.Validation.Registrars
         IMayUseRuleConditions,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect
+        IMayTakeEffect,
+        IMayContinueImposeRulePackage,
+        IMayExposeRulePackageForType,
+        IMayExposeUnregisteredRulePackageForType
     {
         Type DeclaringType { get; }
         Type MemberType { get; }
         IValueFluentValidationRegistrar WithConfig(Func<IValueRuleBuilder, IValueRuleBuilder> func);
-        
+
         IPredicateValidationRegistrar InEnum(Type enumType);
-        
+
         IPredicateValidationRegistrar InEnum<TEnum>();
-        
+
         IPredicateValidationRegistrar IsEnumName(Type enumType, bool caseSensitive);
-        
+
         IPredicateValidationRegistrar IsEnumName<TEnum>(bool caseSensitive);
 
         /// <summary>
@@ -266,7 +269,10 @@ namespace Cosmos.Validation.Registrars
         IMayUseRuleConditions<T>,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect
+        IMayTakeEffect,
+        IMayContinueImposeRulePackage,
+        IMayExposeRulePackageForType,
+        IMayExposeUnregisteredRulePackageForType
     {
         Type DeclaringType { get; }
         Type MemberType { get; }

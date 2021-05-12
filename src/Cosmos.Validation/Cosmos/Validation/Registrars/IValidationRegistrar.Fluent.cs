@@ -11,7 +11,10 @@ namespace Cosmos.Validation.Registrars
         IMayRegisterForMember,
         IMayBuild,
         IMayTempBuild,
-        IMayTakeEffect
+        IMayTakeEffect,
+        IMayContinueImposeRulePackage,
+        IMayExposeRulePackageForType,
+        IMayExposeUnregisteredRulePackageForType
     {
         string Name { get; }
         bool IsAnonymous { get; }
@@ -21,8 +24,8 @@ namespace Cosmos.Validation.Registrars
     public interface IFluentValidationRegistrar<T> : IFluentValidationRegistrar,
         IMayRegisterForMember<T>
     {
-        new IValueFluentValidationRegistrar<T> ForMember(string memberName, ValueRuleMode mode = ValueRuleMode.Append);
-        new IValueFluentValidationRegistrar<T> ForMember(PropertyInfo propertyInfo, ValueRuleMode mode = ValueRuleMode.Append);
-        new IValueFluentValidationRegistrar<T> ForMember(FieldInfo fieldInfo, ValueRuleMode mode = ValueRuleMode.Append);
+        new IValueFluentValidationRegistrar<T> ForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append);
+        new IValueFluentValidationRegistrar<T> ForMember(PropertyInfo propertyInfo, VerifyRuleMode mode = VerifyRuleMode.Append);
+        new IValueFluentValidationRegistrar<T> ForMember(FieldInfo fieldInfo, VerifyRuleMode mode = VerifyRuleMode.Append);
     }
 }

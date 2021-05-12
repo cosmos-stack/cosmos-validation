@@ -151,6 +151,16 @@ namespace CosmosValidationUT.SolutionUT
             {
                 return VerifyResult.Success;
             }
+
+            public VerifyRulePackage ExposeRules()
+            {
+                return VerifyRulePackage.Empty;
+            }
+
+            // public VerifyMemberRulePackage ExposeMemberRules(string memberName)
+            // {
+            //     return VerifyMemberRulePackage.Empty;
+            // }
         }
 
         private class MyFakeNameProject : IProject
@@ -180,6 +190,16 @@ namespace CosmosValidationUT.SolutionUT
             {
                 return VerifyResult.Success;
             }
+
+            public VerifyRulePackage ExposeRules()
+            {
+                return VerifyRulePackage.Empty;
+            }
+
+            // public VerifyMemberRulePackage ExposeMemberRules(string memberName)
+            // {
+            //     return VerifyMemberRulePackage.Empty;
+            // }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Cosmos.Validation.Internals.Rules
             State = new CorrectValueRuleState(contract);
         }
 
-        public CorrectValueRuleBuilder(VerifiableMemberContract contract, ValueRuleMode mode)
+        public CorrectValueRuleBuilder(VerifiableMemberContract contract, VerifyRuleMode mode)
         {
             _contract = contract;
             State = new CorrectValueRuleState(contract);
