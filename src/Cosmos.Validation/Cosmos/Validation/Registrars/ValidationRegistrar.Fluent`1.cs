@@ -260,23 +260,18 @@ namespace Cosmos.Validation.Registrars
 
         #region AndForRulePackage
 
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        public IFluentValidationRegistrar WithRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
         {
-            //step 1: build this register
-            BuildMySelf();
+            if (package is null) throw new ArgumentNullException(nameof(package));
 
-            //step 2: create a new register
-            _parentRegistrar.ForRulePackage(package, mode);
-            return this;
-        }
+            if (SourceType != package.DeclaringType)
+                return this;
 
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            //step 1: build this register
-            BuildMySelf();
-
-            //step 2: create a new register
-            _parentRegistrar.ForRulePackage(package, name, mode);
+            foreach (var rule in package.ExposeMemberRulePackages())
+            {
+                ForMember(rule.MemberName).WithMemberRulePackage(rule, mode).TakeEffect();
+            }
+            
             return this;
         }
 
@@ -390,12 +385,12 @@ namespace Cosmos.Validation.Registrars
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage()
+        public VerifyRulePackage ExposeRulePackage()
         {
-            return _parentRegistrar.ExposeVerifyRulePackage(SourceType, _name);
+            return _parentRegistrar.ExposeRulePackage(SourceType, _name);
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        public VerifyRulePackage ExposeUnregisteredRulePackage()
         {
             return new(SourceType, _clone(Rules));
 

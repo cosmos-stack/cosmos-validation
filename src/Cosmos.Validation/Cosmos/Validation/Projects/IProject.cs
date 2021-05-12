@@ -20,6 +20,6 @@ namespace Cosmos.Validation.Projects
 
         VerifyRulePackage ExposeRules();
 
-        // VerifyMemberRulePackage ExposeMemberRules(string memberName);
+        VerifyMemberRulePackage ExposeMemberRules(string memberName);
     }
 }

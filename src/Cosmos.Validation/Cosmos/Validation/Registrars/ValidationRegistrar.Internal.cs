@@ -134,7 +134,8 @@ namespace Cosmos.Validation.Registrars
             StrategyMode strategyMode = mode switch
             {
                 VerifyRuleMode.Append => StrategyMode.Append,
-                VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite
+                VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
             AddOrUpdateValueRules(package.ExposeRules(), package.DeclaringType, strategyMode);
@@ -149,7 +150,8 @@ namespace Cosmos.Validation.Registrars
             StrategyMode strategyMode = mode switch
             {
                 VerifyRuleMode.Append => StrategyMode.Append,
-                VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite
+                VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
             AddOrUpdateValueRules(package.ExposeRules(), package.DeclaringType, name, strategyMode);
@@ -710,7 +712,7 @@ namespace Cosmos.Validation.Registrars
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage<T>(string projectName = "")
+        public VerifyRulePackage ExposeRulePackage<T>(string projectName = "")
         {
             var manager = GetProjectManager();
 
@@ -723,7 +725,7 @@ namespace Cosmos.Validation.Registrars
             return VerifyRulePackage.Empty;
         }
 
-        public VerifyRulePackage ExposeVerifyRulePackage(Type declaringType, string projectName = "")
+        public VerifyRulePackage ExposeRulePackage(Type declaringType, string projectName = "")
         {
             if (declaringType is null)
                 return VerifyRulePackage.Empty;
@@ -739,7 +741,7 @@ namespace Cosmos.Validation.Registrars
             return VerifyRulePackage.Empty;
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage<T>(string projectName = "")
+        public VerifyRulePackage ExposeUnregisteredRulePackage<T>(string projectName = "")
         {
             lock (_valueRuleLockObj)
             {
@@ -758,7 +760,7 @@ namespace Cosmos.Validation.Registrars
             }
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage(Type declaringType, string projectName = "")
+        public VerifyRulePackage ExposeUnregisteredRulePackage(Type declaringType, string projectName = "")
         {
             if (declaringType is null)
             {

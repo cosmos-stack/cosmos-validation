@@ -743,43 +743,45 @@ namespace Cosmos.Validation
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage<T>(string projectName = "")
+        public VerifyRulePackage ExposeRulePackage<T>(string projectName = "")
         {
-            IProject project;
-            if (string.IsNullOrWhiteSpace(projectName))
-            {
-                if (_typedProjects.TryGetValue(typeof(T).GetHashCode(), out project) && project is TypeProject p)
-                    return p.ExposeRules();
-            }
-            else
-            {
-                if (_namedTypeProjects.TryGetValue((typeof(T).GetHashCode(), projectName.GetHashCode()), out project) && project is NamedTypeProject p)
-                    return p.ExposeRules();
-            }
-
-            return VerifyRulePackage.Empty;
+            return GetProject(typeof(T), projectName)?.ExposeRules() ?? VerifyRulePackage.Empty;
         }
 
-        public VerifyRulePackage ExposeVerifyRulePackage(Type declaringType, string projectName = "")
+        public VerifyRulePackage ExposeRulePackage(Type declaringType, string projectName = "")
         {
             if (declaringType is null)
-            {
                 return VerifyRulePackage.Empty;
-            }
+            return GetProject(declaringType, projectName)?.ExposeRules() ?? VerifyRulePackage.Empty;
+        }
 
+        public VerifyMemberRulePackage ExposeMemberRulePackage<T>(string memberName, string projectName = "")
+        {
+            return GetProject(typeof(T), projectName)?.ExposeMemberRules(memberName) ?? VerifyMemberRulePackage.Empty;
+        }
+
+        public VerifyMemberRulePackage ExposeMemberRulePackage(Type declaringType, string memberName, string projectName = "")
+        {
+            if (declaringType is null)
+                return VerifyMemberRulePackage.Empty;
+            return GetProject(declaringType, projectName)?.ExposeMemberRules(memberName) ?? VerifyMemberRulePackage.Empty;
+        }
+
+        private IProject GetProject(Type declaringType, string projectName)
+        {
             IProject project;
             if (string.IsNullOrWhiteSpace(projectName))
             {
                 if (_typedProjects.TryGetValue(declaringType.GetHashCode(), out project))
-                    return project.ExposeRules();
+                    return project;
             }
             else
             {
                 if (_namedTypeProjects.TryGetValue((declaringType.GetHashCode(), projectName.GetHashCode()), out project))
-                    return project.ExposeRules();
+                    return project;
             }
 
-            return VerifyRulePackage.Empty;
+            return default;
         }
 
         #endregion

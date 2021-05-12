@@ -157,10 +157,10 @@ namespace CosmosValidationUT.SolutionUT
                 return VerifyRulePackage.Empty;
             }
 
-            // public VerifyMemberRulePackage ExposeMemberRules(string memberName)
-            // {
-            //     return VerifyMemberRulePackage.Empty;
-            // }
+            public VerifyMemberRulePackage ExposeMemberRules(string memberName)
+            {
+                return VerifyMemberRulePackage.Empty;
+            }
         }
 
         private class MyFakeNameProject : IProject
@@ -196,10 +196,10 @@ namespace CosmosValidationUT.SolutionUT
                 return VerifyRulePackage.Empty;
             }
 
-            // public VerifyMemberRulePackage ExposeMemberRules(string memberName)
-            // {
-            //     return VerifyMemberRulePackage.Empty;
-            // }
+            public VerifyMemberRulePackage ExposeMemberRules(string memberName)
+            {
+                return VerifyMemberRulePackage.Empty;
+            }
         }
     }
 }

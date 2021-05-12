@@ -16,6 +16,8 @@ namespace Cosmos.Validation
 
         IValueRuleBuilder Or();
 
+        IValueRuleBuilder Use(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append);
+
         IPredicateValueRuleBuilder InEnum(Type enumType);
 
         IPredicateValueRuleBuilder InEnum<TEnum>();
@@ -293,6 +295,8 @@ namespace Cosmos.Validation
         IValueRuleBuilder<T> And();
 
         IValueRuleBuilder<T> Or();
+
+        IValueRuleBuilder<T> Use(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append);
 
         IPredicateValueRuleBuilder<T> InEnum(Type enumType);
 
@@ -572,6 +576,8 @@ namespace Cosmos.Validation
         new IValueRuleBuilder<T, TVal> And();
 
         new IValueRuleBuilder<T, TVal> Or();
+
+        new IValueRuleBuilder<T, TVal> Use(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append);
 
         new IPredicateValueRuleBuilder<T, TVal> InEnum(Type enumType);
 

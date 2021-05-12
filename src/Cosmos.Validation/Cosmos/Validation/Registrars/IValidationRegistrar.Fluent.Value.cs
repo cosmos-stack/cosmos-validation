@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Registrars
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect,
-        IMayContinueImposeRulePackage,
+        IMayUseMemberRulePackage,
         IMayExposeRulePackageForType,
         IMayExposeUnregisteredRulePackageForType
     {
@@ -270,7 +270,7 @@ namespace Cosmos.Validation.Registrars
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect,
-        IMayContinueImposeRulePackage,
+        IMayUseMemberRulePackage<T>,
         IMayExposeRulePackageForType,
         IMayExposeUnregisteredRulePackageForType
     {
@@ -521,6 +521,7 @@ namespace Cosmos.Validation.Registrars
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>,
+        IMayUseMemberRulePackage<T,TVal>,
         IMayUseRuleConditions<T, TVal>
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);

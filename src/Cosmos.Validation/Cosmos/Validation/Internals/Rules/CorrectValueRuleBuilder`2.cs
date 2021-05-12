@@ -93,7 +93,7 @@ namespace Cosmos.Validation.Internals.Rules
         #endregion
 
         #region Rules
-        
+
         public new IPredicateValueRuleBuilder<T, TVal> InEnum(Type enumType)
         {
             State.CurrentToken = new ValueEnumToken(_contract, enumType);
@@ -446,6 +446,28 @@ namespace Cosmos.Validation.Internals.Rules
         public new IPredicateValueRuleBuilder<T, TVal> RequiredTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>()
         {
             State.CurrentToken = new ValueRequiredTypesToken<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(_contract);
+            return this;
+        }
+
+        #endregion
+
+        #region Use Rules by VerifyMemberRulePackage
+
+        public new IValueRuleBuilder<T, TVal> Use(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            if (package is null) throw new ArgumentNullException(nameof(package));
+
+            var rule = package.ExposeRule();
+
+            if (rule is not null)
+            {
+                if (mode == VerifyRuleMode.Overwrite)
+                    Reset();
+
+                foreach (var token in rule.Tokens)
+                    State.CurrentToken = token;
+            }
+
             return this;
         }
 

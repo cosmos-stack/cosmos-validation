@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Registrars
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect,
-        IMayContinueImposeRulePackage,
+        IMayUseRulePackageForType,
         IMayExposeRulePackageForType,
         IMayExposeUnregisteredRulePackageForType
     {

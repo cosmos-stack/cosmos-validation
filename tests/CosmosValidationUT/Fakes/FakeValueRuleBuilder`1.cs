@@ -33,6 +33,16 @@ namespace CosmosValidationUT.Fakes
             throw new NotImplementedException();
         }
 
+        public IValueRuleBuilder<T> Use(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IValueRuleBuilder<T> Use(VerifyMemberRulePackage package)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPredicateValueRuleBuilder<T> InEnum(Type enumType)
         {
             throw new NotImplementedException();

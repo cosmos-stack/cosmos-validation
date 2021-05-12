@@ -31,18 +31,18 @@ namespace Cosmos.Validation.Projects
 
         public VerifyRulePackage ExposeRules() => new(Type, _rules);
 
-        // public VerifyMemberRulePackage ExposeMemberRules(string memberName)
-        // {
-        //     if (string.IsNullOrWhiteSpace(memberName))
-        //         return VerifyMemberRulePackage.Empty;
-        //
-        //     var rule = _rules.FirstOrDefault(x => x.MemberName == memberName);
-        //
-        //     if (rule is null)
-        //         return VerifyMemberRulePackage.Empty;
-        //
-        //     return new(Type, rule.Contract, rule);
-        // }
+        public VerifyMemberRulePackage ExposeMemberRules(string memberName)
+        {
+            if (string.IsNullOrWhiteSpace(memberName))
+                return VerifyMemberRulePackage.Empty;
+        
+            var rule = _rules.FirstOrDefault(x => x.MemberName == memberName);
+        
+            if (rule is null)
+                return VerifyMemberRulePackage.Empty;
+        
+            return new(Type, rule.Contract, rule);
+        }
 
         public VerifyResult Verify(VerifiableObjectContext context)
         {

@@ -468,6 +468,33 @@ namespace Cosmos.Validation.Internals.Rules
         }
 
         #endregion
+        
+        #region Use Rules by VerifyMemberRulePackage
+
+        public IValueRuleBuilder<T> Use(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            if (package is null) throw new ArgumentNullException(nameof(package));
+
+            var rule = package.ExposeRule();
+
+            if (rule is not null)
+            {
+                if (mode == VerifyRuleMode.Overwrite)
+                    Reset();
+
+                foreach (var token in rule.Tokens)
+                    State.CurrentToken = token;
+            }
+            
+            return this;
+        }
+        
+        #endregion
+
+        internal void Reset()
+        {
+            State = new CorrectValueRuleState(_contract);
+        }
 
         public CorrectValueRule Build()
         {

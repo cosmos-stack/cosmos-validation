@@ -15,7 +15,6 @@ namespace Cosmos.Validation.Registrars
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect,
-        IMayContinueImposeRulePackage,
         IMayExposeRulePackageForType,
         IMayExposeUnregisteredRulePackageForType
     {
@@ -48,7 +47,6 @@ namespace Cosmos.Validation.Registrars
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect,
-        IMayContinueImposeRulePackage,
         IMayExposeRulePackageForType,
         IMayExposeUnregisteredRulePackageForType
     {
@@ -82,7 +80,6 @@ namespace Cosmos.Validation.Registrars
         IMayBuild,
         IMayTempBuild,
         IMayTakeEffect,
-        IMayContinueImposeRulePackage,
         IMayExposeRulePackageForType,
         IMayExposeUnregisteredRulePackageForType
     {

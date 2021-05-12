@@ -201,20 +201,6 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
-        #region AndForRulePackage
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            return WithMessage(string.Empty).AndForRulePackage(package, mode);
-        }
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            return WithMessage(string.Empty).AndForRulePackage(package, name, mode);
-        }
-
-        #endregion
-
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -290,14 +276,14 @@ namespace Cosmos.Validation.Registrars
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage()
+        public VerifyRulePackage ExposeRulePackage()
         {
-            return WithMessage(string.Empty).ExposeVerifyRulePackage();
+            return WithMessage(string.Empty).ExposeRulePackage();
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        public VerifyRulePackage ExposeUnregisteredRulePackage()
         {
-            return WithMessage(string.Empty).ExposeUnregisteredVerifyRulePackage();
+            return WithMessage(string.Empty).ExposeUnregisteredRulePackage();
         }
 
         #endregion
@@ -503,20 +489,6 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
-        #region AndForRulePackage
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            return WithMessage(string.Empty).AndForRulePackage(package, mode);
-        }
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            return WithMessage(string.Empty).AndForRulePackage(package, name, mode);
-        }
-
-        #endregion
-
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -592,14 +564,14 @@ namespace Cosmos.Validation.Registrars
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage()
+        public VerifyRulePackage ExposeRulePackage()
         {
-            return WithMessage(string.Empty).ExposeVerifyRulePackage();
+            return WithMessage(string.Empty).ExposeRulePackage();
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        public VerifyRulePackage ExposeUnregisteredRulePackage()
         {
-            return WithMessage(string.Empty).ExposeUnregisteredVerifyRulePackage();
+            return WithMessage(string.Empty).ExposeUnregisteredRulePackage();
         }
 
         #endregion
@@ -806,20 +778,6 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
-        #region AndForRulePackage
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            return WithMessage(string.Empty).AndForRulePackage(package, mode);
-        }
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            return WithMessage(string.Empty).AndForRulePackage(package, name, mode);
-        }
-
-        #endregion
-
         #region AndForCustomValidator
 
         public IFluentValidationRegistrar AndForCustomValidator<TValidator>() where TValidator : CustomValidator, new()
@@ -895,14 +853,14 @@ namespace Cosmos.Validation.Registrars
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage()
+        public VerifyRulePackage ExposeRulePackage()
         {
-            return WithMessage(string.Empty).ExposeVerifyRulePackage();
+            return WithMessage(string.Empty).ExposeRulePackage();
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        public VerifyRulePackage ExposeUnregisteredRulePackage()
         {
-            return WithMessage(string.Empty).ExposeUnregisteredVerifyRulePackage();
+            return WithMessage(string.Empty).ExposeUnregisteredRulePackage();
         }
 
         #endregion

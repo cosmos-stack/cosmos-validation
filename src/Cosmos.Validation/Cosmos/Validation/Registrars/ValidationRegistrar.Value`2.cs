@@ -407,5 +407,15 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
+
+        #region ForMemberRulePackage
+
+        public new IValueFluentValidationRegistrar<T, TVal> WithMemberRulePackage(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            ValueRuleBuilder.Use(package, mode);
+            return this;
+        }
+
+        #endregion
     }
 }

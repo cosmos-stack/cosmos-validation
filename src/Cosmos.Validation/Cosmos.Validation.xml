@@ -7972,6 +7972,61 @@
             <param name="keyValueCollections"></param>
             <returns></returns>
         </member>
+        <member name="P:Cosmos.Validation.Validators.VerifyRulePackageValidator.Name">
+            <summary>
+            Name of validation
+            </summary>
+        </member>
+        <member name="P:Cosmos.Validation.Validators.VerifyRulePackageValidator.IsAnonymous">
+            <summary>
+            Mark whether the validator is anonymous.
+            </summary>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.VerifyRulePackageValidator.Verify(System.Type,System.Object)">
+            <summary>
+            Verify the entire entity
+            </summary>
+            <param name="declaringType"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.VerifyRulePackageValidator.VerifyOne(System.Type,System.Object,System.String)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.VerifyRulePackageValidator.VerifyOneWithInstance(System.Type,System.Object,System.String,System.Object)">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.VerifyRulePackageValidator.VerifyOneWithDictionary(System.Type,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify a member of the entity.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="memberValue"></param>
+            <param name="memberName"></param>
+            <param name="keyValueCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.Validators.VerifyRulePackageValidator.VerifyMany(System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Verify each member in the non-strongly typed dictionary.
+            </summary>
+            <param name="declaringType"></param>
+            <param name="keyValueCollections"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cosmos.Validation.ValidatorType">
             <summary>
             Validator type.
@@ -7985,21 +8040,6 @@
         <member name="F:Cosmos.Validation.ValidatorType.Custom">
             <summary>
             Custom validator.
-            </summary>
-        </member>
-        <member name="T:Cosmos.Validation.ValueRuleMode">
-            <summary>
-            The effective mode of the value rule.
-            </summary>
-        </member>
-        <member name="F:Cosmos.Validation.ValueRuleMode.Append">
-            <summary>
-            Append
-            </summary>
-        </member>
-        <member name="F:Cosmos.Validation.ValueRuleMode.Overwrite">
-            <summary>
-            Overwrite
             </summary>
         </member>
         <member name="T:Cosmos.Validation.VerifyError">
@@ -8326,6 +8366,21 @@
             Combine multiple internal VerifyResults into one and return it.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Cosmos.Validation.VerifyRuleMode">
+            <summary>
+            The effective mode of the value rule.
+            </summary>
+        </member>
+        <member name="F:Cosmos.Validation.VerifyRuleMode.Append">
+            <summary>
+            Append
+            </summary>
+        </member>
+        <member name="F:Cosmos.Validation.VerifyRuleMode.Overwrite">
+            <summary>
+            Overwrite
+            </summary>
         </member>
     </members>
 </doc>

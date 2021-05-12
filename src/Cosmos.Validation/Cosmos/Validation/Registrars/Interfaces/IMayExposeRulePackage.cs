@@ -4,35 +4,25 @@ namespace Cosmos.Validation.Registrars.Interfaces
 {
     public interface IMayExposeRulePackage
     {
-        VerifyRulePackage ExposeVerifyRulePackage<T>(string projectName = "");
+        VerifyRulePackage ExposeRulePackage<T>(string projectName = "");
 
-        VerifyRulePackage ExposeVerifyRulePackage(Type declaringType, string projectName = "");
+        VerifyRulePackage ExposeRulePackage(Type declaringType, string projectName = "");
     }
 
     public interface IMayExposeUnregisteredRulePackage
     {
-        VerifyRulePackage ExposeUnregisteredVerifyRulePackage<T>(string projectName = "");
+        VerifyRulePackage ExposeUnregisteredRulePackage<T>(string projectName = "");
 
-        VerifyRulePackage ExposeUnregisteredVerifyRulePackage(Type declaringType, string projectName = "");
+        VerifyRulePackage ExposeUnregisteredRulePackage(Type declaringType, string projectName = "");
     }
 
     public interface IMayExposeRulePackageForType
     {
-        VerifyRulePackage ExposeVerifyRulePackage();
+        VerifyRulePackage ExposeRulePackage();
     }
 
     public interface IMayExposeUnregisteredRulePackageForType
     {
-        VerifyRulePackage ExposeUnregisteredVerifyRulePackage();
+        VerifyRulePackage ExposeUnregisteredRulePackage();
     }
-
-    // public interface IMayExposeRulePackageForMember
-    // {
-    //     VerifyMemberRulePackage ExposeVerifyMemberRulePackage();
-    // }
-    //
-    // public interface IMayExposeUnregisteredRulePackageForMember
-    // {
-    //     VerifyMemberRulePackage ExposeUnregisteredVerifyMemberRulePackage();
-    // }
 }

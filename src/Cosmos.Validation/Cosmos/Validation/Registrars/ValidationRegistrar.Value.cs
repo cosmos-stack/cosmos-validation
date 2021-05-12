@@ -425,6 +425,16 @@ namespace Cosmos.Validation.Registrars
 
         #endregion
 
+        #region ForMemberRulePackage
+
+        public  IValueFluentValidationRegistrar WithMemberRulePackage(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
+        {
+            ValueRuleBuilder.Use(package, mode);
+            return this;
+        }
+
+        #endregion
+
         #region AndForMember
 
         public IValueFluentValidationRegistrar AndForMember(string memberName, VerifyRuleMode mode = VerifyRuleMode.Append)
@@ -575,28 +585,6 @@ namespace Cosmos.Validation.Registrars
         }
 
         #endregion
-        
-        #region AndForRulePackage
-        
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            //step 1: build this register
-            BuildMySelf();
-
-            //step 2: create a new register
-            return _parentRegistrar.AndForRulePackage(package, mode);
-        }
-
-        public IFluentValidationRegistrar AndForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Append)
-        {
-            //step 1: build this register
-            BuildMySelf();
-
-            //step 2: create a new register
-            return _parentRegistrar.AndForRulePackage(package, name, mode);
-        }
-        
-        #endregion
 
         #region AndForCustomValidator
 
@@ -703,14 +691,14 @@ namespace Cosmos.Validation.Registrars
 
         #region ExposeVerifyRulePackage
 
-        public VerifyRulePackage ExposeVerifyRulePackage()
+        public VerifyRulePackage ExposeRulePackage()
         {
-            return _parentRegistrar.ExposeVerifyRulePackage();
+            return _parentRegistrar.ExposeRulePackage();
         }
 
-        public VerifyRulePackage ExposeUnregisteredVerifyRulePackage()
+        public VerifyRulePackage ExposeUnregisteredRulePackage()
         {
-            return _parentRegistrar.ExposeUnregisteredVerifyRulePackage();
+            return _parentRegistrar.ExposeUnregisteredRulePackage();
         }
 
         #endregion
