@@ -131,7 +131,7 @@ namespace Cosmos.Validation.Registrars
         {
             if (package is null) throw new ArgumentNullException(nameof(package));
 
-            StrategyMode strategyMode = mode switch
+            var strategyMode = mode switch
             {
                 VerifyRuleMode.Append => StrategyMode.Append,
                 VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite,
@@ -147,7 +147,7 @@ namespace Cosmos.Validation.Registrars
         {
             if (package is null) throw new ArgumentNullException(nameof(package));
 
-            StrategyMode strategyMode = mode switch
+            var strategyMode = mode switch
             {
                 VerifyRuleMode.Append => StrategyMode.Append,
                 VerifyRuleMode.Overwrite => StrategyMode.ItemOverwrite,

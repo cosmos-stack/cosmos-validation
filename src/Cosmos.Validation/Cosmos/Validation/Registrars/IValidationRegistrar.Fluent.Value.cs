@@ -521,7 +521,7 @@ namespace Cosmos.Validation.Registrars
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IValueFluentValidationRegistrar<T, TVal> : IValueFluentValidationRegistrar<T>,
-        IMayUseMemberRulePackage<T,TVal>,
+        IMayUseMemberRulePackage<T, TVal>,
         IMayUseRuleConditions<T, TVal>
     {
         IValueFluentValidationRegistrar<T, TVal> WithConfig(Func<IValueRuleBuilder<T, TVal>, IValueRuleBuilder<T, TVal>> func);
@@ -529,6 +529,8 @@ namespace Cosmos.Validation.Registrars
         new IValueFluentValidationRegistrar<T, TVal> And();
 
         new IValueFluentValidationRegistrar<T, TVal> Or();
+
+        new IValueFluentValidationRegistrar<T, TVal> WithMemberRulePackage(VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Append);
 
         new IPredicateValidationRegistrar<T, TVal> InEnum(Type enumType);
 
