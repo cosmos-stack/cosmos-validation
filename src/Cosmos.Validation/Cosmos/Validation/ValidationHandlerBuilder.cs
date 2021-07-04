@@ -89,6 +89,34 @@ namespace Cosmos.Validation
 
         #endregion
 
+        #region RulePackage
+
+        public void ForRulePackage(VerifyRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Overwrite)
+        {
+            Registrar.ForRulePackage(package, mode).TakeEffect();
+        }
+
+        public void ForRulePackage(VerifyRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Overwrite)
+        {
+            Registrar.ForRulePackage(package, name, mode).TakeEffect();
+        }
+
+        #endregion
+
+        #region MemberRulePackage
+
+        public void ForMemberRulePackage(string memberName, VerifyMemberRulePackage package, VerifyRuleMode mode = VerifyRuleMode.Overwrite)
+        {
+            Registrar.ForType(package.DeclaringType).ForMember(memberName, mode).WithMemberRulePackage(package, mode).TakeEffect();
+        }
+
+        public void ForMemberRulePackage(string memberName, VerifyMemberRulePackage package, string name, VerifyRuleMode mode = VerifyRuleMode.Overwrite)
+        {
+            Registrar.ForType(package.DeclaringType, name).ForMember(memberName, mode).WithMemberRulePackage(package, mode).TakeEffect();
+        }
+
+        #endregion
+
         public ValidationHandler Build() => Registrar.TempBuild();
 
         public static ValidationHandlerBuilder Create() => new();
