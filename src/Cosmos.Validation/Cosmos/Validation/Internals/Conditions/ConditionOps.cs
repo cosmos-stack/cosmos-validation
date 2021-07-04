@@ -1,6 +1,6 @@
 ﻿namespace Cosmos.Validation.Internals.Conditions
 {
-    public enum ConditionOps : int
+    public enum ConditionOps
     {
         Break = 0,
         And = 1,

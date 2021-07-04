@@ -1,5 +1,5 @@
 ﻿using System;
-#if NET452
+#if NETFRAMEWORK
 using Cosmos.Reflection;
 
 #endif
@@ -10,7 +10,7 @@ namespace Cosmos.Validation.Internals.Extensions
     {
         public static string GetFriendlyName(this Type type)
         {
-#if NET452
+#if NETFRAMEWORK
             return type.GetFullyQualifiedName();
 #else
             return type.GetDevelopName();
