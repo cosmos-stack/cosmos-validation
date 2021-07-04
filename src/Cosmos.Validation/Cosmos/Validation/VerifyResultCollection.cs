@@ -22,6 +22,15 @@ namespace Cosmos.Validation
         /// <summary>
         /// Create an instance of VerifyResultCollection.
         /// </summary>
+        /// <param name="capacity"></param>
+        public VerifyResultCollection(int capacity)
+        {
+            _results = new(capacity);
+        }
+
+        /// <summary>
+        /// Create an instance of VerifyResultCollection.
+        /// </summary>
         /// <param name="results"></param>
         public VerifyResultCollection(IEnumerable<VerifyResult> results)
         {
