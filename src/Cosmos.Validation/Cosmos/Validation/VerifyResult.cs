@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cosmos.Collections;
 using Cosmos.Text;
 using Cosmos.Validation.Internals.Exceptions;
 
@@ -131,7 +130,7 @@ namespace Cosmos.Validation
         /// <summary>
         /// Returns a VerifyResult object marked as successful.
         /// </summary>
-        public static VerifyResult Success { get; } = new() {InternalSuccess = true};
+        public static VerifyResult Success { get; } = new() { InternalSuccess = true };
 
         /// <summary>
         /// Determine whether the given VerifyResult object is marked as a successful verification.
@@ -411,6 +410,63 @@ namespace Cosmos.Validation
             {
                 throw ExceptionFactory.Create(this, errorCode, flag, message);
             }
+        }
+
+        #endregion
+
+        #region ToException
+
+        /// <summary>
+        /// If the verification result fails, an exception will be returned.
+        /// </summary>
+        /// <returns></returns>
+        public ValidationException ToException()
+        {
+            return IsValid ? default : ExceptionFactory.Create(this);
+        }
+
+        /// <summary>
+        /// If the verification result fails, an exception will be returned.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public ValidationException ToException(string message)
+        {
+            return IsValid ? default : ExceptionFactory.Create(this, message);
+        }
+
+        /// <summary>
+        /// If the verification result fails, an exception will be returned.
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public ValidationException ToException(long errorCode, string message)
+        {
+            return IsValid ? default : ExceptionFactory.Create(this, errorCode, message);
+        }
+
+        /// <summary>
+        /// If the verification result fails, an exception will be returned.
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public ValidationException ToException(string flag, string message)
+        {
+            return IsValid ? default : ExceptionFactory.Create(this, flag, message);
+        }
+
+        /// <summary>
+        /// If the verification result fails, an exception will be returned.
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="flag"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public ValidationException ToException(long errorCode, string flag, string message)
+        {
+            return IsValid ? default : ExceptionFactory.Create(this, errorCode, flag, message);
         }
 
         #endregion
