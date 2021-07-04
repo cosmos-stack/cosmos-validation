@@ -8317,6 +8317,44 @@
             <param name="message"></param>
             <exception cref="T:Cosmos.Validation.ValidationException"></exception>
         </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToException">
+            <summary>
+            If the verification result fails, an exception will be returned.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToException(System.String)">
+            <summary>
+            If the verification result fails, an exception will be returned.
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToException(System.Int64,System.String)">
+            <summary>
+            If the verification result fails, an exception will be returned.
+            </summary>
+            <param name="errorCode"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToException(System.String,System.String)">
+            <summary>
+            If the verification result fails, an exception will be returned.
+            </summary>
+            <param name="flag"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResult.ToException(System.Int64,System.String,System.String)">
+            <summary>
+            If the verification result fails, an exception will be returned.
+            </summary>
+            <param name="errorCode"></param>
+            <param name="flag"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cosmos.Validation.VerifyResultCollection">
             <summary>
             A collection containing multiple VerifyResults.
@@ -8326,6 +8364,12 @@
             <summary>
             Create an instance of VerifyResultCollection.
             </summary>
+        </member>
+        <member name="M:Cosmos.Validation.VerifyResultCollection.#ctor(System.Int32)">
+            <summary>
+            Create an instance of VerifyResultCollection.
+            </summary>
+            <param name="capacity"></param>
         </member>
         <member name="M:Cosmos.Validation.VerifyResultCollection.#ctor(System.Collections.Generic.IEnumerable{Cosmos.Validation.VerifyResult})">
             <summary>
