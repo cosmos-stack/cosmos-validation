@@ -41,9 +41,9 @@ namespace CosmosValidationUT.SinkUTs.FluentValidationUT
                 .Build();
 
             var validator = ValidationMe.Use("UTF_ValidationModelWorkWithFluentValidationAndShouldBeSuccessTest")
-                .Resolve<GanglvToni>();
+                                        .Resolve<GanglvToni>();
 
-            var model = new GanglvToni() {Name = "Good", Age = 11};
+            var model = new GanglvToni() { Name = "Good", Age = 11 };
 
             validator.Verify(typeof(GanglvToni), model).IsValid.Should().BeTrue();
         }
@@ -65,12 +65,12 @@ namespace CosmosValidationUT.SinkUTs.FluentValidationUT
                 .Build();
 
             var validator = ValidationMe.Use("UTF_ValidationModelWorkWithFluentValidationAndShouldBeFailureTest")
-                .Resolve<GanglvToni>();
+                                        .Resolve<GanglvToni>();
 
-            var model1 = new GanglvToni() {Name = "", Age = 11};
-            var model2 = new GanglvToni() {Name = "11111111111", Age = 11};
-            var model3 = new GanglvToni() {Name = "Good", Age = 9};
-            var model4 = new GanglvToni() {Name = "", Age = -9};
+            var model1 = new GanglvToni() { Name = "", Age = 11 };
+            var model2 = new GanglvToni() { Name = "11111111111", Age = 11 };
+            var model3 = new GanglvToni() { Name = "Good", Age = 9 };
+            var model4 = new GanglvToni() { Name = "", Age = -9 };
 
             var r1 = validator.Verify(typeof(GanglvToni), model1);
             var r2 = validator.Verify(typeof(GanglvToni), model2);
@@ -100,13 +100,13 @@ namespace CosmosValidationUT.SinkUTs.FluentValidationUT
             var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UTF_ValidationOneWorkWithFluentValidationAndShouldBeSuccessTest")
-                .ForFluentValidator<GanglvToniValidator>()
-                .Build();
+                               .ForFluentValidator<GanglvToniValidator>()
+                               .Build();
 
             var validator = ValidationMe.Use("UTF_ValidationOneWorkWithFluentValidationAndShouldBeSuccessTest")
-                .Resolve<GanglvToni>();
+                                        .Resolve<GanglvToni>();
 
-            var model = new GanglvToni() {Name = "Good", Age = 11};
+            var model = new GanglvToni() { Name = "Good", Age = 11 };
 
             validator.VerifyOne(x => x.Name, model.Name).IsValid.Should().BeTrue();
             validator.VerifyOne(model.Name, "Name").IsValid.Should().BeTrue();
@@ -125,16 +125,16 @@ namespace CosmosValidationUT.SinkUTs.FluentValidationUT
             var provider = new ValidationProvider(ValidationProjectManager, VerifiableObjectResolver, options);
 
             ValidationRegistrar.ForProvider(provider, "UTF_ValidationOneWorkWithFluentValidationAndShouldBeFailureTest")
-                .ForFluentValidator<GanglvToniValidator>()
-                .Build();
+                               .ForFluentValidator<GanglvToniValidator>()
+                               .Build();
 
             var validator = ValidationMe.Use("UTF_ValidationOneWorkWithFluentValidationAndShouldBeFailureTest")
-                .Resolve<GanglvToni>();
+                                        .Resolve<GanglvToni>();
 
-            var model1 = new GanglvToni() {Name = "", Age = 11};
-            var model2 = new GanglvToni() {Name = "11111111111", Age = 11};
-            var model3 = new GanglvToni() {Name = "Good", Age = 9};
-            var model4 = new GanglvToni() {Name = "", Age = -9};
+            var model1 = new GanglvToni() { Name = "", Age = 11 };
+            var model2 = new GanglvToni() { Name = "11111111111", Age = 11 };
+            var model3 = new GanglvToni() { Name = "Good", Age = 9 };
+            var model4 = new GanglvToni() { Name = "", Age = -9 };
 
             validator.VerifyOne(x => x.Name, model1.Name).IsValid.Should().BeFalse();
             validator.VerifyOne(model1.Name, "Name").IsValid.Should().BeFalse();
@@ -143,7 +143,6 @@ namespace CosmosValidationUT.SinkUTs.FluentValidationUT
             validator.VerifyOne(x => x.Age, model1.Age).IsValid.Should().BeTrue();
             validator.VerifyOne(model1.Age, "Age").IsValid.Should().BeTrue();
             validator.VerifyOne(typeof(GanglvToni), model1.Age, "Age").IsValid.Should().BeTrue();
-
 
             validator.VerifyOne(x => x.Name, model2.Name).IsValid.Should().BeFalse();
             validator.VerifyOne(model2.Name, "Name").IsValid.Should().BeFalse();
