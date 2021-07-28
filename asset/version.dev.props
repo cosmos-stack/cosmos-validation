@@ -1,8 +1,8 @@
 <Project>
 
     <PropertyGroup>
-        <Standard-PkgVersion>0.1.8.9</Standard-PkgVersion>
-        <Dependency-PkgVersion>0.1.7.8</Dependency-PkgVersion>
+        <Standard-PkgVersion>0.1.9.9</Standard-PkgVersion>
+        <Dependency-PkgVersion>0.1.9.9</Dependency-PkgVersion>
     </PropertyGroup>
 
 </Project>
