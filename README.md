@@ -1,4 +1,4 @@
-# COSMOSLOOPS/Validation
+# Cosmos Validation Overview
 
 Cosmos.Validation is a validation component of [Cosmosloops Labs.](https://github.com/cosmos-loops).
 
