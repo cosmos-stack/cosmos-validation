@@ -81,11 +81,14 @@ namespace Cosmos.Validation.Objects
 
         #region Annotation / Attribute
 
-        public bool IncludeAnnotations => _contract.IncludeAnnotations;
+        public bool IncludeAnnotations 
+            => _contract.IncludeAnnotations;
 
-        public IReadOnlyCollection<Attribute> Attributes => _contract.Attributes;
+        public IReadOnlyCollection<Attribute> Attributes
+            => _contract.Attributes;
 
-        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute => _contract.GetAttributes<TAttribute>();
+        public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute 
+            => _contract.GetAttributes<TAttribute>();
 
         public IEnumerable<VerifiableParamsAttribute> GetParameterAnnotations()
             => _contract.GetParameterAnnotations();

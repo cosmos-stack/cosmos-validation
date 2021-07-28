@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Cosmos.Reflection;
 using Cosmos.Validation.Objects;
 
@@ -62,11 +63,13 @@ namespace Cosmos.Validation.Internals.Extensions
     
     internal static class DefaultObjValueExtensions
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object GetDefaultValue(this VerifiableMemberContext context)
         {
             return DefaultObjValue.Get(context.MemberType);
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object GetDefaultValue(this VerifiableMemberContract context)
         {
             return DefaultObjValue.Get(context.MemberType);
