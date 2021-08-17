@@ -2,6 +2,7 @@
 using Shouldly;
 using Xunit;
 
+// ReSharper disable once CheckNamespace
 namespace CosmosValidationUT.ValidatorsUT
 {
     [Trait("ValidatorsUT", "EmailValidator")]
