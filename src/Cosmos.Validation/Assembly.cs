@@ -11,6 +11,7 @@
 [assembly: InternalsVisibleTo("Cosmos.Validation.Extensions.Email")]
 [assembly: InternalsVisibleTo("Cosmos.Validation.Extensions.Encryption")]
 [assembly: InternalsVisibleTo("Cosmos.Validation.Extensions.Verification")]
+[assembly: InternalsVisibleTo("Cosmos.Validation.Extensions.ChinaIdNumber")]
 
 //Cosmos Validation Sinks
 [assembly: InternalsVisibleTo("Cosmos.Validation.Sinks.DataAnnotations")]

@@ -6,15 +6,19 @@ using Cosmos.Validation.Validators;
 namespace Cosmos.Validation.Annotations
 {
     /// <summary>
-    /// Valid Email
+    /// Valid 15-digit China Id Card's Number
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Class)]
-    public class ValidEmailValueAttribute : VerifiableParamsAttribute,
+    public class ChinaIdNumberAttribute : VerifiableParamsAttribute,
         IQuietVerifiableAnnotation, IStrongVerifiableAnnotation<string>, IObjectContextVerifiableAnnotation
     {
-        public bool AllowTopLevelDomains { get; set; }
+        public ChinaIdLength Length { get; set; } = ChinaIdLength.Id18;
 
-        public bool AllowInternational { get; set; }
+        public int MinYear { get; set; } = 0;
+
+        public ChinaIdAreaValidLimit Limit { get; set; } = ChinaIdAreaValidLimit.Province;
+
+        public bool IgnoreCheckBit { get; set; } = false;
 
         /// <summary>
         /// Invoke internal impl
@@ -25,10 +29,10 @@ namespace Cosmos.Validation.Annotations
         /// <returns></returns>
         protected override bool IsValidImpl(Type memberType, string memberName, Func<object> memberValueGetter)
         {
-            var validator = EmailValidator.Instance;
+            var validator = ChinaIdNumberValidator.Instance;
 
             var valid = memberType.Is(TypeClass.StringClazz).Valid && memberValueGetter() is string emailStr
-                ? validator.Verify(emailStr, ParamName, AllowTopLevelDomains, AllowInternational) // valid for field or property
+                ? validator.Verify(emailStr, ParamName, Length, MinYear, Limit, IgnoreCheckBit) // valid for field or property
                 : validator.Verify(memberType, memberValueGetter()); // valid for class
 
             return valid.IsValid;
@@ -42,7 +46,7 @@ namespace Cosmos.Validation.Annotations
         /// <param name="instance"></param>
         /// <returns></returns>
         public VerifyResult StrongVerify(string instance)
-            => EmailValidator.Instance.Verify(instance, ParamName, AllowTopLevelDomains, AllowInternational);
+            => ChinaIdNumberValidator.Instance.Verify(instance, ParamName, Length, MinYear, Limit, IgnoreCheckBit);
 
         /// <summary>
         /// Strong Verify
@@ -68,12 +72,12 @@ namespace Cosmos.Validation.Annotations
                 return StrongVerify(str);
 
             if (instance is VerifiableObjectContext ctx1)
-                return EmailValidator.Instance.VerifyViaContext(ctx1);
+                return ChinaIdNumberValidator.Instance.VerifyViaContext(ctx1);
 
             if (instance is VerifiableMemberContext ctx2)
-                return EmailValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
+                return ChinaIdNumberValidator.Instance.VerifyViaContext(ctx2.ConvertToObjectContext());
 
-            return EmailValidator.Instance.Verify(type, instance);
+            return ChinaIdNumberValidator.Instance.Verify(type, instance);
         }
 
         /// <summary>
@@ -82,10 +86,10 @@ namespace Cosmos.Validation.Annotations
         /// <param name="context"></param>
         /// <returns></returns>
         public VerifyResult StrongVerify(VerifiableObjectContext context)
-            => EmailValidator.Instance.VerifyViaContext(context);
+            => ChinaIdNumberValidator.Instance.VerifyViaContext(context);
 
         #endregion
-
+        
         #region QuietVerify
 
         /// <summary>
@@ -105,6 +109,6 @@ namespace Cosmos.Validation.Annotations
 
         #endregion
 
-        public override string Name => "ValidEmailValueAnnotation";
+        public override string Name => "ValidChinaIdCardNumberAnnotation";
     }
 }
