@@ -13,18 +13,18 @@ namespace CosmosValidationUT.ValidatorsUT
         public void VerifyIdCard15NumberAndShouldBeSuccessTest()
         {
             var validator = ChinaIdNumberValidator.Instance;
-            validator.Verify("370986890623212", ChinaIdLength.Id15).IsValid.ShouldBeTrue();
-            validator.Verify("370986890623212", ChinaIdLength.Id15).IsValid.ShouldBeTrue();
+            validator.Verify("370986890623212", ChinaIdStyles.Id15).IsValid.ShouldBeTrue();
+            validator.Verify("370986890623212", ChinaIdStyles.Id15).IsValid.ShouldBeTrue();
         }
 
         [Fact(DisplayName = "To verify china id card's number / 15 and return failure")]
         public void VerifyIdCard15NumberAndShouldBeFailureTest()
         {
             var validator = ChinaIdNumberValidator.Instance;
-            validator.Verify("3709868906232150", ChinaIdLength.Id15).IsValid.ShouldBeFalse();
-            validator.Verify("37098689062325.0", ChinaIdLength.Id15).IsValid.ShouldBeFalse();
-            validator.Verify("37098689063125", ChinaIdLength.Id15).IsValid.ShouldBeFalse();
-            validator.Verify("37098689062R25", ChinaIdLength.Id15).IsValid.ShouldBeFalse();
+            validator.Verify("3709868906232150", ChinaIdStyles.Id15).IsValid.ShouldBeFalse();
+            validator.Verify("37098689062325.0", ChinaIdStyles.Id15).IsValid.ShouldBeFalse();
+            validator.Verify("37098689063125", ChinaIdStyles.Id15).IsValid.ShouldBeFalse();
+            validator.Verify("37098689062R25", ChinaIdStyles.Id15).IsValid.ShouldBeFalse();
         }
         
         [Fact(DisplayName = "To verify china id card's number / 18 and return success")]
@@ -44,6 +44,25 @@ namespace CosmosValidationUT.ValidatorsUT
             validator.Verify("110101199003320899").IsValid.ShouldBeFalse();
             validator.Verify("1101011990030R0899").IsValid.ShouldBeFalse();
             validator.Verify("11R101199003070899").IsValid.ShouldBeFalse();
+        }
+        
+        [Fact(DisplayName = "To verify china id card's number / TW and return success")]
+        public void VerifyTwIdCardNumberAndShouldBeSuccessTest()
+        {
+            var validator = ChinaIdNumberValidator.Instance;
+            validator.Verify("N227243218", ChinaIdStyles.Taiwan).IsValid.ShouldBeTrue();
+            validator.Verify("K278798724", ChinaIdStyles.Taiwan).IsValid.ShouldBeTrue();
+            validator.Verify("S185258113", ChinaIdStyles.Taiwan).IsValid.ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "To verify china id card's number / TW and return failure")]
+        public void VerifyTwIdCardNumberAndShouldBeFailureTest()
+        {
+            var validator = ChinaIdNumberValidator.Instance;
+            validator.Verify("N127243218", ChinaIdStyles.Taiwan).IsValid.ShouldBeFalse();
+            validator.Verify("2278798724", ChinaIdStyles.Taiwan).IsValid.ShouldBeFalse();
+            validator.Verify("K278798729", ChinaIdStyles.Taiwan).IsValid.ShouldBeFalse();
+            validator.Verify("S1852581130", ChinaIdStyles.Taiwan).IsValid.ShouldBeFalse();
         }
     }
 }

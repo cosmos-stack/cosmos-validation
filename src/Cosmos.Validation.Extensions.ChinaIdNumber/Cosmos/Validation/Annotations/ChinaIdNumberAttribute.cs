@@ -12,7 +12,7 @@ namespace Cosmos.Validation.Annotations
     public class ChinaIdNumberAttribute : VerifiableParamsAttribute,
         IQuietVerifiableAnnotation, IStrongVerifiableAnnotation<string>, IObjectContextVerifiableAnnotation
     {
-        public ChinaIdLength Length { get; set; } = ChinaIdLength.Id18;
+        public ChinaIdStyles Style { get; set; } = ChinaIdStyles.Id18;
 
         public int MinYear { get; set; } = 0;
 
@@ -32,7 +32,7 @@ namespace Cosmos.Validation.Annotations
             var validator = ChinaIdNumberValidator.Instance;
 
             var valid = memberType.Is(TypeClass.StringClazz).Valid && memberValueGetter() is string emailStr
-                ? validator.Verify(emailStr, ParamName, Length, MinYear, Limit, IgnoreCheckBit) // valid for field or property
+                ? validator.Verify(emailStr, ParamName, Style, MinYear, Limit, IgnoreCheckBit) // valid for field or property
                 : validator.Verify(memberType, memberValueGetter()); // valid for class
 
             return valid.IsValid;
@@ -46,7 +46,7 @@ namespace Cosmos.Validation.Annotations
         /// <param name="instance"></param>
         /// <returns></returns>
         public VerifyResult StrongVerify(string instance)
-            => ChinaIdNumberValidator.Instance.Verify(instance, ParamName, Length, MinYear, Limit, IgnoreCheckBit);
+            => ChinaIdNumberValidator.Instance.Verify(instance, ParamName, Style, MinYear, Limit, IgnoreCheckBit);
 
         /// <summary>
         /// Strong Verify

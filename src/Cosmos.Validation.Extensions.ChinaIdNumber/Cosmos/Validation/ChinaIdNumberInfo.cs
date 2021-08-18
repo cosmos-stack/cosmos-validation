@@ -11,7 +11,7 @@ namespace Cosmos.Validation
         /// The length of the Number of the Id Card. <br />
         /// 身份证号码长度
         /// </summary>
-        public ChinaIdLength Length { get; internal set; }
+        public ChinaIdStyles Style { get; internal set; }
 
         /// <summary>
         /// Birthday on the Id Card's Number <br />
