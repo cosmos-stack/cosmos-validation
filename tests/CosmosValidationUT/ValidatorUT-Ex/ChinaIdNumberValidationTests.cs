@@ -64,5 +64,26 @@ namespace CosmosValidationUT.ValidatorsUT
             validator.Verify("K278798729", ChinaIdStyles.Taiwan).IsValid.ShouldBeFalse();
             validator.Verify("S1852581130", ChinaIdStyles.Taiwan).IsValid.ShouldBeFalse();
         }
+        
+        [Fact(DisplayName = "To verify china id card's number / HK and return success")]
+        public void VerifyHkIdCardNumberAndShouldBeSuccessTest()
+        {
+            var validator = ChinaIdNumberValidator.Instance;
+            validator.Verify("P1032651", ChinaIdStyles.HkId03).IsValid.ShouldBeTrue();
+            validator.Verify("P103265(1)", ChinaIdStyles.HkId03).IsValid.ShouldBeTrue();
+            validator.Verify("U627656(0)", ChinaIdStyles.HkId03).IsValid.ShouldBeTrue();
+            validator.Verify("R363137(A)", ChinaIdStyles.HkId03).IsValid.ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "To verify china id card's number / HK and return failure")]
+        public void VerifyHkIdCardNumberAndShouldBeFailureTest()
+        {
+            var validator = ChinaIdNumberValidator.Instance;
+            validator.Verify("P103265(1", ChinaIdStyles.HkId03).IsValid.ShouldBeFalse();
+            validator.Verify("P103265(2)", ChinaIdStyles.HkId03).IsValid.ShouldBeFalse();
+            validator.Verify("Z627656(0)", ChinaIdStyles.HkId03).IsValid.ShouldBeFalse();
+            validator.Verify("R363137", ChinaIdStyles.HkId03).IsValid.ShouldBeFalse();
+            validator.Verify("0363137(A)", ChinaIdStyles.HkId03).IsValid.ShouldBeFalse();
+        }
     }
 }
