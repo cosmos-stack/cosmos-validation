@@ -72,7 +72,7 @@ namespace Cosmos.Validation.Internals
             var @try = ValidGender(idNumber, options, failures, info);
             if (!@try)
                 return false;
-            info.Sequence = int.Parse(idNumber.Substring(2, 7));
+            info.Sequence = idNumber.Substring(2, 7);
             return true;
         }
 
