@@ -13,6 +13,11 @@
         /// <summary>
         /// Male
         /// </summary>
-        Male = 1
+        Male = 1,
+
+        /// <summary>
+        /// Undefined
+        /// </summary>
+        Undefined = 9
     }
 }

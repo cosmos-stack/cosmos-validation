@@ -108,7 +108,7 @@ namespace Cosmos.Validation.Internals
             var sequence = int.Parse(strSequence);
 
             info.Gender = (ChinaIdGender)(sequence % 2);
-            info.Sequence = sequence;
+            info.Sequence = strSequence;
 
             return true;
         }

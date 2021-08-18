@@ -47,7 +47,7 @@ namespace Cosmos.Validation
         /// Birth registration number <br />
         /// 出生顺序登记号
         /// </summary>
-        public int Sequence { get; internal set; }
+        public string Sequence { get; internal set; }
         
         /// <summary>
         /// Id verification code <br />
