@@ -29,21 +29,22 @@ namespace Cosmos.Validation.Validators
         public VerifyResult Verify(string idNumber, ChinaIdNumberValidationOptions options)
         {
             var result = new ChinaIdNumberInfo();
+            var isNumberSpan = new ReadOnlySpan<char>(idNumber.ToArray());
             List<VerifyFailure> failures = new();
 
-            if (!Assists.ValidLength(idNumber, options, failures, result))
+            if (!Assists.ValidLength(isNumberSpan, options, failures, result))
                 return new VerifyResult(failures);
 
-            if (!Assists.ValidBirthday(idNumber, options, failures, result))
+            if (!Assists.ValidBirthday(isNumberSpan, options, failures, result))
                 return new VerifyResult(failures);
 
-            if (!Assists.ValidArea(idNumber, options, failures, result))
+            if (!Assists.ValidArea(isNumberSpan, options, failures, result))
                 return new VerifyResult(failures);
 
-            if (!Assists.ValidCheckBit(idNumber, options, failures, result))
+            if (!Assists.ValidCheckBit(isNumberSpan, options, failures, result))
                 return new VerifyResult(failures);
 
-            if (!Assists.ValidTheRest(idNumber, options, failures, result))
+            if (!Assists.ValidTheRest(isNumberSpan, options, failures, result))
                 return new VerifyResult(failures);
 
             return VerifyResult.Success;

@@ -1,43 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Cosmos.Text;
 using Cosmos.Validation.Internals.Standards;
 using Cosmos.Validation.Validators;
 
 namespace Cosmos.Validation.Internals
 {
-    internal static class CharExtensions
-    {
-        public static bool IsNumberOrA(this char c)
-        {
-            if (c.IsNumber()) return true;
-            if (c == 'A') return true;
-            return false;
-        }
-    }
-
     internal class ChinaHongKongId03Assist : IAssist
     {
-        public bool ValidLength(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidLength(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
             // 8 位：不包含括号
             //10 位：第 8 10 位必须是括号
-            if (idNumber.Length == 8 && idNumber.Substring(1).All(c => c.IsNumberOrA()))
+            if (idNumber.Length == 8 && idNumber.Slice(1).IsAllNumberOrA())
                 return true;
-            if (idNumber.Length == 10 && idNumber.Substring(1).Count(c => c.IsNumberOrA()) == 7 && idNumber[7] == '(' && idNumber[9] == ')')
+            if (idNumber.Length == 10 && idNumber.Slice(1).IsAllNumberOrA(7) && idNumber.IndexOfShouldBe(7, '(') && idNumber.IndexOfShouldBe(9, ')'))
                 return true;
             failures.Add(new(options.ParamName, "The length of the instance must be 8."));
             return false;
         }
 
-        public bool ValidBirthday(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidBirthday(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
             return true;
         }
 
-        public bool ValidArea(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidArea(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
             var d = GBT2260_2013.Singleton.GetDictionary();
             info.AreaNumber = 81;
@@ -45,7 +34,7 @@ namespace Cosmos.Validation.Internals
             return true;
         }
 
-        public bool ValidCheckBit(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidCheckBit(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
             var f = idNumber[0].ToUpper(CultureInfo.InvariantCulture) - 64;
             var s = f * 8
@@ -84,10 +73,10 @@ namespace Cosmos.Validation.Internals
             return true;
         }
 
-        public bool ValidTheRest(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidTheRest(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
             info.Gender = ChinaIdGender.Undefined;
-            info.Sequence = idNumber.Substring(1);
+            info.Sequence = idNumber.Slice(1).GetString();
             return true;
         }
     }

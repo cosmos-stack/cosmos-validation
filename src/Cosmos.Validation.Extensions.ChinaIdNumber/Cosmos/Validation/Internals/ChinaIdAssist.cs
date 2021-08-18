@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Cosmos.Date;
-using Cosmos.Text;
 using Cosmos.Validation.Internals.Standards;
 using Cosmos.Validation.Validators;
 
@@ -10,40 +8,45 @@ namespace Cosmos.Validation.Internals
 {
     internal abstract class ChinaIdAssist : IAssist
     {
-        public abstract bool ValidLength(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info);
+        public abstract bool ValidLength(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info);
 
-        public bool ValidBirthday(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidBirthday(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
-            var @try = ValidBirthdayImpl(idNumber, options, failures, out var birthday);
-            if (!@try)
+            if (!ValidBirthdayImpl(idNumber, options, failures, out var birthday))
             {
                 failures.Add(new(options.ParamName, "The date of birth cannot be recognized."));
                 return false;
             }
-            
-            var now = DateTimeFactory.Now().Date;
-            @try = birthday > DateTime.MinValue && birthday.Year >= options.MinYear && birthday <= now;
-            info.Birthday = birthday;
-            
+
+            var @try = birthday > DateTime.MinValue &&
+                       birthday.Year >= options.MinYear &&
+                       birthday <= DateTimeFactory.Now().Date;
+
             if (!@try)
             {
                 failures.Add(new(options.ParamName, "The date of birth is invalid or exceeds the limit."));
                 return false;
             }
 
+            info.Birthday = birthday;
+
             return true;
         }
 
-        public bool ValidArea(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidArea(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
-            var s = idNumber.Substring(0, 6);
-            if (!s.All(c => c.IsNumber()))
+            var s = idNumber.Slice(0, 6);
+            if (!s.IsAllNumber())
             {
                 failures.Add(new(options.ParamName, "Invalid administrative area code."));
                 return false;
             }
 
+#if NETFRAMEWORK
+            var areaNumber = int.Parse(s.GetString());
+#else
             var areaNumber = int.Parse(s);
+#endif
             var areaInfo = __getDeepestArea(areaNumber);
             var @try = areaInfo is not null && areaInfo.GetDepth() >= (int)options.Limit;
 
@@ -87,10 +90,10 @@ namespace Cosmos.Validation.Internals
             }
         }
 
-        public bool ValidCheckBit(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidCheckBit(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
-            var @try = ValidCheckBitImpl(idNumber, options, failures, out var checkBit)|| options.IgnoreCheckBit;;
-            
+            var @try = ValidCheckBitImpl(idNumber, options, failures, out var checkBit) || options.IgnoreCheckBit;
+
             if (!@try)
             {
                 failures.Add(new(options.ParamName, "Wrong check code."));
@@ -102,7 +105,7 @@ namespace Cosmos.Validation.Internals
             return true;
         }
 
-        public bool ValidTheRest(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
+        public bool ValidTheRest(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, ChinaIdNumberInfo info)
         {
             var strSequence = GetSequenceImpl(idNumber);
             var sequence = int.Parse(strSequence);
@@ -113,10 +116,10 @@ namespace Cosmos.Validation.Internals
             return true;
         }
 
-        protected abstract bool ValidBirthdayImpl(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, out DateTime date);
+        protected abstract bool ValidBirthdayImpl(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, out DateTime date);
 
-        protected abstract bool ValidCheckBitImpl(string idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, out char rightBit);
+        protected abstract bool ValidCheckBitImpl(ReadOnlySpan<char> idNumber, ChinaIdNumberValidationOptions options, List<VerifyFailure> failures, out char rightBit);
 
-        protected abstract string GetSequenceImpl(string idNumber);
+        protected abstract string GetSequenceImpl(ReadOnlySpan<char> idNumber);
     }
 }
