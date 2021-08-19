@@ -26,7 +26,8 @@ dotnet pack src/Cosmos.Validation.Annotations/Cosmos.Validation.Annotations.cspr
 dotnet pack src/Cosmos.Validation.Dependency/Cosmos.Validation.Dependency.csproj -c Release -o nuget_packages --no-restore
 
 ::ex-validator
-dotnet pack src/Cosmos.Validation.Extensions.Email/Cosmos.Validation.Extensions.Email.csproj -c Release -o nuget_packages --no-restore
+dotnet pack src/Cosmos.Validation.Extensions.Email/Cosmos.Validation.Extensions.Email.csproj                 -c Release -o nuget_packages --no-restore
+dotnet pack src/Cosmos.Validation.Extensions.ChinaIdNumber/Cosmos.Validation.Extensions.ChinaIdNumber.csproj -c Release -o nuget_packages --no-restore
 
 ::ex-dependency
 dotnet pack src/Cosmos.Validation.Extensions.AspectCoreInjector/Cosmos.Validation.Extensions.AspectCoreInjector.csproj   -c Release -o nuget_packages --no-restore
