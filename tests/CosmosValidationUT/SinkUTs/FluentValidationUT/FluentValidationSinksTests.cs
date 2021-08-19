@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using Cosmos.Validation;
+﻿using Cosmos.Validation;
 using Cosmos.Validation.Objects;
 using Cosmos.Validation.Projects;
 using Cosmos.Validation.Registrars;
-using CosmosValidationUT.SinkUTs.DataAnnotationsUT.Models;
 using CosmosValidationUT.SinkUTs.FluentValidationUT.Models;
 using FluentAssertions;
-using FluentValidation;
 using Shouldly;
 using Xunit;
 
