@@ -10,8 +10,8 @@
             <Version Condition=" '$(TargetFramework)' == 'net462' ">9.5.3</Version>
             <Version Condition=" '$(TargetFramework)' == 'net472' ">9.5.3</Version>
             <Version Condition=" '$(TargetFramework)' == 'net48' ">9.5.3</Version>
-            <Version Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">10.3.0</Version>
-            <Version Condition=" '$(TargetFramework)' == 'net5.0' ">10.3.0</Version>
+            <Version Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">10.3.1</Version>
+            <Version Condition=" '$(TargetFramework)' == 'net5.0' ">10.3.1</Version>
         </PackageReference>
     </ItemGroup>
 

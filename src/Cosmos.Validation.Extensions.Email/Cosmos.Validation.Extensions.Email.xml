@@ -6,7 +6,7 @@
     <members>
         <member name="T:Cosmos.Validation.Annotations.ValidEmailValueAttribute">
             <summary>
-            Valid date
+            Valid Email
             </summary>
         </member>
         <member name="M:Cosmos.Validation.Annotations.ValidEmailValueAttribute.IsValidImpl(System.Type,System.String,System.Func{System.Object})">
