@@ -1,6 +1,6 @@
-# Cosmos Validation Overview
+# CosmosStack Validation Overview
 
-Cosmos.Validation is a validation component of [Cosmosloops Labs.](https://github.com/cosmos-loops).
+CosmosStack.Validation is a validation component of [Cosmos Stack](https://github.com/cosmos-stack).
 
 ---
 
@@ -20,6 +20,6 @@ People or projects that have made a great contributions to this project:
 
 ## License
 
-Member project of [Cosmosloops Labs.](https://github.com/cosmos-loops).
+Member project of [Cosmos Stack](https://github.com/cosmos-stack).
 
 [Apache License 2.0](/LICENSE)
