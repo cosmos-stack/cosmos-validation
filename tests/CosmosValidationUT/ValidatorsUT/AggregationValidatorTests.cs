@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Date;
-using Cosmos.Validation;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Projects;
-using Cosmos.Validation.Registrars;
-using Cosmos.Validation.Validators;
+using CosmosStack.Date;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Projects;
+using CosmosStack.Validation.Registrars;
+using CosmosStack.Validation.Validators;
 using CosmosValidationUT.Models;
 using FluentAssertions;
 using Shouldly;

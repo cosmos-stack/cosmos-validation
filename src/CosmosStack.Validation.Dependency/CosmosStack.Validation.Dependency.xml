@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CosmosStack.Validation.Dependency</name>
+    </assembly>
+    <members>
+        <member name="T:CosmosStack.Dependency.DependencyExtensions">
+            <summary>
+            Dependency extensions <br />
+            依赖扩展
+            </summary>
+        </member>
+        <member name="M:CosmosStack.Dependency.DependencyExtensions.RegisterValidation``1(``0)">
+            <summary>
+            Register Cosmos Stack Validation
+            </summary>
+            <param name="register"></param>
+            <typeparam name="TRegister"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.Resolve(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.Resolve(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.Resolve``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.Resolve``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolve(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolve(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolve``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolve``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.ResolveScoped(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.ResolveScoped(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.ResolveScoped``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.ResolveScoped``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolveScoped(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolveScoped(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolveScoped``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.Internals.InternalValidationService.RequiredResolveScoped``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.Resolve(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.Resolve(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.Resolve``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.Resolve``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolve(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolve(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolve``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolve``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.ResolveScoped(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.ResolveScoped(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.ResolveScoped``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.ResolveScoped``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolveScoped(System.Type)">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolveScoped(System.Type,System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolveScoped``1">
+            <summary>
+            Resolve a validator based on a given type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:CosmosStack.Validation.IValidationService.RequiredResolveScoped``1(System.String)">
+            <summary>
+            Resolve a validator based on a given type and name.
+            </summary>
+            <param name="name"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Reflection;
-using Cosmos.Validation;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Projects;
+using CosmosStack.Reflection;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Projects;
 using CosmosValidationUT.Fakes;
 using Shouldly;
 using Xunit;

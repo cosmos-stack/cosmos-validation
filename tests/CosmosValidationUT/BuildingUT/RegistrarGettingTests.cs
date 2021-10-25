@@ -1,6 +1,6 @@
-﻿using Cosmos.Validation;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Registrars;
+﻿using CosmosStack.Validation;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Registrars;
 using CosmosValidationUT.Fakes;
 using Shouldly;
 using Xunit;

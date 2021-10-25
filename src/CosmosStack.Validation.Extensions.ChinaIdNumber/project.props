@@ -1,0 +1,9 @@
+﻿<Project>
+
+    <PropertyGroup>
+        <AssemblyName>CosmosStack.Validation.Extensions.ChinaIdNumber</AssemblyName>
+        <PackageId>CosmosStack.Validation.Extensions.ChinaIdNumber</PackageId>
+        <Description>China Id Card's Number extensions for Cosmos validation library</Description>
+    </PropertyGroup>
+
+</Project>

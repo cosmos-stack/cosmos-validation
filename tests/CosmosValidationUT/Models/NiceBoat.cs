@@ -1,5 +1,5 @@
 ﻿using System;
-using Cosmos.Validation.Annotations;
+using CosmosStack.Validation.Annotations;
 
 namespace CosmosValidationUT.Models
 {

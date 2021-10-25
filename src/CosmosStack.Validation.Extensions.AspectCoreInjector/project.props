@@ -1,0 +1,9 @@
+<Project>
+
+    <PropertyGroup>
+        <AssemblyName>CosmosStack.Validation.Extensions.AspectCoreInjector</AssemblyName>
+        <PackageId>CosmosStack.Validation.Extensions.AspectCoreInjector</PackageId>
+        <Description>NCC AspectCore-Framework dependency extensions for Cosmos validation.</Description>
+    </PropertyGroup>
+
+</Project>

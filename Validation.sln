@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation", "src\Cosmos.Validation\Cosmos.Validation.csproj", "{19A5EEC5-7977-454B-BA94-B69A022D674B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation", "src\CosmosStack.Validation\CosmosStack.Validation.csproj", "{19A5EEC5-7977-454B-BA94-B69A022D674B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B1F60691-77D2-4F61-818D-B22471D0F037}"
 EndProject
@@ -22,16 +22,6 @@ ProjectSection(SolutionItems) = preProject
 	asset\props\package.props = asset\props\package.props
 EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FE9C33B7-AE11-4400-B55E-3BC326833E61}"
-ProjectSection(SolutionItems) = preProject
-	build\Beta.bat = build\Beta.bat
-	build\Beta_WithoutBuild.bat = build\Beta_WithoutBuild.bat
-	build\Nightly.bat = build\Nightly.bat
-	build\Nightly_WithoutBuild.bat = build\Nightly_WithoutBuild.bat
-	build\Release.bat = build\Release.bat
-	build\Release_WithoutBuild.bat = build\Release_WithoutBuild.bat
-EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F5CBA80A-F7CA-4B13-B889-1B5D8C288527}"
 ProjectSection(SolutionItems) = preProject
 	README.md = README.md
@@ -48,29 +38,40 @@ ProjectSection(SolutionItems) = preProject
 	asset\version.props = asset\version.props
 EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Sinks.FluentValidation", "src\Cosmos.Validation.Sinks.FluentValidation\Cosmos.Validation.Sinks.FluentValidation.csproj", "{3D4948DF-2A0B-4E92-972C-25D3301ED6B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Sinks.FluentValidation", "src\CosmosStack.Validation.Sinks.FluentValidation\CosmosStack.Validation.Sinks.FluentValidation.csproj", "{3D4948DF-2A0B-4E92-972C-25D3301ED6B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Sinks.DataAnnotations", "src\Cosmos.Validation.Sinks.DataAnnotations\Cosmos.Validation.Sinks.DataAnnotations.csproj", "{38D53450-3924-4AD4-ABA2-F113FE904ECA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Sinks.DataAnnotations", "src\CosmosStack.Validation.Sinks.DataAnnotations\CosmosStack.Validation.Sinks.DataAnnotations.csproj", "{38D53450-3924-4AD4-ABA2-F113FE904ECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Annotations", "src\Cosmos.Validation.Annotations\Cosmos.Validation.Annotations.csproj", "{6B2D78C7-83D1-4D28-92F1-E27A96ED60F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Annotations", "src\CosmosStack.Validation.Annotations\CosmosStack.Validation.Annotations.csproj", "{6B2D78C7-83D1-4D28-92F1-E27A96ED60F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Extensions.Email", "src\Cosmos.Validation.Extensions.Email\Cosmos.Validation.Extensions.Email.csproj", "{21CA29E7-707B-41A2-A6A6-AE3A8C606B79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Extensions.Email", "src\CosmosStack.Validation.Extensions.Email\CosmosStack.Validation.Extensions.Email.csproj", "{21CA29E7-707B-41A2-A6A6-AE3A8C606B79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ex-dependency", "ex-dependency", "{A66D4694-5798-451D-AD8C-241F4A1C69C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ex-sinks", "ex-sinks", "{3FAA8BC0-7BA8-424C-AA81-184D907F9B10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Extensions.DependencyInjection", "src\Cosmos.Validation.Extensions.DependencyInjection\Cosmos.Validation.Extensions.DependencyInjection.csproj", "{BD2BF25A-4C1A-48CF-BEC6-F02A52AAB2DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Extensions.DependencyInjection", "src\CosmosStack.Validation.Extensions.DependencyInjection\CosmosStack.Validation.Extensions.DependencyInjection.csproj", "{BD2BF25A-4C1A-48CF-BEC6-F02A52AAB2DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Extensions.Autofac", "src\Cosmos.Validation.Extensions.Autofac\Cosmos.Validation.Extensions.Autofac.csproj", "{3E5A49A7-A172-41C9-9A71-3053FCFFD9CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Extensions.Autofac", "src\CosmosStack.Validation.Extensions.Autofac\CosmosStack.Validation.Extensions.Autofac.csproj", "{3E5A49A7-A172-41C9-9A71-3053FCFFD9CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Extensions.AspectCoreInjector", "src\Cosmos.Validation.Extensions.AspectCoreInjector\Cosmos.Validation.Extensions.AspectCoreInjector.csproj", "{D340CF6C-764A-4127-BC73-BC93A16E8E62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Extensions.AspectCoreInjector", "src\CosmosStack.Validation.Extensions.AspectCoreInjector\CosmosStack.Validation.Extensions.AspectCoreInjector.csproj", "{D340CF6C-764A-4127-BC73-BC93A16E8E62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ex-validators", "ex-validators", "{842CC372-32F2-4068-920A-B6FA98FA3664}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Dependency", "src\Cosmos.Validation.Dependency\Cosmos.Validation.Dependency.csproj", "{60821941-CB1D-4BEC-AF8A-4B1394F3DE39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Dependency", "src\CosmosStack.Validation.Dependency\CosmosStack.Validation.Dependency.csproj", "{60821941-CB1D-4BEC-AF8A-4B1394F3DE39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cosmos.Validation.Extensions.ChinaIdNumber", "src\Cosmos.Validation.Extensions.ChinaIdNumber\Cosmos.Validation.Extensions.ChinaIdNumber.csproj", "{E3BF796D-F487-4161-998D-ADCD24D8FE7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosStack.Validation.Extensions.ChinaIdNumber", "src\CosmosStack.Validation.Extensions.ChinaIdNumber\CosmosStack.Validation.Extensions.ChinaIdNumber.csproj", "{E3BF796D-F487-4161-998D-ADCD24D8FE7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{C10739A5-0184-4F93-A3BF-73C2410D40D2}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\Beta.bat = scripts\Beta.bat
+		scripts\Beta_WithoutBuild.bat = scripts\Beta_WithoutBuild.bat
+		scripts\BuildOnly.bat = scripts\BuildOnly.bat
+		scripts\Nightly.bat = scripts\Nightly.bat
+		scripts\Nightly_WithoutBuild.bat = scripts\Nightly_WithoutBuild.bat
+		scripts\Release.bat = scripts\Release.bat
+		scripts\Release_WithoutBuild.bat = scripts\Release_WithoutBuild.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

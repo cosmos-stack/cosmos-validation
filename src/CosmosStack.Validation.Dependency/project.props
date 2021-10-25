@@ -1,0 +1,9 @@
+<Project>
+
+    <PropertyGroup>
+        <AssemblyName>CosmosStack.Validation.Dependency</AssemblyName>
+        <PackageId>CosmosStack.Validation.Dependency</PackageId>
+        <Description>Core dependency lib for Cosmos validation.</Description>
+    </PropertyGroup>
+
+</Project>

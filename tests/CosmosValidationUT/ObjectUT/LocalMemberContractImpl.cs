@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Date;
-using Cosmos.Reflection;
-using Cosmos.Validation;
-using Cosmos.Validation.Annotations;
-using Cosmos.Validation.Objects;
+using CosmosStack.Date;
+using CosmosStack.Reflection;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Annotations;
+using CosmosStack.Validation.Objects;
 using CosmosValidationUT.Models;
 
 namespace CosmosValidationUT.ObjectUT
@@ -72,6 +72,16 @@ namespace CosmosValidationUT.ObjectUT
         public IReadOnlyCollection<Attribute> Attributes { get; }
 
         public IEnumerable<TAttribute> GetAttributes<TAttribute>() where TAttribute : Attribute
+        {
+            throw new NotImplementedException();
+        }
+
+        public AttributeCollection GetAttributeCollection()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AttributeCollection GetAttributeCollection<TAttribute>() where TAttribute : Attribute
         {
             throw new NotImplementedException();
         }

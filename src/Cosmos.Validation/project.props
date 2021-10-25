@@ -1,9 +1,0 @@
-<Project>
-
-    <PropertyGroup>
-        <AssemblyName>Cosmos.Validation</AssemblyName>
-        <PackageId>Cosmos.Validation</PackageId>
-        <Description>Cosmos validation common library</Description>
-    </PropertyGroup>
-
-</Project>

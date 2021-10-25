@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cosmos.Validation;
-using Cosmos.Validation.Annotations;
-using Cosmos.Validation.Internals.Extensions;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Validators;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Annotations;
+using CosmosStack.Validation.Internals.Extensions;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Validators;
 
 namespace CosmosValidationUT.ValidatorsUT
 {

@@ -1,9 +1,0 @@
-<Project>
-
-    <PropertyGroup>
-        <AssemblyName>Cosmos.Validation.Dependency</AssemblyName>
-        <PackageId>Cosmos.Validation.Dependency</PackageId>
-        <Description>Core dependency lib for Cosmos validation.</Description>
-    </PropertyGroup>
-
-</Project>

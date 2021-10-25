@@ -1,9 +1,0 @@
-<Project>
-
-    <PropertyGroup>
-        <AssemblyName>Cosmos.Validation.Extensions.Autofac</AssemblyName>
-        <PackageId>Cosmos.Validation.Extensions.Autofac</PackageId>
-        <Description>Autofac dependency extensions for Cosmos validation.</Description>
-    </PropertyGroup>
-
-</Project>

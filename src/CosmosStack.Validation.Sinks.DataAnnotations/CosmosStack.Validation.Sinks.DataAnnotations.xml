@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CosmosStack.Validation.Sinks.DataAnnotations</name>
+    </assembly>
+    <members>
+        <member name="T:CosmosStack.Reflection.DataAnnotationExtensions">
+            <summary>
+            DataAnnotation Extensions <br />
+            数据注解扩展
+            </summary>
+        </member>
+        <member name="M:CosmosStack.Reflection.DataAnnotationExtensions.HasDataAnnotationAttribute(System.Type)">
+            <summary>
+            Has DataAnnotation Attribute <br />
+            是否存在数据注解特性
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Reflection.DataAnnotationExtensions.GetDataAnnotationAttributes(System.Type)">
+            <summary>
+            Get all DataAnnotation Attributes <br />
+            获取所有数据注解特性
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions">
+            <summary>
+            Validation registrar extensions <br />
+            验证注册器扩展
+            </summary>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.ForDataAnnotationSupport(CosmosStack.Validation.Registrars.IValidationRegistrar)">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForDataAnnotationSupport(CosmosStack.Validation.Registrars.IFluentValidationRegistrar)">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForDataAnnotationSupport(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar)">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForDataAnnotationSupport``1(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar{``0})">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForDataAnnotationSupport(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar)">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForDataAnnotationSupport``1(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0})">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForDataAnnotationSupport``2(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0,``1})">
+            <summary>
+            Add DataAnnotation support <br />
+            添加对数据注解的支持
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:CosmosStack.Validation.Validators.DataAnnotationValidator">
+            <summary>
+            DataAnnotation Validator <br />
+            数据注解验证器
+            </summary>
+        </member>
+        <member name="M:CosmosStack.Validation.Validators.DataAnnotationValidator.Verify(System.Type,System.Object)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

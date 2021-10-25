@@ -1,6 +1,5 @@
-﻿using Cosmos.Validation.Internals;
-using Cosmos.Validation.Internals.Rules;
-using Cosmos.Validation.Registrars;
+﻿using CosmosStack.Validation.Internals.Rules;
+using CosmosStack.Validation.Registrars;
 using CosmosValidationUT.Models;
 using CosmosValidationUT.StrategyUT;
 using FluentAssertions;

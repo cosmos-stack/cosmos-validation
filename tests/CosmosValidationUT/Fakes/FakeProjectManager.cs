@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Collections;
-using Cosmos.Reflection;
-using Cosmos.Validation.Projects;
+using CosmosStack.Collections;
+using CosmosStack.Reflection;
+using CosmosStack.Validation.Projects;
 
 namespace CosmosValidationUT.Fakes
 {

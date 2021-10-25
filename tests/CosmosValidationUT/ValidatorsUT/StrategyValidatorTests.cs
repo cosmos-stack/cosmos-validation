@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Cosmos.Validation;
-using Cosmos.Validation.Validators;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Validators;
 using CosmosValidationUT.Models;
 using CosmosValidationUT.StrategyUT;
 using Shouldly;

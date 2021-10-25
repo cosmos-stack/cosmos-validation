@@ -1,4 +1,4 @@
-﻿using Cosmos.Validation.Validators;
+﻿using CosmosStack.Validation.Validators;
 using CosmosValidationUT.SinkUTs.DataAnnotationsUT.Models;
 using FluentAssertions;
 using Shouldly;

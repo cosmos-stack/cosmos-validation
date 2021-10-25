@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Cosmos.Date;
-using Cosmos.Reflection;
-using Cosmos.Validation.Annotations;
-using Cosmos.Validation.Objects;
+using CosmosStack.Date;
+using CosmosStack.Reflection;
+using CosmosStack.Validation.Annotations;
+using CosmosStack.Validation.Objects;
 using CosmosValidationUT.Models;
 using Shouldly;
 using Xunit;

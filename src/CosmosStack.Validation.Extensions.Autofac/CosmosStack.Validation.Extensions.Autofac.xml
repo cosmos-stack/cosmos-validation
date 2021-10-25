@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CosmosStack.Validation.Extensions.Autofac</name>
+    </assembly>
+    <members>
+        <member name="T:Autofac.ValidationRegisterExtensions">
+            <summary>
+            Cosmos Stack Validation Register Extensions
+            </summary>
+        </member>
+        <member name="M:Autofac.ValidationRegisterExtensions.RegisterCosmosValidation(Autofac.ContainerBuilder)">
+            <summary>
+            Add Cosmos Stack Validation Support
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,4 +1,4 @@
-﻿using Cosmos.Validation.Annotations;
+﻿using CosmosStack.Validation.Annotations;
 
 #if !NETFRAMEWORK && !NETCOREAPP3_1
 

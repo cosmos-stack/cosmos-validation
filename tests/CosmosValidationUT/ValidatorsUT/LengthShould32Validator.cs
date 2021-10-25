@@ -1,7 +1,7 @@
-﻿using Cosmos.Validation;
-using Cosmos.Validation.Internals.Extensions;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Validators;
+﻿using CosmosStack.Validation;
+using CosmosStack.Validation.Internals.Extensions;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Validators;
 
 namespace CosmosValidationUT.ValidatorsUT
 {

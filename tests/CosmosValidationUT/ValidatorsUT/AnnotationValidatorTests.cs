@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Cosmos.Date;
-using Cosmos.Validation;
-using Cosmos.Validation.Validators;
+using CosmosStack.Date;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Validators;
 using CosmosValidationUT.Models;
 using FluentAssertions;
 using Shouldly;

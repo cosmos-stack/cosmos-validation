@@ -1,9 +1,0 @@
-<Project>
-
-    <PropertyGroup>
-        <AssemblyName>Cosmos.Validation.Extensions.DependencyInjection</AssemblyName>
-        <PackageId>Cosmos.Validation.Extensions.DependencyInjection</PackageId>
-        <Description>Microsoft Dependency Injection dependency extensions for Cosmos validation.</Description>
-    </PropertyGroup>
-
-</Project>

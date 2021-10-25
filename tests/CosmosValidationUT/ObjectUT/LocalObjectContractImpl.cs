@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Cosmos.Date;
-using Cosmos.Validation.Annotations;
-using Cosmos.Validation.Objects;
+using CosmosStack.Date;
+using CosmosStack.Validation.Annotations;
+using CosmosStack.Validation.Objects;
 using CosmosValidationUT.Models;
 
 namespace CosmosValidationUT.ObjectUT

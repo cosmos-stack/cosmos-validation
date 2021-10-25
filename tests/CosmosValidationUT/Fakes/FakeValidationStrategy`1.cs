@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Strategies;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Strategies;
 
 namespace CosmosValidationUT.Fakes
 {

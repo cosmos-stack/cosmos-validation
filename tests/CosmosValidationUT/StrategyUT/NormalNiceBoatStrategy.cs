@@ -1,5 +1,5 @@
-﻿using Cosmos.Validation;
-using Cosmos.Validation.Strategies;
+﻿using CosmosStack.Validation;
+using CosmosStack.Validation.Strategies;
 using CosmosValidationUT.Models;
 
 namespace CosmosValidationUT.StrategyUT

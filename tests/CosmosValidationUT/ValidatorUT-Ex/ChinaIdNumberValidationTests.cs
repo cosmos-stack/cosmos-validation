@@ -1,5 +1,5 @@
-﻿using Cosmos.Validation;
-using Cosmos.Validation.Validators;
+﻿using CosmosStack.Validation;
+using CosmosStack.Validation.Validators;
 using Shouldly;
 using Xunit;
 

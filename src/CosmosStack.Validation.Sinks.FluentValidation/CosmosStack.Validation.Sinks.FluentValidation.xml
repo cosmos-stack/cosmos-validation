@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CosmosStack.Validation.Sinks.FluentValidation</name>
+    </assembly>
+    <members>
+        <member name="T:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions">
+            <summary>
+            Validation registrar extensions <br />
+            验证注册器扩展
+            </summary>
+            <summary>
+            Validation registrar extensions <br />
+            验证注册器扩展
+            </summary>
+            <summary>
+            Validation registrar extensions <br />
+            验证注册器扩展
+            </summary>
+            <summary>
+            Validation registrar extensions <br />
+            验证注册器扩展
+            </summary>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.ForFluentValidator(CosmosStack.Validation.Registrars.IValidationRegistrar,System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator(CosmosStack.Validation.Registrars.IFluentValidationRegistrar,System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar,System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar{``0},System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar,System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0},System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0,``1},System.Type)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="typeOfValidator"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.ForFluentValidator(CosmosStack.Validation.Registrars.IValidationRegistrar,FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator(CosmosStack.Validation.Registrars.IFluentValidationRegistrar,FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar,FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar{``0},FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar,FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0},FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0,``1},FluentValidation.IValidator)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <param name="validator"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.ForFluentValidator``1(CosmosStack.Validation.Registrars.IValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IFluentValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar{``0})">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``1(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0})">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``3(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0,``1})">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TValidator"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.ForFluentValidator``2(CosmosStack.Validation.Registrars.IValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IFluentValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``3(CosmosStack.Validation.Registrars.IValueFluentValidationRegistrar{``0})">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``2(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar)">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``3(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0})">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CosmosStack.Validation.Registrars.ValidationRegistrarExtensions.AndForFluentValidator``4(CosmosStack.Validation.Registrars.IWaitForMessageValidationRegistrar{``0,``1})">
+            <summary>
+            Register for Sink Validator for FluentValidation
+            </summary>
+            <param name="registrar"></param>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TVal"></typeparam>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:CosmosStack.Validation.Validators.FluentValidator">
+            <summary>
+            A sink validator for FluentValidation
+            </summary>
+        </member>
+        <member name="T:CosmosStack.Validation.Validators.FluentValidator`1">
+            <summary>
+            A sink validator for FluentValidation
+            </summary>
+            <typeparam name="TValidator"></typeparam>
+        </member>
+        <member name="M:CosmosStack.Validation.Validators.FluentValidator`1.Verify(System.Type,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:CosmosStack.Validation.Validators.FluentValidator`2">
+            <summary>
+            A sink validator for FluentValidation
+            </summary>
+            <typeparam name="TValidator"></typeparam>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CosmosStack.Validation.Validators.FluentValidator`2.Verify(System.Type,System.Object)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

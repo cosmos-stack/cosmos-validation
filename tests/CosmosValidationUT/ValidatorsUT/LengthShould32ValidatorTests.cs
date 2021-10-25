@@ -1,7 +1,7 @@
-﻿using Cosmos.Validation;
-using Cosmos.Validation.Objects;
-using Cosmos.Validation.Projects;
-using Cosmos.Validation.Registrars;
+﻿using CosmosStack.Validation;
+using CosmosStack.Validation.Objects;
+using CosmosStack.Validation.Projects;
+using CosmosStack.Validation.Registrars;
 using Shouldly;
 using Xunit;
 

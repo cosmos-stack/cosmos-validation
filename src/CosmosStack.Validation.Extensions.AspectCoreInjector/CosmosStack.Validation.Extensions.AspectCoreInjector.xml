@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CosmosStack.Validation.Extensions.AspectCoreInjector</name>
+    </assembly>
+    <members>
+        <member name="T:AspectCore.DependencyInjection.ValidationRegisterExtensions">
+            <summary>
+            Cosmos Stack Validation Register Extensions
+            </summary>
+        </member>
+        <member name="M:AspectCore.DependencyInjection.ValidationRegisterExtensions.AddCosmosValidation(AspectCore.DependencyInjection.IServiceContext)">
+            <summary>
+            Add Cosmos Stack Validation Support
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

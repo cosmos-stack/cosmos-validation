@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Cosmos.Validation.Internals.Tokens.ValueTokens;
-using Cosmos.Validation.Objects;
+using CosmosStack.Validation.Internals.Tokens.ValueTokens;
+using CosmosStack.Validation.Objects;
 using CosmosValidationUT.TokenUT.Models;
 using Shouldly;
 using Xunit;

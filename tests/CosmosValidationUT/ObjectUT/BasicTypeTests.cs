@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Cosmos.Validation.Objects;
+using CosmosStack.Validation.Objects;
 using CosmosValidationUT.Models;
 using FluentAssertions;
 using Shouldly;

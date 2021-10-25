@@ -1,6 +1,6 @@
 ﻿using System;
-using Cosmos.Validation;
-using Cosmos.Validation.Objects;
+using CosmosStack.Validation;
+using CosmosStack.Validation.Objects;
 
 namespace CosmosValidationUT.Fakes
 {

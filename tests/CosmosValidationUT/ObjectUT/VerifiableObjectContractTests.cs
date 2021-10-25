@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Cosmos.Validation.Objects;
+using CosmosStack.Validation.Objects;
 using CosmosValidationUT.Models;
 using Shouldly;
 using Xunit;

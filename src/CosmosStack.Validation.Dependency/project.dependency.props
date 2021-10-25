@@ -1,0 +1,11 @@
+<Project>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CosmosStack.Validation\CosmosStack.Validation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CosmosStack.Extensions.Dependency" Version="$(Dependency-RefVersion)"/>
+    </ItemGroup>
+
+</Project>

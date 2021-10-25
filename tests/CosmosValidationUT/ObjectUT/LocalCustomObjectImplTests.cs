@@ -1,4 +1,4 @@
-﻿using Cosmos.Validation.Objects;
+﻿using CosmosStack.Validation.Objects;
 using Shouldly;
 using Xunit;
 
